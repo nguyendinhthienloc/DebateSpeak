@@ -1,0 +1,262 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1,T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+\setlength{\headheight}{14pt}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={DebateSpeak AI - Project Assignment 1 Report},
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{CS300 - Software Engineering | PA1-2026}
+\lhead{DebateSpeak AI}
+\rfoot{Page \thepage}
+
+\title{
+    \vspace{-1.5cm}
+    \textbf{\Large University of Science, VNU-HCM}\\
+    \textbf{\large Faculty of Information Technology}\\
+    \textbf{\normalsize Advanced Program in Computer Science (APCS)}\\
+    \vspace{0.8cm}
+    \hrule height 1.5pt \vspace{0.4cm}
+    \textbf{\huge DebateSpeak AI}\\
+    \vspace{0.2cm}
+    \textbf{\Large Project Assignment 1 (PA1-2026) Report}\\
+    \vspace{0.2cm}
+    \hrule height 1.5pt
+    \vspace{0.5cm}
+}
+
+\author{
+    \textbf{Group Members:}\\[0.2cm]
+    \begin{tabular}{rll}
+        \textbf{24125093} & \fontencoding{T5}\selectfont Nguyễn Đình Thiên Lộc & (DevOps, QA \& Fact-Checking Lead) \\
+        \textbf{24125047} & \fontencoding{T5}\selectfont Nguyễn Bảo Minh Triết & (Frontend \& WebRTC/Audio Lead) \\
+        \textbf{24125078} & \fontencoding{T5}\selectfont Nguyễn Hồng Tấn Tài & (Backend \& Real-Time Media Lead) \\
+        \textbf{24125058} & \fontencoding{T5}\selectfont Nguyễn Anh Khoa & (AI Audio \& Speech Pipeline Lead) \\
+        \textbf{24125107} & \fontencoding{T5}\selectfont Trần Lê Anh Tuấn & (AI Orchestrator \& Analysis Lead) \\
+    \end{tabular}
+}
+
+\date{\vspace{0.3cm}\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vspace{-0.5cm}
+\begin{abstract}
+\textbf{DebateSpeak AI} is a web-based, real-time spoken debate and English language learning platform designed for intermediate non-native English learners (CEFR A2--C1). Two human debaters participate in an assigned motion over live WebRTC audio. The platform captures their speech, generates live transcripts with deterministic track-level speaker attribution, and executes an asynchronous multi-agent evaluation pipeline providing CEFR-adapted language feedback, mapping rebuttal structures, and fact-checking claims against web evidence. This report compiles the deliverables for Project Assignment 1 (PA1-2026) under the CS300 Software Engineering curriculum, structured strictly across Parts A, B, C, D, and E.
+\end{abstract}
+
+\vspace{0.5cm}
+\tableofcontents
+\newpage
+
+% -------------------------------------------------------------
+% PART A
+% -------------------------------------------------------------
+\section{Part A: Group Registration \& Team Roles}
+\noindent\textit{Author: Triết (24125047) | Reviewer: Tài (24125078) | Editor: Lộc (24125093)}
+
+\subsection{Team Identification}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Course:} CS300 / CSC13002 -- Introduction to Software Engineering
+    \item \textbf{Academic Program:} Advanced Program in Computer Science (APCS), Faculty of Information Technology, VNU-HCM US.
+    \item \textbf{Project Title:} DebateSpeak AI -- Real-Time Spoken Debate \& Multi-Agent Language Coaching Arena.
+\end{itemize}
+
+\subsection{Member Responsibilities \& Subsystem Ownership}
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Student ID} & \textbf{Full Name} & \textbf{Engineering Role \& Primary Ownership} \\
+\midrule
+24125093 & \fontencoding{T5}\selectfont Nguyễn Đình Thiên Lộc & \textbf{DevOps \& QA / Fact-Checking Lead}: Staging deployment (Docker/Caddy), CI/CD, search retrieval pipeline, Playwright E2E tests, latexmk setup. \\
+\addlinespace
+24125047 & \fontencoding{T5}\selectfont Nguyễn Bảo Minh Triết & \textbf{Frontend \& WebRTC Lead}: Vite + React SPA, Tailwind design system, LiveKit audio integration, debate room lobby and report UI. \\
+\addlinespace
+24125078 & \fontencoding{T5}\selectfont Nguyễn Hồng Tấn Tài & \textbf{Backend \& Media Lead}: FastAPI application, PostgreSQL models, JWT authentication, room lifecycle state machine, Redis pub/sub hub. \\
+\addlinespace
+24125058 & \fontencoding{T5}\selectfont Nguyễn Anh Khoa & \textbf{AI Audio \& Speech Pipeline Lead}: LiveKit bot subscriber worker, Silero VAD speech segmentation, streaming STT adapters and audio metrics pipeline. \\
+\addlinespace
+24125107 & \fontencoding{T5}\selectfont Trần Lê Anh Tuấn & \textbf{AI Orchestrator Lead}: Language Coach, Argument Coach, Debate Judge, deterministic Consensus Engine, quote grounding validator. \\
+\bottomrule
+\end{tabularx}
+\caption{Official Project Team Roles and Responsibilities}
+\end{table}
+
+\newpage
+
+% -------------------------------------------------------------
+% PART B
+% -------------------------------------------------------------
+\section{Part B: Project Proposal}
+\noindent\textit{Author: Triết (24125047) | Reviewer: Tuấn (24125107) | Editor: Tài (24125078)}
+
+\subsection{Problem Statement \& Target Actors}
+Non-native English learners preparing for international speaking tests (IELTS, TOEFL) or global professional careers face a major bottleneck: while reading and writing tools are abundant, real-time live speaking practice with intellectual rigor remains expensive, intimidated by human prejudice, or constrained to solitary flashcard apps. DebateSpeak AI introduces an engaging peer-to-peer live debate platform with intelligent post-debate coaching.
+
+The platform distinguishes two primary actors:
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Debater / Learner (Actor 1):} Registers with a target CEFR level (A2--C1), selects debate topics, joins synchronized live audio rooms, receives live transcripts, and reviews multi-dimensional learning reports with personalized drills.
+    \item \textbf{System Administrator / Moderator (Actor 2):} Curates topic motions, monitors room health and AI adapter quotas, audits flagged transcripts, and manages platform safety.
+\end{enumerate}
+
+\subsection{Ten Distinctive Functional Groups}
+\begin{enumerate}[leftmargin=1.5cm, label=\textbf{FG-\arabic*:}]
+    \item \textbf{User Account \& Profile Management:} Argon2id authentication, JWT rotation, and CEFR baseline level tracking.
+    \item \textbf{Debate Topic \& Difficulty Management:} Catalog of categorized motions with CEFR difficulty tags and vocabulary suggestions.
+    \item \textbf{Debate Room \& Live Session Management:} Finite state machine (\texttt{LOBBY} $\to$ \texttt{READY} $\to$ \texttt{LIVE} $\to$ \texttt{ENDED}), dual-consent gates, and timers.
+    \item \textbf{Real-Time Audio Communication:} Managed WebRTC audio routing via LiveKit Cloud, mic test modal, volume meters, and 60-second reconnection handling.
+    \item \textbf{Speech-to-Text \& Speaker Attribution:} Dedicated audio track subscription, Silero VAD, streaming STT, and 100\% deterministic speaker tagging.
+    \item \textbf{English Language Analysis:} Spoken metrics (WPM, pause profiles, filler rates) and quote-grounded grammar/vocabulary feedback.
+    \item \textbf{Argument \& Debate Analysis:} Extraction of claims, rebuttals, concessions, and logical fallacies.
+    \item \textbf{AI Fact-Checking \& Evidence Analysis:} Search API integration, sanitized snippet extraction, and 5-level verdict generation with uncertainty indicators.
+    \item \textbf{Multi-Agent Evaluation \& Consensus:} Independent Evaluator and Skeptic agents, Debate Judge scoring, and deterministic consensus calculation.
+    \item \textbf{Learning History \& Personalized Reports:} Multi-dimensional learning reports with personalized practice drills and historical skill progression charts.
+\end{enumerate}
+
+\subsection{Standalone AI-Powered Capabilities}
+DebateSpeak AI features an asynchronous Multi-Agent Evaluation Arena. Following a live debate, participant audio transcripts are processed through specialized agents:
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Strict Quote-Grounding Rule:} Feedback items cite exact verbatim quotes from the learner's transcript. The system rejects ungrounded or hallucinated learner errors.
+    \item \textbf{Automated Fact-Checking:} Check-worthy factual claims trigger web retrieval, returning verified sources, 5-level verdicts, and confidence indicators.
+\end{itemize}
+
+\newpage
+
+% -------------------------------------------------------------
+% PART C
+% -------------------------------------------------------------
+\section{Part C: Existing App Survey}
+\noindent\textit{Author: Tài (24125078) | Reviewer: Khoa (24125058) | Editor: Triết (24125047)}
+
+\subsection{Market Analysis \& Comparison}
+We surveyed three market products: \textbf{ArguFight} (asynchronous AI debate game), \textbf{Khaos Live} (interactive social voice streaming), and \textbf{ELSA Speak} (pronunciation coach).
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{Dimension} & \textbf{ArguFight} & \textbf{Khaos Live} & \textbf{DebateSpeak AI (Ours)} \\
+\midrule
+\textbf{Primary Goal} & Competitive AI-judged debate & Social entertainment streaming & \textbf{Spoken English learning \& critical thinking} \\
+\textbf{Interaction} & Asynchronous audio turns & Live synchronous streaming & \textbf{Synchronous live 2-person peer room} \\
+\textbf{Language Focus} & None & None & \textbf{CEFR-adapted grammar, vocab \& fluency} \\
+\textbf{Fact-Checking} & Internal static knowledge & None & \textbf{Live web search + sources + uncertainty} \\
+\textbf{Post-Debate} & Win/Loss score card & Audience engagement metrics & \textbf{Actionable drills with quoted corrections} \\
+\bottomrule
+\end{tabularx}
+\caption{Competitive Landscape Synthesis}
+\end{table}
+
+\subsection{Key Competitive Differentiators}
+DebateSpeak AI bridges the gap between competitive debate and pedagogical language training:
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \textbf{Real-Time Peer Synergy:} Synchronous voice debate over WebRTC creates genuine conversational pressure unlike solitary AI speaking bots.
+    \item \textbf{Multi-Dimensional Feedback:} Pairs rhetorical analysis (rebuttals, fallacies) with fine-grained English metrics (WPM, pause profiles, CEFR lexical suggestions).
+\end{enumerate}
+
+\newpage
+
+% -------------------------------------------------------------
+% PART D
+% -------------------------------------------------------------
+\section{Part D: Team Contract \& Accountability}
+\noindent\textit{Author: Khoa (24125058) | Reviewer: Triết (24125047) | Editor: Tuấn (24125107)}
+
+\subsection{Communication Norms \& Response SLAs}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Channels:} Discord for daily coordination (\texttt{\#frontend}, \texttt{\#backend}, \texttt{\#devops}); Google Meet for bi-weekly standups; GitHub for PR code reviews.
+    \item \textbf{Response Time SLAs:} Within 4 hours on standard workdays; urgent technical blockers marked \texttt{[BLOCKER]} acknowledged within 2 hours.
+\end{itemize}
+
+\subsection{Incremental Release Schedule (5 Sprints = PA1 to PA5)}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Sprint 1 (PA1 - Weeks 1--2):} Project Conception, Requirements (10 FGs), Team Contract, Dev Process setup, Docker Compose baseline.
+    \item \textbf{Sprint 2 (PA2 - Weeks 3--4):} Project Plan, Vision Document, Spec Kit initialization in \texttt{/src}, and \textbf{Build 1} (Auth + Room Lobby skeleton).
+    \item \textbf{Sprint 3 (PA3 - Weeks 5--6):} Use-Case Model \& Specs, \texttt{Changes.md}, and \textbf{Build 2} (End-to-end implementation of 1 FG: Room \& Session Management) with video demo.
+    \item \textbf{Sprint 4 (PA4 - Weeks 7--8):} C4 Software Architecture, Deployment diagram, and \textbf{Build 3} (Implementation of 2 FGs: Live Audio + Streaming STT) with video demo.
+    \item \textbf{Sprint 5 (PA5 - Weeks 9--10):} Comprehensive Testing, Refined test cases, Reflective Report, and \textbf{Build 4} (Final Release \& 15-minute live product demo of all 10 FGs).
+\end{itemize}
+
+\subsection{Code Standards \& Peer Review Rules}
+\begin{itemize}[leftmargin=1.2cm]
+    \item Python code strictly formatted with Ruff (PEP 8); TypeScript strictly checked under ESLint.
+    \item All pull requests require at least one approved peer review and all automated CI checks passing before merge into \texttt{develop}.
+    \item Zero tolerance for hardcoded paths or committed secrets; environment variables loaded dynamically.
+\end{itemize}
+
+\newpage
+
+% -------------------------------------------------------------
+% PART E
+% -------------------------------------------------------------
+\section{Part E: Development Tools \& Engineering Process}
+\noindent\textit{Author: Lộc (24125093) | Reviewer: Tài (24125078) | Editor: Triết (24125047)}
+
+\subsection{Scrum Cadence \& Meeting Structure}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Sprint Planning (Day 1 of Sprint):} Decompose PA deliverables into Jira tasks, estimate Story Points, assign dedicated owners.
+    \item \textbf{Scrum Check-ins (Twice per Sprint):} Track burndown progress, resolve cross-component blockers, synchronize API schemas.
+    \item \textbf{Sprint Review \& Retrospective (Final Day of Sprint):} Demo working vertical slices, conduct transparent team retrospective, package assignment submission.
+\end{itemize}
+
+\subsection{Jira Task Management Discipline}
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Single Assignee Invariant:} Every Jira task is assigned to exactly one member.
+    \item \textbf{Strict Date Tracking:} Explicit Creation Date, Assignment Date, and Completion Date tracked individually throughout the sprint. No bulk completion at sprint close.
+    \item \textbf{Comprehensive Activity Logging:} Coding, report writing, research spikes, and self-training are all tracked as valid Jira issues.
+\end{itemize}
+
+\subsection{Spec-Driven Development \& Spec Kit Integration}
+\begin{itemize}[leftmargin=1.2cm]
+    \item Formal Markdown specifications written before code generation.
+    \item Spec Kit initialized in \texttt{/src} during PA2 to maintain continuous traceability between use cases, implementations, and automated test cases.
+    \item AI coding assistants (GitHub Copilot / Cursor) constrained by formal architecture specifications to prevent architectural drift.
+\end{itemize}
+
+\subsection{PA1 Work Breakdown Structure (Sprint 1 Tasks)}
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXllr}
+\toprule
+\textbf{Task Key} & \textbf{Summary Description} & \textbf{Assignee} & \textbf{Type} & \textbf{Points} \\
+\midrule
+\texttt{DSP-1} & Project Proposal \& 10 Functional Groups & Triết (24125047) & Doc & 5 pts \\
+\texttt{DSP-2} & Existing App Survey (ArguFight, Khaos Live, ELSA) & Tài (24125078) & Research & 5 pts \\
+\texttt{DSP-3} & Team Contract \& SLA Accountability & Khoa (24125058) & Doc & 3 pts \\
+\texttt{DSP-4} & Software Architecture Specification & Tuấn (24125107) & Tech Spec & 8 pts \\
+\texttt{DSP-5} & Monorepo Initialization, CI Linters \& GitHub Actions & Lộc (24125093) & DevOps & 3 pts \\
+\texttt{DSP-6} & Docker Compose Setup \& Clean .env.example & Lộc (24125093) & DevOps & 3 pts \\
+\texttt{DSP-7} & Educational AI Coding Account Verification & All Team & Setup & 1 pt \\
+\texttt{DSP-8} & Academic LaTeX Report Compilation (\texttt{latexmk}) & Lộc (24125093) & Management & 2 pts \\
+\bottomrule
+\end{tabularx}
+\caption{Sprint 1 Work Breakdown Structure Tasks}
+\end{table}
+
+\end{document}

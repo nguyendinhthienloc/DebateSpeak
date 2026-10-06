@@ -20,9 +20,9 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 |---|---|---|
 | **Nguyễn Bảo Minh Triết** (ID: `24125047`) | **Frontend & WebRTC/Audio Lead (Triết)** | • Leads the Vite + React SPA architecture, Tailwind design system, and UI accessibility.<br>• Implements the LiveKit Client SDK integration, audio controls, room lobby, and interactive report viewer.<br>• Coordinates user flows with backend WebSocket endpoints. |
 | **Nguyễn Hồng Tấn Tài** (ID: `24125078`) | **Backend & Real-Time Media Lead (Tài)** | • Leads the FastAPI core architecture and PostgreSQL database schema design (SQLAlchemy/Alembic).<br>• Implements user authentication (Argon2id, rotating JWTs) and room lifecycle state machine.<br>• Develops the LiveKit server token minting service and Redis pub/sub WebSocket hub. |
-| **Nguyễn Anh Khoa** (ID: `24125058`) | **AI Audio & Speech Pipeline Lead (Khoa)** | • Leads the LiveKit audio track subscription worker (bot subscriber).<br>• Implements Silero VAD for vocal activity segmentation and pause measurement.<br>• Develops the streaming STT adapter pipeline (cloud streaming STT + local fallback engine), word timestamps, and filler-word tracking. |
-| **Trần Lê Anh Tuấn** (ID: `24125107`) | **AI Orchestrator & Analysis Lead (Tuấn)** | • Leads the prompt engineering, LLM adapter interfaces, and Pydantic schemas for all AI agents.<br>• Implements the Language Coach (grammar/vocab), Argument Coach (rebuttal/fallacies), and Debate Judge.<br>• Builds the deterministic Consensus Engine and the regex/substring quote-grounding guard. |
-| **Nguyễn Đình Thiên Lộc** (ID: `24125093`) | **DevOps & QA / Fact-Checking Lead (Lộc)** | • Leads the Fact Investigator search retrieval pipeline (web search adapter) and Evidence Evaluator agent.<br>• Manages the Docker Compose multi-container staging environment and Caddy automated TLS reverse proxy.<br>• Establishes CI/CD pipelines (GitHub Actions), Playwright E2E automation, and golden-set evaluation scripts. |
+| **Nguyễn Anh Khoa** (ID: `24125058`) | **AI Audio & Speech Pipeline Lead (Khoa)** | • Leads the LiveKit audio track subscription worker (bot subscriber).<br>• Implements Silero VAD for vocal activity segmentation and pause measurement.<br>• Develops the streaming STT adapter pipeline (Groq Whisper / Deepgram + `faster-whisper`), word timestamps, and filler-word tracking. |
+| **Trần Lê Anh Tuấn** (ID: `24125107`) | **AI Orchestrator & Analysis Lead (Tuấn)** | • Leads the prompt engineering and Pydantic schemas for all AI agents.<br>• Implements the Language Coach (grammar/vocab), Argument Coach (rebuttal/fallacies), and Debate Judge.<br>• Builds the deterministic Consensus Engine and the regex/substring quote-grounding guard. |
+| **Nguyễn Đình Thiên Lộc** (ID: `24125093`) | **DevOps & QA / Fact-Checking Lead (Lộc)** | • Leads the Fact Investigator search retrieval pipeline (Serper/Tavily API) and Evidence Evaluator agent.<br>• Manages the Docker Compose multi-container staging environment and Caddy automated TLS reverse proxy.<br>• Establishes CI/CD pipelines (GitHub Actions), Playwright E2E automation, and golden-set evaluation scripts. |
 
 ---
 
@@ -49,12 +49,11 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 
 *Performed by: Member 2 | Reviewed by: Member 1 | Edited by: Member 5*
 
-- **Incremental Release Schedule (5 Sprints mapped to PA1–PA5):**
-  - **Sprint 1 (PA1 - Weeks 1–2):** *Conception & Setup* — Proposal (10 FGs), app survey, team contract, dev tooling, baseline monorepo, Docker Compose, and academic report.
-  - **Sprint 2 (PA2 - Weeks 3–4):** *Planning & Foundation (Build 1)* — Project Plan, Vision Document, Spec Kit initialization in `/src`, and Build 1 (Auth + Room Lobby state machine skeleton).
-  - **Sprint 3 (PA3 - Weeks 5–6):** *Use-Case Modeling & First Functional Slice (Build 2)* — Use-case specs & diagrams, Changes.md, Build 2 (End-to-End implementation of 1 FG: Room & Session Management), narrated video demo.
-  - **Sprint 4 (PA4 - Weeks 7–8):** *Architecture & Second Implementation Slice (Build 3)* — C4 model (Context, Container, Component, Deployment), Build 3 (Implementation of 2 FGs: Live Audio + Streaming STT), narrated video demo.
-  - **Sprint 5 (PA5 - Weeks 9–10):** *Comprehensive Testing, Demo & Hardening (Build 4 - Final Release)* — Test plan, refined test cases, golden-set evaluation, 15-minute live product demo of all 10 FGs, reflective report.
+- **Semester Milestone Schedule:**
+  - **Sprint 1 (PA1 - Weeks 1–2):** Project proposal, competitor survey, architecture spec, team contract, repository & CI setup.
+  - **Sprint 2 (PA2 - Weeks 3–4):** Live debate room, two-way WebRTC audio, staging deployment with HTTPS, and two-user audio verification.
+  - **Sprint 3 (PA3 - Weeks 5–6):** Live transcription worker, speaker attribution, Language Coach, Argument Coach, and Fact-Checking search pipeline.
+  - **Sprint 4 (PA4 - Weeks 7–8):** Debate Judge, personalized learning reports, progress analytics, full E2E testing, and capstone presentation defense.
 - **Contingency Protocol for Missed Deadlines:**
   - If a team member realizes a task will be delayed, they must notify the Project Manager on Discord at least **48 hours before the sprint deadline**.
   - The team will hold an emergency triage meeting to redistribute subtasks or scope down non-critical features to preserve milestone delivery.
