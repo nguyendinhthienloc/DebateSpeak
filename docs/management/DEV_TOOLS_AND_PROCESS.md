@@ -1,7 +1,5 @@
 # Part E: Development Tools & Process Setup — DebateSpeak AI
 
-*Author: Group Member 5 | Reviewer: Group Member 2 | Editor: Group Member 1*
-
 | Field | Description |
 |---|---|
 | Course | CS300 / CSC13002 — Introduction to Software Engineering |
@@ -11,8 +9,6 @@
 ---
 
 ## 1. Scrum Methodology & Incremental Development Strategy (5 Sprints = 5 PAs)
-
-*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
 Our team adheres strictly to the **Agile Scrum framework combined with an Incremental Development model** structured across **5 Sprints**, corresponding directly to the 5 course Project Assignments (PA1–PA5):
 
@@ -50,8 +46,6 @@ graph LR
 
 ## 2. Jira Task Management Standards
 
-*Performed by: Member 1 | Reviewed by: Member 5 | Edited by: Member 3*
-
 The team utilizes **Jira** for end-to-end task tracking following strict course guidelines:
 
 1. **Complete Project Logging:** All activities—including coding, writing documentation reports, research spikes, self-training, and setting up CI pipelines—are logged as formal Jira issues.
@@ -65,8 +59,6 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 ---
 
 ## 3. Git Workflow & Version Control Invariants
-
-*Performed by: Member 5 | Reviewed by: Member 2 | Edited by: Member 1*
 
 - **Branching Strategy (Git Flow):**
   - `main`: Production-ready, stable releases (tagged `v1.0-pa1`, `v2.0-pa2`, etc.). Protected branch; direct pushes prohibited.
@@ -84,19 +76,15 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 
 ## 4. Spec-Driven Development & Spec Kit Integration
 
-*Performed by: Member 4 | Reviewed by: Member 1 | Edited by: Member 5*
-
 - In accordance with course guidelines, the team adopts **Specification-Driven Development** starting from PA1 and preparing for **Spec Kit** initialization in PA2 (in `/src`).
 - Before code implementation begins on any feature:
   1. A formal specification (data models, Pydantic schemas, API route contracts, and edge cases) is written and reviewed in `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md`.
-  2. Test cases and acceptance criteria are authored in `docs/pa5/TESTING_PLAN.md`.
+  2. Test cases and acceptance criteria are authored in `docs/testing/TESTING_PLAN.md`.
   3. AI coding assistants (GitHub Copilot / Cursor) are constrained using these specifications as prompt context, ensuring code generation directly adheres to architecture invariants.
 
 ---
 
 ## 5. AI Coding Tooling & Educational Accounts
-
-*Performed by: Member 3 | Reviewed by: Member 2 | Edited by: Member 1*
 
 All 5 team members have registered and verified educational developer accounts:
 - **GitHub Copilot for Students:** Activated via the GitHub Student Developer Pack on university email domains (`@hcmus.edu.vn`). Used for inline autocompletion and unit test scaffolding.
@@ -106,16 +94,14 @@ All 5 team members have registered and verified educational developer accounts:
 
 ## 6. Sprint 1 Work Breakdown Structure (PA1 Tasks)
 
-*Performed by: Member 1 | Reviewed by: Member 2 | Edited by: Member 5*
-
 | Task Key | Task Summary | Assignee | Issue Type | Story Points | Target Completion |
 |---|---|---|---|---|---|
-| `DSP-1` | Author Project Proposal & 10 Functional Groups | Member 1 (Triết) | Documentation | 5 pts | Week 1, Day 4 |
-| `DSP-2` | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Member 2 (Tài) | Research/Doc | 5 pts | Week 1, Day 6 |
-| `DSP-3` | Draft Team Contract & Accountability Guidelines | Member 3 (Khoa) | Documentation | 3 pts | Week 2, Day 2 |
-| `DSP-4` | Author Software Architecture & System Spec Document | Member 4 (Tuấn) | Technical Spec| 8 pts | Week 2, Day 4 |
-| `DSP-5` | Initialize Git Monorepo, Directory Hierarchy & CI Linters | Member 5 (Lộc) | DevOps/Setup | 3 pts | Week 1, Day 3 |
-| `DSP-6` | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev) | Member 5 (Lộc) | DevOps/Setup | 3 pts | Week 2, Day 3 |
+| `DSP-1` | Author Project Proposal & 10 Functional Groups | Nguyễn Bảo Minh Triết (24125047) | Documentation | 5 pts | Week 1, Day 4 |
+| `DSP-2` | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Nguyễn Hồng Tấn Tài (24125078) | Research/Doc | 5 pts | Week 1, Day 6 |
+| `DSP-3` | Draft Team Contract & Accountability Guidelines | Nguyễn Anh Khoa (24125058) | Documentation | 3 pts | Week 2, Day 2 |
+| `DSP-4` | Author Software Architecture & System Spec Document | Trần Lê Anh Tuấn (24125107) | Technical Spec| 8 pts | Week 2, Day 4 |
+| `DSP-5` | Initialize Git Monorepo, Directory Hierarchy & CI Linters | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup | 3 pts | Week 1, Day 3 |
+| `DSP-6` | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev) | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup | 3 pts | Week 2, Day 3 |
 | `DSP-7` | Verify Educational AI Coding Accounts (Copilot/Cursor) | All | Administrative | 1 pt | Week 1, Day 2 |
-| `DSP-8` | Setup `latexmk` pipeline & compile academic PA1 report | Member 5 (Lộc) | Management | 2 pts | Week 2, Day 5 |
-| `DSP-9` | Compile PA1 Markdown Package & Export Submission PDFs | Member 1 (Triết) | Management | 2 pts | Week 2, Day 6 |
+| `DSP-8` | Setup `latexmk` pipeline & compile academic PA1 report | Nguyễn Đình Thiên Lộc (24125093) | Management | 2 pts | Week 2, Day 5 |
+| `DSP-9` | Compile PA1 Markdown Package & Export Submission PDFs | Nguyễn Bảo Minh Triết (24125047) | Management | 2 pts | Week 2, Day 6 |

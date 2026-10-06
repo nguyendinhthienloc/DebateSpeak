@@ -1,8 +1,6 @@
-*Author: Group Member 5 | Reviewer: Group Member 3 | Editor: Group Member 1*
-
 # DebateSpeak AI — Roadmap, Verification & Execution Guide
 
-Companion to [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md) and [DEV_TOOLS_AND_PROCESS.md](../pa1/DEV_TOOLS_AND_PROCESS.md).
+Companion to [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md) and [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md).
 
 > Numeric targets are **project targets**, not results. This document defines experiments and metrics only; no results are reported.
 

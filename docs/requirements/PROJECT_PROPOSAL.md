@@ -1,7 +1,5 @@
 # Part B: Project Proposal — DebateSpeak AI
 
-*Author: Group Member 1 | Reviewer: Group Member 4 | Editor: Group Member 2*
-
 | Field | Description |
 |---|---|
 | Course | CS300 / CSC13002 — Introduction to Software Engineering |
@@ -12,8 +10,6 @@
 ---
 
 ## 1. Introduction & Value Proposition
-
-*Performed by: Member 1 | Reviewed by: Member 4 | Edited by: Member 2*
 
 ### 1.1 Problem Statement
 Intermediate English learners (CEFR levels A2 to C1) frequently reach a fluency plateau: they understand grammar rules and can pass written tests, but struggle with unscripted, spontaneous speaking. Traditional classroom speaking activities are scripted or role-played, and human 1-on-1 tutoring (Cambly, iTalki) is expensive and difficult to schedule frequently. Meanwhile, conventional English apps (Duolingo, ELSA Speak) focus strictly on isolated pronunciation drills or superficial conversational small-talk, failing to challenge learners with extended arguments, rebuttal under pressure, or logical structure.
@@ -33,8 +29,6 @@ Debate serves as the **high-engagement practice activity**; the AI coaching pipe
 
 ## 2. Target Users & Operating Environments
 
-*Performed by: Member 2 | Reviewed by: Member 1 | Edited by: Member 5*
-
 ### 2.1 Primary Target Users
 1. **University & College Students:** Learners preparing for international speaking examinations (IELTS Speaking Part 3, TOEFL iBT Independent & Integrated Speaking) who need structured practice expressing abstract opinions and handling rebuttals under time limits.
 2. **Global Professionals:** Non-native English speakers in business, software engineering, and consulting who must present persuasive arguments, defend architectural proposals, and speak coherently in real-time meetings.
@@ -53,8 +47,6 @@ The system defines two primary human actors with role-based access control:
 ---
 
 ## 3. Key Functional Groups (10 Distinctive Functional Groups)
-
-*Performed by: Member 3 | Reviewed by: Member 2 | Edited by: Member 1*
 
 The application is decomposed into **10 distinctive, non-generic functional groups**:
 
@@ -137,8 +129,6 @@ flowchart TD
 
 ## 4. Standalone AI Features & Real User Value
 
-*Performed by: Member 4 | Reviewed by: Member 3 | Edited by: Member 1*
-
 ### 4.1 Description of the AI Architecture
 DebateSpeak AI integrates a **Hierarchical Multi-Agent Orchestration Pipeline** rather than a generic single-prompt chatbot:
 
@@ -177,3 +167,19 @@ sequenceDiagram
 1. **Zero-Hallucination Language Grounding:** Conventional LLM tutors often hallucinate grammar errors that the learner never actually made. DebateSpeak enforces an automated regex/substring grounding guard that immediately drops any suggestion whose quoted text cannot be located in the verified audio transcript.
 2. **Real-Time Critical Thinking & Rebuttal Coaching:** By mapping which opposing claims were answered and which were ignored, the AI teaches learners conversational agility: how to acknowledge an opponent's point, use concession phrases (*"While it is true that X, we must consider Y"*), and construct counterarguments.
 3. **Objective Fact Verification with Uncertainty:** Instead of an LLM pretending to know everything, the system searches the live web, extracts real sources, and transparently warns students when evidence is inconclusive or contested.
+
+---
+
+## 5. Scope Boundaries & Future Considerations
+
+To maintain realistic feasibility for a student project while demonstrating sound software engineering foresight, several production-grade concerns are intentionally isolated as **Future Enhancements**:
+
+- **System Scaling & Media Optimization (Post-MVP):**
+  - *Academic Scope:* Single staging instance deployed with Docker Compose and managed LiveKit Cloud SFU routing audio.
+  - *Future Consideration:* Multi-region LiveKit mesh routing, autoscaling API clusters, and dedicated Redis cluster sharding.
+- **Billing & Commercialization (Post-MVP):**
+  - *Academic Scope:* Free access with rate-limited session creations and token quotas tracked in Redis.
+  - *Future Consideration:* Stripe integration for freemium tiers, institutional billing for debate clubs, and consumption-based API billing.
+- **Enterprise Deployment & Monitoring (Post-MVP):**
+  - *Academic Scope:* Automated GitHub Actions CI/CD deploying to a Linux host behind a Caddy reverse proxy.
+  - *Future Consideration:* Kubernetes orchestration (Helm/K8s), zero-downtime blue-green deployments, and OpenTelemetry observability.

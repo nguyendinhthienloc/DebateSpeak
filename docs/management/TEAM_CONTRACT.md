@@ -1,7 +1,5 @@
 # Part D: Team Contract — DebateSpeak AI
 
-*Author: Group Member 1 | Reviewer: Group Member 5 | Editor: Group Member 3*
-
 | Field | Description |
 |---|---|
 | Course | CS300 / CSC13002 — Introduction to Software Engineering |
@@ -11,8 +9,6 @@
 ---
 
 ## 1. Team Roles and Responsibilities
-
-*Performed by: Member 1 | Reviewed by: Member 2 | Edited by: Member 5*
 
 In accordance with course guidelines, **all 5 team members act as full-stack engineers** contributing to design, coding, testing, and documentation. To maintain accountability and prevent gaps, each member leads a dedicated functional subsystem:
 
@@ -28,26 +24,21 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 
 ## 2. Communication Plan
 
-*Performed by: Member 1 | Reviewed by: Member 3 | Edited by: Member 4*
-
 - **Primary Communication Channels:**
-  - **Discord:** Daily asynchronous coordination, instant messaging, and technical troubleshooting channels (`#frontend`, `#backend`, `#ai-pipeline`, `#devops`).
-  - **Google Meet:** Bi-weekly synchronous Scrum meetings and sprint ceremonies.
+  - **Facebook Messenger:** Primary daily communication channel (team group chat for daily coordination, instant messaging, announcements, urgent blocker alerts, and poll-based meeting scheduling).
+  - **Google Meet:** Synchronous online team meetings, sprint ceremonies, and live pair-programming sessions.
   - **GitHub Discussions / PR Comments:** Formal code reviews, architectural debate, and technical RFCs.
-- **Meeting Frequency & Cadence:**
-  - **Sprint Planning Meeting:** Once at the beginning of each 2-week sprint (60 minutes).
-  - **Scrum Check-in Meetings:** Twice per sprint (Mid-week 1 and Mid-week 2; 20 minutes each) to discuss completed work, immediate next steps, and blockers.
-  - **Sprint Review & Retrospective:** Once at the end of each sprint (45 minutes) to demonstrate working software and reflect on process improvements.
+- **Meeting Cadence & Scheduling:**
+  - **Meeting Times:** Specific meeting times and dates are **flexible and to be decided** collaboratively prior to each sprint or milestone based on all 5 members' course schedules and academic availability (polled and confirmed via Messenger).
+  - **Sprint Ceremonies & Syncs:** Arranged dynamically at key milestones (Sprint Planning at sprint launch, mid-sprint progress check-ins, and sprint review/retro demonstrations) to maintain momentum without rigid scheduling constraints.
 - **Response Time Expectations:**
   - Standard workdays (Monday – Friday, 08:00 – 21:00): Acknowledge messages within **4 hours**.
-  - Urgent blockers (`[BLOCKER]` prefix in Discord): Acknowledge within **2 hours**.
+  - Urgent blockers (`[BLOCKER]` prefix in Messenger): Acknowledge within **2 hours**.
   - Weekends: Acknowledge within **12 hours** unless notified of planned absence in advance.
 
 ---
 
 ## 3. Work Schedule and Deadlines
-
-*Performed by: Member 2 | Reviewed by: Member 1 | Edited by: Member 5*
 
 - **Incremental Release Schedule (5 Sprints mapped to PA1–PA5):**
   - **Sprint 1 (PA1 - Weeks 1–2):** *Conception & Setup* — Proposal (10 FGs), app survey, team contract, dev tooling, baseline monorepo, Docker Compose, and academic report.
@@ -56,14 +47,12 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
   - **Sprint 4 (PA4 - Weeks 7–8):** *Architecture & Second Implementation Slice (Build 3)* — C4 model (Context, Container, Component, Deployment), Build 3 (Implementation of 2 FGs: Live Audio + Streaming STT), narrated video demo.
   - **Sprint 5 (PA5 - Weeks 9–10):** *Comprehensive Testing, Demo & Hardening (Build 4 - Final Release)* — Test plan, refined test cases, golden-set evaluation, 15-minute live product demo of all 10 FGs, reflective report.
 - **Contingency Protocol for Missed Deadlines:**
-  - If a team member realizes a task will be delayed, they must notify the Project Manager on Discord at least **48 hours before the sprint deadline**.
+  - If a team member realizes a task will be delayed, they must notify the Team Leader on Messenger at least **48 hours before the sprint deadline**.
   - The team will hold an emergency triage meeting to redistribute subtasks or scope down non-critical features to preserve milestone delivery.
 
 ---
 
 ## 4. Code and Documentation Standards
-
-*Performed by: Member 5 | Reviewed by: Member 4 | Edited by: Member 2*
 
 - **Coding Conventions & Linters:**
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
@@ -76,13 +65,11 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
   - PRs must pass automated CI checks (linters, unit tests) and maintain ≥70% test coverage on core business logic.
 - **Documentation Standards:**
   - All documentation is written in clear, concise English using GitHub-flavored Markdown.
-  - Architectural flows must use Mermaid diagrams. Every document header must state author, reviewer, and editor.
+  - Architectural flows must use Mermaid diagrams.
 
 ---
 
 ## 5. Accountability, Performance, and Consequences
-
-*Performed by: Member 4 | Reviewed by: Member 1 | Edited by: Member 3*
 
 - **Contribution Measurement Criteria:**
   - Completion of assigned Jira tasks within the committed sprint timeline.
@@ -97,8 +84,6 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 
 ## 6. Decision-Making & Conflict Resolution
 
-*Performed by: Member 3 | Reviewed by: Member 2 | Edited by: Member 1*
-
 - **Decision-Making Protocol:**
   - Architectural and technical decisions are made through open discussion and **consensus whenever possible**.
   - If consensus cannot be reached, the team takes a **majority vote (3 out of 5 votes)**.
@@ -111,8 +96,6 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 7. Contract Review and Update Process
-
-*Performed by: Member 1 | Reviewed by: Member 5 | Edited by: Member 4*
 
 - This team contract will be reviewed at the conclusion of each sprint during the **Sprint Retrospective**.
 - Any team member may propose amendments to communication protocols, workload distribution, or tooling.

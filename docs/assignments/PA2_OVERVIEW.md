@@ -1,5 +1,3 @@
-*Author: Group Member 1 | Reviewer: Group Member 5 | Editor: Group Member 2*
-
 # PA2 Preview — Project Plan & Vision Document
 
 > **Assignment:** Project Assignment 2 (PA2-2026) | **Weight:** 45 Points | **Duration:** 2–3 Weeks

@@ -1,5 +1,3 @@
-*Author: Group Member 4 | Reviewer: Group Member 2 | Editor: Group Member 1*
-
 # DebateSpeak AI — Software Requirements & Architecture Specification
 
 | Field | Value |
@@ -7,7 +5,7 @@
 | Document version | 1.0 |
 | Status | Draft for course approval |
 | Product type | Web application (responsive, desktop-first; mobile browsers supported) |
-| Companion documents | [PROJECT_PROPOSAL.md](../pa1/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../pa1/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../pa5/TESTING_PLAN.md) |
+| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
 
 > **Conventions.** All numeric targets in this document are **project targets** chosen for a student team. They are not measured results and must be validated by the test plan in the roadmap. All API endpoints are **proposed design**; none exist yet. Descriptions of third-party products are approximate and based on public marketing material; verify them before citing in a presentation.
 

@@ -1,7 +1,5 @@
 # Part C: Existing App Survey — DebateSpeak AI
 
-*Author: Group Member 2 | Reviewer: Group Member 1 | Editor: Group Member 4*
-
 | Field | Description |
 |---|---|
 | Course | CS300 / CSC13002 — Introduction to Software Engineering |
@@ -11,8 +9,6 @@
 ---
 
 ## 1. Survey Methodology & App Selection
-
-*Performed by: Member 2 | Reviewed by: Member 1 | Edited by: Member 4*
 
 To evaluate the current state of market solutions and identify architectural and user experience gaps, our team surveyed existing applications operating at the intersection of AI debate judging, live speech transcription, and English speaking practice.
 
@@ -25,8 +21,6 @@ Additionally, we benchmarked against **ELSA Speak** to analyze mobile-first lang
 ---
 
 ## 2. In-Depth Survey: App 1 — ArguFight
-
-*Performed by: Member 2 | Reviewed by: Member 3 | Edited by: Member 1*
 
 ### 2.1 Overview & Core Focus
 **ArguFight** focuses on structured, competitive online debates. It allows participants to debate topics either through text or asynchronous voice inputs and uses multiple AI judges to evaluate which debater presented the stronger case.
@@ -89,8 +83,6 @@ graph LR
 
 ## 3. In-Depth Survey: App 2 — Khaos Live
 
-*Performed by: Member 3 | Reviewed by: Member 2 | Edited by: Member 5*
-
 ### 3.1 Overview & Core Focus
 **Khaos Live** is a live streaming debate platform where users enter live voice/video rooms to argue controversial topics in front of a live audience, accompanied by real-time speech transcription and dynamic AI scoring.
 
@@ -146,8 +138,6 @@ graph LR
 ---
 
 ## 4. Comparative Synthesis & Differentiation
-
-*Performed by: Member 1 | Reviewed by: Member 4 | Edited by: Member 2*
 
 ### 4.1 Comparative Feature Matrix
 

@@ -1,5 +1,3 @@
-*Author: Group Member 1 | Reviewer: Group Member 5 | Editor: Group Member 2*
-
 # PA3 Preview — Use-Case Model & First Implemented Functional Group
 
 > **Assignment:** Project Assignment 3 (PA3-2026) | **Weight:** 90 Points | **Duration:** 2–3 Weeks

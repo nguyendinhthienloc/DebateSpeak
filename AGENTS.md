@@ -49,7 +49,6 @@ All documentation, task cards, and Git contributions must strictly attribute the
 | **24125058** | **Nguyễn Anh Khoa** | **Khoa** | **AI Audio & Speech Pipeline Lead** |
 | **24125107** | **Trần Lê Anh Tuấn** | **Tuấn** | **AI Orchestrator & Analysis Lead** |
 
-Every authored section or document header must include attribution adhering to PA1-2026 guidelines (e.g. `*Author: Nguyễn Bảo Minh Triết (24125047) | Reviewer: Nguyễn Đình Thiên Lộc (24125093)*`).
 
 ---
 
@@ -75,7 +74,7 @@ Every authored section or document header must include attribution adhering to P
 ## 5. Specification-Driven Development Rules
 
 1. **SPEC BEFORE CODE:**
-   - Do not write code before updating the corresponding specifications in `docs/analysis-and-design/SOFTWARE_ARCHITECTURE_SPEC.md` and `docs/requirements/PROJECT_PROPOSAL.md`.
+   - Do not write code before updating the corresponding specifications in `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` and `docs/requirements/PROJECT_PROPOSAL.md`.
 2. **CLEAN ARCHITECTURE & NO PLACEHOLDERS:**
    - Never commit stub functions with `pass` or `TODO` without a defined ticket or contract.
    - Keep business logic decoupled from third-party vendor APIs using abstract adapter protocols (`LLMAdapter`, `STTAdapter`, `SearchAdapter`).
@@ -95,3 +94,26 @@ Every authored section or document header must include attribution adhering to P
    - **Increment 2 (PA2/Sprint 2):** Live Audio Core (WebRTC LiveKit connection, synchronized audio exchange, staging HTTPS).
    - **Increment 3 (PA3/Sprint 3):** Real-time Intelligence (VAD, Streaming STT, Language & Argument Coach pipeline).
    - **Increment 4 (PA4/Sprint 4):** Complete Product (Personalized Learning Reports, Consensus Engine, Longitudinal Trends).
+
+---
+
+## 7. User Consequences & Debate Dynamics Constraints
+
+1. **MANDATORY CONSEQUENCE REASONING (USERS & DEBATE):**
+   - **User Impact & Live Human Experience:** Agents must evaluate the direct human and psychological consequences of any architectural, code, or prompt decision before implementation. Spoken debates are intense, spontaneous, and socially vulnerable exercises. Agents must design systems that safeguard user dignity, prevent cognitive overload, and avoid disrupting the fragile conversational rhythm.
+   - **Real-Time Latency & Audio Integrity:** Audio latency, buffering, or dropped WebSocket frames directly undermine human communication. Agents must prioritize low-latency delivery, graceful reconnection, and deterministic speaker isolation above non-essential computational embellishments.
+   - **Dual-Consent & Psychological Safety:** Audio streaming and automated transcription must never initiate without explicit, uncoerced dual-consent from both debaters in the room. System designs must actively prevent toxic escalation or abusive behaviors while preserving the competitive rigor of intellectual debate.
+
+---
+
+## 8. Brutal Honesty Invariant (No Sugarcoating)
+
+1. **BRUTAL HONESTY IN AI CODING ASSISTANCE:**
+   - AI agents (Antigravity, Cursor, Copilot) must remain **brutally honest** with the engineering team.
+   - **Never sugarcoat technical debt, security flaws, performance bottlenecks, or broken edge cases.** If an approach is brittle, unsafe, over-engineered, or violates architecture invariants, state it plainly and directly. Do not flatter, validate bad decisions, or pretend incomplete stubs are functional to appear agreeable.
+2. **BRUTAL HONESTY IN SYSTEM AI COACHING & JUDGING:**
+   - Prompts for DebateSpeak's AI coaching and judging agents (Language Coach, Argument Coach, Debate Judge, Fact-Checker) must enforce **uncompromising, unflinching intellectual honesty**:
+     - **No Participation Trophies:** Never offer false praise or superficial encouragement that masks fundamental reasoning fallacies or poor language mechanics.
+     - **Direct Callouts Grounded in Evidence:** If a debater evaded an argument, committed a logical fallacy (ad hominem, strawman, false dilemma), exhibited severe disfluency, or fabricated empirical claims, the agent must state the failure plainly, quote the exact transcript segment, and explain why it failed.
+     - **Constructive, Clinical Precision:** Brutal honesty is not hostility; it is clinical, objective precision. Every sharp critique must be paired with the exact formula for intellectual and linguistic remediation.
+

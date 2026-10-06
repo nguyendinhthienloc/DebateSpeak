@@ -1,5 +1,3 @@
-*Author: Group Member 1 | Reviewer: Group Member 5 | Editor: Group Member 2*
-
 # DebateSpeak AI — Multi-Sprint Engineering Task Breakdown & Role Matrix (TASKS.md)
 
 | Field | Value |
@@ -7,7 +5,7 @@
 | Project Name | **DebateSpeak AI** |
 | Target Timeline | 10–12 Weeks across **5 Sprints** (Mapped directly to **PA1–PA5**) |
 | Team Size | 5 Engineers |
-| Companion Documents | [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), [TESTING_PLAN.md](../pa5/TESTING_PLAN.md) |
+| Companion Documents | [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
 
 ---
 
@@ -34,12 +32,12 @@ To prevent engineering overlaps and establish clear ownership, the 5 team member
 |---|---|---|---|---|---|
 | **T1.1** | Repository setup, monorepo layout, code style linters (Ruff, ESLint), GitHub Actions CI | **R5** | **R2** | `.github/workflows/ci.yml` | Done |
 | **T1.2** | Docker Compose setup for local dev (PostgreSQL 16, Redis 7, LiveKit dev) & clean `.env.example` | **R5** | **R2** | `docker-compose.yml`, `.env.example` | Done |
-| **T1.3** | Author Project Proposal (10 Functional Groups & 2 Actors) | **R1** | **R5** | `docs/pa1/PROJECT_PROPOSAL.md` | Done |
-| **T1.4** | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | **R2** | **R4** | `docs/pa1/EXISTING_APP_SURVEY.md` | Done |
-| **T1.5** | Draft Team Contract & Code Standards | **R3** | **R1** | `docs/pa1/TEAM_CONTRACT.md` | Done |
-| **T1.6** | Setup Dev Tools, Scrum Process & Incremental Slices | **R5** | **R2** | `docs/pa1/DEV_TOOLS_AND_PROCESS.md` | Done |
+| **T1.3** | Author Project Proposal (10 Functional Groups & 2 Actors) | **R1** | **R5** | `docs/requirements/PROJECT_PROPOSAL.md` | Done |
+| **T1.4** | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | **R2** | **R4** | `docs/requirements/EXISTING_APP_SURVEY.md` | Done |
+| **T1.5** | Draft Team Contract & Code Standards | **R3** | **R1** | `docs/management/TEAM_CONTRACT.md` | Done |
+| **T1.6** | Setup Dev Tools, Scrum Process & Incremental Slices | **R5** | **R2** | `docs/management/DEV_TOOLS_AND_PROCESS.md` | Done |
 | **T1.7** | Design System Architecture Spec & PostgreSQL Schema | **R4** | **R5** | `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` | Done |
-| **T1.8** | Draft QA & Testing Plan | **R5** | **R3** | `docs/pa5/TESTING_PLAN.md` | Done |
+| **T1.8** | Draft QA & Testing Plan | **R5** | **R3** | `docs/testing/TESTING_PLAN.md` | Done |
 | **T1.9** | Configure `latexmk` academic report compilation & compile PDF | **R5** | **R1** | `report/report.tex`, `report/build/report.pdf` | Done |
 
 ---

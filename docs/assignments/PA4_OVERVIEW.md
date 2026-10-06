@@ -1,5 +1,3 @@
-*Author: Group Member 1 | Reviewer: Group Member 5 | Editor: Group Member 2*
-
 # PA4 Preview — Software Architecture & Second Implementation Phase
 
 > **Assignment:** Project Assignment 4 (PA4-2026) | **Weight:** 75 Points | **Duration:** 2–3 Weeks
