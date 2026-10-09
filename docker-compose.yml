@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: debatespeak-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-debatespeak}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-debatespeak_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-debatespeak}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-debatespeak} -d ${POSTGRES_DB:-debatespeak}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - debatespeak-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: debatespeak-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    networks:
+      - debatespeak-network
+
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: debatespeak-livekit
+    restart: unless-stopped
+    command: ["--dev", "--bind", "0.0.0.0"]
+    ports:
+      - "7880:7880"       # HTTP API & WebSocket signaling
+      - "7881:7881"       # WebRTC over TCP fallback
+      - "7882:7882/udp"   # WebRTC over UDP
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7880/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - debatespeak-network
+
+volumes:
+  postgres_data:
+    name: debatespeak_postgres_data
+  redis_data:
+    name: debatespeak_redis_data
+
+networks:
+  debatespeak-network:
+    name: debatespeak-network
+    driver: bridge
