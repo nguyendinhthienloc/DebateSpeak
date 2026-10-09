@@ -10,20 +10,22 @@
 
 ## 1. Survey Methodology & App Selection
 
-To evaluate the current state of market solutions and identify architectural and user experience gaps, our team surveyed existing applications operating at the intersection of AI debate judging, live speech transcription, and English speaking practice.
+To evaluate the current state of market solutions and identify architectural and user experience gaps, our team surveyed existing platforms operating at the intersection of AI debate judging, live speech transcription, and English speaking practice.
 
 We selected **two primary directly comparable platforms**:
-1. **ArguFight:** A modern web-based debate platform featuring AI judging, voice input, and automated fact checking.
-2. **Khaos Live:** A real-time debate arena featuring live spoken interactions, continuous transcription, and algorithmic debate scoring.
+1. **ArguFight:** A modern web-based debate platform featuring AI judging, voice input, and automated claim verification.
+2. **Luyennoi.com (Luyện Nói):** A popular browser-based spoken English & IELTS Speaking training platform featuring automated 4-criteria rubric scoring and per-sentence feedback.
 
-Additionally, we benchmarked against **ELSA Speak** to analyze mobile-first language learning interfaces and speech-evaluation UX patterns.
+Additionally, we benchmarked against **two industry reference systems**:
+1. **ELSA Speak:** A leading mobile-first AI pronunciation coach, analyzing acoustic phoneme feedback and solo drill UX patterns.
+2. **Google Meet with Gemini ("Take notes for me" / Meeting Summary):** Google Workspace's flagship enterprise video/audio platform, analyzing real-time multi-speaker transcription, speaker attribution, and asynchronous post-call LLM synthesis.
 
 ---
 
 ## 2. In-Depth Survey: App 1 — ArguFight
 
 ### 2.1 Overview & Core Focus
-**ArguFight** focuses on structured, competitive online debates. It allows participants to debate topics either through text or asynchronous voice inputs and uses multiple AI judges to evaluate which debater presented the stronger case.
+**ArguFight** focuses on structured, competitive online debates. It allows participants to debate motions either through text or asynchronous voice inputs and employs multiple AI judges to evaluate which debater presented the stronger case.
 
 ### 2.2 Key Features & Workflow Analysis
 
@@ -76,87 +78,121 @@ graph LR
 *Caption 1.2: ArguFight Post-Match Verdict — Shows competitive scorecard with independent AI judge opinions, winner selection, and fact validation.*
 
 ### 2.4 Strengths & Limitations
-- **Strengths:** Excellent multi-judge roleplay that exposes varied reasoning angles; strong gamification for competitive debaters.
-- **Limitations:** Focuses exclusively on *who won the debate*; provides **zero language-learning feedback** (no grammar correction, no CEFR vocabulary recommendations, no pause/fluency analytics). Asynchronous turn-taking feels mechanical and lacks spontaneous conversational back-and-forth.
+- **Strengths:** Excellent multi-judge roleplay exposing varied reasoning perspectives; strong gamification and competitive motivation.
+- **Limitations:** Focuses exclusively on *who won the debate*; provides **zero language-learning feedback** (no grammar correction, no CEFR vocabulary recommendations, no pause/fluency analytics). Asynchronous turn-taking feels mechanical and lacks spontaneous conversational flow.
 
 ---
 
-## 3. In-Depth Survey: App 2 — Khaos Live
+## 3. In-Depth Survey: App 2 — Luyennoi.com (Luyện Nói)
 
 ### 3.1 Overview & Core Focus
-**Khaos Live** is a live streaming debate platform where users enter live voice/video rooms to argue controversial topics in front of a live audience, accompanied by real-time speech transcription and dynamic AI scoring.
+**Luyennoi.com** is a Vietnamese browser-based AI platform designed for English learners and IELTS Speaking candidates. It operates directly inside web browsers (Chrome, Safari, Edge) without requiring app installation, providing automated band scoring across the 4 official IELTS Speaking criteria and per-sentence linguistic feedback.
 
 ### 3.2 Key Features & Workflow Analysis
 
 ```mermaid
 graph LR
-    subgraph Khaos Live Workflow
-        A[Live Audio Room Entry] --> B[Real-Time Microphone Stream]
-        B --> C[Streaming Transcription Feed]
-        C --> D[Real-Time Audience / AI Meter]
-        D --> E[Session Summary]
+    subgraph Luyennoi.com Workflow
+        A[Select Topic / Forecast Prompt] --> B[Browser Microphone Recording]
+        B --> C[Speech-to-Text Transcription]
+        C --> D[4-Criteria Rubric Scoring]
+        D --> E[Per-Sentence Error & Lexical Feedback]
     end
 ```
 
-1. **Synchronized Live Voice Rooms:** Two speakers talk concurrently with real-time audio transport.
-2. **Real-Time Scrolling Transcript:** Captures speech continuously, allowing listeners to follow the discussion textually.
-3. **Sentiment & Engagement Meter:** Live dynamic bars measuring persuasive impact during speech delivery.
+1. **In-Browser Audio Recording:** Direct browser-based Web Audio capture with countdown timers simulating IELTS speaking rounds.
+2. **4-Criteria Automated Scoring:** Evaluates user speech against Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, and Pronunciation.
+3. **Per-Sentence Remediation:** Displays transcribed sentences with underlined grammatical errors and suggests upgraded CEFR/academic vocabulary.
+4. **"Lớp Nói" Classroom Management:** Offers teacher/tutor portals to assign speaking prompts and review student submission histories.
 
 ### 3.3 User Interface & Screenshots
 
-#### Screen 1: Live Spoken Room & Real-Time Transcript
+#### Screen 1: In-Browser Speaking Practice & Recording
 ```text
 +-------------------------------------------------------------------+
-|  KHAOS LIVE: Room #402                      [Audience: 124] (Exit)|
+|  LUYENNOI.COM                     [Forecast 2026]  [Lớp Nói] (User)|
 |-------------------------------------------------------------------|
-|  [Speaker 1: David] (MIC ON)        [Speaker 2: Elena] (LISTENING)|
-|  (( Live Waveform Visualization ))                                |
-|-------------------------------------------------------------------|
-|  REAL-TIME TRANSCRIPT FEED                                        |
-|  [David 02:14]: "The economic data clearly shows inflation..."    |
-|  [Elena 02:18]: "That data ignores regional supply constraints!"  |
+|  TOPIC: "Describe an environmental problem in your city"          |
+|  Part: IELTS Speaking Part 2 | Prep Time: 00:00 | Speaking: 01:42 |
+|                                                                   |
+|  [|||||||||||||||||||||||||||..........] (Recording Active)       |
+|                                                                   |
+|  [Finish & Score Now]                                             |
 +-------------------------------------------------------------------+
 ```
-*Caption 2.1: Khaos Live Room Interface — Two speakers engage over live audio while a continuous transcript stream renders in real time.*
+*Caption 2.1: Luyennoi.com Recording Interface — Clean web-first recording interface with timed countdown and visual audio waveform.*
 
-#### Screen 2: Real-Time Persuasion Gauge
+#### Screen 2: 4-Criteria Scorecard & Sentence-Level Corrections
 ```text
 +-------------------------------------------------------------------+
-|  PERSUASION IMPACT GAUGE                                          |
+|  OVERALL BAND ESTIMATE: 6.5                                       |
 |-------------------------------------------------------------------|
-|  David (Pro):  [=====================>       ] 68%                |
-|  Elena (Con):  [===========>                 ] 32%                |
-|  AI Observation: "Elena has not responded to David's statistics." |
+|  [Fluency: 6.0]   [Lexical: 7.0]   [Grammar: 6.0]   [Pronun: 6.5] |
+|-------------------------------------------------------------------|
+|  SENTENCE-BY-SENTENCE REMEDIATION:                                |
+|  - Sentence 2: "In my city, traffic cause severe air pollution."   |
+|    ❌ Error: Subject-verb agreement ('traffic cause' -> 'causes')  |
+|    💡 Vocabulary Upgrade: 'severe' -> 'detrimental'               |
+|                                                                   |
+|  - Sentence 4: "Government should invest more in bus."             |
+|    ❌ Error: Missing plural/determiner ('buses' or 'public transit')|
 +-------------------------------------------------------------------+
 ```
-*Caption 2.2: Khaos Live Impact Analytics — Visualizes moment-to-moment audience and AI momentum shifts during live debate exchanges.*
+*Caption 2.2: Luyennoi.com Scorecard — Granular diagnostic breakdown across 4 standardized rubrics paired with verbatim sentence corrections.*
 
 ### 3.4 Strengths & Limitations
-- **Strengths:** True synchronous real-time audio environment; high emotional engagement; live transcription aids viewer accessibility.
-- **Limitations:** Geared toward entertainment and social clout; no educational framework; does not assist non-native English speakers with grammar, vocabulary, or structured rebuttal development; AI metric is a superficial "persuasion score" without actionable improvement plans.
+- **Strengths:** Zero installation friction (web-first); direct alignment with standardized test rubrics (IELTS 4 criteria); actionable per-sentence feedback quoting learner speech; tailored specifically to Vietnamese English learners.
+- **Limitations:** Strictly **solo, monologue-based practice** against static prompts; **zero real-time interactive dialogue or peer debate**; cannot train spontaneous rebuttal, conversational turn-taking, or real-time active listening; no logical argumentation structure analysis or empirical fact-checking.
 
 ---
 
-## 4. Comparative Synthesis & Differentiation
+## 4. Industry Reference Benchmarks
 
-### 4.1 Comparative Feature Matrix
+### 4.1 Benchmark 1: ELSA Speak
+- **Focus:** Mobile-first English pronunciation and acoustic phoneme analysis.
+- **Key Relevance to DebateSpeak:** Demonstrates optimal UX patterns for phoneme-level speech feedback, syllable stress visualization, and longitudinal proficiency tracking.
+- **Limitation:** Purely solo phoneme drills; lacks spontaneous conversational context and argumentative reasoning.
 
-| Evaluation Dimension | ArguFight | Khaos Live | ELSA Speak | **DebateSpeak AI (Proposed)** |
-|---|---|---|---|---|
-| **Core Primary Purpose** | Competitive AI-judged debate | Social entertainment debate streaming | Solo pronunciation & fluency drills | **Spoken English learning & critical-thinking development** |
-| **Interaction Format** | Asynchronous / turn-based audio | Synchronous real-time live room | Solo speech against automated AI prompts | **Synchronous live peer debate (2 debaters in room)** |
-| **Language Pedagogy (CEFR)** | None (assumes native fluency) | None | Yes (pronunciation/phoneme focus) | **Yes (CEFR A2–C1 adapted grammar, vocabulary, fluency)** |
-| **Spoken Fluency Metrics** | None | Basic talk time | Phoneme accuracy, syllable stress | **WPM, filler rate, pause duration profile, lexical diversity** |
-| **Argument Structure Analysis** | High-level judge critique | Audience momentum score | None | **Claim extraction, rebuttal mapping, fallacy detection** |
-| **Fact-Checking Mechanism** | Internal knowledge base | None | None | **Live search retrieval (Serper/Tavily) + 5-level verdict + sources** |
-| **Post-Debate Output** | Win / Loss verdict | Engagement statistics | Pronunciation score card | **Personalized action plan with quoted transcript corrections** |
+### 4.2 Benchmark 2: Google Meet with Gemini ("Take notes for me" / Meeting Summary)
+- **Focus:** Enterprise video conferencing powered by Gemini in Google Workspace.
+- **Key Capabilities:**
+  1. **Deterministic Speaker Attribution & Streaming Captions:** Isolates multi-party audio streams and renders real-time diarized captions with speaker tags.
+  2. **Asynchronous Post-Call Synthesis ("Take notes for me"):** Automatically extracts core discussion threads, decisions made, and assigned action items into a structured Google Doc.
+  3. **Live "Summary so far":** In-call catch-up synthesis allowing participants to read what transpired before they joined.
+- **Visual Interface Analysis (Survey Artifacts):**
+  - **Pre-Call & Entry ([`screenshots/join_screen.png`](../../screenshots/join_screen.png)):** Shows seamless mic/camera device selection with Gemini intelligence enabled.
+  - **In-Call Orchestration ([`screenshots/in-meeting.png`](../../screenshots/in-meeting.png)):** Displays active in-meeting transcription indicator where Gemini unobtrusively captures live speech without intruding into the conversation.
+  - **Post-Call Structured Artifacts ([`screenshots/email_1.png`](../../screenshots/email_1.png), [`screenshots/email_2.png`](../../screenshots/email_2.png)):** Shows automated email notifications delivering structured meeting summaries, grouped discussion topics, and clear action items directly to participants' inboxes and Google Drive.
+- **Key Relevance to DebateSpeak:**
+  - **Non-Intrusive Background Orchestration:** Demonstrates that AI should listen quietly in the background during live human communication without introducing cognitive disruption or audio latency.
+  - **Asynchronous LLM Multi-Agent Pipeline:** Mirrors DebateSpeak's design where deep analytical extraction (Language, Argument, Fact-Checking) runs asynchronously after the speaking session ends.
+- **Limitation:** Designed for corporate productivity and action item tracking; provides **zero language-learning pedagogy** (no CEFR grammar or vocabulary analysis), no speech fluency profiling (WPM, pause durations, fillers), and no fact-checking of claims made.
 
-### 4.2 Key Differentiators for DebateSpeak AI
-1. **Learning-First Positioning:** Unlike ArguFight and Khaos Live, DebateSpeak does not exist to crown a winner. The debate is simply the *educational vehicle* to elicit unscripted speech, while the AI functions as a personal, patient English and critical-thinking coach.
-2. **Quote-Grounded Language Feedback:** Rather than generic grammar tips, the system quotes the student's exact utterance (*"You said: 'it reduce pollution' → Suggested: 'it reduces pollution'"*) and explains the grammatical rationale at their selected CEFR level.
-3. **Objective Fact-Checking with Transparency:** Rather than making a definitive claim of absolute truth, DebateSpeak presents retrieved source URLs, highlights uncertainty, and explicitly flags contested statements.
+---
 
-### 4.3 UI/UX Patterns Adopted from Surveyed Systems
-- **From Khaos Live:** We adopt the **synchronized live room pattern** featuring visual audio waveforms, speaking indicators, and an auto-scrolling live transcript panel so users can read what was said.
-- **From ArguFight:** We adopt the **multi-perspective evaluation card layout**, separating language feedback, argument structure, and evidence verification into clean, tabbed post-debate cards.
-- **From ELSA Speak:** We adopt the **progress trajectory visualizer** and personalized drill suggestions, translating diagnostic errors into concrete speaking exercises for the next session.
+## 5. Comparative Synthesis & Differentiation
+
+### 5.1 Comprehensive Feature Matrix
+
+| Evaluation Dimension | ArguFight | Luyennoi.com | ELSA Speak | Google Meet + Gemini | **DebateSpeak AI (Proposed)** |
+|---|---|---|---|---|---|
+| **Core Primary Purpose** | Competitive debate game | Solo IELTS speaking drills | Solo pronunciation practice | Enterprise meeting productivity | **Spoken English learning & critical-thinking debate** |
+| **Interaction Format** | Asynchronous audio/text turns | Solo recording on web | Solo phoneme drills | Multi-party live video meeting | **Synchronous live peer debate (2 debaters in room)** |
+| **Audio Routing Architecture** | Uploaded audio files | Browser Web Audio recording | Native mobile audio recording | WebRTC media routing | **LiveKit Cloud SFU (low-latency WebRTC peer audio)** |
+| **Language Pedagogy (CEFR)** | None | Yes (IELTS 4 criteria) | Yes (Pronunciation/Acoustic) | None | **Yes (CEFR A2–C1 grammar, vocab breadth & fluency)** |
+| **Spoken Fluency Metrics** | None | High-level fluency band | Phoneme/syllable accuracy | None | **WPM, filler rate, pause profile, lexical diversity (MATTR)** |
+| **Argument Structure Analysis** | Judge roleplay text | None | None | Topic clustering | **Claim extraction, rebuttal mapping, fallacy detection** |
+| **Fact-Checking Mechanism** | Internal knowledge base | None | None | None | **Live search retrieval (Serper/Tavily) + Skeptic consensus** |
+| **Post-Session Output** | Win / Loss verdict | Scorecard + sentence tips | Pronunciation scorecard | Meeting notes & action items | **Personalized action plan with verbatim quote corrections** |
+
+### 5.2 Key Differentiators for DebateSpeak AI
+1. **Learning-First Debate Vehicle:** Unlike ArguFight (competitive game) and Google Meet (corporate notes), DebateSpeak uses debate purely as an *educational vehicle* to elicit unscripted, spontaneous speech from language learners.
+2. **From Solo Cramming to Live Interaction:** Unlike Luyennoi.com and ELSA Speak where learners practice monologues in isolation, DebateSpeak introduces real-time peer dialogue where learners must listen actively, think on their feet, and formulate rebuttals.
+3. **Strict Quote-Grounded Remediation:** Adopting Luyennoi.com's strength of citing learner sentences, DebateSpeak's **Grounding Guard** guarantees 100% of feedback items cite verbatim transcript quotes from the debate, eliminating AI hallucinations.
+4. **Empirical Fact-Checking with Transparency:** DebateSpeak goes beyond opinionated scoring by verifying check-worthy claims through live search engines, presenting transparent source URLs, and flagging contested claims.
+
+### 5.3 UI/UX Patterns Adopted from Surveyed Systems
+- **From Luyennoi.com:** We adopt the **zero-install web-first audio experience** and the **quote-grounded sentence remediation pattern**, showing learners exactly what they said alongside targeted corrections.
+- **From Google Meet with Gemini:** We adopt the **non-intrusive background listener architecture**, where live WebRTC audio streams quietly to backend transcription workers while deep multi-agent evaluation runs asynchronously to produce structured summaries.
+- **From ArguFight:** We adopt the **multi-perspective evaluation layout**, presenting distinct coach analyses (Language, Argument, Fact-Checking) as organized, tabbed scorecards.
+- **From ELSA Speak:** We adopt the **longitudinal progress visualizer**, tracking speaking speed, filler frequency, and vocabulary growth across debate rounds over time.
