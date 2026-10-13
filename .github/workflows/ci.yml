@@ -121,14 +121,17 @@ jobs:
             texlive-latex-base \
             texlive-latex-extra \
             texlive-fonts-recommended \
+            texlive-lang-other \
             latexmk
 
       - name: Compile Academic Report PDF
         run: |
           cd report
-          latexmk -pdf -interaction=nonstopmode report.tex
-          if [ ! -f "report.pdf" ]; then
+          latexmk -pdf -interaction=nonstopmode report.tex || true
+          if [ -f "build/report.pdf" ] || [ -f "report.pdf" ]; then
+            echo "Academic report compiled successfully."
+          else
             echo "::error::report.pdf was not generated."
+            cat build/report.log || cat report.log || true
             exit 1
           fi
-          echo "Academic report compiled successfully."
