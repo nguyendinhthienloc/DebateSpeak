@@ -41,6 +41,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 dist/
 dist-ssr/
+*.tsbuildinfo
 *.local
 
 # IDE & OS
