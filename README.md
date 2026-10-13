@@ -18,19 +18,19 @@
 
 ```mermaid
 graph LR
-    subgraph Client [Learner Devices]
-        UserA[Learner A<br/>Browser / Mic]
-        UserB[Learner B<br/>Browser / Mic]
+    subgraph Client ["Learner Devices"]
+        UserA["Learner A<br/>Browser / Mic"]
+        UserB["Learner B<br/>Browser / Mic"]
     end
 
-    subgraph Media [Real-Time Audio Layer]
-        LiveKit[LiveKit Cloud SFU<br/>Managed WebRTC]
+    subgraph Media ["Real-Time Audio Layer"]
+        LiveKit["LiveKit Cloud SFU<br/>Managed WebRTC"]
     end
 
-    subgraph Backend [Application & Processing]
-        API[FastAPI Server<br/>WebSockets & Auth]
-        Worker[Transcription Worker<br/>Silero VAD + STT]
-        Agents[Multi-Agent Pipeline<br/>Language, Argument, Fact-Check]
+    subgraph Backend ["Application & Processing"]
+        API["FastAPI Server<br/>WebSockets & Auth"]
+        Worker["Transcription Worker<br/>Silero VAD + STT"]
+        Agents["Multi-Agent Pipeline<br/>Language, Argument, Fact-Check"]
     end
 
     UserA <-->|WebRTC Audio| LiveKit

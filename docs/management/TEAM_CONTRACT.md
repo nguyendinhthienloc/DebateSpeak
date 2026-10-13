@@ -9,6 +9,7 @@
 ---
 
 ## 1. Team Roles and Responsibilities
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 In accordance with course guidelines, **all 5 team members act as full-stack engineers** contributing to design, coding, testing, and documentation. To maintain accountability and prevent gaps, each member leads a dedicated functional subsystem:
 
@@ -23,10 +24,11 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 2. Communication Plan
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - **Primary Communication Channels:**
   - **Facebook Messenger:** Primary daily communication channel (team group chat for daily coordination, instant messaging, announcements, urgent blocker alerts, and poll-based meeting scheduling).
-  - **Google Meet:** Synchronous online team meetings, sprint ceremonies, and live pair-programming sessions.
+  - **Google Meet:** Synchronous online team meetings, sprint ceremonies, and live pair-programming sessions ([Meeting Portal Evidence](./PA1/meeting_google_meet_join.png)).
   - **GitHub Discussions / PR Comments:** Formal code reviews, architectural debate, and technical RFCs.
 - **Meeting Cadence & Scheduling:**
   - **Meeting Times:** Specific meeting times and dates are **flexible and to be decided** collaboratively prior to each sprint or milestone based on all 5 members' course schedules and academic availability (polled and confirmed via Messenger).
@@ -39,6 +41,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 3. Work Schedule and Deadlines
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - **Incremental Release Schedule (5 Sprints mapped to PA1–PA5):**
   - **Sprint 1 (PA1 - Weeks 1–2):** *Conception & Setup* — Proposal (10 FGs), app survey, team contract, dev tooling, baseline monorepo, Docker Compose, and academic report.
@@ -53,6 +56,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 4. Code and Documentation Standards
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Anh Khoa (24125058)*
 
 - **Coding Conventions & Linters:**
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
@@ -70,6 +74,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 5. Accountability, Performance, and Consequences
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 - **Contribution Measurement Criteria:**
   - Completion of assigned Jira tasks within the committed sprint timeline.
@@ -83,6 +88,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 6. Decision-Making & Conflict Resolution
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 - **Decision-Making Protocol:**
   - Architectural and technical decisions are made through open discussion and **consensus whenever possible**.
@@ -96,6 +102,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 7. Contract Review and Update Process
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - This team contract will be reviewed at the conclusion of each sprint during the **Sprint Retrospective**.
 - Any team member may propose amendments to communication protocols, workload distribution, or tooling.

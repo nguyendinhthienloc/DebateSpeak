@@ -9,6 +9,7 @@
 ---
 
 ## 1. Survey Methodology & App Selection
+*Performed by: Nguyễn Hồng Tấn Tài (24125078) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 To evaluate the current state of market solutions and identify architectural and user experience gaps, our team surveyed existing platforms operating at the intersection of AI debate judging, live speech transcription, and English speaking practice.
 
@@ -23,6 +24,7 @@ Additionally, we benchmarked against **two industry reference systems**:
 ---
 
 ## 2. In-Depth Survey: App 1 — ArguFight
+*Performed by: Nguyễn Hồng Tấn Tài (24125078) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 2.1 Overview & Core Focus
 **ArguFight** focuses on structured, competitive online debates. It allows participants to debate motions either through text or asynchronous voice inputs and employs multiple AI judges to evaluate which debater presented the stronger case.
@@ -31,11 +33,11 @@ Additionally, we benchmarked against **two industry reference systems**:
 
 ```mermaid
 graph LR
-    subgraph ArguFight Workflow
-        A[Select Debate Motion] --> B[Enter Timed Speaking Turn]
-        B --> C[Speech Upload / Voice Input]
-        C --> D[AI Multi-Judge Scoring]
-        D --> E[Winner Proclamation & Fact Check]
+    subgraph ArguFightWorkflow ["ArguFight Workflow"]
+        A["Select Debate Motion"] --> B["Enter Timed Speaking Turn"]
+        B --> C["Speech Upload / Voice Input"]
+        C --> D["AI Multi-Judge Scoring"]
+        D --> E["Winner Proclamation & Fact Check"]
     end
 ```
 
@@ -45,37 +47,17 @@ graph LR
 
 ### 2.3 User Interface & Screenshots
 
-#### Screen 1: Debate Matchmaking & Motion Selection
-```text
-+-------------------------------------------------------------------+
-|  ARGUFIGHT                          [Search Motions]  (Profile)   |
-|-------------------------------------------------------------------|
-|  ACTIVE DEBATES                                                   |
-|  +-----------------------------------+  +-----------------------+ |
-|  | Motion: "AI will replace coders"  |  | Round: Rebuttal (2/3) | |
-|  | Pro: User_Alpha | Con: User_Beta  |  | Time Left: 01:45      | |
-|  +-----------------------------------+  +-----------------------+ |
-|  [Join Match]  [Spectate Live]                                    |
-+-------------------------------------------------------------------+
-```
-*Caption 1.1: ArguFight Motion Directory — Displays active and upcoming debate matches with round timers and competitive matchmaking status.*
+#### Screen 1: Platform Hero & Competitive Debate Directory
+![ArguFight Landing Hero](../management/PA1/argufight_01_landing_hero.png)
+*Figure 2.1: ArguFight Motion Directory & Landing Hero — Highlighting real-time AI-judged debate platform, ELO rankings, and active debate challenges.*
 
-#### Screen 2: Multi-Judge Scoring Breakdown
-```text
-+-------------------------------------------------------------------+
-|  ARGUFIGHT POST-MATCH BREAKDOWN                                    |
-|-------------------------------------------------------------------|
-|  WINNER: User_Alpha (Pro) - Final Score: 87 vs 74                 |
-|                                                                   |
-|  [Judge: The Logician]                                            |
-|  - Logic & Consistency: 90/100                                    |
-|  - Critique: "Pro successfully pointed out Con's circular logic." |
-|                                                                   |
-|  [Judge: The Empiricist]                                          |
-|  - Fact-Check Result: 2 Claims Verified, 1 Claim Flagged (Weak)  |
-+-------------------------------------------------------------------+
-```
-*Caption 1.2: ArguFight Post-Match Verdict — Shows competitive scorecard with independent AI judge opinions, winner selection, and fact validation.*
+#### Screen 2: Live In-Match Fact Checking & Evidence Verification
+![ArguFight Live Fact Check](../management/PA1/argufight_20_live_fact_check_sources.png)
+*Figure 2.2: ArguFight Live Fact-Checking Card — Evaluates factual assertions mid-debate against verified external sources with transparent accuracy ratings.*
+
+#### Screen 3: Post-Debate Multi-Judge Scoring Verdict
+![ArguFight Post-Debate Verdict](../management/PA1/argufight_21_post_debate_verdict.png)
+*Figure 2.3: ArguFight Post-Match Verdict — Multi-judge deliberation results with head-to-head score comparison, AI judge consensus, and rematch options.*
 
 ### 2.4 Strengths & Limitations
 - **Strengths:** Excellent multi-judge roleplay exposing varied reasoning perspectives; strong gamification and competitive motivation.
@@ -84,6 +66,7 @@ graph LR
 ---
 
 ## 3. In-Depth Survey: App 2 — Luyennoi.com (Luyện Nói)
+*Performed by: Nguyễn Hồng Tấn Tài (24125078) | Reviewed by: Nguyễn Anh Khoa (24125058) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 ### 3.1 Overview & Core Focus
 **Luyennoi.com** is a Vietnamese browser-based AI platform designed for English learners and IELTS Speaking candidates. It operates directly inside web browsers (Chrome, Safari, Edge) without requiring app installation, providing automated band scoring across the 4 official IELTS Speaking criteria and per-sentence linguistic feedback.
@@ -92,11 +75,11 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Luyennoi.com Workflow
-        A[Select Topic / Forecast Prompt] --> B[Browser Microphone Recording]
-        B --> C[Speech-to-Text Transcription]
-        C --> D[4-Criteria Rubric Scoring]
-        D --> E[Per-Sentence Error & Lexical Feedback]
+    subgraph LuyennoiWorkflow ["Luyennoi.com Workflow"]
+        A["Select Topic / Forecast Prompt"] --> B["Browser Microphone Recording"]
+        B --> C["Speech-to-Text Transcription"]
+        C --> D["4-Criteria Rubric Scoring"]
+        D --> E["Per-Sentence Error & Lexical Feedback"]
     end
 ```
 
@@ -107,38 +90,17 @@ graph LR
 
 ### 3.3 User Interface & Screenshots
 
-#### Screen 1: In-Browser Speaking Practice & Recording
-```text
-+-------------------------------------------------------------------+
-|  LUYENNOI.COM                     [Forecast 2026]  [Lớp Nói] (User)|
-|-------------------------------------------------------------------|
-|  TOPIC: "Describe an environmental problem in your city"          |
-|  Part: IELTS Speaking Part 2 | Prep Time: 00:00 | Speaking: 01:42 |
-|                                                                   |
-|  [|||||||||||||||||||||||||||..........] (Recording Active)       |
-|                                                                   |
-|  [Finish & Score Now]                                             |
-+-------------------------------------------------------------------+
-```
-*Caption 2.1: Luyennoi.com Recording Interface — Clean web-first recording interface with timed countdown and visual audio waveform.*
+#### Screen 1: Platform Hero & 4-Criteria Scoring Overview
+![Luyennoi Landing Page](../management/PA1/luyennoi_01_landing_hero.png)
+*Figure 3.1: Luyennoi.com Landing Page — Automated IELTS Speaking grading based on 4 standardized criteria with immediate test-taking options.*
 
-#### Screen 2: 4-Criteria Scorecard & Sentence-Level Corrections
-```text
-+-------------------------------------------------------------------+
-|  OVERALL BAND ESTIMATE: 6.5                                       |
-|-------------------------------------------------------------------|
-|  [Fluency: 6.0]   [Lexical: 7.0]   [Grammar: 6.0]   [Pronun: 6.5] |
-|-------------------------------------------------------------------|
-|  SENTENCE-BY-SENTENCE REMEDIATION:                                |
-|  - Sentence 2: "In my city, traffic cause severe air pollution."   |
-|    ❌ Error: Subject-verb agreement ('traffic cause' -> 'causes')  |
-|    💡 Vocabulary Upgrade: 'severe' -> 'detrimental'               |
-|                                                                   |
-|  - Sentence 4: "Government should invest more in bus."             |
-|    ❌ Error: Missing plural/determiner ('buses' or 'public transit')|
-+-------------------------------------------------------------------+
-```
-*Caption 2.2: Luyennoi.com Scorecard — Granular diagnostic breakdown across 4 standardized rubrics paired with verbatim sentence corrections.*
+#### Screen 2: In-Browser Speaking Practice & Recording Interface
+![Luyennoi Recording Session](../management/PA1/luyennoi_08_recording_session.png)
+*Figure 3.2: Luyennoi.com In-Browser Recording — Timed speaking prompt with visual audio level meter and response submission controls.*
+
+#### Screen 3: Standardized 4-Criteria Scorecard & Sentence-Level Corrections
+![Luyennoi Scorecard Feedback](../management/PA1/luyennoi_09_scorecard_sentence_feedback.png)
+*Figure 3.3: Luyennoi.com Diagnostic Scorecard — Granular sub-scores across fluency, vocabulary, grammar, and pronunciation with verbatim error highlights.*
 
 ### 3.4 Strengths & Limitations
 - **Strengths:** Zero installation friction (web-first); direct alignment with standardized test rubrics (IELTS 4 criteria); actionable per-sentence feedback quoting learner speech; tailored specifically to Vietnamese English learners.
@@ -147,6 +109,7 @@ graph LR
 ---
 
 ## 4. Industry Reference Benchmarks
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
 ### 4.1 Benchmark 1: ELSA Speak
 - **Focus:** Mobile-first English pronunciation and acoustic phoneme analysis.
@@ -160,9 +123,9 @@ graph LR
   2. **Asynchronous Post-Call Synthesis ("Take notes for me"):** Automatically extracts core discussion threads, decisions made, and assigned action items into a structured Google Doc.
   3. **Live "Summary so far":** In-call catch-up synthesis allowing participants to read what transpired before they joined.
 - **Visual Interface Analysis (Survey Artifacts):**
-  - **Pre-Call & Entry ([`screenshots/join_screen.png`](../../screenshots/join_screen.png)):** Shows seamless mic/camera device selection with Gemini intelligence enabled.
-  - **In-Call Orchestration ([`screenshots/in-meeting.png`](../../screenshots/in-meeting.png)):** Displays active in-meeting transcription indicator where Gemini unobtrusively captures live speech without intruding into the conversation.
-  - **Post-Call Structured Artifacts ([`screenshots/email_1.png`](../../screenshots/email_1.png), [`screenshots/email_2.png`](../../screenshots/email_2.png)):** Shows automated email notifications delivering structured meeting summaries, grouped discussion topics, and clear action items directly to participants' inboxes and Google Drive.
+  - **Pre-Call & Entry ([`meeting_google_meet_join.png`](../management/PA1/meeting_google_meet_join.png)):** Shows seamless mic/camera device selection with Gemini intelligence enabled.
+  - **In-Call Orchestration ([`meeting_google_meet_call.png`](../management/PA1/meeting_google_meet_call.png)):** Displays active in-meeting transcription indicator where Gemini unobtrusively captures live speech without intruding into the conversation.
+  - **Post-Call Structured Artifacts ([`meeting_gemini_notes_email_1.png`](../management/PA1/meeting_gemini_notes_email_1.png), [`meeting_gemini_notes_email_2.png`](../management/PA1/meeting_gemini_notes_email_2.png)):** Shows automated email notifications delivering structured meeting summaries, grouped discussion topics, and clear action items directly to participants' inboxes and Google Drive.
 - **Key Relevance to DebateSpeak:**
   - **Non-Intrusive Background Orchestration:** Demonstrates that AI should listen quietly in the background during live human communication without introducing cognitive disruption or audio latency.
   - **Asynchronous LLM Multi-Agent Pipeline:** Mirrors DebateSpeak's design where deep analytical extraction (Language, Argument, Fact-Checking) runs asynchronously after the speaking session ends.
@@ -171,6 +134,7 @@ graph LR
 ---
 
 ## 5. Comparative Synthesis & Differentiation
+*Performed by: Nguyễn Hồng Tấn Tài (24125078) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 5.1 Comprehensive Feature Matrix
 
