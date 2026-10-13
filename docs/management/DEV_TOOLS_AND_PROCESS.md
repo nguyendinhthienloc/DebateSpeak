@@ -48,7 +48,7 @@ As part of our Scrum cadence, team meetings are conducted synchronously via Goog
 
 | Live Scrum Meeting Session | Automated Gemini Meeting Minutes |
 |:---:|:---:|
-| ![Google Meet In-Call Session](./PA1/meeting_google_meet_call.png) | ![Gemini Automated Meeting Notes](./PA1/meeting_gemini_notes_email_1.png) |
+| ![Google Meet In-Call Session](./screenshots/meeting_google_meet_call.png) | ![Gemini Automated Meeting Notes](./screenshots/meeting_gemini_notes_email_1.png) |
 | *Figure 1.1: Live Scrum check-in meeting on Google Meet with Gemini AI note-taking activated.* | *Figure 1.2: Automated meeting notes, concept review, and action items distributed via email.* |
 
 ---
@@ -76,6 +76,10 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
   - `develop`: Shared integration branch for active sprint development.
   - `feature/<jira-key>-<short-description>`: Individual feature branches branched off `develop`.
   - `bugfix/<jira-key>-<short-description>`: Defect fixes branched off `develop`.
+- **Sprint 1 Centralized Documentation Custodian Role:**
+  - During Sprint 1 (conception & foundation phase), all five team members collaborated in drafting, review, and editing of project deliverables (documented verbatim via per-section headers).
+  - To prevent Git merge conflicts during rapid simultaneous drafting of Markdown files and ensure uniform LaTeX compilation via `latexmk`, **Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager**, centralizing integration, running linters, and packaging assignment archives.
+  - Starting from Sprint 2 (PA2), each team member will independently branch, commit, and open PRs for their assigned vertical slice implementation tasks.
 - **Pull Request Rules:**
   - Every PR requires passing automated CI checks (linting, tests, build).
   - Every PR requires at least **one approved code review** from a designated peer reviewer before merging.

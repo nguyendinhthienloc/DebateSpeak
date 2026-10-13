@@ -53,6 +53,7 @@ The system defines two primary human actors with role-based access control:
 
 The application is decomposed into **10 distinctive, non-generic functional groups**:
 
+---
 ```mermaid
 flowchart TD
     subgraph Core ["User & Content Management"]
@@ -89,7 +90,7 @@ flowchart TD
     FG8 --> FG9
     FG9 --> FG10
 ```
-
+---
 ### FG-01: User Account & Profile Management
 - **Feature Description:** Provides secure registration, authentication (Argon2id password hashing and rotating JWTs), and persistent learner profiles. Learners configure their native language, self-assessed CEFR proficiency level (A2, B1, B2, C1), and target improvement goals (e.g., "reduce filler words", "improve rebuttal structure").
 - **Utility:** Ensures personalized baseline calibration so subsequent AI evaluations and topic recommendations adapt appropriately to the student's proficiency level.

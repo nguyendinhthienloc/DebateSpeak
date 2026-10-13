@@ -48,15 +48,15 @@ graph LR
 ### 2.3 User Interface & Screenshots
 
 #### Screen 1: Platform Hero & Competitive Debate Directory
-![ArguFight Landing Hero](../management/PA1/argufight_01_landing_hero.png)
+![ArguFight Landing Hero](../management/screenshots/argufight_01_landing_hero.png)
 *Figure 2.1: ArguFight Motion Directory & Landing Hero — Highlighting real-time AI-judged debate platform, ELO rankings, and active debate challenges.*
 
 #### Screen 2: Live In-Match Fact Checking & Evidence Verification
-![ArguFight Live Fact Check](../management/PA1/argufight_20_live_fact_check_sources.png)
+![ArguFight Live Fact Check](../management/screenshots/argufight_20_live_fact_check_sources.png)
 *Figure 2.2: ArguFight Live Fact-Checking Card — Evaluates factual assertions mid-debate against verified external sources with transparent accuracy ratings.*
 
 #### Screen 3: Post-Debate Multi-Judge Scoring Verdict
-![ArguFight Post-Debate Verdict](../management/PA1/argufight_21_post_debate_verdict.png)
+![ArguFight Post-Debate Verdict](../management/screenshots/argufight_21_post_debate_verdict.png)
 *Figure 2.3: ArguFight Post-Match Verdict — Multi-judge deliberation results with head-to-head score comparison, AI judge consensus, and rematch options.*
 
 ### 2.4 Strengths & Limitations
@@ -91,15 +91,15 @@ graph LR
 ### 3.3 User Interface & Screenshots
 
 #### Screen 1: Platform Hero & 4-Criteria Scoring Overview
-![Luyennoi Landing Page](../management/PA1/luyennoi_01_landing_hero.png)
+![Luyennoi Landing Page](../management/screenshots/luyennoi_01_landing_hero.png)
 *Figure 3.1: Luyennoi.com Landing Page — Automated IELTS Speaking grading based on 4 standardized criteria with immediate test-taking options.*
 
 #### Screen 2: In-Browser Speaking Practice & Recording Interface
-![Luyennoi Recording Session](../management/PA1/luyennoi_08_recording_session.png)
+![Luyennoi Recording Session](../management/screenshots/luyennoi_08_recording_session.png)
 *Figure 3.2: Luyennoi.com In-Browser Recording — Timed speaking prompt with visual audio level meter and response submission controls.*
 
 #### Screen 3: Standardized 4-Criteria Scorecard & Sentence-Level Corrections
-![Luyennoi Scorecard Feedback](../management/PA1/luyennoi_09_scorecard_sentence_feedback.png)
+![Luyennoi Scorecard Feedback](../management/screenshots/luyennoi_09_scorecard_sentence_feedback.png)
 *Figure 3.3: Luyennoi.com Diagnostic Scorecard — Granular sub-scores across fluency, vocabulary, grammar, and pronunciation with verbatim error highlights.*
 
 ### 3.4 Strengths & Limitations
@@ -116,16 +116,29 @@ graph LR
 - **Key Relevance to DebateSpeak:** Demonstrates optimal UX patterns for phoneme-level speech feedback, syllable stress visualization, and longitudinal proficiency tracking.
 - **Limitation:** Purely solo phoneme drills; lacks spontaneous conversational context and argumentative reasoning.
 
+#### Screen 1: Phoneme-Level Pronunciation Feedback & Proficiency Assessment
+![ELSA Speak Pronunciation Feedback](../management/screenshots/elsa_speak_pronunciation.png)
+*Figure 4.1: ELSA Speak Pronunciation Assessment — Visual phoneme-level scoring highlighting specific pronunciation errors with color-coded phonetic feedback and CEFR level classification.*
+
 ### 4.2 Benchmark 2: Google Meet with Gemini ("Take notes for me" / Meeting Summary)
 - **Focus:** Enterprise video conferencing powered by Gemini in Google Workspace.
 - **Key Capabilities:**
   1. **Deterministic Speaker Attribution & Streaming Captions:** Isolates multi-party audio streams and renders real-time diarized captions with speaker tags.
   2. **Asynchronous Post-Call Synthesis ("Take notes for me"):** Automatically extracts core discussion threads, decisions made, and assigned action items into a structured Google Doc.
   3. **Live "Summary so far":** In-call catch-up synthesis allowing participants to read what transpired before they joined.
-- **Visual Interface Analysis (Survey Artifacts):**
-  - **Pre-Call & Entry ([`meeting_google_meet_join.png`](../management/PA1/meeting_google_meet_join.png)):** Shows seamless mic/camera device selection with Gemini intelligence enabled.
-  - **In-Call Orchestration ([`meeting_google_meet_call.png`](../management/PA1/meeting_google_meet_call.png)):** Displays active in-meeting transcription indicator where Gemini unobtrusively captures live speech without intruding into the conversation.
-  - **Post-Call Structured Artifacts ([`meeting_gemini_notes_email_1.png`](../management/PA1/meeting_gemini_notes_email_1.png), [`meeting_gemini_notes_email_2.png`](../management/PA1/meeting_gemini_notes_email_2.png)):** Shows automated email notifications delivering structured meeting summaries, grouped discussion topics, and clear action items directly to participants' inboxes and Google Drive.
+
+#### Screen 2: Pre-Call Entry & Audio Device Configuration
+![Google Meet Pre-Call Entry](../management/screenshots/meeting_google_meet_join.png)
+*Figure 4.2: Google Meet Pre-Call Portal — Audio device check and microphone readiness with Gemini background intelligence enabled.*
+
+#### Screen 3: In-Call Orchestration & Live Background Audio Capture
+![Google Meet In-Call Session](../management/screenshots/meeting_google_meet_call.png)
+*Figure 4.3: Google Meet In-Call Session — Unobtrusive live background speech capture and speaker attribution without interrupting conversational flow.*
+
+#### Screen 4: Asynchronous Post-Call Structured Artifacts & Actionable Minutes
+![Gemini Automated Meeting Notes](../management/screenshots/meeting_gemini_notes_email_1.png)
+*Figure 4.4: Automated Gemini Notes & Synthesis — Asynchronous extraction of discussion threads, key decisions, and actionable follow-ups distributed post-call via email.*
+
 - **Key Relevance to DebateSpeak:**
   - **Non-Intrusive Background Orchestration:** Demonstrates that AI should listen quietly in the background during live human communication without introducing cognitive disruption or audio latency.
   - **Asynchronous LLM Multi-Agent Pipeline:** Mirrors DebateSpeak's design where deep analytical extraction (Language, Argument, Fact-Checking) runs asynchronously after the speaking session ends.

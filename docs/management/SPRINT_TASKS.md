@@ -18,9 +18,9 @@
 | **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | FastAPI, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
 | **R3** | **AI Audio & Speech Pipeline Lead** | Nguyễn Anh Khoa (`24125058`) | Python, LiveKit Agents, Silero VAD, STT Adapter Protocol |
 | **R4** | **AI Analysis & Agent Orchestrator Lead** | Trần Lê Anh Tuấn (`24125107`) | Python, Pydantic v2, LLM Adapter Protocol, Redis Queue (ARQ) |
-| **R5** | **DevOps & QA / Fact-Checking Lead** | Nguyễn Đình Thiên Lộc (`24125093`) | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
+| **R5** | **DevOps & QA / Fact-Checking Lead & Release Custodian** | Nguyễn Đình Thiên Lộc (`24125093`) | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
 
-> **Note on Implementation Status & Technology Choices:** Because active implementation has not yet started in Sprint 1 (conception & proposal phase), primary ownership of code modules is not assigned in advance. The candidate technologies listed above reflect initial architectural planning and remain tentative and subject to change based on prototyping, research spikes, and Spec Kit specifications in future sprints.
+> **Note on Implementation Status & Technology Choices:** Because active implementation has not yet started in Sprint 1 (conception & proposal phase), primary ownership of code modules is not assigned in advance. The candidate technologies listed above reflect initial architectural planning and remain tentative and subject to change based on prototyping, research spikes, and Spec Kit specifications in future sprints. Furthermore, for Sprint 1 documentation, Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager to manage consolidated repository commits on behalf of all collaborating authors.
 
 ---
 
