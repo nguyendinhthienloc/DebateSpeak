@@ -87,21 +87,69 @@ Comprehensive design, roadmap, and implementation documents are organized within
 ## 5. Quick Start (Development)
 
 ### Prerequisites
-- [Docker](https://www.docker.com/) & Docker Compose v2+
-- [Node.js](https://nodejs.org/) v20+ & [pnpm](https://pnpm.io/)
+- [Docker Desktop](https://www.docker.com/) (Docker Compose v2+)
 - [Python](https://www.python.org/) 3.11+
+- [Node.js](https://nodejs.org/) v20+ & [pnpm](https://pnpm.io/)
 
-### Environment Configuration
-Copy the sanitized environment template and supply your credentials:
+---
+
+### Step 1: Environment Setup
+Copy the sanitized environment template to create your local `.env`:
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item .env.example .env
+```
+**macOS / Linux (Bash):**
 ```bash
 cp .env.example .env
 ```
 
-### Launch Local Services
-Start PostgreSQL, Redis, and supporting services with Docker Compose:
+---
+
+### Step 2: Start Local Infrastructure (Docker Compose)
+Launch PostgreSQL 16, Redis 7, and the LiveKit WebRTC server in the background:
+
 ```bash
 docker compose up -d
 ```
+
+Verify that all three containers are healthy:
+```bash
+docker compose ps
+```
+
+| Service | Container Name | Local Port | Purpose |
+|---|---|---|---|
+| **PostgreSQL 16** | `debatespeak-db` | `5432` | Relational persistence (users, debate rooms, transcripts, reports) |
+| **Redis 7** | `debatespeak-redis` | `6379` | In-memory cache & async worker queue (ARQ) |
+| **LiveKit SFU** | `debatespeak-livekit` | `7880` (HTTP/WS), `7881` (TCP), `7882/udp` | Real-time audio routing (offline `--dev` mode) |
+
+---
+
+### Step 3: Verify Services
+
+Test connectivity and health for each service:
+
+```powershell
+# 1. Test PostgreSQL connectivity (accepting connections)
+docker exec debatespeak-db pg_isready -U debatespeak -d debatespeak
+
+# 2. Test Redis responsiveness (Expects: PONG)
+docker exec debatespeak-redis redis-cli ping
+
+# 3. Test LiveKit WebRTC server (Expects: HTTP 200)
+curl.exe http://localhost:7880/
+```
+
+---
+
+### Step 4: Teardown
+To stop the services without losing database records:
+```bash
+docker compose down
+```
+*(To completely reset and wipe local database data, use `docker compose down -v`)*
 
 ---
 
