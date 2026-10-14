@@ -9,6 +9,7 @@
 ---
 
 ## 1. Team Roles and Responsibilities
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 In accordance with course guidelines, **all 5 team members act as full-stack engineers** contributing to design, coding, testing, and documentation. To maintain accountability and prevent gaps, each member leads a dedicated functional subsystem:
 
@@ -18,15 +19,19 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 | **Nguyễn Hồng Tấn Tài** (ID: `24125078`) | **Backend & Real-Time Media Lead (Tài)** | • Leads the FastAPI core architecture and PostgreSQL database schema design (SQLAlchemy/Alembic).<br>• Implements user authentication (Argon2id, rotating JWTs) and room lifecycle state machine.<br>• Develops the LiveKit server token minting service and Redis pub/sub WebSocket hub. |
 | **Nguyễn Anh Khoa** (ID: `24125058`) | **AI Audio & Speech Pipeline Lead (Khoa)** | • Leads the LiveKit audio track subscription worker (bot subscriber).<br>• Implements Silero VAD for vocal activity segmentation and pause measurement.<br>• Develops the streaming STT adapter pipeline (cloud streaming STT + local fallback engine), word timestamps, and filler-word tracking. |
 | **Trần Lê Anh Tuấn** (ID: `24125107`) | **AI Orchestrator & Analysis Lead (Tuấn)** | • Leads the prompt engineering, LLM adapter interfaces, and Pydantic schemas for all AI agents.<br>• Implements the Language Coach (grammar/vocab), Argument Coach (rebuttal/fallacies), and Debate Judge.<br>• Builds the deterministic Consensus Engine and the regex/substring quote-grounding guard. |
-| **Nguyễn Đình Thiên Lộc** (ID: `24125093`) | **DevOps & QA / Fact-Checking Lead (Lộc)** | • Leads the Fact Investigator search retrieval pipeline (web search adapter) and Evidence Evaluator agent.<br>• Manages the Docker Compose multi-container staging environment and Caddy automated TLS reverse proxy.<br>• Establishes CI/CD pipelines (GitHub Actions), Playwright E2E automation, and golden-set evaluation scripts. |
+| **Nguyễn Đình Thiên Lộc** (ID: `24125093`) | **DevOps & QA / Fact-Checking Lead & Release Custodian (Lộc)** | • Leads the Fact Investigator search retrieval pipeline (web search adapter) and Evidence Evaluator agent.<br>• Serves as **Documentation Custodian & Git Release Manager** for Sprint 1 (PA1): bootstraps repository, manages branch merges, compiles LaTeX reports via `latexmk`, and packages release archives on behalf of the collaborative authoring team.<br>• Manages the Docker Compose multi-container staging environment and Caddy automated TLS reverse proxy.<br>• Establishes CI/CD pipelines (GitHub Actions), Playwright E2E automation, and golden-set evaluation scripts. |
+
+> **Note on Sprint 1 (PA1) Git Commit Log Attribution:**  
+> During Sprint 1 (project conception and documentation phase), all five team members collaborated extensively on drafting, cross-reviewing, and editing the required deliverables (as certified by the per-section attribution headers across all project documents). To prevent merge conflicts during rapid document iteration and ensure uniform Markdown/LaTeX formatting, **Nguyễn Đình Thiên Lộc acted as the central Documentation Custodian & Git Release Manager**, committing the consolidated and verified submissions to the remote repository. Individual member Git commit activity will take full effect starting in Sprint 2 (PA2) as code implementation begins on dedicated feature branches.
 
 ---
 
 ## 2. Communication Plan
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - **Primary Communication Channels:**
   - **Facebook Messenger:** Primary daily communication channel (team group chat for daily coordination, instant messaging, announcements, urgent blocker alerts, and poll-based meeting scheduling).
-  - **Google Meet:** Synchronous online team meetings, sprint ceremonies, and live pair-programming sessions.
+  - **Google Meet:** Synchronous online team meetings, sprint ceremonies, and live pair-programming sessions ([Meeting Portal Evidence](./screenshots/meeting_google_meet_join.png)).
   - **GitHub Discussions / PR Comments:** Formal code reviews, architectural debate, and technical RFCs.
 - **Meeting Cadence & Scheduling:**
   - **Meeting Times:** Specific meeting times and dates are **flexible and to be decided** collaboratively prior to each sprint or milestone based on all 5 members' course schedules and academic availability (polled and confirmed via Messenger).
@@ -39,6 +44,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 3. Work Schedule and Deadlines
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - **Incremental Release Schedule (5 Sprints mapped to PA1–PA5):**
   - **Sprint 1 (PA1 - Weeks 1–2):** *Conception & Setup* — Proposal (10 FGs), app survey, team contract, dev tooling, baseline monorepo, Docker Compose, and academic report.
@@ -53,6 +59,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 4. Code and Documentation Standards
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Anh Khoa (24125058)*
 
 - **Coding Conventions & Linters:**
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
@@ -70,6 +77,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 5. Accountability, Performance, and Consequences
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 - **Contribution Measurement Criteria:**
   - Completion of assigned Jira tasks within the committed sprint timeline.
@@ -83,6 +91,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 6. Decision-Making & Conflict Resolution
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 - **Decision-Making Protocol:**
   - Architectural and technical decisions are made through open discussion and **consensus whenever possible**.
@@ -96,6 +105,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 ---
 
 ## 7. Contract Review and Update Process
+*Performed by: Nguyễn Anh Khoa (24125058) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 - This team contract will be reviewed at the conclusion of each sprint during the **Sprint Retrospective**.
 - Any team member may propose amendments to communication protocols, workload distribution, or tooling.

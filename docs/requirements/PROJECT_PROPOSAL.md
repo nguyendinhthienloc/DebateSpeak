@@ -10,6 +10,7 @@
 ---
 
 ## 1. Introduction & Value Proposition
+*Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 1.1 Problem Statement
 Intermediate English learners (CEFR levels A2 to C1) frequently reach a fluency plateau: they understand grammar rules and can pass written tests, but struggle with unscripted, spontaneous speaking. Traditional classroom speaking activities are scripted or role-played, and human 1-on-1 tutoring (Cambly, iTalki) is expensive and difficult to schedule frequently. Meanwhile, conventional English apps (Duolingo, ELSA Speak) focus strictly on isolated pronunciation drills or superficial conversational small-talk, failing to challenge learners with extended arguments, rebuttal under pressure, or logical structure.
@@ -28,6 +29,7 @@ Debate serves as the **high-engagement practice activity**; the AI coaching pipe
 ---
 
 ## 2. Target Users & Operating Environments
+*Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Anh Khoa (24125058)*
 
 ### 2.1 Primary Target Users
 1. **University & College Students:** Learners preparing for international speaking examinations (IELTS Speaking Part 3, TOEFL iBT Independent & Integrated Speaking) who need structured practice expressing abstract opinions and handling rebuttals under time limits.
@@ -47,31 +49,33 @@ The system defines two primary human actors with role-based access control:
 ---
 
 ## 3. Key Functional Groups (10 Distinctive Functional Groups)
+*Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
 The application is decomposed into **10 distinctive, non-generic functional groups**:
 
+---
 ```mermaid
 flowchart TD
-    subgraph Core [User & Content Management]
-        FG1[FG-01: User & Profile Management]
-        FG2[FG-02: Topic Library & Difficulty]
+    subgraph Core ["User & Content Management"]
+        FG1["FG-01: User & Profile Management"]
+        FG2["FG-02: Topic Library & Difficulty"]
     end
 
-    subgraph LiveSession [Live Spoken Debate Session]
-        FG3[FG-03: Room & Session Management]
-        FG4[FG-04: Real-Time Audio Communication]
-        FG5[FG-05: Speech-to-Text & Attribution]
+    subgraph LiveSession ["Live Spoken Debate Session"]
+        FG3["FG-03: Room & Session Management"]
+        FG4["FG-04: Real-Time Audio Communication"]
+        FG5["FG-05: Speech-to-Text & Attribution"]
     end
 
-    subgraph AIAssessment [Multi-Agent Analysis Engine]
-        FG6[FG-06: English Language Analysis]
-        FG7[FG-07: Argument & Rebuttal Analysis]
-        FG8[FG-08: Fact-Checking & Evidence Retrieval]
-        FG9[FG-09: Consensus & Judge Engine]
+    subgraph AIAssessment ["Multi-Agent Analysis Engine"]
+        FG6["FG-06: English Language Analysis"]
+        FG7["FG-07: Argument & Rebuttal Analysis"]
+        FG8["FG-08: Fact-Checking & Evidence Retrieval"]
+        FG9["FG-09: Consensus & Judge Engine"]
     end
 
-    subgraph LearningFeedback [Personalized Coaching]
-        FG10[FG-10: Personalized Learning Reports]
+    subgraph LearningFeedback ["Personalized Coaching"]
+        FG10["FG-10: Personalized Learning Reports"]
     end
 
     FG1 --> FG3
@@ -81,10 +85,12 @@ flowchart TD
     FG5 --> FG6
     FG5 --> FG7
     FG5 --> FG8
-    FG6 & FG7 & FG8 --> FG9
+    FG6 --> FG9
+    FG7 --> FG9
+    FG8 --> FG9
     FG9 --> FG10
 ```
-
+---
 ### FG-01: User Account & Profile Management
 - **Feature Description:** Provides secure registration, authentication (Argon2id password hashing and rotating JWTs), and persistent learner profiles. Learners configure their native language, self-assessed CEFR proficiency level (A2, B1, B2, C1), and target improvement goals (e.g., "reduce filler words", "improve rebuttal structure").
 - **Utility:** Ensures personalized baseline calibration so subsequent AI evaluations and topic recommendations adapt appropriately to the student's proficiency level.
@@ -128,6 +134,7 @@ flowchart TD
 ---
 
 ## 4. Standalone AI Features & Real User Value
+*Performed by: Trần Lê Anh Tuấn (24125107) | Reviewed by: Nguyễn Anh Khoa (24125058) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 ### 4.1 Description of the AI Architecture
 DebateSpeak AI integrates a **Hierarchical Multi-Agent Orchestration Pipeline** rather than a generic single-prompt chatbot:
@@ -171,6 +178,7 @@ sequenceDiagram
 ---
 
 ## 5. Scope Boundaries & Future Considerations
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 To maintain realistic feasibility for a student project while demonstrating sound software engineering foresight, several production-grade concerns are intentionally isolated as **Future Enhancements**:
 

@@ -10,20 +10,22 @@
 ---
 
 ## 1. Team Role Allocation Matrix
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
-To prevent engineering overlaps and establish clear ownership, the 5 team members are assigned dedicated subsystem areas:
+| Role ID | Role Title | Member | Candidate Technologies (Tentative / Subject to Change) |
+|---|---|---|---|
+| **R1** | **Frontend & WebRTC/Audio Lead** | Nguyễn Bảo Minh Triết (`24125047`) | React, TypeScript, Tailwind CSS, LiveKit Client SDK |
+| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | FastAPI, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
+| **R3** | **AI Audio & Speech Pipeline Lead** | Nguyễn Anh Khoa (`24125058`) | Python, LiveKit Agents, Silero VAD, STT Adapter Protocol |
+| **R4** | **AI Analysis & Agent Orchestrator Lead** | Trần Lê Anh Tuấn (`24125107`) | Python, Pydantic v2, LLM Adapter Protocol, Redis Queue (ARQ) |
+| **R5** | **DevOps & QA / Fact-Checking Lead & Release Custodian** | Nguyễn Đình Thiên Lộc (`24125093`) | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
 
-| Role ID | Role Title | Member | Primary Ownership | Primary Technologies |
-|---|---|---|---|---|
-| **R1** | **Frontend & WebRTC/Audio Lead** | Nguyễn Bảo Minh Triết (`24125047`) | Vite + React SPA, Tailwind UI, room lobby, audio controls, live transcript rendering, report viewer | React, TypeScript, Tailwind CSS, LiveKit Client SDK |
-| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | FastAPI service, PostgreSQL models/migrations, JWT auth, room state machine, LiveKit token minting, WebSocket hub | FastAPI, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
-| **R3** | **AI Audio & Speech Pipeline Lead** | Nguyễn Anh Khoa (`24125058`) | Audio track subscription worker (LiveKit agent), Silero VAD, streaming STT adapter, track-to-speaker attribution, disfluency tracking | Python, LiveKit Agents, Silero VAD, STT Adapter Protocol |
-| **R4** | **AI Analysis & Agent Orchestrator Lead** | Trần Lê Anh Tuấn (`24125107`) | Language Coach, Argument Coach, Debate Judge, Consensus Engine, quote grounding guard, Pydantic schemas | Python, Pydantic v2, LLM Adapter Protocol, Redis Queue (ARQ) |
-| **R5** | **DevOps & QA / Fact-Checking Lead** | Nguyễn Đình Thiên Lộc (`24125093`) | Claim detector, search integration, evidence evaluator, Docker/Caddy staging deployment, CI/CD, Playwright E2E, latexmk | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
+> **Note on Implementation Status & Technology Choices:** Because active implementation has not yet started in Sprint 1 (conception & proposal phase), primary ownership of code modules is not assigned in advance. The candidate technologies listed above reflect initial architectural planning and remain tentative and subject to change based on prototyping, research spikes, and Spec Kit specifications in future sprints. Furthermore, for Sprint 1 documentation, Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager to manage consolidated repository commits on behalf of all collaborating authors.
 
 ---
 
 ## 2. Multi-Sprint Work Breakdown Structure (5 Sprints = PA1 to PA5)
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Anh Khoa (24125058)*
 
 ### Sprint 1 (Weeks 1–2 / PA1): Foundation, Proposals & Setup
 **Sprint Goal:** Comprehensive project proposal (10 FGs), existing app survey, team contract, dev environment setup, and baseline monorepo with CI.
@@ -102,6 +104,7 @@ To prevent engineering overlaps and establish clear ownership, the 5 team member
 ---
 
 ## 3. Individual Member Workload Matrix
+*Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 ```
 +--------------------------------------------------------------------------------------------------+

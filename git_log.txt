@@ -1,0 +1,40 @@
+================================================================================
+DebateSpeak AI — Git Commit History Log (Sprint 1 / PA1-2026)
+Group: 02 (CS300 - Introduction to Software Engineering)
+Documentation Custodian & Git Release Manager: Nguyễn Đình Thiên Lộc (24125093)
+
+NOTE ON SPRINT 1 (PA1) COMMIT ATTRIBUTION & COLLABORATIVE WORKFLOW:
+In Sprint 1 (conception & foundation phase), all five team members collaborated
+extensively on research, drafting, reviewing, and refining project deliverables
+(see per-section author attribution headers across all files in docs/):
+  - 24125047: Nguyễn Bảo Minh Triết (Frontend & WebRTC Lead)
+  - 24125078: Nguyễn Hồng Tấn Tài (Backend & Real-Time Media Lead)
+  - 24125058: Nguyễn Anh Khoa (AI Audio & Speech Pipeline Lead)
+  - 24125107: Trần Lê Anh Tuấn (AI Orchestrator & Analysis Lead)
+  - 24125093: Nguyễn Đình Thiên Lộc (DevOps & QA / Fact-Checking Lead & Release Custodian)
+
+To prevent merge conflicts during rapid document iteration and ensure uniform
+LaTeX/Markdown formatting, Nguyễn Đình Thiên Lộc was designated as the official
+Documentation Custodian & Git Release Manager for Sprint 1. He integrated peer-
+reviewed sections, executed linters, verified LaTeX compilation, and tagged
+official assignment releases on behalf of the full authoring team.
+Individual feature-branch Git commits for each member will commence in Sprint 2
+(PA2) as code implementation begins.
+================================================================================
+
+* 8003537 - Nguyễn Đình Thiên Lộc, 2026-10-13 09:51:29 +0700 : PA1 first draft (HEAD -> PA1, origin/PA1)
+*   2a0c561 - Nguyễn Đình Thiên Lộc, 2026-10-09 18:10:12 +0700 : Merge branch 'main' into dev (origin/dev, dev)
+|\  
+| * 16d6383 - Nguyễn Đình Thiên Lộc, 2026-10-09 17:45:33 +0700 : Removed Khaos Live (origin/main, origin/HEAD, main)
+* |   caa4fc3 - Nguyễn Đình Thiên Lộc, 2026-10-09 18:09:18 +0700 : Merge pull request #1 from nguyendinhthienloc/devops-setup
+|\ \  
+| |/  
+|/|   
+| * 9e045b9 - Nguyễn Đình Thiên Lộc, 2026-10-09 02:08:21 +0700 : chore: move course assignment PDFs to docs/assignments (origin/devops-setup, devops-setup)
+| * 903d9f6 - Nguyễn Đình Thiên Lộc, 2026-10-09 02:05:36 +0700 : docs(management): add devops qa multi-sprint roadmap workbook (DSP-5)
+| * e01063f - Nguyễn Đình Thiên Lộc, 2026-10-09 02:05:16 +0700 : feat(infra): setup local docker compose stack and add quick start guide (DSP-6)
+|/  
+* b0028fc - Nguyễn Đình Thiên Lộc, 2026-10-06 23:24:59 +0700 : Please Read Yall
+* 6023b5a - Nguyễn Đình Thiên Lộc, 2026-10-06 23:02:14 +0700 : Set-up for the project
+* 1eef998 - Nguyễn Đình Thiên Lộc, 2026-10-06 22:35:01 +0700 : Documentation
+* 375c0e1 - Nguyễn Đình Thiên Lộc, 2026-10-06 22:28:27 +0700 : First Commit
