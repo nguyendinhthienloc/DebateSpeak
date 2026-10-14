@@ -167,14 +167,15 @@ def build_roadmap_excel(output_path: Path):
         
     tasks_data = [
         # Sprint 1
-        ("T1.1", "Sprint 1 (PA1)", "DevOps / CI", "Repository setup, monorepo layout, code style linters (Ruff, ESLint), GitHub Actions CI", ".github/workflows/ci.yml", "R2 (Tài)", 3, "CRITICAL", "In Progress"),
+        ("T1.1", "Sprint 1 (PA1)", "DevOps / CI", "Repository setup, monorepo layout, code style linters (Ruff, ESLint), GitHub Actions CI", ".github/workflows/ci.yml", "R2 (Tài)", 3, "CRITICAL", "Done"),
         ("T1.2", "Sprint 1 (PA1)", "DevOps / Infra", "Docker Compose setup for local dev (PostgreSQL 16, Redis 7, LiveKit dev) & clean .env.example", "docker-compose.yml, .env.example", "R2 (Tài)", 3, "CRITICAL", "Done"),
         ("T1.6", "Sprint 1 (PA1)", "Management", "Setup Dev Tools, Scrum Process & Incremental Slices specification", "docs/management/DEV_TOOLS_AND_PROCESS.md", "R2 (Tài)", 3, "MAJOR", "Done"),
         ("T1.8", "Sprint 1 (PA1)", "QA / Testing", "Draft comprehensive QA & Testing Plan (Unit, Integration, Audio chaos, Golden sets)", "docs/testing/TESTING_PLAN.md", "R3 (Khoa)", 5, "CRITICAL", "Done"),
         ("T1.9", "Sprint 1 (PA1)", "Academic / LaTeX", "Configure latexmk academic report compilation pipeline & compile submission PDF", "report/report.tex, report/build/report.pdf", "R1 (Triết)", 2, "MAJOR", "Done"),
         
         # Sprint 2
-        ("T2.1", "Sprint 2 (PA2)", "Management", "Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan", "docs/pa2/PROJECT_PLAN.md", "R1 (Triết)", 5, "CRITICAL", "Planned"),
+        ("T2.1", "Sprint 2 (PA2)", "Management", "Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan", "docs/pa2/PROJECT_PLAN.md", "R1 (Triết)", 5, "CRITICAL", "In Progress"),
+        ("T2.3", "Sprint 2 (PA2)", "SDD / Spec Kit", "Spec Kit Initialization in /src: constitution.md and initial spec artifacts", "src/constitution.md, .specify/", "R4 (Tuấn)", 3, "CRITICAL", "Done"),
         ("T2.R", "Sprint 2 (PA2)", "QA / Review", "Verify Backend Build 1: PostgreSQL migrations, Argon2id auth, JWT rotation, and room lobby endpoints", "api/tests/unit/test_auth.py", "R2 (Tài)", 2, "MAJOR", "Planned"),
         
         # Sprint 3
@@ -243,10 +244,10 @@ def build_roadmap_excel(output_path: Path):
     actions = [
         ("Step 1", "Local Docker Compose Infrastructure Setup", "docker-compose.yml, .env.example", "Run PostgreSQL 16, Redis 7, LiveKit locally with 1 command", "Everyone", "Completed", "Done"),
         ("Step 2", "Update README.md with Quick Start & Health Checks", "README.md", "Teammates and evaluators can boot and verify the system in 2 mins", "Everyone / Graders", "Completed", "Done"),
-        ("Step 3", "Monorepo Directory Layout Scaffolding", "api/, web/, workers/, tests/, scripts/", "Establishes clean architecture layout per TESTING_PLAN.md", "Tài (R2), Triết (R1)", "15 mins", "In Progress"),
-        ("Step 4", "Backend & Frontend Linter Configurations", "api/pyproject.toml, web/eslint.config.js", "Enforce Ruff, Mypy, ESLint so code committed is clean and formatted", "All coders", "30 mins", "Planned"),
-        ("Step 5", "GitHub Actions CI Pipeline (.github/workflows/ci.yml)", ".github/workflows/ci.yml", "Automates linting, security audits (pip-audit), tests, and latexmk build", "All PRs", "1 hour", "Planned"),
-        ("Step 6", "Draft PA2 Project Plan Document (T2.1)", "docs/pa2/PROJECT_PLAN.md", "Formal PA2 deliverable: Goals, risks, 5-sprint schedule, build roadmap", "Course submission", "2 hours", "Planned"),
+        ("Step 3", "Monorepo Directory Layout Scaffolding", "api/, web/, workers/, tests/, scripts/", "Establishes clean architecture layout per TESTING_PLAN.md", "Tài (R2), Triết (R1)", "Completed", "Done"),
+        ("Step 4", "Backend & Frontend Linter Configurations", "api/pyproject.toml, web/eslint.config.js", "Enforce Ruff, Mypy, ESLint so code committed is clean and formatted", "All coders", "Completed", "Done"),
+        ("Step 5", "GitHub Actions CI Pipeline (.github/workflows/ci.yml)", ".github/workflows/ci.yml", "Automates linting, security audits, tests, and latexmk build", "All PRs", "Completed", "Done"),
+        ("Step 6", "Draft PA2 Project Plan Document (T2.1)", "docs/pa2/PROJECT_PLAN.md", "Formal PA2 deliverable: Goals, risks, 5-sprint schedule, build roadmap", "Course submission", "2 hours", "In Progress"),
     ]
     
     for row_idx, act in enumerate(actions, start=4):
