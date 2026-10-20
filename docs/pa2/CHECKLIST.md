@@ -80,7 +80,7 @@ Owner: **Tuấn**. Reviewer: **Khoa**. Output: `docs/pa2/PROJECT_PLAN.md`. Lộc
 - [ ] **A-6.2** Create 5 sprints named `Sprint 1 (PA1)` to `Sprint 5 (PA5)`.
 - [ ] **A-6.3** Create one Epic per Build: Build 1 to Build 4.
 - [ ] **A-6.4** Import the tasks from the Jira import table in `SPRINT_TASKS.md`. Set the assignee, reviewer and branch name (from its branch table) in the description.
-- [ ] **A-6.5** Describe in the plan how Jira IDs map to the Task IDs in `SPRINT_TASKS.md` (e.g., "Jira `SCRUM-12` = T2.5").
+- [ ] **A-6.5** Describe in the plan how Jira IDs map to the Task IDs in `SPRINT_TASKS.md` (e.g., "Jira `SCRUM-24` = T2.5").
 
 ### A-7 Review
 - [ ] **A-7.1** Khoa reviews against the PA2 rubric in `PA2_OVERVIEW.md` Part A (15 pts). Tuấn fixes and re-requests review.

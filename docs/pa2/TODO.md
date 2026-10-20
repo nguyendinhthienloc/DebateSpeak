@@ -19,7 +19,7 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 | Task | Branch | Reviewer | Jira key |
 |---|---|---|---|
-| T2.3 Spec Kit evidence (checklist §6) | `feature/T2.3-speckit-evidence` | Tài | |
+| T2.3 Spec Kit evidence (checklist §6) | `feature/T2.3-speckit-evidence` | Tài | SCRUM-22 |
 | Jira project setup (checklist A-6) | — (no branch) | — | |
 | Final `pa2` → `dev` PR (after Sprint Review) | `pa2` → `dev` | Tài | |
 
@@ -30,7 +30,7 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 - T2.7 room API (Tài)
 - T2.7 lobby UI (Triết)
 
-**Also:** Milestone 1 demo lead (checklist §11).
+**Also:** Milestone 1 demo lead (checklist §11), Jira SCRUM-30.
 
 ---
 
@@ -40,9 +40,9 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 | Task | Branch | Reviewer | Jira key |
 |---|---|---|---|
-| T2.2 Vision Document assembly (checklist §5) | `feature/T2.2-vision-document` | Tuấn | |
-| T2.6 Build 1 frontend (checklist §9) | `feature/T2.6-frontend-auth` (*after G1*) | Tài | |
-| T2.7 lobby UI, R-1 to R-4 (checklist §10) | `feature/T2.7-lobby-ui` (*after G1*) | Lộc | |
+| T2.2 Vision Document assembly (checklist §5) | `feature/T2.2-vision-document` | Tuấn | SCRUM-21 |
+| T2.6 Build 1 frontend (checklist §9) | `feature/T2.6-frontend-auth` (*after G1*) | Tài | SCRUM-25 |
+| T2.7 lobby UI, R-1 to R-4 (checklist §10) | `feature/T2.7-lobby-ui` (*after G1*) | Lộc | SCRUM-27 |
 | Your own B-5 feature paragraphs (checklist B-5) | `feature/B5-drafts-<first-name>` | Tuấn | |
 
 **You review**
@@ -60,8 +60,8 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 | Task | Branch | Reviewer | Jira key |
 |---|---|---|---|
-| T2.5 Build 1 backend: auth and migrations (checklist §8) | `feature/T2.5-auth-backend` (*after G1*) | Lộc | |
-| T2.7 room API, R-5 and R-6 (checklist §10) | `feature/T2.7-room-api` (*after G1*) | Lộc | |
+| T2.5 Build 1 backend: auth and migrations (checklist §8) | `feature/T2.5-auth-backend` (*after G1*) | Lộc | SCRUM-24 |
+| T2.7 room API, R-5 and R-6 (checklist §10) | `feature/T2.7-room-api` (*after G1*) | Lộc | SCRUM-26 |
 | B-6.1 room lifecycle diagram (checklist B-6.1) | with T2.5 | Lộc | |
 
 **You review**
@@ -79,8 +79,8 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 | Task | Branch | Reviewer | Jira key |
 |---|---|---|---|
-| T2.4 AI Usage Report and Weekly Report, with minutes and AI log (checklist §7) | `feature/T2.4-weekly-report` | Triết | |
-| T2.9 Milestone 1 end-to-end smoke test, R-7 (checklist §10) | `feature/T2.9-m1-smoke-e2e` | Tài | |
+| T2.4 AI Usage Report and Weekly Report, with minutes and AI log (checklist §7) | `feature/T2.4-weekly-report` | Triết | SCRUM-23 |
+| T2.9 Milestone 1 end-to-end smoke test, R-7 (checklist §10) | `feature/T2.9-m1-smoke-e2e` | Tài | SCRUM-29 |
 | Your own B-5 feature paragraphs (checklist B-5) | `feature/B5-drafts-khoa` | Triết | |
 
 **You review**
@@ -95,9 +95,9 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 | Task | Branch | Reviewer | Jira key |
 |---|---|---|---|
-| Gate G1 spec (checklist §3) | `feature/G1-spec-build1` | Lộc | |
-| T2.1 Project Plan (checklist §4) | `feature/T2.1-project-plan` | Khoa | |
-| T2.8 room state machine and transition tests, BE-4.1 and R-6 (checklist §8, §10) | `feature/T2.8-room-state-machine` (*after G1*) | Tài | |
+| Gate G1 spec (checklist §3) | `feature/G1-spec-build1` | Lộc | SCRUM-19 |
+| T2.1 Project Plan (checklist §4) | `feature/T2.1-project-plan` | Khoa | SCRUM-20 |
+| T2.8 room state machine and transition tests, BE-4.1 and R-6 (checklist §8, §10) | `feature/T2.8-room-state-machine` (*after G1*) | Tài | SCRUM-28 |
 | Your own B-5 feature paragraphs (checklist B-5) | `feature/B5-drafts-<first-name>` | Triết | |
 
 **You review**
@@ -107,4 +107,4 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 ---
 
-Jira project key: `SCRUM` (project named "DebateSpeak"). Each member signs in to Jira with their own account. Fill in the Jira key column once the issues exist, then update the checklist to match.
+Jira project key: `SCRUM` (project named "DebateSpeak"). Each member signs in to Jira with their own account. Keys are filled in from the Jira import (12 issues in the SCRUM project). Epics: Build 1 = SCRUM-15, Build 2 = SCRUM-16, Build 3 = SCRUM-17, Build 4 = SCRUM-18.
