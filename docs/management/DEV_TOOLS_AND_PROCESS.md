@@ -140,14 +140,16 @@ All 5 team members have registered and verified educational developer accounts:
 
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
+*Note: these are the planned PA1 tasks. The PA1 issues in the SCRUM project (for example SCRUM-1, SCRUM-7, SCRUM-9 to SCRUM-11) do not map one-to-one to this table, so no task keys are recorded here.*
+
 | Task Key  | Task Summary                                                    | Assignee                              | Issue Type     | Story Points | Target Completion |
 | --------- | --------------------------------------------------------------- | ------------------------------------- | -------------- | ------------ | ----------------- |
-| `DEBATESPEAK-1` | Author Project Proposal & 10 Functional Groups                  | Nguyễn Bảo Minh Triết (24125047)   | Documentation  | 5 pts        | Week 1, Day 4     |
-| `DEBATESPEAK-2` | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Nguyễn Hồng Tấn Tài (24125078)    | Research/Doc   | 5 pts        | Week 1, Day 6     |
-| `DEBATESPEAK-3` | Draft Team Contract & Accountability Guidelines                 | Nguyễn Anh Khoa (24125058)           | Documentation  | 3 pts        | Week 2, Day 2     |
-| `DEBATESPEAK-4` | Author Software Architecture & System Spec Document             | Trần Lê Anh Tuấn (24125107)        | Technical Spec | 8 pts        | Week 2, Day 4     |
-| `DEBATESPEAK-5` | Initialize Git Monorepo, Directory Hierarchy & CI Linters       | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 1, Day 3     |
-| `DEBATESPEAK-6` | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev)           | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 2, Day 3     |
-| `DEBATESPEAK-7` | Verify Educational AI Coding Accounts (Copilot/Cursor)          | All                                   | Administrative | 1 pt         | Week 1, Day 2     |
-| `DEBATESPEAK-8` | Setup `latexmk` pipeline & compile academic PA1 report        | Nguyễn Đình Thiên Lộc (24125093) | Management     | 2 pts        | Week 2, Day 5     |
-| `DEBATESPEAK-9` | Compile PA1 Markdown Package & Export Submission PDFs           | Nguyễn Bảo Minh Triết (24125047)   | Management     | 2 pts        | Week 2, Day 6     |
+| — | Author Project Proposal & 10 Functional Groups                  | Nguyễn Bảo Minh Triết (24125047)   | Documentation  | 5 pts        | Week 1, Day 4     |
+| — | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Nguyễn Hồng Tấn Tài (24125078)    | Research/Doc   | 5 pts        | Week 1, Day 6     |
+| — | Draft Team Contract & Accountability Guidelines                 | Nguyễn Anh Khoa (24125058)           | Documentation  | 3 pts        | Week 2, Day 2     |
+| — | Author Software Architecture & System Spec Document             | Trần Lê Anh Tuấn (24125107)        | Technical Spec | 8 pts        | Week 2, Day 4     |
+| — | Initialize Git Monorepo, Directory Hierarchy & CI Linters       | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 1, Day 3     |
+| — | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev)           | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 2, Day 3     |
+| — | Verify Educational AI Coding Accounts (Copilot/Cursor)          | All                                   | Administrative | 1 pt         | Week 1, Day 2     |
+| — | Setup `latexmk` pipeline & compile academic PA1 report        | Nguyễn Đình Thiên Lộc (24125093) | Management     | 2 pts        | Week 2, Day 5     |
+| — | Compile PA1 Markdown Package & Export Submission PDFs           | Nguyễn Bảo Minh Triết (24125047)   | Management     | 2 pts        | Week 2, Day 6     |
