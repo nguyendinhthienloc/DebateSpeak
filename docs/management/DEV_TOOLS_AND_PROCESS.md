@@ -1,14 +1,15 @@
 # Part E: Development Tools & Process Setup — DebateSpeak AI
 
-| Field | Description |
-|---|---|
-| Course | CS300 / CSC13002 — Introduction to Software Engineering |
-| Document | **Part E: Scrum Process, Engineering Tooling Setup & Multi-Sprint WBS** |
-| Score Allocation | Part E (5 Points) |
+| Field            | Description                                                                   |
+| ---------------- | ----------------------------------------------------------------------------- |
+| Course           | CS300 / CSC13002 — Introduction to Software Engineering                      |
+| Document         | **Part E: Scrum Process, Engineering Tooling Setup & Multi-Sprint WBS** |
+| Score Allocation | Part E (5 Points)                                                             |
 
 ---
 
 ## 1. Scrum Methodology & Incremental Development Strategy (5 Sprints = 5 PAs)
+
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
 Our team adheres strictly to the **Agile Scrum framework combined with an Incremental Development model** structured across **5 Sprints**, corresponding directly to the 5 course Project Assignments (PA1–PA5):
@@ -26,8 +27,9 @@ graph TD
 ```
 
 ### Incremental Development Principles
+
 1. **Vertical Slices Over Horizontal Layers:** Each increment integrates frontend UI, backend logic, and database persistence so that the increment is immediately testable by end users.
-2. **Continuous Integration & Regression Guarding:** Code from each increment is merged into `develop` only after automated tests pass. Existing working functionality is never broken to support upcoming increments.
+2. **Continuous Integration & Regression Guarding:** Code from each increment is merged into `pa2` only after automated tests pass, and the sprint branch is merged into `dev` only after Sprint Review. Existing working functionality is never broken to support upcoming increments.
 3. **Spec Kit & Traceability:** Starting from PA2 initialization, Spec Kit artifacts guide feature implementations with strict traceability from use cases to tests.
 
 ```mermaid
@@ -44,16 +46,18 @@ graph LR
 - **Sprint Review & Retrospective (Final Day of Sprint):** Demonstrates working software against acceptance criteria, conducts an honest team retrospective, and compiles PA submission artifacts.
 
 ### Team Meeting Evidence & Automated AI Minutes
+
 As part of our Scrum cadence, team meetings are conducted synchronously via Google Meet with automated AI note-taking and minutes extraction (Gemini in Google Meet), generating structured meeting artifacts distributed directly to team members:
 
-| Live Scrum Meeting Session | Automated Gemini Meeting Minutes |
-|:---:|:---:|
-| ![Google Meet In-Call Session](./screenshots/meeting_google_meet_call.png) | ![Gemini Automated Meeting Notes](./screenshots/meeting_gemini_notes_email_1.png) |
+|                                    Live Scrum Meeting Session                                    |                                 Automated Gemini Meeting Minutes                                 |
+| :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+|            ![Google Meet In-Call Session](./screenshots/meeting_google_meet_call.png)            |        ![Gemini Automated Meeting Notes](./screenshots/meeting_gemini_notes_email_1.png)        |
 | *Figure 1.1: Live Scrum check-in meeting on Google Meet with Gemini AI note-taking activated.* | *Figure 1.2: Automated meeting notes, concept review, and action items distributed via email.* |
 
 ---
 
 ## 2. Jira Task Management Standards
+
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Anh Khoa (24125058) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 The team utilizes **Jira** for end-to-end task tracking following strict course guidelines:
@@ -68,18 +72,38 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 
 ---
 
+## 2A. Platforms of Work
+
+Every platform the team uses, who owns its setup, and how it connects. Keep this table in sync with `docs/pa2/TODO.md` and `docs/pa2/CHECKLIST.md`.
+
+| Platform | Used for | Connection / location | Owner |
+|---|---|---|---|
+| GitHub | Repository, branches, PRs, reviews, CI (Actions) | Git remote `origin`; branches per §3 below | Lộc (release custodian) |
+| Jira | Tasks, sprints, board, burndown | Project key `SCRUM` (named "DebateSpeak"); Claude connects through the Atlassian MCP connector at `https://mcp.atlassian.com/v2/mcp` | Lộc (creates project, A-6) |
+| Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (T2.4 minutes) |
+| VS Code | Local editor; Atlassian extension for viewing Jira | Local install per member | Each member |
+| Docker Compose | Local PostgreSQL 16, Redis 7, LiveKit dev | `docker-compose.yml` | Lộc |
+| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (T2.3) |
+| LaTeX (`latexmk`) | Academic reports | `report/report.tex` | Lộc |
+
+Each member signs in to Jira and GitHub with their own account. Do not share tokens or passwords in chat or in the repository.
+
 ## 3. Git Workflow & Version Control Invariants
+
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Hồng Tấn Tài (24125078) | Edited by: Nguyễn Bảo Minh Triết (24125047)*
 
 - **Branching Strategy (Git Flow):**
   - `main`: Production-ready, stable releases (tagged `v1.0-pa1`, `v2.0-pa2`, etc.). Protected branch; direct pushes prohibited.
-  - `develop`: Shared integration branch for active sprint development.
-  - `feature/<jira-key>-<short-description>`: Individual feature branches branched off `develop`.
-  - `bugfix/<jira-key>-<short-description>`: Defect fixes branched off `develop`.
+  - `dev`: Shared integration branch. Receives each sprint's branch after Sprint Review.
+  - `pa2` (and `pa3`, `pa4`, `pa5` for later sprints): Sprint branch, branched off `dev`. All task PRs for the sprint merge here.
+  - `feature/<task-ID-or-jira-key>-<short-description>`: One branch per task and per performer, branched off the sprint branch (`pa2`). PR target is always the sprint branch.
+  - `bugfix/<task-ID-or-jira-key>-<short-description>`: Defect fixes, branched off the sprint branch.
+  - Merge path: `feature/*` → `pa2` (task PR, one reviewer) → `dev` (one PR per sprint, opened by the release custodian) → `main` (tagged release).
+  - Per-member branch instructions for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md).
 - **Sprint 1 Centralized Documentation Custodian Role:**
   - During Sprint 1 (conception & foundation phase), all five team members collaborated in drafting, review, and editing of project deliverables (documented verbatim via per-section headers).
   - To prevent Git merge conflicts during rapid simultaneous drafting of Markdown files and ensure uniform LaTeX compilation via `latexmk`, **Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager**, centralizing integration, running linters, and packaging assignment archives.
-  - Starting from Sprint 2 (PA2), each team member will independently branch, commit, and open PRs for their assigned vertical slice implementation tasks.
+  - Starting from Sprint 2 (PA2), each team member will independently branch from `pa2`, commit, and open PRs into `pa2` for their assigned vertical slice implementation tasks.
 - **Pull Request Rules:**
   - Every PR requires passing automated CI checks (linting, tests, build).
   - Every PR requires at least **one approved code review** from a designated peer reviewer before merging.
@@ -90,6 +114,7 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 ---
 
 ## 4. Spec-Driven Development & Spec Kit Integration
+
 *Performed by: Trần Lê Anh Tuấn (24125107) | Reviewed by: Nguyễn Đình Thiên Lộc (24125093) | Edited by: Nguyễn Anh Khoa (24125058)*
 
 - In accordance with course guidelines, the team adopts **Specification-Driven Development** starting from PA1 and preparing for **Spec Kit** initialization in PA2 (in `/src`).
@@ -101,25 +126,28 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 ---
 
 ## 5. AI Coding Tooling & Educational Accounts
+
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Anh Khoa (24125058) | Edited by: Trần Lê Anh Tuấn (24125107)*
 
 All 5 team members have registered and verified educational developer accounts:
+
 - **GitHub Copilot for Students:** Activated via the GitHub Student Developer Pack on university email domains (`@hcmus.edu.vn`). Used for inline autocompletion and unit test scaffolding.
 - **Codex/ Antigravity:** Configured with local project context (`AGENTS.md`, `.cursorrules`) to assist with full-stack refactoring, FastAPI schema validation, and React component styling under strict quote-grounding constraints.
 
 ---
 
 ## 6. Sprint 1 Work Breakdown Structure (PA1 Tasks)
+
 *Performed by: Nguyễn Đình Thiên Lộc (24125093) | Reviewed by: Nguyễn Bảo Minh Triết (24125047) | Edited by: Nguyễn Hồng Tấn Tài (24125078)*
 
-| Task Key | Task Summary | Assignee | Issue Type | Story Points | Target Completion |
-|---|---|---|---|---|---|
-| `DSP-1` | Author Project Proposal & 10 Functional Groups | Nguyễn Bảo Minh Triết (24125047) | Documentation | 5 pts | Week 1, Day 4 |
-| `DSP-2` | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Nguyễn Hồng Tấn Tài (24125078) | Research/Doc | 5 pts | Week 1, Day 6 |
-| `DSP-3` | Draft Team Contract & Accountability Guidelines | Nguyễn Anh Khoa (24125058) | Documentation | 3 pts | Week 2, Day 2 |
-| `DSP-4` | Author Software Architecture & System Spec Document | Trần Lê Anh Tuấn (24125107) | Technical Spec| 8 pts | Week 2, Day 4 |
-| `DSP-5` | Initialize Git Monorepo, Directory Hierarchy & CI Linters | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup | 3 pts | Week 1, Day 3 |
-| `DSP-6` | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev) | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup | 3 pts | Week 2, Day 3 |
-| `DSP-7` | Verify Educational AI Coding Accounts (Copilot/Cursor) | All | Administrative | 1 pt | Week 1, Day 2 |
-| `DSP-8` | Setup `latexmk` pipeline & compile academic PA1 report | Nguyễn Đình Thiên Lộc (24125093) | Management | 2 pts | Week 2, Day 5 |
-| `DSP-9` | Compile PA1 Markdown Package & Export Submission PDFs | Nguyễn Bảo Minh Triết (24125047) | Management | 2 pts | Week 2, Day 6 |
+| Task Key  | Task Summary                                                    | Assignee                              | Issue Type     | Story Points | Target Completion |
+| --------- | --------------------------------------------------------------- | ------------------------------------- | -------------- | ------------ | ----------------- |
+| `DEBATESPEAK-1` | Author Project Proposal & 10 Functional Groups                  | Nguyễn Bảo Minh Triết (24125047)   | Documentation  | 5 pts        | Week 1, Day 4     |
+| `DEBATESPEAK-2` | Conduct Existing App Survey (ArguFight, Khaos Live, ELSA Speak) | Nguyễn Hồng Tấn Tài (24125078)    | Research/Doc   | 5 pts        | Week 1, Day 6     |
+| `DEBATESPEAK-3` | Draft Team Contract & Accountability Guidelines                 | Nguyễn Anh Khoa (24125058)           | Documentation  | 3 pts        | Week 2, Day 2     |
+| `DEBATESPEAK-4` | Author Software Architecture & System Spec Document             | Trần Lê Anh Tuấn (24125107)        | Technical Spec | 8 pts        | Week 2, Day 4     |
+| `DEBATESPEAK-5` | Initialize Git Monorepo, Directory Hierarchy & CI Linters       | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 1, Day 3     |
+| `DEBATESPEAK-6` | Setup Docker Compose (PostgreSQL, Redis, LiveKit dev)           | Nguyễn Đình Thiên Lộc (24125093) | DevOps/Setup   | 3 pts        | Week 2, Day 3     |
+| `DEBATESPEAK-7` | Verify Educational AI Coding Accounts (Copilot/Cursor)          | All                                   | Administrative | 1 pt         | Week 1, Day 2     |
+| `DEBATESPEAK-8` | Setup `latexmk` pipeline & compile academic PA1 report        | Nguyễn Đình Thiên Lộc (24125093) | Management     | 2 pts        | Week 2, Day 5     |
+| `DEBATESPEAK-9` | Compile PA1 Markdown Package & Export Submission PDFs           | Nguyễn Bảo Minh Triết (24125047)   | Management     | 2 pts        | Week 2, Day 6     |

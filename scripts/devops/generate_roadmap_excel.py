@@ -276,7 +276,7 @@ def build_roadmap_excel(output_path: Path):
     ws3.set_tab_color("#059669")
     
     ws3.merge_range("A1:F1", "QA Testing Strategy & Quality Gates (NFR-15 Enforcement)", title_fmt)
-    ws3.merge_range("A2:F2", "Automated gates required for merging into develop and releasing to main", subtitle_fmt)
+    ws3.merge_range("A2:F2", "Automated gates required for merging into the sprint branch, dev and releasing to main", subtitle_fmt)
     
     headers_ws3 = ["Test Level", "Target Component", "Testing Framework", "Success Criterion", "CI Automation", "Frequency"]
     for col_idx, h in enumerate(headers_ws3):

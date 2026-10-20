@@ -36,7 +36,7 @@ The suggested five-block breakdown is merged into four two-week sprints for spri
 
 **Stretch goals (do not start until all MVP acceptance criteria pass):** live video; advanced pronunciation scoring; multiple simultaneous AI judges; tournaments; rankings/ELO; audience mode; advanced real-time fact-check overlays; teacher dashboard; sophisticated CEFR progression model.
 
-**Scope-cut order if the project falls behind** (cut first → last): PDF export → progress charts → fallacy detection → Skeptic pass on claims → topic recommendations → timed-turn format (keep free-flow) → admin AI-config UI (keep config file). The Must requirements are never cut.
+**Scope-cut order if the project falls behind** (cut first → last): human evaluator grading (FR-55, FR-56) → PDF export → progress charts → fallacy detection → Skeptic pass on claims → topic recommendations → timed-turn format (keep free-flow) → admin AI-config UI (keep config file). The Must requirements are never cut.
 
 ---
 

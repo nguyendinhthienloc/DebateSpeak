@@ -1,7 +1,7 @@
 # PA2 Checklist — Project Plan, Vision Document & Build 1
 
 > **Status:** DRAFT for revision before Jira import.
-> **Sprint:** Sprint 2 (Weeks 3–4), PA2 — 45 pts. Source of truth for the sprint scope: [SPRINT_TASKS.md](SPRINT_TASKS.md) (T2.1–T2.7) and [PA2_OVERVIEW.md](../assignments/PA2_OVERVIEW.md).
+> **Sprint:** Sprint 2 (Weeks 3–4), PA2 — 45 pts. Source of truth for the sprint scope: [SPRINT_TASKS.md](../management/SPRINT_TASKS.md) (T2.1–T2.7) and [PA2_OVERVIEW.md](../assignments/PA2_OVERVIEW.md).
 
 ## 0. Open decisions to confirm before Jira
 
@@ -13,44 +13,9 @@ These conflicts exist in the current docs. The checklist below assumes the first
 4. **Topic library (FG-02).** `TESTING_PLAN.md` AC-1.3 (topic filter, admin CRUD) is in Build 1, but no T2.x task covers it. **Assumed: out of PA2, moved to Sprint 3.** Add a task if you disagree.
 5. **Auth token storage.** Choose httpOnly cookie or in-memory access token + refresh cookie. This is a security decision and needs Tài and Triết to agree (task B-2).
 
-## 1. Owner summary
+## 1. Owners, branches and Jira mapping
 
-| Person | Role | Performs (PA2) | Reviews (whose work) |
-|---|---|---|---|
-| **Lộc** (24125093) | R5 DevOps & QA / Release Custodian | T2.3 Spec Kit evidence; Jira project setup (A-6); final `pa2` → `dev` PR | G1 spec (Tuấn); T2.5 (Tài); T2.7 room API (Tài); T2.7 lobby UI (Triết) |
-| **Triết** (24125047) | R1 Frontend & WebRTC/Audio Lead | T2.2 Vision assembly; T2.6 Frontend; T2.7 lobby UI | T2.4 (Khoa); B-5 drafts from Khoa, Tài, Lộc |
-| **Tài** (24125078) | R2 Backend & Real-Time Media Lead | T2.5 Backend; T2.7 room API | T2.3 (Lộc); T2.6 (Triết); T2.8 (Tuấn); T2.9 M1 smoke test (Khoa) |
-| **Khoa** (24125058) | R3 AI Audio & Speech Pipeline Lead | T2.4 AI Usage & Weekly Report; T2.9 M1 smoke test (R-7) | T2.1 Project Plan (Tuấn) |
-| **Tuấn** (24125107) | R4 AI Analysis & Orchestrator Lead | G1 spec; T2.1 Project Plan; T2.8 Room state machine | T2.2 (Triết); Triết's B-5 drafts |
-
-## 1A. Branches and merge rules (read before creating any branch)
-
-Branch model: `main` (releases) ← `dev` (integration) ← `pa2` (Sprint 2 branch) ← `feature/...` (one per task and performer).
-
-1. Start from the latest sprint branch: `git checkout pa2`, `git pull origin pa2`, then `git checkout -b <branch-name>` using the table below.
-2. Branch names use the task ID now (`feature/T2.5-auth-backend`). Once Jira keys exist (A-6), use `feature/<JIRA-KEY>-<short-name>` and keep the task ID in the PR title.
-3. Every PR targets `pa2`. Never target `dev` or `main` from a feature branch.
-4. Each task has one performer and one reviewer. The reviewer approves, CI passes, then the performer merges into `pa2` and deletes the feature branch.
-5. Nobody pushes directly to `pa2`, `dev` or `main`.
-6. After Sprint Review, Lộc (release custodian) opens one PR `pa2` → `dev`. Reviewer: Tài. The sprint is "in dev" only after that PR merges.
-7. Build 1 code (rows marked *after G1*) starts only after the G1 spec PR is merged into `pa2`.
-
-| Member | Branch to create from `pa2` | Task(s) | PR reviewer |
-|---|---|---|---|
-| Tuấn | `feature/T2.1-project-plan` | T2.1 Project Plan (§4) | Khoa |
-| Khoa | `feature/T2.9-m1-smoke-e2e` | R-7 end-to-end smoke test (§10) | Tài |
-| Tuấn | `feature/G1-spec-build1` | Gate G1 spec (§3) | Lộc |
-| Lộc | `feature/T2.3-speckit-evidence` | C-3 to C-6 (§6) | Tài |
-| Tuấn | `feature/T2.8-room-state-machine` (*after G1*) | State machine and transition tests, BE-4.1 and R-6 (§8, §10) | Tài |
-| Triết | `feature/T2.2-vision-document` | Vision Document assembly and B-6.2 diagram (§5) | Tuấn |
-| Triết | `feature/T2.6-frontend-auth` (*after G1*) | Build 1 frontend (§9) | Tài |
-| Triết | `feature/T2.7-lobby-ui` (*after G1*) | Lobby UI, R-1 to R-4 (§10) | Lộc |
-| Tài | `feature/T2.5-auth-backend` (*after G1*) | Build 1 backend (§8) and B-6.1 diagram | Lộc |
-| Tài | `feature/T2.7-room-api` (*after G1*) | Room API and tests, R-5 and R-6 (§10) | Lộc |
-| Khoa | `feature/T2.4-weekly-report` | `WEEKLY_REPORT.md`, `AI_USAGE_LOG.md`, minutes (§7) | Triết |
-| Each author | `feature/B5-drafts-<first-name>` (e.g. `feature/B5-drafts-khoa`) | Own feature paragraphs in `docs/pa2/drafts/<name>.md` (B-5.1) | Triết; Triết's own drafts go to Tuấn |
-
-Triết merges the approved drafts into `feature/T2.2-vision-document` (B-5.3). Triết and Tài wait for the G1 PR before branching.
+Moved to [docs/pa2/TODO.md](TODO.md). Read its branch rules before creating any branch.
 
 ## 2. Sprint 2 timeline (suggested)
 
@@ -84,7 +49,7 @@ Owner: **Tuấn**. Reviewer: **Khoa**. Output: `docs/pa2/PROJECT_PLAN.md`. Lộc
 
 ### A-1 Setup
 - [ ] **A-1.1** Create `docs/pa2/` and add `PROJECT_PLAN.md` with the section headings only: Overview, Goals, Scope, Deliverables, Assumptions, Team Organisation, Risks, Sprint Schedule, Build Plan, Jira Integration.
-- [ ] **A-1.2** Copy the role matrix from `SPRINT_TASKS.md` §1 into the Team Organisation section. Check each name and student ID against the table in `AGENTS.md` §3.
+- [ ] **A-1.2** Copy the role matrix from `../management/SPRINT_TASKS.md` §1 (Team Role Allocation) into the Team Organisation section. Check each name and student ID against the table in `AGENTS.md` §3.
 
 ### A-2 Overview, goals, scope
 - [ ] **A-2.1** Write a 3–5 sentence project overview. Source: `PROJECT_PROPOSAL.md` opening section.
@@ -111,11 +76,11 @@ Owner: **Tuấn**. Reviewer: **Khoa**. Output: `docs/pa2/PROJECT_PLAN.md`. Lộc
 - [ ] **A-5.3** Check the schedule against `ROADMAP.md` §1. Fix any disagreement in the same PR.
 
 ### A-6 Jira integration
-- [ ] **A-6.1** Create a Jira project (or confirm the existing one). Name it `DEBATESPEAK`. Claude connects to it through the Atlassian MCP connector at `https://mcp.atlassian.com/v2/mcp`; each member signs in with their own Atlassian account.
+- [ ] **A-6.1** Create a Jira project (or confirm the existing one). Use the existing project with key `SCRUM` (named "DebateSpeak"); do not create a new one. Claude connects to it through the Atlassian MCP connector at `https://mcp.atlassian.com/v2/mcp`; each member signs in with their own Atlassian account.
 - [ ] **A-6.2** Create 5 sprints named `Sprint 1 (PA1)` to `Sprint 5 (PA5)`.
 - [ ] **A-6.3** Create one Epic per Build: Build 1 to Build 4.
-- [ ] **A-6.4** Import the tasks from §13 of this checklist. Set the assignee, reviewer and branch name (§1A) in the description.
-- [ ] **A-6.5** Describe in the plan how Jira IDs map to the Task IDs in `SPRINT_TASKS.md` (e.g., "Jira `DEBATESPEAK-12` = T2.5").
+- [ ] **A-6.4** Import the tasks from the Jira import table in `SPRINT_TASKS.md`. Set the assignee, reviewer and branch name (from its branch table) in the description.
+- [ ] **A-6.5** Describe in the plan how Jira IDs map to the Task IDs in `SPRINT_TASKS.md` (e.g., "Jira `SCRUM-12` = T2.5").
 
 ### A-7 Review
 - [ ] **A-7.1** Khoa reviews against the PA2 rubric in `PA2_OVERVIEW.md` Part A (15 pts). Tuấn fixes and re-requests review.
@@ -199,7 +164,7 @@ Owner: **Khoa**. Reviewer: **Triết**. Output: `docs/pa2/WEEKLY_REPORT.md`, `do
 - [ ] **D-1.3** Khoa checks the log at Sprint Review. Any row missing a human-change note is returned.
 
 ### D-2 Meetings
-- [ ] **D-2.1** Sprint Planning: prepare agenda (goal, task list from §13, capacity). Record minutes in `docs/pa2/MEETINGS/`.
+- [ ] **D-2.1** Sprint Planning: prepare agenda (goal, task list from the Jira import table in `SPRINT_TASKS.md`, capacity). Record minutes in `docs/pa2/MEETINGS/`.
 - [ ] **D-2.2** Standup 1 (Week 3 mid): minutes with yesterday / today / blockers per member.
 - [ ] **D-2.3** Standup 2 (Week 4 mid): same format.
 - [ ] **D-2.4** Sprint Review: demo Build 1 to the team (Milestone 1 steps in §9). Record minutes.
@@ -301,25 +266,13 @@ Target: two users in two browsers.
 - [ ] Every T2.x task has: code or document merged to `pa2`, reviewer approval, Jira ticket closed, task ID (and Jira ID once available) in the PR title.
 - [ ] `PROJECT_PLAN.md`, `VISION_DOCUMENT.md`, `WEEKLY_REPORT.md`, `AI_USAGE_LOG.md`, `SPECKIT_TRAINING.md` all present under `docs/pa2/`.
 - [ ] Spec G1 merged before any Build 1 code.
-- [ ] `pa2` merged into `dev` after Sprint Review (§1A step 6), with CI green on `pa2` and on `dev`. `main` is updated only for the tagged release.
+- [ ] `pa2` merged into `dev` after Sprint Review (branch rule 6 in `SPRINT_TASKS.md`), with CI green on `pa2` and on `dev`. `main` is updated only for the tagged release.
 - [ ] No `.env` files, secrets, or absolute paths in the diff (AGENTS.md §1–§2).
 - [ ] Milestone 1 demo recorded.
 - [ ] Sprint Review minutes and Jira screenshots in place.
 
 ---
 
-## 13. Task summary for Jira import
+## 13. Jira import
 
-| Jira task | Task ID | Owner | Reviewer | Depends on | Output |
-|---|---|---|---|---|---|
-| Gate G1 spec | G1 | Tuấn | Lộc | — | Spec PR merged |
-| Project Plan | T2.1 | Tuấn | Khoa | — | `docs/pa2/PROJECT_PLAN.md` |
-| Vision Document | T2.2 | Triết | Tuấn | B-5 drafts from all | `docs/pa2/VISION_DOCUMENT.md` |
-| Spec Kit evidence | T2.3 | Lộc | Tài | — | `docs/pa2/SPECKIT_TRAINING.md` |
-| AI Usage & Weekly Report | T2.4 | Khoa | Triết | all members' log rows | `docs/pa2/WEEKLY_REPORT.md` |
-| Build 1 Backend | T2.5 | Tài | Lộc | G1 | `api/app/auth/`, migrations |
-| Build 1 Frontend | T2.6 | Triết | Tài | G1.3 contract | `web/src/pages/auth/` |
-| Build 1 Room lifecycle | T2.7 | Tài + Triết | Lộc | T2.5 | `api/app/rooms/`, `web/src/pages/rooms/` |
-| Room state machine | T2.8 | Tuấn | Tài | G1 | `api/app/rooms/state.py`, tests |
-| M1 end-to-end smoke test | T2.9 | Khoa | Tài | T2.5–T2.7 | `tests/e2e/` smoke test |
-| Milestone 1 demo | M1 | All (lead Lộc) | — | T2.5–T2.9 | Recording + screenshots |
+Moved to [docs/pa2/TODO.md](TODO.md) §4.

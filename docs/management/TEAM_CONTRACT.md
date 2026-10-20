@@ -65,8 +65,10 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
   - **TypeScript (Frontend):** Enforced via **ESLint** and **Prettier** with strict TypeScript compiler checks (`noImplicitAny: true`).
 - **Git Branching Strategy:**
-  - Git Flow model: `main` (production-ready, tagged releases), `develop` (staging integration), and short-lived feature branches (`feat/room-timer`, `fix/vad-segmentation`).
-  - **Never commit directly to `main` or `develop`.** All changes require a Pull Request.
+  - Git Flow model: `main` (production-ready, tagged releases), `dev` (integration), a sprint branch per PA (`pa2`, `pa3`, …), and short-lived feature branches (`feature/T2.5-auth-backend`, `bugfix/…`).
+  - Feature branches are created from the sprint branch and their PRs target it. The sprint branch merges into `dev` once per sprint.
+  - **Never commit directly to `main`, `dev` or the sprint branch.** All changes require a Pull Request.
+  - Per-member branch instructions for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md).
 - **Code Review & Testing Guidelines:**
   - Every PR must have at least **one approving review** from a designated peer reviewer before merging.
   - PRs must pass automated CI checks (linters, unit tests) and maintain ≥70% test coverage on core business logic.

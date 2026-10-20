@@ -39,6 +39,8 @@ Debate serves as the **high-engagement practice activity**; the AI coaching pipe
 ### 2.2 User Actors (Minimum 2 Required)
 The system defines two primary human actors with role-based access control:
 - **Learner / Debater (Primary Actor):** Authenticates, configures target CEFR level and speaking goals, explores the topic catalog, creates/joins live debate rooms, participates via live microphone audio, views live transcripts, reviews post-debate learning reports, and tracks historical skill progress.
+- **Evaluator (human, MVP target; often a teacher):** Scores assigned debates on a grading card that uses the same rubric dimensions as the AI Debate Judge (FR-55). A separate role from Moderator / Admin, with access limited to assigned debates and no system configuration rights.
+- **Audience Member (post-MVP):** Watches or listens to a room only with both debaters' consent (FR-60).
 - **Moderator / Admin (Administrative Actor):** Manages the debate topic catalog (adding categories, assigning CEFR difficulty tags, retiring outdated topics), monitors system abuse reports, moderates flagged transcripts, manages user account suspensions, reviews LLM token costs, and configures prompt versions and feature flags.
 
 ### 2.3 Operating Environments

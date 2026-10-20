@@ -30,7 +30,7 @@
 
 ### Principle IV: Incremental Vertical Slices (Working Software Invariant)
 1. **Vertical Slices Over Horizontal Layers:** Every pull request and sprint deliverable must provide an end-to-end, testable increment (UI -> API -> DB/Service).
-2. **Working State Preservation:** The `develop` and `main` branches must remain in a passing, releasable state. Existing working features must never be broken to support future increments.
+2. **Working State Preservation:** The `dev` and `main` branches (and the current sprint branch, e.g. `pa2`) must remain in a passing, releasable state. Existing working features must never be broken to support future increments.
 
 ### Principle V: Dual-Consent & Debate Psychological Safety
 1. **Explicit Dual-Consent:** Real-time audio streaming, recording, and automated transcription must never initiate without explicit, uncoerced consent from both debaters in the room.
@@ -63,7 +63,7 @@
    - Task completion dates progress naturally across the sprint; batch completions at sprint end are prohibited.
 2. **Pull Request Quality Gates:**
    - Automated CI passing: Ruff linting & formatting (Python), ESLint & TSC (TypeScript), pytest suite, and secret scanning.
-   - At least one approved code review from the designated peer reviewer before merging to `develop`.
+   - At least one approved code review from the designated peer reviewer before merging to the sprint branch (`pa2`), and the sprint branch merges to `dev` only after Sprint Review.
 3. **Constitution Governance:**
    - This Constitution supersedes individual coding preferences.
    - Any amendment requires consensus across all 5 team leads and an updated version timestamp.

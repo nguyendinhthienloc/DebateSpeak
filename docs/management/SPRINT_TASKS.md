@@ -49,14 +49,21 @@
 
 | Task ID | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping | Status |
 |---|---|---|---|---|---|---|
-| **T2.1** | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R5** | **R1** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
+| **T2.1** | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
 | **T2.2** | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/pa2/VISION_DOCUMENT.md` | PA2 Part B | Planned |
-| **T2.3** | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R4** | **R5** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
+| **T2.3** | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
 | **T2.4** | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
 | **T2.5** | Build 1 Core Backend: PostgreSQL schema migrations, Argon2id auth, JWT rotation | **R2** | **R5** | `api/app/auth/` | Build 1 | Planned |
 | **T2.6** | Build 1 Core Frontend: Vite + React shell, login/register UI, CEFR level selection | **R1** | **R2** | `web/src/pages/auth/` | Build 1 | Planned |
 | **T2.7** | Build 1 Room Lifecycle: `create_room`, `join_room` via invite code (Lobby state machine) | **R2, R1** | **R5** | `api/app/rooms/`, `web/src/pages/rooms/` | Build 1 | Planned |
+| **T2.8** | Room state machine as a pure function, all valid/invalid transition tests, and the invalid-transition API test (BE-4.1, R-6, AC-1.5) | **R4** | **R2** | `api/app/rooms/state.py`, unit tests | Build 1 | Planned |
+| **T2.9** | Milestone 1 end-to-end smoke test: two users create, join and see `READY`; third user gets 409 (R-7, M1-1 to M1-5) | **R3** | **R2** | `tests/e2e/` | Build 1 | Planned |
 
+---
+
+### Sprint 2 assignments
+
+Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2/TODO.md).
 ---
 
 ### Sprint 3 (Weeks 5–6 / PA3): Use-Case Modeling & First Functional Slice (Build 2)
@@ -118,14 +125,14 @@
 +--------------------------------------------------------------------------------------------------+
 | ROLE 3: AI AUDIO & SPEECH PIPELINE LEAD (Khoa - 24125058)                                        |
 | Primary Focus: LiveKit Bot Worker, Audio Track Hooks, Silero VAD, Streaming STT Adapters         |
-| Tasks: T1.5, T2.4, T3.6, T4.5, T4.6, T5.5                                                        |
+| Tasks: T1.5, T2.4, T2.9, T3.6, T4.5, T4.6, T5.5                                                        |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 4: AI ANALYSIS & AGENT ORCHESTRATOR LEAD (Tuấn - 24125107)                                  |
 | Primary Focus: Agent Prompts, Spec Kit Models, Language/Argument Coach, Consensus Judge          |
-| Tasks: T1.7, T2.3, T3.2, T3.3, T4.1, T4.2, T4.3, T5.3, T5.4, T5.5                                |
+| Tasks: T1.7, T2.1, T2.8, T3.2, T3.3, T4.1, T4.2, T4.3, T5.3, T5.4, T5.5                                |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 5: DEVOPS & QA / FACT-CHECKING LEAD (Lộc - 24125093)                                        |
 | Primary Focus: Staging Deployment, CI/CD, Search Retrieval, Security, E2E Testing, latexmk      |
-| Tasks: T1.1, T1.2, T1.6, T1.8, T1.9, T2.1, T3.1, T4.4, T4.7, T5.1, T5.2, T5.6, T5.7             |
+| Tasks: T1.1, T1.2, T1.6, T1.8, T1.9, T2.3, T3.1, T4.4, T4.7, T5.1, T5.2, T5.6, T5.7             |
 +--------------------------------------------------------------------------------------------------+
 ```

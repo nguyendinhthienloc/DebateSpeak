@@ -87,7 +87,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Every sprint, user story, and pull request must deliver an **end-to-end, vertically sliced, testable increment** of functionality.
    - Do not build isolated horizontal layers in silos (e.g. creating 20 empty database tables or 15 mocked UI pages with zero connection). Every feature increment must connect UI -> API -> Database/Service.
 2. **VERIFIED WORKING STATE PRESERVATION:**
-   - The `develop` and `main` branches must remain in a releasable, passing state at all times.
+   - The `dev` and `main` branches (and the current sprint branch, e.g. `pa2`) must remain in a releasable, passing state at all times.
    - Never break existing working features to introduce partial code for future sprints. Stubs must be feature-flagged or confined to isolated branches until integration tests pass.
 3. **INCREMENT PROGRESSION PATH:**
    - **Increment 1 (PA1/Sprint 1):** Walking Skeleton (Auth, Topic Selection, Room State Machine).

@@ -5,12 +5,14 @@ on:
     branches:
       - main
       - dev
+      - 'pa*'
       - 'feature/**'
       - 'bugfix/**'
   pull_request:
     branches:
       - main
       - dev
+      - 'pa*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
