@@ -5,7 +5,9 @@
 | Document version | 1.0 |
 | Status | Draft for course approval |
 | Product type | Web application (responsive, desktop-first; mobile browsers supported) |
-| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [VISION_DOCUMENT.md](../requirements/VISION_DOCUMENT.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+
+The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/vision/README.md) for the reproducible build command.
 
 > **Conventions.** All numeric targets in this document are **project targets** chosen for a student team. They are not measured results and must be validated by the test plan in the roadmap. All API endpoints are **proposed design**; none exist yet. Descriptions of third-party products are approximate and based on public marketing material; verify them before citing in a presentation.
 
