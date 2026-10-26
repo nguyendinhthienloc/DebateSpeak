@@ -15,22 +15,26 @@ Sprint end: Lộc opens one PR `pa2` → `dev`, reviewed by Tài.
 
 ## 1. Lộc (R5, DevOps & QA / Release Custodian)
 
+**Status as of 2026-10-26** (checked against `pa2` and the remote branches; Jira status is as of 2026-10-24)
+
 **You build**
 
-| Task | Branch | Reviewer | Jira key |
-|---|---|---|---|
-| T2.3 Spec Kit evidence (checklist §6) | `feature/T2.3-speckit-evidence` | Tài | SCRUM-22 |
-| Jira project setup (checklist A-6) | — (no branch) | — | |
-| Final `pa2` → `dev` PR (after Sprint Review) | `pa2` → `dev` | Tài | |
+| Task | Branch | Reviewer | Jira key | Status |
+|---|---|---|---|---|
+| T2.3 Spec Kit evidence (checklist §6) | `feature/T2.3-speckit-evidence` | Tài | SCRUM-22 | In progress: branch pushed, PR not yet open, not merged to `pa2`. Constitution amendment needs all five leads' consensus. Training log in `SPECKIT_TRAINING.md` is empty. |
+| Jira project setup (checklist A-6) | — (no branch) | — | | Partial: `SCRUM` project exists and tasks are imported. Sprint and Epic setup not verified. |
+| Final `pa2` → `dev` PR (after Sprint Review) | `pa2` → `dev` | Tài | | Not started (depends on Sprint Review) |
 
 **You review**
 
-- G1 spec (Tuấn)
-- T2.5 Build 1 backend (Tài)
-- T2.7 room API (Tài)
-- T2.7 lobby UI (Triết)
+- G1 spec (Tuấn): SCRUM-19 To Do, not started
+- T2.5 Build 1 backend (Tài): SCRUM-24 In Progress, no review yet
+- T2.7 room API (Tài): SCRUM-26 To Do, not started
+- T2.7 lobby UI (Triết): SCRUM-27 To Do, not started
 
-**Also:** Milestone 1 demo lead (checklist §11), Jira SCRUM-30.
+**Also:** Milestone 1 demo lead (checklist §11), Jira SCRUM-30 To Do. M1-7 (CI green on `pa2`) not verified.
+
+**Not done:** T2.3 merge, all four reviews, the M1 demo, the final PR to `dev`, and the M1-7 CI check.
 
 ---
 
