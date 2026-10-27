@@ -1,5 +1,7 @@
 # Build the PA2 Vision Document
 
+This is the repository's only `latexmk` flow. The older hand-written `report/report.tex` flow was retired in Sprint 2 and is kept in Git history.
+
 The authoritative source is [VISION_DOCUMENT.md](../../docs/requirements/VISION_DOCUMENT.md).
 The submission output is [VISION_DOCUMENT.pdf](../../docs/requirements/VISION_DOCUMENT.pdf).
 Both Mermaid diagrams are rendered locally from the fenced blocks in that Markdown;
