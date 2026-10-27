@@ -8,6 +8,8 @@ Companion to [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTU
 
 ## 1. 8-Week (4-Sprint) Academic Roadmap
 
+> **Note:** this section predates the 5-sprint, PA-aligned schedule. Sprint numbers and contents below are legacy. The authoritative schedule is [docs/ROADMAP.md](../ROADMAP.md): PA2 (Sprint 2) is documents only, Build 1 is in Sprint 3, and live audio is in Sprint 4. Keep the acceptance criteria; ignore the sprint labels.
+
 ```
 Week:     1   2 | 3   4 | 5   6 | 7   8
           [Sprint 1]  [Sprint 2]  [Sprint 3]       [Sprint 4]
