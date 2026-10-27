@@ -49,11 +49,12 @@
 
 | Task ID | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping | Status |
 |---|---|---|---|---|---|---|
-| **T2.1** | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
-| **T2.2** | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/requirements/VISION_DOCUMENT.md` | PA2 Part B | Done |
-| **T2.3** | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
-| **T2.4** | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
-| **T2.10** | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Planned |
+| **SCRUM-20** | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
+| **SCRUM-21** | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/requirements/VISION_DOCUMENT.md` | PA2 Part B | Done |
+| **SCRUM-22** | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
+| **SCRUM-23** | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
+| **SCRUM-31** | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Planned |
+| **SCRUM-32** | Backend database design document | **R2** | **R5** | `api/app/core/database_document.md` | PA2 supporting | Done |
 
 ---
 
@@ -73,11 +74,11 @@ Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2
 | **T3.4** | **Implement 1 Functional Group (FG-03: Room & Live Session Management)** end-to-end using Spec Kit | **R2, R1** | **R5** | Full-stack working code | PA3 Part E (Build 2) |
 | **T3.5** | Record narrated video demo of FG-03 and upload to YouTube | **R1** | **All** | YouTube Video Link | PA3 Part E |
 | **T3.6** | Sprint 3 AI Usage Report & Weekly Report (Scrum minutes, Jira tracking) | **R3** | **R1** | `docs/pa3/WEEKLY_REPORT.md` | PA3 Part F |
-| **T2.5** | Build 1 Core Backend: PostgreSQL schema migrations, Argon2id auth, JWT rotation | **R2** | **R5** | `api/app/auth/` | Build 1 (moved from Sprint 2) |
-| **T2.6** | Build 1 Core Frontend: Vite + React shell, login/register UI, CEFR level selection | **R1** | **R2** | `web/src/pages/auth/` | Build 1 (moved from Sprint 2) |
-| **T2.7** | Build 1 Room Lifecycle: `create_room`, `join_room` via invite code (Lobby state machine) | **R2, R1** | **R5** | `api/app/rooms/`, `web/src/pages/rooms/` | Build 1 (moved from Sprint 2) |
-| **T2.8** | Room state machine as a pure function, all valid/invalid transition tests, and the invalid-transition API test (BE-4.1, R-6, AC-1.5) | **R4** | **R2** | `api/app/rooms/state.py`, unit tests | Build 1 (moved from Sprint 2) |
-| **T2.9** | Milestone 1 end-to-end smoke test: two users create, join and see `READY`; third user gets 409 (R-7, M1-1 to M1-5) | **R3** | **R2** | `tests/e2e/` | Build 1 (moved from Sprint 2) |
+| **SCRUM-24** | Build 1 Core Backend: PostgreSQL schema migrations, Argon2id auth, JWT rotation | **R2** | **R5** | `api/app/auth/` | Build 1 (moved from Sprint 2) |
+| **SCRUM-25** | Build 1 Core Frontend: Vite + React shell, login/register UI, CEFR level selection | **R1** | **R2** | `web/src/pages/auth/` | Build 1 (moved from Sprint 2) |
+| **SCRUM-26** / **SCRUM-27** | Build 1 Room Lifecycle: `create_room`, `join_room` via invite code (Lobby state machine) | **R2, R1** | **R5** | `api/app/rooms/`, `web/src/pages/rooms/` | Build 1 (moved from Sprint 2) |
+| **SCRUM-28** | Room state machine as a pure function, all valid/invalid transition tests, and the invalid-transition API test (BE-4.1, R-6, AC-1.5) | **R4** | **R2** | `api/app/rooms/state.py`, unit tests | Build 1 (moved from Sprint 2) |
+| **SCRUM-29** | Milestone 1 end-to-end smoke test: two users create, join and see `READY`; third user gets 409 (R-7, M1-1 to M1-5) | **R3** | **R2** | `tests/e2e/` | Build 1 (moved from Sprint 2) |
 
 ---
 
@@ -118,22 +119,22 @@ Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2
 +--------------------------------------------------------------------------------------------------+
 | ROLE 1: FRONTEND & WEBRTC/AUDIO LEAD (Triết - 24125047)                                          |
 | Primary Focus: UI/UX, WebRTC Audio Integration, Lobby & Live Debate, Learning Reports, Demos    |
-| Tasks: T1.3, T1.9, T2.2, T2.6, T2.7, T3.3, T3.4, T3.5, T4.5, T5.2, T5.4, T5.5                   |
+| Tasks: T1.3, T1.9, SCRUM-21, SCRUM-25, SCRUM-27, T3.3, T3.4, T3.5, T4.5, T5.2, T5.4, T5.5                   |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 2: BACKEND & REAL-TIME MEDIA LEAD (Tài - 24125078)                                          |
 | Primary Focus: FastAPI API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
-| Tasks: T1.4, T2.5, T2.7, T3.2, T3.4, T4.3, T4.5, T5.1, T5.3, T5.5                              |
+| Tasks: T1.4, SCRUM-24, SCRUM-26, SCRUM-31, SCRUM-32, T3.2, T3.4, T4.3, T4.5, T5.1, T5.3, T5.5                              |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 3: AI AUDIO & SPEECH PIPELINE LEAD (Khoa - 24125058)                                        |
 | Primary Focus: LiveKit Bot Worker, Audio Track Hooks, Silero VAD, Streaming STT Adapters         |
-| Tasks: T1.5, T2.4, T2.9, T3.6, T4.5, T4.6, T5.5                                                        |
+| Tasks: T1.5, SCRUM-23, SCRUM-29, T3.6, T4.5, T4.6, T5.5                                                        |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 4: AI ANALYSIS & AGENT ORCHESTRATOR LEAD (Tuấn - 24125107)                                  |
 | Primary Focus: Agent Prompts, Spec Kit Models, Language/Argument Coach, Consensus Judge          |
-| Tasks: T1.7, T2.1, T2.8, T3.2, T3.3, T4.1, T4.2, T4.3, T5.3, T5.4, T5.5                                |
+| Tasks: T1.7, SCRUM-19, SCRUM-20, SCRUM-28, T3.2, T3.3, T4.1, T4.2, T4.3, T5.3, T5.4, T5.5                                |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 5: DEVOPS & QA / FACT-CHECKING LEAD (Lộc - 24125093)                                        |
 | Primary Focus: Staging Deployment, CI/CD, Search Retrieval, Security, E2E Testing, latexmk      |
-| Tasks: T1.1, T1.2, T1.6, T1.8, T1.9, T2.3, T3.1, T4.4, T4.7, T5.1, T5.2, T5.6, T5.7             |
+| Tasks: T1.1, T1.2, T1.6, T1.8, T1.9, SCRUM-22, SCRUM-30, T3.1, T4.4, T4.7, T5.1, T5.2, T5.6, T5.7             |
 +--------------------------------------------------------------------------------------------------+
 ```
