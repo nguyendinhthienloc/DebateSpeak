@@ -116,7 +116,7 @@ and the invite-based two-person lobby, ending at READY. It uses in-memory access
 an HttpOnly rotating refresh cookie and server-side session revocation. Topic selection
 uses explicitly seeded topics until FG-02 exists; no topic-management API is required
 for this slice. Live audio/transcription/analysis remain full-product requirements;
-the conflicting PA2 milestone wording in AGENTS.md still requires team reconciliation.
+Build 1 implementation is scheduled for Sprint 3 (PA3).
 
 ### FG-04: Real-Time Audio Communication
 - **Feature Description:** Low-latency, two-way WebRTC voice transport powered by LiveKit Cloud. Features an interactive pre-debate microphone test modal with visual audio meters, mute/unmute toggles, active speaker visualizers, and a 60-second graceful reconnection window if a participant briefly drops off.

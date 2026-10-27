@@ -30,9 +30,8 @@ Proposed decisions for Lộc's review and Tài/Triết's implementation alignmen
 | Topic dependency | Seed at least one active `debate_topics` row and a matching frontend seed list of IDs/titles; no catalog/admin endpoint in Build 1; validate foreign keys |
 | State boundary | Full enum retains CANCELLED; Build 1 creates LOBBY and advances to READY. LIVE remains disabled even if both participants are present |
 
-The checklist calls Build 1 a PA2 lobby increment, while AGENTS.md places live audio
-in PA2. This spec does not override AGENTS.md or claim the full PA2 release is complete.
-Reviewers must explicitly reconcile that schedule. Declining consent must never prevent
+Build 1 implementation is scheduled for Sprint 3 (PA3); PA2-2026 grades documents only.
+This spec does not override AGENTS.md or claim any implementation is complete. Declining consent must never prevent
 ordinary account use or force capture; room presence is not consent.
 
 ## 2. G1.1 — Persistence and invariants
