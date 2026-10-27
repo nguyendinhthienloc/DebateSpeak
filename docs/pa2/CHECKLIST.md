@@ -15,7 +15,7 @@ Scope: **PA2-2026 only**, which grades documents (A Project Plan 15, B Vision Do
 
 ## B — Vision Document (Triết, reviewer Tuấn) — `docs/requirements/VISION_DOCUMENT.md`
 - [x] All required sections, ten feature paragraphs and two Mermaid diagrams, merged and reviewed (PR #6)
-- [ ] PDF built and committed
+- [ ] PDF built and committed (SCRUM-33)
 
 ## C — Spec Kit (SCRUM-22: every member has a task; Lộc collects, reviewer Tài)
 - [x] `src/constitution.md` and `.specify/` merged and reviewed (PR #7)
@@ -33,8 +33,8 @@ Scope: **PA2-2026 only**, which grades documents (A Project Plan 15, B Vision Do
 
 ## Submission (Lộc, last)
 - [ ] All documents merged to `pa2`, each with Markdown and PDF
-- [ ] Git log exported
-- [ ] Zip `PA2-Group[GroupId]` (confirm the Group ID; the Vision Document says Group 02)
+- [ ] Git log exported (SCRUM-34)
+- [ ] Zip `PA2-Group[GroupId]` (SCRUM-34) (confirm the Group ID; the Vision Document says Group 02)
 - [ ] No `.env` files, secrets or absolute paths in the repo
-- [ ] `pa2` → `dev` PR after Sprint Review (Lộc)
-- [ ] Tài submits the zip to the school's Moodle after the merge to `dev`
+- [ ] `pa2` → `dev` PR after Sprint Review (Lộc, SCRUM-34)
+- [ ] Tài submits the zip to the school's Moodle after the merge to `dev` (SCRUM-31)

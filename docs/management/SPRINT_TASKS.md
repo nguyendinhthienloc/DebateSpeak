@@ -58,12 +58,14 @@
 | SCRUM-23 | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
 | SCRUM-31 | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Planned |
 | SCRUM-32 | Backend database design document | **R2** | **R5** | `api/app/core/database_document.md` | PA2 supporting | Done |
+| SCRUM-33 | Vision Document PDF built from the Markdown | **R1** | **R5** | `docs/requirements/VISION_DOCUMENT.pdf` | PA2 Part B | Planned |
+| SCRUM-34 | Package PA2 (Git log, zip) and merge `pa2` into `dev` | **R5** | **R2** | `PA2-Group[GroupId].zip` | PA2 submission | Planned |
 
 ---
 
 ### Sprint 2 assignments
 
-Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2/TODO.md).
+Who does what and branch rules: [pa2/TODO.md](../pa2/TODO.md). Jira mapping: [pa2/JIRA_MAPPING.md](../pa2/JIRA_MAPPING.md).
 ---
 
 ### Sprint 3 (Weeks 5–6 / PA3): Use-Case Modeling & First Functional Slice (Build 2)
@@ -123,7 +125,7 @@ Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2
 +--------------------------------------------------------------------------------------------------+
 | ROLE 1: FRONTEND & WEBRTC/AUDIO LEAD (Triết - 24125047)                                          |
 | Primary Focus: UI/UX, WebRTC Audio Integration, Lobby & Live Debate, Learning Reports, Demos    |
-| Tasks: SCRUM-21, SCRUM-25, SCRUM-27 |
+| Tasks: SCRUM-21, SCRUM-33, SCRUM-25, SCRUM-27 |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 2: BACKEND & REAL-TIME MEDIA LEAD (Tài - 24125078)                                          |
 | Primary Focus: FastAPI API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
@@ -139,6 +141,6 @@ Who does what, branch rules, branch table and Jira mapping: [pa2/TODO.md](../pa2
 +--------------------------------------------------------------------------------------------------+
 | ROLE 5: DEVOPS & QA / FACT-CHECKING LEAD (Lộc - 24125093)                                        |
 | Primary Focus: Staging Deployment, CI/CD, Search Retrieval, Security, E2E Testing, latexmk      |
-| Tasks: SCRUM-22, SCRUM-30 |
+| Tasks: SCRUM-22, SCRUM-34, SCRUM-30 |
 +--------------------------------------------------------------------------------------------------+
 ```
