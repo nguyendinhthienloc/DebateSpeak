@@ -28,6 +28,9 @@ Scope: **PA2-2026 only**, which grades documents (A Project Plan 15, B Vision Do
 - [ ] Jira screenshots (`docs/pa2/screenshots/`)
 - [ ] `WEEKLY_REPORT.md`; PDF built
 
+## Backend database design (Tài, SCRUM-32)
+- [x] `api/app/core/database_document.md` merged and reviewed (commit `84aad76`)
+
 ## Submission (Lộc, last)
 - [ ] All documents merged to `pa2`, each with Markdown and PDF
 - [ ] Git log exported

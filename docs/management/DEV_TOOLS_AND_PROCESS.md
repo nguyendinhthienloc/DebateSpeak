@@ -80,10 +80,10 @@ Every platform the team uses, who owns its setup, and how it connects. Keep this
 |---|---|---|---|
 | GitHub | Repository, branches, PRs, reviews, CI (Actions) | Git remote `origin`; branches per §3 below | Lộc (release custodian) |
 | Jira | Tasks, sprints, board, burndown | Project key `SCRUM` (named "DebateSpeak"); Claude connects through the Atlassian MCP connector at `https://mcp.atlassian.com/v2/mcp` | Lộc (creates project, A-6) |
-| Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (T2.4 minutes) |
+| Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (SCRUM-23 minutes) |
 | VS Code | Local editor; Atlassian extension for viewing Jira | Local install per member | Each member |
 | Docker Compose | Local PostgreSQL 16, Redis 7, LiveKit dev | `docker-compose.yml` | Lộc |
-| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (T2.3) |
+| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (SCRUM-22) |
 | LaTeX (`latexmk`) | Academic reports | `report/report.tex` | Lộc |
 
 Each member signs in to Jira and GitHub with their own account. Do not share tokens or passwords in chat or in the repository.

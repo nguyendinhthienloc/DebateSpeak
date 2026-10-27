@@ -9,7 +9,7 @@
 | Status | Initial draft for team review; revise in PA3 after TA feedback |
 | Responsible owner | Nguyễn Bảo Minh Triết — 24125047 — Frontend & WebRTC/Audio Lead |
 | Assigned reviewer | Trần Lê Anh Tuấn — 24125107 — AI Orchestrator & Analysis Lead |
-| Work item | [SCRUM-21 — T2.2 Vision Document](https://ndtloc0304.atlassian.net/browse/SCRUM-21) |
+| Work item | [SCRUM-21 — Vision Document](https://ndtloc0304.atlassian.net/browse/SCRUM-21) |
 
 This document describes intended product behavior. Features, quality targets, and expected benefits are not claims of completed implementation or measured learning improvement. The ownership above records responsibility; it does not claim that human review or approval has occurred.
 

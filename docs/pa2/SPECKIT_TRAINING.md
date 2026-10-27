@@ -1,4 +1,4 @@
-# Spec Kit Initialisation and Training Evidence (PA2 Part C, T2.3, SCRUM-22)
+# Spec Kit Initialisation and Training Evidence (PA2 Part C, SCRUM-22)
 
 Owner: Lộc. Reviewer: Tài.
 
