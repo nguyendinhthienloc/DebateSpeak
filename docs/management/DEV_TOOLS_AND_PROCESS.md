@@ -18,7 +18,7 @@ Our team adheres strictly to the **Agile Scrum framework combined with an Increm
 graph TD
     subgraph IncrementalSlices ["5 Vertical Product Increments across 5 Sprints / PAs"]
         S1["Sprint 1 / PA1: Foundation & Project Conception<br/>- Proposal (10 FGs), Survey, Team Contract, Dev Setup<br/>- Baseline monorepo, linters, Docker Compose skeleton"]
-        S2["Sprint 2 / PA2: Project Planning & Architecture Foundation<br/>- Project Plan, Vision Document, Spec Kit Init (/src)<br/>- Build 1: Auth + Room Lobby state machine skeleton"]
+        S2["Sprint 2 / PA2: Project Planning & Architecture Foundation<br/>- Project Plan, Vision Document, Spec Kit Init (/src)"]
         S3["Sprint 3 / PA3: Use-Case Modeling & First Functional Slice<br/>- Use-Case specs & diagrams, Changes.md<br/>- Build 2: Full-Stack Implementation of 1 FG (Room Lobby + Auth) + Demo"]
         S4["Sprint 4 / PA4: Software Architecture & Second Implementation Slice<br/>- C4 Context, Container, Component & Deployment diagrams<br/>- Build 3: Full-Stack Implementation of 2 FGs (Live Audio + Speech Pipeline) + Demo"]
         S5["Sprint 5 / PA5: Comprehensive Testing, Hardening & Final Product Demo<br/>- Test Plan & refined test cases, Golden set evaluation, Reflective Report<br/>- Build 4 (Release): Final Live 15-min product demo of all 10 FGs"]
