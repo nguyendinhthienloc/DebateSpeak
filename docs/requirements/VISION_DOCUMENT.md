@@ -31,7 +31,7 @@ This document describes intended product behavior. Features, quality targets, an
 | R3 | [Software Architecture Specification](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), §§1–4, 6–12, 15–16, 18 | Functional requirements, quality targets, consent, grounding, evaluation limits |
 | R4 | [Existing App Survey](EXISTING_APP_SURVEY.md), §§2–5 | PA1 comparison and interaction patterns |
 | R5 | [Testing Plan](../testing/TESTING_PLAN.md), §2 | Verification methods and planned learner pilot |
-| R6 | [Development Roadmap](../ROADMAP.md), §§1–2 | Proposed course builds; schedule discrepancy recorded in §7 |
+| R6 | [Development Roadmap](../ROADMAP.md), §§1–2 | Course builds and schedule; see §7 |
 | R7 | [Repository operating guidelines](../../AGENTS.md), §§3–8 | Official roles, architecture, incremental delivery, human experience, evidence-based critique |
 | R8 | [Jira work item SCRUM-21](https://ndtloc0304.atlassian.net/browse/SCRUM-21) | Assigned owner and reviewer; read on October 25, 2026 |
 
@@ -242,7 +242,7 @@ The following requirements retain R3's identifiers and numeric targets. All are 
 
 | Topic | Treatment in this draft | Required follow-up |
 |---|---|---|
-| Course schedule | R6 and Jira use five PA-aligned sprints; R7 and parts of R3/R5 describe a four-increment schedule with different milestone placement | Reconcile the Project Plan and delivery documents in SCRUM-20; this vision does not change dates or override engineering invariants |
+| Course schedule | R6, R7 (`AGENTS.md` §6) and Jira use the same five PA-aligned sprints: PA2 is documents only and Build 1 is in Sprint 3. Only the legacy 4-sprint section of R5 (marked as such) differs | The Project Plan (SCRUM-20) follows R6; this vision does not change dates or override engineering invariants |
 | Grounding and attribution claims | R2/R4 use absolute language about hallucinations and speaker accuracy; this draft adopts R3's validation rule and measured attribution target | Align the stronger wording in the proposal and survey during the review revision |
 | CEFR scope | Product range remains A2–C1; B1–B2 is the planned transcription test population | Do not generalize pilot accuracy to untested proficiency groups |
 | Supported browsers | Use R3's rolling desktop test matrix rather than R2's older fixed minimum versions | Record actual versions and mobile limitations in test evidence |
