@@ -80,7 +80,7 @@ Comprehensive design, roadmap, and implementation documents are organized within
 - 📋 **[Engineering Task Breakdown (TASKS.md)](docs/management/SPRINT_TASKS.md):** Multi-sprint work breakdown structure and subsystem assignments.
 - 🧪 **[Quality Assurance & Testing Plan](docs/testing/TESTING_PLAN.md):** Unit, integration, audio chaos, and golden-set LLM evaluation protocols.
 - 🤝 **[Team Collaboration Contract](docs/management/TEAM_CONTRACT.md):** Team commitments, communication protocols, and meeting cadences.
-- 🎓 **[Course & Sprint Deliverables](docs/assignments/):** Specific course project documentation. PDFs are converted from Markdown with [`report/vision/build.py`](report/vision/README.md).
+- 🎓 **[Course & Sprint Deliverables](docs/assignments/):** Specific course project documentation. PDFs are converted from Markdown with [`report/pdf/build.py`](report/pdf/README.md).
 
 ---
 

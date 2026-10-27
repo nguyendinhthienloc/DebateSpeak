@@ -23,7 +23,7 @@ Every document needs a "performed / reviewed / edited" line under each section h
 | Task | Status |
 |---|---|
 | Vision Document (SCRUM-21) | Done, merged and reviewed, at `docs/requirements/VISION_DOCUMENT.md` |
-| Build the Vision Document PDF, `report/vision/README.md` (SCRUM-33) | Open |
+| Build the Vision Document PDF, `report/pdf/README.md` (SCRUM-33) | Open |
 | Review Khoa's weekly report | Open |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 
