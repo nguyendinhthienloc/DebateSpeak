@@ -2,7 +2,7 @@
 
 Updated 2026-10-27. Scope: **PA2-2026 only** (documents). Steps are in [CHECKLIST.md](CHECKLIST.md). If the two files disagree, fix both in the same PR.
 
-Branch rules: branch from the latest `pa2`, open the PR into `pa2`, one reviewer approves, then merge. **A merged PR counts as reviewed.** Sprint end: Lộc opens `pa2` → `dev`, reviewed by Tài.
+Branch rules: branch from the latest `pa2` and name it `feature/SCRUM-nn-short-name`, open the PR into `pa2`, one reviewer approves, then merge. **A merged PR counts as reviewed.** Sprint end: Lộc opens `pa2` → `dev`, reviewed by Tài.
 
 Every document needs a "performed / reviewed / edited" line under each section header, and a PDF converted from the Markdown.
 
@@ -15,15 +15,15 @@ Every document needs a "performed / reviewed / edited" line under each section h
 | Spec Kit: `constitution.md` and `.specify/` (SCRUM-22) | Done, merged and reviewed |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 | Collect all five training entries (SCRUM-22) | Open |
-| Git log export and the final zip `PA2-Group[GroupId]` | After everything is merged |
-| Final PR `pa2` → `dev` | After Sprint Review |
+| Git log export and the final zip `PA2-Group[GroupId]` (SCRUM-34) | After everything is merged |
+| Final PR `pa2` → `dev` (SCRUM-34) | After Sprint Review |
 
 ## 2. Triết — Frontend
 
 | Task | Status |
 |---|---|
 | Vision Document (SCRUM-21) | Done, merged and reviewed, at `docs/requirements/VISION_DOCUMENT.md` |
-| Build the Vision Document PDF (`report/vision/README.md`) | Open |
+| Build the Vision Document PDF, `report/vision/README.md` (SCRUM-33) | Open |
 | Review Khoa's weekly report | Open |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 

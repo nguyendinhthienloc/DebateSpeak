@@ -6,7 +6,7 @@
 | Project Title | **DebateSpeak AI: Real-Time Spoken Debate & English Learning Arena** |
 | Target Type | Responsive Web Application (Vite + React SPA / Mobile-responsive) |
 | Score Allocation | Part B (10 Points) |
-| PA2 companion | [Vision Document](VISION_DOCUMENT.md) — initial draft; review pending |
+| PA2 companion | [Vision Document](VISION_DOCUMENT.md) — initial draft, merged via PR #6 |
 
 The PA2 vision refines these functional groups into stakeholder needs, user workflows, and measurable acceptance targets without asserting implementation completion. Its Markdown is the source for the submission PDF: render Mermaid locally, convert to LaTeX with Pandoc, and compile with `latexmk`. Build instructions are in [the vision report guide](../../report/vision/README.md); generated intermediates stay in the ignored `report_build/` directory.
 
@@ -110,7 +110,7 @@ flowchart TD
 
 **Build 1 clarification — SCRUM-19, 2026-10-27.**
 Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
-Reviewed: pending Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead.
+Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (PR #8 merged).
 Edited: Codex. The [Gate G1 contract](../pa2/G1_SPEC_BUILD1.md) specifies auth/profile
 and the invite-based two-person lobby, ending at READY. It uses in-memory access JWTs,
 an HttpOnly rotating refresh cookie and server-side session revocation. Topic selection

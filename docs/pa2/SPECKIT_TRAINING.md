@@ -11,7 +11,7 @@ Owner: Lộc. Reviewer: Tài.
 | Templates, scripts, workflow | `src/.specify/` (templates, PowerShell scripts, `workflows/speckit`) |
 | Agent skills | `src/.github/skills/speckit-*` (analyze, checklist, clarify, constitution, converge, implement, plan, specify, tasks, taskstoissues) |
 
-## 2. Constitution check against `AGENTS.md` (checklist C-3)
+## 2. Constitution check against `AGENTS.md` (CHECKLIST section C)
 
 | `AGENTS.md` section | Constitution |
 |---|---|
@@ -24,9 +24,9 @@ Owner: Lộc. Reviewer: Tài.
 | §7 User consequences, dual consent | Principle V, Principle VII.2 (added in 1.0.1) |
 | §8 Brutal honesty (agents and coaching prompts) | Principle VI (coaching prompts), Principle VII.3 (agents, added in 1.0.1) |
 
-The amendment (1.0.0 to 1.0.1) needs consensus of all five leads under constitution section 3. It is pending until the PR is approved by Tài and acknowledged by the others.
+The amendment (1.0.0 to 1.0.1) needs consensus of all five leads under constitution section 3. PR #7 is merged, so Tài's review is done. Acknowledgement by the other four leads is still pending (SCRUM-22).
 
-## 3. Training log (checklist C-5)
+## 3. Training log (CHECKLIST section C)
 
 One entry per member. Evidence is a screenshot or a note with date, name and what was learned. Rows stay empty until the member supplies them.
 
@@ -40,5 +40,5 @@ One entry per member. Evidence is a screenshot or a note with date, name and wha
 
 ## 4. Open items
 
-- C-4: Build 1 spec files (`/speckit-specify` for auth and for room lobby) wait for Gate G1 (Tuấn).
-- C-5: four members have not logged training yet; Lộc has not logged his own.
+- Training entries: all five members still need to add their row to section 3 (SCRUM-22), Lộc included.
+- Build 1 spec files (`/speckit-specify` for auth and room lobby): Sprint 3.

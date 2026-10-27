@@ -99,7 +99,7 @@ Each member signs in to Jira and GitHub with their own account. Do not share tok
   - `feature/<task-ID-or-jira-key>-<short-description>`: One branch per task and per performer, branched off the sprint branch (`pa2`). PR target is always the sprint branch.
   - `bugfix/<task-ID-or-jira-key>-<short-description>`: Defect fixes, branched off the sprint branch.
   - Merge path: `feature/*` → `pa2` (task PR, one reviewer) → `dev` (one PR per sprint, opened by the release custodian) → `main` (tagged release).
-  - Per-member branch instructions for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md).
+  - Per-member tasks and branch rules for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md); branch names follow `feature/SCRUM-nn-short-name`.
 - **Sprint 1 Centralized Documentation Custodian Role:**
   - During Sprint 1 (conception & foundation phase), all five team members collaborated in drafting, review, and editing of project deliverables (documented verbatim via per-section headers).
   - To prevent Git merge conflicts during rapid simultaneous drafting of Markdown files and ensure uniform LaTeX compilation via `latexmk`, **Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager**, centralizing integration, running linters, and packaging assignment archives.
