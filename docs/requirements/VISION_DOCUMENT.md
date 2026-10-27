@@ -1,20 +1,20 @@
 # DebateSpeak AI — Vision Document
-*Performed: Codex, AI-assisted drafting for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex, pending human verification.*
+*Performed: Codex, AI-assisted drafting for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex, pending human verification.*
 
 | Document control | Value |
 |---|---|
 | Course / team | CS300 / CSC13002 — Introduction to Software Engineering / Group 02 |
 | Assignment | PA2-2026, Part B — Vision Document |
 | Version / date | 0.1 / October 25, 2026 |
-| Status | Initial draft for team review; revise in PA3 after TA feedback |
+| Status | Initial draft, merged via PR #6; revise in PA3 after TA feedback |
 | Responsible owner | Nguyễn Bảo Minh Triết — 24125047 — Frontend & WebRTC/Audio Lead |
 | Assigned reviewer | Trần Lê Anh Tuấn — 24125107 — AI Orchestrator & Analysis Lead |
 | Work item | [SCRUM-21 — Vision Document](https://ndtloc0304.atlassian.net/browse/SCRUM-21) |
 
-This document describes intended product behavior. Features, quality targets, and expected benefits are not claims of completed implementation or measured learning improvement. The ownership above records responsibility; it does not claim that human review or approval has occurred.
+This document describes intended product behavior. Features, quality targets, and expected benefits are not claims of completed implementation or measured learning improvement. The ownership above records responsibility; Review by Tuấn is recorded as approved by the merge of PR #6.
 
 ## 1. Introduction
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 **Purpose.** Establish a shared product vision for DebateSpeak AI: a browser-based platform where two people practice spoken English through live debate and receive evidence-grounded feedback. The document defines the problem, intended users, product boundaries, major features, and measurable quality expectations. It guides subsequent use-case specifications, implementation priorities, and acceptance tests without replacing the Project Plan or detailed architecture specification.
 
@@ -38,7 +38,7 @@ This document describes intended product behavior. Features, quality targets, an
 The assignment defines the deliverable format, and the repository guidelines govern engineering constraints. R2–R5 supply the product baseline. Unresolved differences between sources are recorded in §7 rather than silently treated as agreed decisions.
 
 ## 2. Positioning
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 **Problem statement**
 
@@ -65,7 +65,7 @@ These needs are working hypotheses drawn from the PA1 proposal and survey, not f
 The intended value is the complete practice-to-reflection loop. A debate score is supporting feedback, not the product's primary measure of learner worth or progress.
 
 ## 3. Stakeholder and User Descriptions
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 **Stakeholder summary**
 
@@ -124,7 +124,7 @@ Learner and moderator are the two primary human application roles. Teachers and 
 | Existing classroom or tutor-led practice | Human judgment and guided conversation | Support repeatable peer practice; do not claim to replace qualified teachers or official assessments |
 
 ## 4. Product Overview
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 **Product perspective.** DebateSpeak is a standalone responsive web application. A Vite, React, TypeScript, and Tailwind CSS SPA communicates with a Python 3.11+ FastAPI backend, PostgreSQL 16 through SQLAlchemy 2 async ORM and Alembic, and Redis 7 with ARQ workers. LiveKit Cloud routes independent participant audio tracks. Streaming transcription and asynchronous analysis use `STTAdapter`, `LLMAdapter`, and `SearchAdapter` boundaries so a vendor change does not redefine the learning workflow.
 
@@ -149,7 +149,7 @@ Learner and moderator are the two primary human application roles. Teachers and 
 **Human consequences.** Participation is voluntary: declining consent keeps the session out of `LIVE`, and either participant may end the session. A microphone test requires an explicit user action and browser permission; it must remain local before dual consent, without upload, storage, or transcription. Live controls prioritize audibility, presence, mute, and leaving; detailed criticism belongs in post-debate reflection. Feedback must state the specific failure, quote the evidence, and give a repair or practice exercise without insulting the person, attributing motives, or treating accent as weak reasoning.
 
 ## 5. Product Features and Workflows
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 Feature identifiers preserve the ten functional groups in R2 and map to the detailed requirements in R3. Each paragraph describes intended behavior and its user value; priority labels identify the complete MVP rather than the current implementation state. A Must label applies to the group's core workflow; individual Should/Could requirements retain their detailed priorities in R3, including the explicitly deferred features below.
 
@@ -209,7 +209,7 @@ flowchart TD
 These diagrams describe the intended user workflows, not proof that the implementation passes them. Fact-checking, detailed coaching, and judge evaluation run outside the live audio path.
 
 ## 6. Non-Functional Requirements and Success Measures
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 The following requirements retain R3's identifiers and numeric targets. All are **unverified project targets**. Tests must record deployment resources, provider/model versions, browser versions, network conditions, sample size, and failures; median latency must not conceal poor tail performance.
 
@@ -238,7 +238,7 @@ The following requirements retain R3's identifiers and numeric targets. All are 
 **Safety and interpretation.** A valid quote is necessary but insufficient for a correct critique; transcript errors and invalid reasoning can survive a string-match guard. Track-based attribution is a design strategy, with the measured 98% target retained instead of a promise of perfect speaker identification. Provider quotas, fallback hardware, and mobile network conditions may prevent a target from being met; such failures must be reported rather than hidden in aggregate results.
 
 ## 7. Source Alignment and Decisions for Review
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 | Topic | Treatment in this draft | Required follow-up |
 |---|---|---|
@@ -254,7 +254,7 @@ The following requirements retain R3's identifiers and numeric targets. All are 
 **Review completion.** The assigned reviewer should check alignment with R1–R7, confirm scope and unresolved decisions, and record the review outcome before this document is approved. Jira status, human review attribution, and submission readiness must reflect actual evidence. This draft fulfills the writing task but does not certify completion of the product or its acceptance tests.
 
 ## 8. AI Assistance Record
-*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), pending; Edited: Codex.*
+*Performed: Codex for Nguyễn Bảo Minh Triết (24125047); Review: Trần Lê Anh Tuấn (24125107), approved by the merge of PR #6; Edited: Codex.*
 
 | Item | Record |
 |---|---|
@@ -262,7 +262,7 @@ The following requirements retain R3's identifiers and numeric targets. All are 
 | Tool and requested assistance | OpenAI Codex; user requested creation of the Vision Document from the project documents |
 | Inputs | Sources R1–R8, including the original PA2 PDF and the local proposal, architecture, survey, test plan, roadmap, and operating guidelines |
 | Assistance performed | Source synthesis; English drafting; positioning and needs tables; ten feature paragraphs; two Mermaid workflows; quality-target traceability; Markdown-to-PDF preparation |
-| Human responsibility | Nguyễn Bảo Minh Triết (24125047) owns verification and submission; Trần Lê Anh Tuấn (24125107) is the assigned reviewer; review remains pending |
+| Human responsibility | Nguyễn Bảo Minh Triết (24125047) owns verification and submission; Trần Lê Anh Tuấn (24125107) is the reviewer; review approved by the merge of PR #6 |
 | Limits | No learner research results, implementation completion, human approval, or new competitor capability claims were fabricated; outstanding source conflicts are recorded in §7 |
 
 This entry supports the team's PA2 AI Usage Report. It is not a substitute for the full sprint-wide usage log, meeting records, training evidence, or submission checklist required by the course.
