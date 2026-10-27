@@ -5,7 +5,9 @@
 | Document version | 1.1-draft (Gate G1 / SCRUM-19) |
 | Status | Draft for course approval |
 | Product type | Web application (responsive, desktop-first; mobile browsers supported) |
-| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [VISION_DOCUMENT.md](../requirements/VISION_DOCUMENT.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+
+The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/vision/README.md) for the reproducible build command.
 
 **Build 1 contract (SCRUM-19 / Gate G1, proposed for review):**
 [G1_SPEC_BUILD1.md](../pa2/G1_SPEC_BUILD1.md) defines the request/response/error shapes,

@@ -6,6 +6,9 @@
 | Project Title | **DebateSpeak AI: Real-Time Spoken Debate & English Learning Arena** |
 | Target Type | Responsive Web Application (Vite + React SPA / Mobile-responsive) |
 | Score Allocation | Part B (10 Points) |
+| PA2 companion | [Vision Document](VISION_DOCUMENT.md) — initial draft; review pending |
+
+The PA2 vision refines these functional groups into stakeholder needs, user workflows, and measurable acceptance targets without asserting implementation completion. Its Markdown is the source for the submission PDF: render Mermaid locally, convert to LaTeX with Pandoc, and compile with `latexmk`. Build instructions are in [the vision report guide](../../report/vision/README.md); generated intermediates stay in the ignored `report_build/` directory.
 
 ---
 
