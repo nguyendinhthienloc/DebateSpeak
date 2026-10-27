@@ -31,7 +31,7 @@ Every document needs a "performed / reviewed / edited" line under each section h
 
 | Task | Status |
 |---|---|
-| Backend and database spec document | Done, merged |
+| Backend database design document, `api/app/core/database_document.md` (SCRUM-32) | Done, merged and reviewed |
 | Submit PA2 (the zip `PA2-Group[GroupId]`) to the school's Moodle, after Lộc merges `pa2` into `dev` (SCRUM-31) | After the merge |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 

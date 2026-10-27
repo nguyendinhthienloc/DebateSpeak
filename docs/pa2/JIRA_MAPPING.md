@@ -22,6 +22,7 @@ Project: `SCRUM` ("DebateSpeak"), read from Jira on 2026-10-21.
 | SCRUM-22 | T2.3 | Spec Kit evidence | Lộc | In Progress |
 | SCRUM-23 | T2.4 | AI Usage & Weekly Report | Khoa | To Do |
 | SCRUM-31 | T2.10 | Submit PA2 to Moodle | Tài | To Do |
+| SCRUM-32 | | Backend database design document | Tài | Done |
 
 ## Sprint 3 tasks (Build 1, moved from Sprint 2 on 2026-10-27)
 
