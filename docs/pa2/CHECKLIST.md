@@ -32,6 +32,13 @@ Moved to [docs/pa2/TODO.md](TODO.md). Read its branch rules before creating any 
 
 Owner: **Tuấn** (spec), reviewer **Lộc**.
 
+Prepared contract: [G1_SPEC_BUILD1.md](G1_SPEC_BUILD1.md), SCRUM-19, 2026-10-27.
+Drafting: Codex assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead;
+review by Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead, pending.
+The contract maps checklist `rooms` / `room_participants` to the existing
+`debate_rooms` / `debate_participants` tables, retains CANCELLED, and makes the
+token-storage choice concrete for review. The checkboxes remain open until verified.
+
 - [ ] **G1.1** Open `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md`. Confirm the `users`, `rooms`, `room_participants` tables and the room state enum (`LOBBY`, `READY`, `LIVE`, `ENDED`) match what Build 1 needs. Note any change.
 - [ ] **G1.2** Write the transition table: which states can move to which, and which HTTP code is returned on an invalid move (409, per AC-1.5).
 - [ ] **G1.3** Write the API contract for the Build 1 endpoints: `POST /auth/register`, `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`, `GET/PATCH /users/me`, `POST /rooms`, `POST /rooms/join`, `GET /rooms/{id}`. For each: request body, response body, error codes.
@@ -225,7 +232,7 @@ Code path: `web/src/pages/auth/`, `web/src/api/`.
 - [ ] **F-4** Register form: email, password, confirm password. Client-side validation mirrors server rules. Show server error text.
 - [ ] **F-5** Login form. On success, store the session as decided in G1.4 (Decision 5).
 - [ ] **F-6** Logout button in the header.
-- [ ] **F-7** CEFR level picker (A1–C2) on the profile page. Saves via `PATCH /users/me`.
+- [ ] **F-7** CEFR level picker (A2/B1/B2/C1, matching the G1 contract and existing enum) on the profile page. Saves via `PATCH /users/me`.
 - [ ] **F-8** Protected-route wrapper: unauthenticated user goes to `/login`.
 - [ ] **F-9** Component tests for the two forms (Vitest + Testing Library). Add to CI.
 - [ ] **F-10** Responsive check: both forms work at 375 px width and at desktop width (AGENTS.md §4.1).

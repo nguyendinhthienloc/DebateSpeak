@@ -94,7 +94,7 @@ flowchart TD
 ```
 ---
 ### FG-01: User Account & Profile Management
-- **Feature Description:** Provides secure registration, authentication (Argon2id password hashing and rotating JWTs), and persistent learner profiles. Learners configure their native language, self-assessed CEFR proficiency level (A2, B1, B2, C1), and target improvement goals (e.g., "reduce filler words", "improve rebuttal structure").
+- **Feature Description:** Provides secure registration, authentication (Argon2id password hashing, short-lived access JWTs and rotating refresh sessions), and persistent learner profiles. Learners configure their native language, self-assessed CEFR proficiency level (A2, B1, B2, C1), and target improvement goals (e.g., "reduce filler words", "improve rebuttal structure").
 - **Utility:** Ensures personalized baseline calibration so subsequent AI evaluations and topic recommendations adapt appropriately to the student's proficiency level.
 
 ### FG-02: Debate Topic & Difficulty Management
@@ -104,6 +104,16 @@ flowchart TD
 ### FG-03: Debate Room & Live Session Management
 - **Feature Description:** Manages the synchronized debate lifecycle through a formal finite state machine (`LOBBY` → `READY` → `LIVE` → `ENDED`). Handles 8-character invite code sharing, stance assignment (Pro vs. Con), synchronized countdown timers, and an explicit dual-consent gate requiring both users to approve audio transcription before the room goes live.
 - **Utility:** Creates an organized, predictable stage for the debate, ensuring both participants enter with agreed-upon rules and verified privacy consent.
+
+**Build 1 clarification — SCRUM-19, 2026-10-27.**
+Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
+Reviewed: pending Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead.
+Edited: Codex. The [Gate G1 contract](../pa2/G1_SPEC_BUILD1.md) specifies auth/profile
+and the invite-based two-person lobby, ending at READY. It uses in-memory access JWTs,
+an HttpOnly rotating refresh cookie and server-side session revocation. Topic selection
+uses explicitly seeded topics until FG-02 exists; no topic-management API is required
+for this slice. Live audio/transcription/analysis remain full-product requirements;
+the conflicting PA2 milestone wording in AGENTS.md still requires team reconciliation.
 
 ### FG-04: Real-Time Audio Communication
 - **Feature Description:** Low-latency, two-way WebRTC voice transport powered by LiveKit Cloud. Features an interactive pre-debate microphone test modal with visual audio meters, mute/unmute toggles, active speaker visualizers, and a 60-second graceful reconnection window if a participant briefly drops off.
