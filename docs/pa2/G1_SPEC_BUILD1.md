@@ -68,7 +68,7 @@ requires creator_stance PRO/CON. Do not permit join to choose arbitrary user ide
 ## 3. G1.2 — State graph, guards and errors
 Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: pending. Edited: Codex.
 
-The later T2.8 pure transition function validates the following complete graph.
+The later SCRUM-28 pure transition function validates the following complete graph.
 Row = current, column = requested target. A dash means InvalidTransition; at an API
 that exposes that operation, map it to HTTP 409 with code INVALID_TRANSITION.
 
@@ -91,7 +91,7 @@ that exposes that operation, map it to HTTP 409 with code INVALID_TRANSITION.
 A valid edge still needs actor authorization and domain guards. Self-transitions are
 invalid in the pure graph; an idempotent repeat join returns the snapshot without
 calling transition. Build 1 has no arbitrary `PATCH status` API. Unknown routes return
-404; do not add a fake status endpoint just to demonstrate 409. T2.8's API negative
+404; do not add a fake status endpoint just to demonstrate 409. SCRUM-28's API negative
 test should exercise the real lifecycle service boundary or a future exposed transition.
 
 ## 4. G1.3 — Shared HTTP and response contracts
@@ -284,7 +284,7 @@ These support the transport controls, not a claim that this unimplemented design
 ## 8. Acceptance matrix and handoff
 Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: pending. Edited: Codex.
 
-All scenarios below are NOT RUN; they are implementation requirements for T2.5–T2.9.
+All scenarios below are NOT RUN; they are implementation requirements for SCRUM-24 to SCRUM-29.
 
 | ID | Scenario / observable expected result | Source |
 |---|---|---|
@@ -296,7 +296,7 @@ All scenarios below are NOT RUN; they are implementation requirements for T2.5�
 | G1-A06 | A creates, B joins, both poll READY with two opposing stances | M1-3 / M1-4 |
 | G1-A07 | One creator plus ten concurrent distinct joiners: exactly one succeeds, nine get 409, two total members | AC-1.4 |
 | G1-A08 | Member retry adds no membership; invalid/expired invite cannot join; third user gets no private snapshot | G1.1 / G1.3 |
-| G1-A09 | Every one of the 25 state pairs matches the matrix; invalid pairs raise InvalidTransition | AC-1.5 / T2.8 |
+| G1-A09 | Every one of the 25 state pairs matches the matrix; invalid pairs raise InvalidTransition | AC-1.5 / SCRUM-28 |
 | G1-A10 | Join/READY never opens microphone, media token or analysis job; no status mutation endpoint bypasses consent | AGENTS.md §7 |
 | G1-A11 | Nonmember room GET returns 404; no emails, token hashes or secrets leak; service failure is sanitized | G1.3 |
 | G1-A12 | Create room uses a seeded active topic; bad settings fail before any room/member write | G1.1 / G1.3 |
