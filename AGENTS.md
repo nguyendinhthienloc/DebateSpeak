@@ -79,7 +79,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Never commit stub functions with `pass` or `TODO` without a defined ticket or contract.
    - Keep business logic decoupled from third-party vendor APIs using abstract adapter protocols (`LLMAdapter`, `STTAdapter`, `SearchAdapter`).
 3. **ACADEMIC REPORTING (LATEXMK):**
-   - Project reports, submission PDFs, and deliverables must be compiled using **`latexmk`** (`latexmk -pdf report.tex`) to ensure reproducible, high-quality typography.
+   - Project reports, submission PDFs, and deliverables are converted from their Markdown source with the single Markdown-to-PDF pipeline in `report/vision/` (`python report/vision/build.py`: Pandoc, Mermaid, **`latexmk`**) to ensure reproducible, high-quality typography.
 
 ## 6. Incremental Development & Vertical Slices Policy
 

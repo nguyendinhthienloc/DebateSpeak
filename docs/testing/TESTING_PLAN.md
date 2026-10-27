@@ -363,7 +363,7 @@ Project_2/
 ├── AGENTS.md
 ├── .env.example                         # placeholders only; real .env is git-ignored
 ├── docker-compose.yml
-├── report/                              # Academic report compiled with latexmk
+├── report/                              # Markdown-to-PDF pipeline (Pandoc, Mermaid, latexmk)
 ├── docs/
 │   ├── pa1/                             # PA1 deliverables (Proposal, Survey, Contract, Dev Process)
 │   ├── pa2/ pa3/ pa4/ pa5/              # PAs 2 to 5 deliverables & specifications
