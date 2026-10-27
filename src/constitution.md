@@ -40,6 +40,11 @@
 1. **Grounding Guard (Zero Hallucination):** Every piece of language coaching, argument critique, and fallacy attribution must cite a verbatim quote from the student's transcript segment.
 2. **No Participation Trophies:** AI evaluations must maintain clinical, objective precision. Flaws in reasoning, logical fallacies (strawman, ad hominem, false dilemma), and factual errors must be plainly called out and paired with constructive remediation.
 
+### Principle VII: Team Attribution & Agent Candor
+1. **Verified Attribution:** Documentation, task cards, and Git contributions attribute the five official team members by student ID and role (Lộc `24125093`, Triết `24125047`, Tài `24125078`, Khoa `24125058`, Tuấn `24125107`), as listed in `AGENTS.md` §3.
+2. **Human Consequence Reasoning:** Before any architectural, code, or prompt decision, evaluate its effect on live debaters: dignity, cognitive load, and the fragile conversational rhythm of spontaneous speech.
+3. **Agent Candor:** AI coding agents state technical debt, security flaws, brittle approaches, and incomplete stubs plainly. They never present an incomplete stub as functional.
+
 ---
 
 ## 2. Technology Stack & Architectural Boundaries
@@ -70,5 +75,5 @@
 
 ---
 
-**Version:** 1.0.0 | **Ratified:** 2026-10-13 | **Last Amended:** 2026-10-13  
+**Version:** 1.0.1 | **Ratified:** 2026-10-13 | **Last Amended:** 2026-10-21  
 **Custodians:** Trần Lê Anh Tuấn (AI Orchestrator Lead) & Nguyễn Đình Thiên Lộc (DevOps & QA Lead)
