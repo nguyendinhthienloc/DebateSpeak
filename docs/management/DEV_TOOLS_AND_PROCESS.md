@@ -84,7 +84,7 @@ Every platform the team uses, who owns its setup, and how it connects. Keep this
 | VS Code | Local editor; Atlassian extension for viewing Jira | Local install per member | Each member |
 | Docker Compose | Local PostgreSQL 16, Redis 7, LiveKit dev | `docker-compose.yml` | Lộc |
 | Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (SCRUM-22) |
-| LaTeX (`latexmk`) | PDFs converted from Markdown | `report/vision/build.py` | Lộc |
+| LaTeX (`latexmk`) | PDFs converted from Markdown | `report/pdf/build.py` | Lộc |
 
 Each member signs in to Jira and GitHub with their own account. Do not share tokens or passwords in chat or in the repository.
 

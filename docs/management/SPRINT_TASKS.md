@@ -42,7 +42,7 @@
 | — | Setup Dev Tools, Scrum Process & Incremental Slices | **R5** | **R2** | `docs/management/DEV_TOOLS_AND_PROCESS.md` | Done |
 | — | Design System Architecture Spec & PostgreSQL Schema | **R4** | **R5** | `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` | Done |
 | — | Draft QA & Testing Plan | **R5** | **R3** | `docs/testing/TESTING_PLAN.md` | Done |
-| — | Configure `latexmk` academic report compilation & compile PDF | **R5** | **R1** | `report/report.tex`, `report/build/report.pdf` (retired in Sprint 2; replaced by `report/vision/build.py`) | Done |
+| — | Configure `latexmk` academic report compilation & compile PDF | **R5** | **R1** | `report/report.tex`, `report/build/report.pdf` (retired in Sprint 2; replaced by `report/pdf/build.py`) | Done |
 
 ---
 
