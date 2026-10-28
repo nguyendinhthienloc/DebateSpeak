@@ -55,7 +55,7 @@
 | SCRUM-20 | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
 | SCRUM-21 | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/requirements/VISION_DOCUMENT.md` | PA2 Part B | Done |
 | SCRUM-22 | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
-| SCRUM-23 | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
+| SCRUM-23 | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Done |
 | SCRUM-31 | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Planned |
 | SCRUM-32 | Backend database design document | **R2** | **R5** | `api/app/core/database_document.md` | PA2 supporting | Done |
 | SCRUM-33 | Vision Document PDF built from the Markdown | **R1** | **R5** | `docs/requirements/VISION_DOCUMENT.pdf` | PA2 Part B | Planned |
