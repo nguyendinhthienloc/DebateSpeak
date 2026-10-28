@@ -52,7 +52,7 @@
 | **T2.1** | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
 | **T2.2** | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/pa2/VISION_DOCUMENT.md` | PA2 Part B | Planned |
 | **T2.3** | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
-| **T2.4** | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Planned |
+| **T2.4** | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Done |
 | **T2.5** | Build 1 Core Backend: PostgreSQL schema migrations, Argon2id auth, JWT rotation | **R2** | **R5** | `api/app/auth/` | Build 1 | Planned |
 | **T2.6** | Build 1 Core Frontend: Vite + React shell, login/register UI, CEFR level selection | **R1** | **R2** | `web/src/pages/auth/` | Build 1 | Planned |
 | **T2.7** | Build 1 Room Lifecycle: `create_room`, `join_room` via invite code (Lobby state machine) | **R2, R1** | **R5** | `api/app/rooms/`, `web/src/pages/rooms/` | Build 1 | Planned |
