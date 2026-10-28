@@ -79,7 +79,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Never commit stub functions with `pass` or `TODO` without a defined ticket or contract.
    - Keep business logic decoupled from third-party vendor APIs using abstract adapter protocols (`LLMAdapter`, `STTAdapter`, `SearchAdapter`).
 3. **ACADEMIC REPORTING (LATEXMK):**
-   - Project reports, submission PDFs, and deliverables must be compiled using **`latexmk`** (`latexmk -pdf report.tex`) to ensure reproducible, high-quality typography.
+   - Project reports, submission PDFs, and deliverables are converted from their Markdown source with the single Markdown-to-PDF pipeline in `report/pdf/` (`python report/pdf/build.py <file.md>`: Pandoc, Mermaid, **`latexmk`**) to ensure reproducible, high-quality typography.
 
 ## 6. Incremental Development & Vertical Slices Policy
 
@@ -90,10 +90,12 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - The `dev` and `main` branches (and the current sprint branch, e.g. `pa2`) must remain in a releasable, passing state at all times.
    - Never break existing working features to introduce partial code for future sprints. Stubs must be feature-flagged or confined to isolated branches until integration tests pass.
 3. **INCREMENT PROGRESSION PATH:**
-   - **Increment 1 (PA1/Sprint 1):** Walking Skeleton (Auth, Topic Selection, Room State Machine).
-   - **Increment 2 (PA2/Sprint 2):** Live Audio Core (WebRTC LiveKit connection, synchronized audio exchange, staging HTTPS).
-   - **Increment 3 (PA3/Sprint 3):** Real-time Intelligence (VAD, Streaming STT, Language & Argument Coach pipeline).
-   - **Increment 4 (PA4/Sprint 4):** Complete Product (Personalized Learning Reports, Consensus Engine, Longitudinal Trends).
+   - **Sprint 1 (PA1):** Project conception and setup (survey, proposal, CI, architecture spec). No product increment.
+   - **Sprint 2 (PA2):** Documents only (Project Plan, Vision Document, Spec Kit initialisation, AI usage and weekly report). No code increment.
+   - **Increment 1 (PA3/Sprint 3):** Build 1 (Auth, Room Lobby state machine) and Build 2 (FG-03 room and session management end-to-end).
+   - **Increment 2 (PA4/Sprint 4):** Build 3 (Live Audio Core with LiveKit, streaming STT; FG-04 and FG-05).
+   - **Increment 3 (PA5/Sprint 5):** Build 4 (language and argument coaching, reports, consensus; all ten functional groups) and the final demo.
+   - The authoritative schedule is [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ---
 

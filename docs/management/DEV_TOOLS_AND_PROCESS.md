@@ -18,7 +18,7 @@ Our team adheres strictly to the **Agile Scrum framework combined with an Increm
 graph TD
     subgraph IncrementalSlices ["5 Vertical Product Increments across 5 Sprints / PAs"]
         S1["Sprint 1 / PA1: Foundation & Project Conception<br/>- Proposal (10 FGs), Survey, Team Contract, Dev Setup<br/>- Baseline monorepo, linters, Docker Compose skeleton"]
-        S2["Sprint 2 / PA2: Project Planning & Architecture Foundation<br/>- Project Plan, Vision Document, Spec Kit Init (/src)<br/>- Build 1: Auth + Room Lobby state machine skeleton"]
+        S2["Sprint 2 / PA2: Project Planning & Architecture Foundation<br/>- Project Plan, Vision Document, Spec Kit Init (/src)"]
         S3["Sprint 3 / PA3: Use-Case Modeling & First Functional Slice<br/>- Use-Case specs & diagrams, Changes.md<br/>- Build 2: Full-Stack Implementation of 1 FG (Room Lobby + Auth) + Demo"]
         S4["Sprint 4 / PA4: Software Architecture & Second Implementation Slice<br/>- C4 Context, Container, Component & Deployment diagrams<br/>- Build 3: Full-Stack Implementation of 2 FGs (Live Audio + Speech Pipeline) + Demo"]
         S5["Sprint 5 / PA5: Comprehensive Testing, Hardening & Final Product Demo<br/>- Test Plan & refined test cases, Golden set evaluation, Reflective Report<br/>- Build 4 (Release): Final Live 15-min product demo of all 10 FGs"]
@@ -80,11 +80,11 @@ Every platform the team uses, who owns its setup, and how it connects. Keep this
 |---|---|---|---|
 | GitHub | Repository, branches, PRs, reviews, CI (Actions) | Git remote `origin`; branches per §3 below | Lộc (release custodian) |
 | Jira | Tasks, sprints, board, burndown | Project key `SCRUM` (named "DebateSpeak"); Claude connects through the Atlassian MCP connector at `https://mcp.atlassian.com/v2/mcp` | Lộc (creates project, A-6) |
-| Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (T2.4 minutes) |
+| Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (SCRUM-23 minutes) |
 | VS Code | Local editor; Atlassian extension for viewing Jira | Local install per member | Each member |
 | Docker Compose | Local PostgreSQL 16, Redis 7, LiveKit dev | `docker-compose.yml` | Lộc |
-| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (T2.3) |
-| LaTeX (`latexmk`) | Academic reports | `report/report.tex` | Lộc |
+| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (SCRUM-22) |
+| LaTeX (`latexmk`) | PDFs converted from Markdown | `report/pdf/build.py` | Lộc |
 
 Each member signs in to Jira and GitHub with their own account. Do not share tokens or passwords in chat or in the repository.
 
@@ -99,7 +99,7 @@ Each member signs in to Jira and GitHub with their own account. Do not share tok
   - `feature/<task-ID-or-jira-key>-<short-description>`: One branch per task and per performer, branched off the sprint branch (`pa2`). PR target is always the sprint branch.
   - `bugfix/<task-ID-or-jira-key>-<short-description>`: Defect fixes, branched off the sprint branch.
   - Merge path: `feature/*` → `pa2` (task PR, one reviewer) → `dev` (one PR per sprint, opened by the release custodian) → `main` (tagged release).
-  - Per-member branch instructions for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md).
+  - Per-member tasks and branch rules for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md); branch names follow `feature/SCRUM-nn-short-name`.
 - **Sprint 1 Centralized Documentation Custodian Role:**
   - During Sprint 1 (conception & foundation phase), all five team members collaborated in drafting, review, and editing of project deliverables (documented verbatim via per-section headers).
   - To prevent Git merge conflicts during rapid simultaneous drafting of Markdown files and ensure uniform LaTeX compilation via `latexmk`, **Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager**, centralizing integration, running linters, and packaging assignment archives.

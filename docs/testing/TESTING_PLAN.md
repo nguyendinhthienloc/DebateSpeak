@@ -8,6 +8,8 @@ Companion to [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTU
 
 ## 1. 8-Week (4-Sprint) Academic Roadmap
 
+> **Note:** this section predates the 5-sprint, PA-aligned schedule. Sprint numbers and contents below are legacy. The authoritative schedule is [docs/ROADMAP.md](../ROADMAP.md): PA2 (Sprint 2) is documents only, Build 1 is in Sprint 3, and live audio is in Sprint 4. Keep the acceptance criteria; ignore the sprint labels.
+
 ```
 Week:     1   2 | 3   4 | 5   6 | 7   8
           [Sprint 1]  [Sprint 2]  [Sprint 3]       [Sprint 4]
@@ -361,7 +363,7 @@ Project_2/
 ├── AGENTS.md
 ├── .env.example                         # placeholders only; real .env is git-ignored
 ├── docker-compose.yml
-├── report/                              # Academic report compiled with latexmk
+├── report/                              # Markdown-to-PDF pipeline (Pandoc, Mermaid, latexmk)
 ├── docs/
 │   ├── pa1/                             # PA1 deliverables (Proposal, Survey, Contract, Dev Process)
 │   ├── pa2/ pa3/ pa4/ pa5/              # PAs 2 to 5 deliverables & specifications

@@ -48,7 +48,7 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
 
 - **Incremental Release Schedule (5 Sprints mapped to PA1–PA5):**
   - **Sprint 1 (PA1 - Weeks 1–2):** *Conception & Setup* — Proposal (10 FGs), app survey, team contract, dev tooling, baseline monorepo, Docker Compose, and academic report.
-  - **Sprint 2 (PA2 - Weeks 3–4):** *Planning & Foundation (Build 1)* — Project Plan, Vision Document, Spec Kit initialization in `/src`, and Build 1 (Auth + Room Lobby state machine skeleton).
+  - **Sprint 2 (PA2 - Weeks 3–4):** *Planning & Foundation* — Project Plan, Vision Document, Spec Kit initialization in `/src`, AI usage and weekly report (Build 1 moved to Sprint 3).
   - **Sprint 3 (PA3 - Weeks 5–6):** *Use-Case Modeling & First Functional Slice (Build 2)* — Use-case specs & diagrams, Changes.md, Build 2 (End-to-End implementation of 1 FG: Room & Session Management), narrated video demo.
   - **Sprint 4 (PA4 - Weeks 7–8):** *Architecture & Second Implementation Slice (Build 3)* — C4 model (Context, Container, Component, Deployment), Build 3 (Implementation of 2 FGs: Live Audio + Streaming STT), narrated video demo.
   - **Sprint 5 (PA5 - Weeks 9–10):** *Comprehensive Testing, Demo & Hardening (Build 4 - Final Release)* — Test plan, refined test cases, golden-set evaluation, 15-minute live product demo of all 10 FGs, reflective report.
@@ -65,10 +65,10 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
   - **TypeScript (Frontend):** Enforced via **ESLint** and **Prettier** with strict TypeScript compiler checks (`noImplicitAny: true`).
 - **Git Branching Strategy:**
-  - Git Flow model: `main` (production-ready, tagged releases), `dev` (integration), a sprint branch per PA (`pa2`, `pa3`, …), and short-lived feature branches (`feature/T2.5-auth-backend`, `bugfix/…`).
+  - Git Flow model: `main` (production-ready, tagged releases), `dev` (integration), a sprint branch per PA (`pa2`, `pa3`, …), and short-lived feature branches (`feature/SCRUM-24-auth-backend`, `bugfix/…`).
   - Feature branches are created from the sprint branch and their PRs target it. The sprint branch merges into `dev` once per sprint.
   - **Never commit directly to `main`, `dev` or the sprint branch.** All changes require a Pull Request.
-  - Per-member branch instructions for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md).
+  - Per-member tasks and branch rules for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md); branch names follow `feature/SCRUM-nn-short-name`.
 - **Code Review & Testing Guidelines:**
   - Every PR must have at least **one approving review** from a designated peer reviewer before merging.
   - PRs must pass automated CI checks (linters, unit tests) and maintain ≥70% test coverage on core business logic.

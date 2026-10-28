@@ -2,10 +2,21 @@
 
 | Field | Value |
 |---|---|
-| Document version | 1.0 |
+| Document version | 1.1-draft (Gate G1 / SCRUM-19) |
 | Status | Draft for course approval |
 | Product type | Web application (responsive, desktop-first; mobile browsers supported) |
-| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [VISION_DOCUMENT.md](../requirements/VISION_DOCUMENT.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+
+The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/pdf/README.md) for the reproducible build command.
+
+**Build 1 contract (SCRUM-19 / Gate G1, merged via PR #8):**
+[G1_SPEC_BUILD1.md](../pa2/G1_SPEC_BUILD1.md) defines the request/response/error shapes,
+session transport, persistence mapping and complete state-transition matrix needed by
+the Build 1 implementation. For Build 1 it takes precedence over the older proposed
+room/profile route names below. No endpoint implementation is claimed; it is scheduled for Sprint 3.
+Authoring support: Codex for Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead;
+designated reviewer: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead,
+approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af`.
 
 > **Conventions.** All numeric targets in this document are **project targets** chosen for a student team. They are not measured results and must be validated by the test plan in the roadmap. All API endpoints are **proposed design**; none exist yet. Descriptions of third-party products are approximate and based on public marketing material; verify them before citing in a presentation.
 
@@ -388,6 +399,12 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | `LOBBY → CANCELLED` | Creator cancels, or 30-minute lobby timeout | Release invite code |
 
 State is held in PostgreSQL and mirrored to the room participants through the event WebSocket; invalid transitions return HTTP 409.
+
+Build 1 stops at `READY` and polls the room resource; it does not implement WebSocket,
+media or analysis. The complete valid/invalid state matrix and guards are in the G1
+contract. `CANCELLED` is retained from the existing database enum. A valid graph edge
+alone never authorizes an actor or bypasses consent. The later media flow below must
+enforce dual consent before publishing audio; joining a room grants no media consent.
 
 ### 6.2 Joining Flow
 
@@ -823,6 +840,23 @@ CREATE TABLE user_profiles (
   data_retention_days INT NOT NULL DEFAULT 90
 );
 
+-- Build 1 addition proposed by SCRUM-19: persistent refresh rotation and revocation.
+-- One row per refresh token generation; consumed hashes remain until family expiry
+-- so replay can be detected. Tokens themselves are never stored.
+CREATE TABLE auth_refresh_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  family_id UUID NOT NULL,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash CHAR(64) UNIQUE NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  consumed_at TIMESTAMPTZ,
+  revoked_at TIMESTAMPTZ,
+  replaced_by UUID REFERENCES auth_refresh_tokens(id),
+  CHECK (expires_at > created_at)
+);
+CREATE INDEX ON auth_refresh_tokens (family_id);
+
 CREATE TABLE debate_topics (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
@@ -1032,20 +1066,27 @@ class JudgeOutput(BaseModel):
 
 > **All endpoints below are proposed design. None are implemented yet.** All REST endpoints require a Bearer access token except `/auth/*`. Errors use RFC 7807-style problem JSON.
 
+Paths omit the configured prefix, currently `/api/v1`. For Build 1 use the G1 contract:
+`/users/me`, `/rooms`, `/rooms/join`, `/rooms/{id}` plus the four auth routes. The older
+`/me` and `/debates/rooms` spellings are not additional Build 1 aliases. Future-only
+routes below remain proposals and must be reconciled before their implementation.
+
 ### 14.1 REST
 
 | Method & Path | Description | Actor |
 |---|---|---|
 | `POST /auth/register` | Create an account | Public |
-| `POST /auth/login` | Return access and refresh tokens | Public |
-| `POST /auth/refresh` | Rotate tokens | Authenticated |
-| `GET /me` / `PATCH /me` | Read/update profile (CEFR level, goals) | Learner |
+| `POST /auth/login` | Return access JWT; set HttpOnly refresh cookie | Public with Origin/header protection |
+| `POST /auth/refresh` | Rotate refresh cookie and issue access JWT | Refresh cookie; no Bearer required |
+| `POST /auth/logout` | Revoke current session family and clear cookie | Refresh cookie; idempotent |
+| `GET /users/me` / `PATCH /users/me` | Read/update own profile | Learner |
 | `DELETE /me` | Delete account and data | Learner |
 | `GET /topics` | List/search topics (filters: `category`, `difficulty`) | Learner |
 | `POST /topics` | Create topic | Admin |
 | `PATCH /topics/{id}` | Edit or retire topic | Admin |
-| `POST /debates/rooms` | Create room (topic, format, duration, stance mode) | Learner |
-| `POST /debates/rooms/{id}/join` | Join via invite code in body | Learner |
+| `POST /rooms` | Create room (topic, format, duration, stance mode) | Learner |
+| `POST /rooms/join` | Join via invite code in body | Learner |
+| `GET /rooms/{id}` | Read room snapshot; participant-only | Participant |
 | `POST /debates/rooms/{id}/consent` | Record transcription/analysis consent | Participant |
 | `POST /debates/rooms/{id}/token` | Mint short-lived LiveKit token | Participant |
 | `POST /debates/rooms/{id}/start` | `READY → LIVE` (both consented) | Participant |
