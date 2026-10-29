@@ -1,8 +1,8 @@
 # Spec Kit Training Evidence
 
-Name: [Nguyen Bao Minh Triet]
-Student ID: [24125047]
-Date: [29/10/2026]
+Name: Nguyen Bao Minh Triet
+Student ID: 24125047
+Date: 29/10/2026
 
 ## Activities completed
 - Read src/constitution.md.

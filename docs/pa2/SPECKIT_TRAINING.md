@@ -33,7 +33,7 @@ One entry per member. Evidence is a screenshot or a note with date, name and wha
 | Member | Date | What was done and learned | Evidence |
 |---|---|---|---|
 | Lộc | | | |
-| Triết | 29/10/2026 | Read the project constituion and inspected spec, plan, task templates. Learned the specify -> plan -> tasks -> implement workflow. |[Training note](speckit-training-Triet.md) |
+| Triết | 29/10/2026 | Read the project constitution and inspected spec, plan, task templates. Learned the specify -> plan -> tasks -> implement workflow. |[Training note](speckit-training-Triet.md) |
 | Tài | | | |
 | Khoa | | | |
 | Tuấn | | | |
