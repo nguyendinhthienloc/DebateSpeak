@@ -11,6 +11,8 @@ The PA2 Vision Document is a product-level companion, not evidence that these pr
 
 > **Conventions.** All numeric targets in this document are **project targets** chosen for a student team. They are not measured results and must be validated by the test plan in the roadmap. All API endpoints are **proposed design**; none exist yet. Descriptions of third-party products are approximate and based on public marketing material; verify them before citing in a presentation.
 
+**Initial UI design study (October 25, 2026).** The [initial screen design package](../design/initial/README.md) specifies login, registration, main menu, room lobby, and profile views for FG-01–04, with navigation toward FG-10. These are review artifacts, not implemented application features. Desktop and mobile compositions use the existing Inter typography. The lobby must distinguish participant presence, readiness, microphone permission, and individual transcription/analysis consent; a start action stays disabled until both participants satisfy all gates. A local microphone test requires an explicit action and must not transmit or transcribe audio. Profile CEFR choices are self-assessments, and destructive account actions require a separate confirmation. No rankings, audience mode, or fabricated learner performance are introduced by this study.
+
 ---
 
 ## 1. Executive Summary & Problem Formulation
