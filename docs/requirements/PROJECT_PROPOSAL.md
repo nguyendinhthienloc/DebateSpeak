@@ -10,6 +10,8 @@
 
 The PA2 vision refines these functional groups into stakeholder needs, user workflows, and measurable acceptance targets without asserting implementation completion. Its Markdown is the source for the submission PDF: render Mermaid locally, convert to LaTeX with Pandoc, and compile with `latexmk`. Build instructions are in [the vision report guide](../../report/pdf/README.md); generated intermediates stay in the ignored `report_build/` directory.
 
+The [initial UI design study](../design/initial/README.md) translates FG-01 (login, registration, profile), FG-02 (topic discovery), FG-03 (create/join entry points and lobby), and FG-04 (explicit microphone setup) into editable desktop and mobile Figma review screens. The main menu also exposes the FG-10 learning-history entry point. It draws visual references from the repository's Existing App Survey while preserving DebateSpeak's learning focus and dual-consent requirements. These static designs do not assert working authentication, live audio, or AI analysis; detailed follow-up flows are listed in the design handoff.
+
 ---
 
 ## 1. Introduction & Value Proposition
