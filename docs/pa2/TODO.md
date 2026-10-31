@@ -13,8 +13,8 @@ Every document needs a "performed / reviewed / edited" line under each section h
 | Task | Status |
 |---|---|
 | Spec Kit: `constitution.md` and `.specify/` (SCRUM-22) | Done, merged and reviewed |
-| Add your Spec Kit training entry (SCRUM-22) | Open |
-| Collect all five training entries (SCRUM-22) | Open |
+| Add your Spec Kit training entry (SCRUM-22) | Done |
+| Collect all five training entries (SCRUM-22) | Lộc and Triết done; Tài, Khoa, Tuấn open |
 | Git log export and the final zip `PA2-Group[GroupId]` (SCRUM-34) | After everything is merged |
 | Final PR `pa2` → `dev` (SCRUM-34) | After Sprint Review |
 
@@ -23,9 +23,9 @@ Every document needs a "performed / reviewed / edited" line under each section h
 | Task | Status |
 |---|---|
 | Vision Document (SCRUM-21) | Done, merged and reviewed, at `docs/requirements/VISION_DOCUMENT.md` |
-| Build the Vision Document PDF, `report/pdf/README.md` (SCRUM-33) | Open |
-| Review Khoa's weekly report | Open |
-| Add your Spec Kit training entry (SCRUM-22) | Open |
+| Vision Document PDF (SCRUM-33) | Done, merged (PR #10) |
+| Review Khoa's weekly report | Done, merged (PR #13) |
+| Add your Spec Kit training entry (SCRUM-22) | Done |
 
 ## 3. Tài — Backend
 
@@ -39,11 +39,10 @@ Every document needs a "performed / reviewed / edited" line under each section h
 
 | Task | Status |
 |---|---|
-| AI usage log (SCRUM-23) | On `feature/T2.4-weekly-report`, 5 lines, **not merged** |
-| Merge `pa2` into that branch | Open |
-| Hold the Sprint Review and write the minutes | Open |
-| Weekly report with Jira screenshots | **Not started** |
-| Review Tuấn's Project Plan | Open |
+| AI usage log and weekly report (SCRUM-23) | Done, merged (PR #9) |
+| Sprint Planning and Sprint Review minutes, weekly report PDF | Done, merged |
+| Jira screenshots and standup minutes | Open |
+| Review Tuấn's Project Plan | Done, merged (PR #12) |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 
 ## 5. Tuấn — AI Orchestrator
@@ -51,7 +50,7 @@ Every document needs a "performed / reviewed / edited" line under each section h
 | Task | Status |
 |---|---|
 | Gate G1 spec (SCRUM-19) | Done, merged |
-| **Project Plan, `docs/pa2/PROJECT_PLAN.md` (15 pts, SCRUM-20)** | **Not started. This is the missing piece** |
+| Project Plan, `docs/pa2/PROJECT_PLAN.md` (15 pts, SCRUM-20) | Done, merged and reviewed (PR #12). PDF still to build |
 | Add your Spec Kit training entry (SCRUM-22) | Open |
 
 ---

@@ -32,7 +32,7 @@ One entry per member. Evidence is a screenshot or a note with date, name and wha
 
 | Member | Date | What was done and learned | Evidence |
 |---|---|---|---|
-| Lộc | | | |
+| Lộc | 2026-10-13, 2026-10-21 | Hands-on Spec Kit work as DevOps lead: initialised Spec Kit in `/src` and ran the setup commands, wrote the DebateSpeak AI constitution (1.0.0), then amended it to 1.0.1 to match `AGENTS.md` and recorded the check in section 2 above. Learned how the constitution, templates and `/speckit-*` skills fit together. | Commit `8e32cba` (initialisation), PR #4, commit `d0d6aa2` (amendment), PR #7 |
 | Triết | 29/10/2026 | Read the project constitution and inspected spec, plan, task templates. Learned the specify -> plan -> tasks -> implement workflow. |[Training note](speckit-training-Triet.md) |
 | Tài | | | |
 | Khoa | | | |
@@ -40,5 +40,5 @@ One entry per member. Evidence is a screenshot or a note with date, name and wha
 
 ## 4. Open items
 
-- Training entries: all five members still need to add their row to section 3 (SCRUM-22), Lộc included.
+- Training entries: Lộc and Triết are done. Tài, Khoa and Tuấn still need to add their row to section 3 (SCRUM-22).
 - Build 1 spec files (`/speckit-specify` for auth and room lobby): Sprint 3.
