@@ -2,6 +2,13 @@
 
 Deadline **Fri 2026-11-13** (zip and submission buffer 11-14 to 11-15). Jira: Sprint 3 (PA3). Each member's tasks: `loc/`, `triet/`, `tai/`, `khoa/`, `tuan/` → `TODO.md`.
 
+## How to work (everyone)
+1. `git checkout pa3 && git pull`, then branch from `pa3`.
+2. Name the branch `feature/SCRUM-<nn>-<short-name>` (bug fixes: `bugfix/SCRUM-<nn>-<short-name>`). Example: `feature/SCRUM-24-auth-api`.
+3. Open the PR **into `pa3`**, never into `dev` or `main`. One teammate reviews; a merged PR counts as reviewed.
+4. Never commit directly to `pa3` for code. Only Lộc commits planning docs straight to it.
+5. Lộc merges `pa3` into `dev` once, at the end of the sprint.
+
 ## What PA3 grades
 Revised plan and vision with `Changes.md` (A, B, 10 pts), use-case model (C, 10), use-case specs with prototype screenshots (D, 45), FG-03 end to end with Spec Kit and a video (E, 20), AI usage and weekly report (F, 5). Spec Kit artifacts (`specs/`, plans, tasks) go in the zip.
 
