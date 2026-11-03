@@ -1,0 +1,288 @@
+{
+  "runId": "debatespeak-initial-2026-10-25",
+  "fileKey": "AIMVZQMzuesvOLx1YiICsz",
+  "fileUrl": "https://www.figma.com/design/AIMVZQMzuesvOLx1YiICsz",
+  "sessionId": "eafdb314-37b5-4256-b98c-6f81868d3397",
+  "pageId": "0:1",
+  "boardId": "2:2",
+  "componentAreaId": "2:13",
+  "createdNodeIds": [
+    "9:101",
+    "9:102",
+    "9:103",
+    "9:104",
+    "9:105",
+    "9:106",
+    "9:107",
+    "9:108",
+    "9:109",
+    "9:110",
+    "9:111",
+    "9:112",
+    "9:113",
+    "9:114",
+    "9:115",
+    "9:116",
+    "9:117",
+    "9:118",
+    "9:119",
+    "9:120",
+    "9:121",
+    "9:122",
+    "9:124",
+    "9:126",
+    "9:128",
+    "9:130",
+    "9:131",
+    "9:135",
+    "9:139",
+    "9:140",
+    "9:144",
+    "9:145",
+    "9:146",
+    "9:147",
+    "9:148",
+    "9:149",
+    "9:150",
+    "9:152"
+  ],
+  "mutatedNodeIds": [
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:2",
+    "2:13"
+  ],
+  "preview": "9:119",
+  "notes": "9:111",
+  "screens": [
+    {
+      "id": "2:3",
+      "name": "Login · Desktop",
+      "width": 1440,
+      "height": 1024,
+      "descendants": 87,
+      "counts": {
+        "FRAME": 22,
+        "RECTANGLE": 41,
+        "TEXT": 20,
+        "INSTANCE": 4
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:4",
+      "name": "Register · Desktop",
+      "width": 1440,
+      "height": 1024,
+      "descendants": 100,
+      "counts": {
+        "FRAME": 27,
+        "RECTANGLE": 41,
+        "TEXT": 27,
+        "INSTANCE": 5
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:5",
+      "name": "Main menu · Desktop",
+      "width": 1440,
+      "height": 1184,
+      "descendants": 103,
+      "counts": {
+        "FRAME": 40,
+        "RECTANGLE": 3,
+        "TEXT": 50,
+        "INSTANCE": 10
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:6",
+      "name": "Lobby · Desktop",
+      "width": 1440,
+      "height": 1024,
+      "descendants": 91,
+      "counts": {
+        "FRAME": 31,
+        "RECTANGLE": 3,
+        "TEXT": 47,
+        "INSTANCE": 10
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:7",
+      "name": "Profile · Desktop",
+      "width": 1440,
+      "height": 1024,
+      "descendants": 103,
+      "counts": {
+        "FRAME": 36,
+        "RECTANGLE": 3,
+        "TEXT": 50,
+        "INSTANCE": 14
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:8",
+      "name": "Login · Mobile",
+      "width": 390,
+      "height": 732,
+      "descendants": 32,
+      "counts": {
+        "FRAME": 12,
+        "RECTANGLE": 3,
+        "TEXT": 13,
+        "INSTANCE": 4
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:9",
+      "name": "Register · Mobile",
+      "width": 390,
+      "height": 1040,
+      "descendants": 45,
+      "counts": {
+        "FRAME": 17,
+        "RECTANGLE": 3,
+        "TEXT": 20,
+        "INSTANCE": 5
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:10",
+      "name": "Main menu · Mobile",
+      "width": 390,
+      "height": 1716,
+      "descendants": 63,
+      "counts": {
+        "FRAME": 27,
+        "RECTANGLE": 3,
+        "TEXT": 28,
+        "INSTANCE": 5
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:11",
+      "name": "Lobby · Mobile",
+      "width": 390,
+      "height": 2154,
+      "descendants": 69,
+      "counts": {
+        "FRAME": 24,
+        "RECTANGLE": 3,
+        "TEXT": 36,
+        "INSTANCE": 6
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    },
+    {
+      "id": "2:12",
+      "name": "Profile · Mobile",
+      "width": 390,
+      "height": 1900,
+      "descendants": 82,
+      "counts": {
+        "FRAME": 30,
+        "RECTANGLE": 3,
+        "TEXT": 39,
+        "INSTANCE": 10
+      },
+      "fonts": [
+        "Inter"
+      ],
+      "imageNodes": [],
+      "overflow": []
+    }
+  ],
+  "componentSets": [
+    {
+      "id": "3:12",
+      "name": "Button",
+      "variants": 5
+    },
+    {
+      "id": "3:25",
+      "name": "Text field",
+      "variants": 3
+    },
+    {
+      "id": "3:29",
+      "name": "Checkbox",
+      "variants": 2
+    },
+    {
+      "id": "3:34",
+      "name": "Navigation item",
+      "variants": 2
+    }
+  ],
+  "variables": 51,
+  "styles": [
+    "display",
+    "h1",
+    "h2",
+    "h3",
+    "body",
+    "label",
+    "small",
+    "caption"
+  ],
+  "prototype": "Static review screens",
+  "completedSteps": [
+    "requirements-and-reference-review",
+    "discovery",
+    "foundations",
+    "desktop-and-mobile-screens",
+    "visual-review-and-layout-fixes",
+    "structural-validation"
+  ],
+  "pendingValidations": [],
+  "componentPreviewVisualCheck": "Passed"
+}

@@ -2,12 +2,25 @@
 
 | Field | Value |
 |---|---|
-| Document version | 1.0 |
+| Document version | 1.1-draft (Gate G1 / SCRUM-19) |
 | Status | Draft for course approval |
 | Product type | Web application (responsive, desktop-first; mobile browsers supported) |
-| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+| Companion documents | [PROJECT_PROPOSAL.md](../requirements/PROJECT_PROPOSAL.md), [VISION_DOCUMENT.md](../requirements/VISION_DOCUMENT.md), [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md), [TESTING_PLAN.md](../testing/TESTING_PLAN.md) |
+
+The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/pdf/README.md) for the reproducible build command.
+
+**Build 1 contract (SCRUM-19 / Gate G1, merged via PR #8):**
+[G1_SPEC_BUILD1.md](../pa2/G1_SPEC_BUILD1.md) defines the request/response/error shapes,
+session transport, persistence mapping and complete state-transition matrix needed by
+the Build 1 implementation. For Build 1 it takes precedence over the older proposed
+room/profile route names below. No endpoint implementation is claimed; it is scheduled for Sprint 3.
+Authoring support: Codex for Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead;
+designated reviewer: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead,
+approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af`.
 
 > **Conventions.** All numeric targets in this document are **project targets** chosen for a student team. They are not measured results and must be validated by the test plan in the roadmap. All API endpoints are **proposed design**; none exist yet. Descriptions of third-party products are approximate and based on public marketing material; verify them before citing in a presentation.
+
+**Initial UI design study (October 25, 2026).** The [initial screen design package](../design/initial/README.md) specifies login, registration, main menu, room lobby, and profile views for FG-01–04, with navigation toward FG-10. These are review artifacts, not implemented application features. Desktop and mobile compositions use the existing Inter typography. The lobby must distinguish participant presence, readiness, microphone permission, and individual transcription/analysis consent; a start action stays disabled until both participants satisfy all gates. A local microphone test requires an explicit action and must not transmit or transcribe audio. Profile CEFR choices are self-assessments, and destructive account actions require a separate confirmation. No rankings, audience mode, or fabricated learner performance are introduced by this study.
 
 ---
 
@@ -113,6 +126,8 @@ AI judges, speech-to-text, voice input, multiple AI judges, debate scoring and A
 |---|---|---|
 | **Learner / Debater** | Primary human actor | Registers, sets CEFR level and goals, selects a topic, creates/joins rooms, debates, reviews transcript, reports and history, manages own data |
 | **Moderator / Admin** | Primary human actor | Manages topic library and difficulty tags, reviews abuse reports, suspends accounts, configures AI providers/prompts/feature flags, monitors usage and handles deletion requests |
+| **Evaluator (human, MVP target (Should); often a teacher)** | Primary human actor | Scores assigned debates on a grading card that uses the same rubric dimensions as the AI Debate Judge (FR-55). Separate from Moderator/Admin; cannot change system configuration or user accounts |
+| **Audience member (post-MVP)** | Human actor | Watches or listens to a room only with both debaters' consent (FR-60). Cannot publish audio or grade |
 | Real-time media service (LiveKit) | External system | Routes audio between participants, exposes per-participant audio tracks to the server-side transcription worker |
 | Speech-to-text service | External system | Converts audio to timestamped text |
 | LLM provider(s) | External system | Provides language, argument, evidence and report generation through a configurable adapter |
@@ -130,7 +145,7 @@ AI judges, speech-to-text, voice input, multiple AI judges, debate scoring and A
 | FG-06 English Analysis | Receive language feedback | Tune rubric and prompt versions |
 | FG-07 Argument Analysis | Receive argument feedback | Tune rubric and prompt versions |
 | FG-08 Fact Checking | See claim verdicts and sources | Configure search provider, blocked domains |
-| FG-09 Multi-Agent Evaluation | See consensus and "contested" flags | Configure models, judge count, feature flags, view usage |
+| FG-09 Multi-Agent Evaluation | See consensus and "contested" flags; see human grades after the debate ends (Should, Sprint 4) | Configure models, judge count, feature flags, view usage; Evaluators (human, Should, Sprint 4) grade assigned debates on grading cards |
 | FG-10 History & Reports | View reports, history, progress, export | Handle deletion and retention requests |
 
 ---
@@ -230,6 +245,12 @@ Priority key: **M** = Must (MVP), **S** = Should (target for the MVP if time all
 | FR-45 | A Consensus Engine aggregates evaluator outputs, computes agreement/confidence and marks results **Contested** when evaluators disagree beyond a threshold. | M | 4 |
 | FR-46 | Admins can configure providers/models, evaluator count, prompt versions and feature flags, and view usage/cost summaries. | S | 4 |
 | FR-47 | Heterogeneous multi-model judge panel (three or more different models). | C | — |
+| FR-55 | An Evaluator (a human, often a teacher) can be assigned to a finished debate by its creator and both debaters. The Evaluator scores each debater on a grading card that uses the same rubric dimensions as the Debate Judge (FR-44), within the same schema range. Human grades are stored separately from AI evaluations and never overwrite them; both are shown side by side. Grading is only possible after the room reaches `ENDED`, never during `LIVE`. | S | 4 |
+| FR-56 | Debaters see a human grade only after it is submitted, and only if both debaters have agreed to share grades in their consent record. An Evaluator sees only transcripts of debates they are assigned to. Every grade records the Evaluator, timestamp, grading card version and rubric version, and the debaters can see who graded them. | S | 4 |
+| FR-57 | A Teacher can view (read-only) the learning dashboards of students who have explicitly joined the Teacher's class and granted consent to share. The Teacher cannot edit, delete or comment on a student's data, and the student can revoke access at any time. Class management (creating classes, rosters, invitations, assignments) is a **long-term goal** outside the current roadmap and is not designed here. | C | — |
+| FR-58 | Room chat: a room creator can enable a text chat between the two debaters. Chat messages are stored separately from the debate transcript, are not sent to AI analysis unless both debaters opt in, and are deleted with the account (FR-04). | C | — |
+| FR-59 | Solo practice with AI: a learner can practise against an AI opponent in a room with no second human. The AI's turns are text generated by the LLM adapter and spoken through a **TTS adapter** (not yet in the architecture; to be added before implementation). Dual consent still applies to the learner's own audio and analysis; the AI is never a consenting party and never receives audio of another person. | C | — |
+| FR-60 | Audience: a room creator can allow moderators, evaluators or other audience members to join. Audience members never publish audio, do not count toward the two debaters, and see live audio or transcript only if **both debaters** consent to that audience. Audience size is capped by the creator. | C | — |
 
 ### FG-10 Learning History & Personalized Reports
 
@@ -243,7 +264,12 @@ Priority key: **M** = Must (MVP), **S** = Should (target for the MVP if time all
 | FR-53 | Export report as PDF. | C | — |
 | FR-54 | Admins can process data-deletion requests and apply retention policies. | M | 4 |
 
-**Traceability:** 54 requirements: 34 Must, 11 Should, 9 Could (stretch). Each Must/Should requirement is assigned to a sprint with acceptance criteria in the roadmap (Section 1).
+**Traceability:** 60 requirements: 34 Must, 13 Should, 13 Could (stretch). FR-55 and FR-56 (human evaluation) are Should in Sprint 4, not Must, so a schedule slip cuts them instead of the Must set. FR-57 to FR-60 are post-MVP and do not block the MVP acceptance criteria.
+
+**Long-term goals (not yet requirements; each needs its own FR set and spec review before work starts):**
+- **LT-1 Multi-debater rooms in two teams:** more than two debaters per room, organised as two teams with turn-taking. This replaces the two-person capacity rule in FR-11 and changes the consent model (N-party consent), stance assignment (FR-10) and transcription cost.
+- **LT-2 Classes as groups / social clubs:** teachers create and manage classes of many students (rosters, invitations, assignments), and a class can also work as a social club: members who join a group, chat and debate together. Builds on FR-57 (teacher read-only dashboards), FR-55 (evaluation) and FR-58 (chat). Group membership and visibility rules need their own FR set.
+- **LT-3 Student report dashboards tracked over time:** teachers and students follow reports and progress across debates. Builds on FR-50 and FR-51 for students and FR-57 for teachers. Each Must/Should requirement is assigned to a sprint with acceptance criteria in the roadmap (Section 1).
 
 ---
 
@@ -375,6 +401,12 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | `LOBBY → CANCELLED` | Creator cancels, or 30-minute lobby timeout | Release invite code |
 
 State is held in PostgreSQL and mirrored to the room participants through the event WebSocket; invalid transitions return HTTP 409.
+
+Build 1 stops at `READY` and polls the room resource; it does not implement WebSocket,
+media or analysis. The complete valid/invalid state matrix and guards are in the G1
+contract. `CANCELLED` is retained from the existing database enum. A valid graph edge
+alone never authorizes an actor or bypasses consent. The later media flow below must
+enforce dual consent before publishing audio; joining a room grants no media consent.
 
 ### 6.2 Joining Flow
 
@@ -810,6 +842,23 @@ CREATE TABLE user_profiles (
   data_retention_days INT NOT NULL DEFAULT 90
 );
 
+-- Build 1 addition proposed by SCRUM-19: persistent refresh rotation and revocation.
+-- One row per refresh token generation; consumed hashes remain until family expiry
+-- so replay can be detected. Tokens themselves are never stored.
+CREATE TABLE auth_refresh_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  family_id UUID NOT NULL,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash CHAR(64) UNIQUE NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  consumed_at TIMESTAMPTZ,
+  revoked_at TIMESTAMPTZ,
+  replaced_by UUID REFERENCES auth_refresh_tokens(id),
+  CHECK (expires_at > created_at)
+);
+CREATE INDEX ON auth_refresh_tokens (family_id);
+
 CREATE TABLE debate_topics (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
@@ -1019,20 +1068,27 @@ class JudgeOutput(BaseModel):
 
 > **All endpoints below are proposed design. None are implemented yet.** All REST endpoints require a Bearer access token except `/auth/*`. Errors use RFC 7807-style problem JSON.
 
+Paths omit the configured prefix, currently `/api/v1`. For Build 1 use the G1 contract:
+`/users/me`, `/rooms`, `/rooms/join`, `/rooms/{id}` plus the four auth routes. The older
+`/me` and `/debates/rooms` spellings are not additional Build 1 aliases. Future-only
+routes below remain proposals and must be reconciled before their implementation.
+
 ### 14.1 REST
 
 | Method & Path | Description | Actor |
 |---|---|---|
 | `POST /auth/register` | Create an account | Public |
-| `POST /auth/login` | Return access and refresh tokens | Public |
-| `POST /auth/refresh` | Rotate tokens | Authenticated |
-| `GET /me` / `PATCH /me` | Read/update profile (CEFR level, goals) | Learner |
+| `POST /auth/login` | Return access JWT; set HttpOnly refresh cookie | Public with Origin/header protection |
+| `POST /auth/refresh` | Rotate refresh cookie and issue access JWT | Refresh cookie; no Bearer required |
+| `POST /auth/logout` | Revoke current session family and clear cookie | Refresh cookie; idempotent |
+| `GET /users/me` / `PATCH /users/me` | Read/update own profile | Learner |
 | `DELETE /me` | Delete account and data | Learner |
 | `GET /topics` | List/search topics (filters: `category`, `difficulty`) | Learner |
 | `POST /topics` | Create topic | Admin |
 | `PATCH /topics/{id}` | Edit or retire topic | Admin |
-| `POST /debates/rooms` | Create room (topic, format, duration, stance mode) | Learner |
-| `POST /debates/rooms/{id}/join` | Join via invite code in body | Learner |
+| `POST /rooms` | Create room (topic, format, duration, stance mode) | Learner |
+| `POST /rooms/join` | Join via invite code in body | Learner |
+| `GET /rooms/{id}` | Read room snapshot; participant-only | Participant |
 | `POST /debates/rooms/{id}/consent` | Record transcription/analysis consent | Participant |
 | `POST /debates/rooms/{id}/token` | Mint short-lived LiveKit token | Participant |
 | `POST /debates/rooms/{id}/start` | `READY → LIVE` (both consented) | Participant |

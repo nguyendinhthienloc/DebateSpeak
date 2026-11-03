@@ -11,8 +11,8 @@ The project follows a strict **Incremental Development Lifecycle**, delivering f
 | Sprint | Assignment | Primary Capability Delivered | Verification Milestone / Build |
 |---|---|---|---|
 | **Sprint 1** | **PA1 (Weeks 1–2)** | **Project Conception & Setup:** 10 Functional Groups, Survey, Contract, Dev Process | CI pipeline green, Docker Compose skeleton, LaTeX report |
-| **Sprint 2** | **PA2 (Weeks 3–4)** | **Planning & Core Foundation:** Project Plan, Vision Doc, Spec Kit init in `/src` | **Build 1:** User Auth + Room Lobby state machine skeleton |
-| **Sprint 3** | **PA3 (Weeks 5–6)** | **Use-Case Modeling & First Functional Slice:** Specs, UI prototypes, Changes.md | **Build 2:** Full-stack implementation of FG-03 + narrated video demo |
+| **Sprint 2** | **PA2 (Weeks 3–4)** | **Planning & Core Foundation:** Project Plan, Vision Doc, Spec Kit init in `/src` | Documents merged and submitted (no code build) |
+| **Sprint 3** | **PA3 (Weeks 5–6)** | **Use-Case Modeling & First Functional Slice:** Specs, UI prototypes, Changes.md | **Build 1 + Build 2:** auth and room lobby, then full-stack FG-03 + narrated video demo |
 | **Sprint 4** | **PA4 (Weeks 7–8)** | **Architecture & Second Slice:** C4 Context/Container/Component/Deployment | **Build 3:** Full-stack audio & streaming STT (FG-04 & FG-05) + demo |
 | **Sprint 5** | **PA5 (Weeks 9–10)** | **Testing, Hardening & Final Presentation:** Test plan, refined tests, reflective report | **Build 4 (Final):** 15-min live demo showcasing all 10 FGs |
 
@@ -26,12 +26,13 @@ The project follows a strict **Incremental Development Lifecycle**, delivering f
 - Repository infrastructure, CI/CD linters (Ruff, ESLint, GitHub Actions), and containerized dev environment.
 - Architecture specification and testing strategy design.
 
-### Sprint 2: Planning, Core Foundation & Build 1
+### Sprint 2: Planning & Core Foundation
 - Vision Document and Project Plan formulation.
 - Specification Kit setup (`/src/constitution.md`).
-- **Build 1:** User authentication (Argon2id, JWT), database models (SQLAlchemy / PostgreSQL), and Room Lobby state machine.
+- AI usage report and weekly report.
 
-### Sprint 3: Use-Case Modeling & Build 2 (First Functional Slice)
+### Sprint 3: Use-Case Modeling, Build 1 & Build 2 (First Functional Slice)
+- **Build 1 (moved from Sprint 2):** User authentication (Argon2id, JWT), database models (SQLAlchemy / PostgreSQL), and Room Lobby state machine.
 - Formal use case specifications and sequence diagrams.
 - UI prototyping and component design in Tailwind CSS.
 - **Build 2:** End-to-end slice connecting frontend room lobby to backend state machine, topic selection, and synchronized debate start.

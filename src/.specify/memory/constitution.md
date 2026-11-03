@@ -30,7 +30,7 @@
 
 ### Principle IV: Incremental Vertical Slices (Working Software Invariant)
 1. **Vertical Slices Over Horizontal Layers:** Every pull request and sprint deliverable must provide an end-to-end, testable increment (UI -> API -> DB/Service).
-2. **Working State Preservation:** The `develop` and `main` branches must remain in a passing, releasable state. Existing working features must never be broken to support future increments.
+2. **Working State Preservation:** The `dev` and `main` branches (and the current sprint branch, e.g. `pa2`) must remain in a passing, releasable state. Existing working features must never be broken to support future increments.
 
 ### Principle V: Dual-Consent & Debate Psychological Safety
 1. **Explicit Dual-Consent:** Real-time audio streaming, recording, and automated transcription must never initiate without explicit, uncoerced consent from both debaters in the room.
@@ -39,6 +39,11 @@
 ### Principle VI: Grounding Guard & Brutal Intellectual Honesty
 1. **Grounding Guard (Zero Hallucination):** Every piece of language coaching, argument critique, and fallacy attribution must cite a verbatim quote from the student's transcript segment.
 2. **No Participation Trophies:** AI evaluations must maintain clinical, objective precision. Flaws in reasoning, logical fallacies (strawman, ad hominem, false dilemma), and factual errors must be plainly called out and paired with constructive remediation.
+
+### Principle VII: Team Attribution & Agent Candor
+1. **Verified Attribution:** Documentation, task cards, and Git contributions attribute the five official team members by student ID and role (Lộc `24125093`, Triết `24125047`, Tài `24125078`, Khoa `24125058`, Tuấn `24125107`), as listed in `AGENTS.md` §3.
+2. **Human Consequence Reasoning:** Before any architectural, code, or prompt decision, evaluate its effect on live debaters: dignity, cognitive load, and the fragile conversational rhythm of spontaneous speech.
+3. **Agent Candor:** AI coding agents state technical debt, security flaws, brittle approaches, and incomplete stubs plainly. They never present an incomplete stub as functional.
 
 ---
 
@@ -63,12 +68,12 @@
    - Task completion dates progress naturally across the sprint; batch completions at sprint end are prohibited.
 2. **Pull Request Quality Gates:**
    - Automated CI passing: Ruff linting & formatting (Python), ESLint & TSC (TypeScript), pytest suite, and secret scanning.
-   - At least one approved code review from the designated peer reviewer before merging to `develop`.
+   - At least one approved code review from the designated peer reviewer before merging to the sprint branch (`pa2`), and the sprint branch merges to `dev` only after Sprint Review.
 3. **Constitution Governance:**
    - This Constitution supersedes individual coding preferences.
    - Any amendment requires consensus across all 5 team leads and an updated version timestamp.
 
 ---
 
-**Version:** 1.0.0 | **Ratified:** 2026-10-13 | **Last Amended:** 2026-10-13  
+**Version:** 1.0.1 | **Ratified:** 2026-10-13 | **Last Amended:** 2026-10-21  
 **Custodians:** Trần Lê Anh Tuấn (AI Orchestrator Lead) & Nguyễn Đình Thiên Lộc (DevOps & QA Lead)
