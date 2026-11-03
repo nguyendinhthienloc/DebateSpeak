@@ -10,7 +10,7 @@ Examples:
 
 ```sh
 python report/pdf/build.py docs/requirements/VISION_DOCUMENT.md --subtitle "Vision Document — PA2 / Group 02" --date "October 25, 2026"
-python report/pdf/build.py docs/pa2/PROJECT_PLAN.md --subtitle "Project Plan — PA2 / Group 02"
+python report/pdf/build.py docs/requirements/PROJECT_PLAN.md --subtitle "Project Plan — PA2 / Group 02"
 ```
 
 The PDF is written next to the Markdown file with the same name. The title comes from the first `# ` line. Mermaid blocks, if any, are rendered locally and embedded as diagrams. Generated files stay in the ignored `report_build/` folder, and nothing is committed for you.

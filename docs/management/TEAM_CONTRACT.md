@@ -65,10 +65,10 @@ In accordance with course guidelines, **all 5 team members act as full-stack eng
   - **Python (Backend & Workers):** Strict PEP 8 standards enforced via **Ruff** (line length 100) and static type checking via **MyPy**.
   - **TypeScript (Frontend):** Enforced via **ESLint** and **Prettier** with strict TypeScript compiler checks (`noImplicitAny: true`).
 - **Git Branching Strategy:**
-  - Git Flow model: `main` (production-ready, tagged releases), `dev` (integration), a sprint branch per PA (`pa2`, `pa3`, …), and short-lived feature branches (`feature/SCRUM-24-auth-backend`, `bugfix/…`).
+  - Git Flow model: `main` (production-ready, tagged releases), `dev` (integration), a sprint branch per PA (`pa3`, `pa4`, …), and short-lived feature branches (`feature/SCRUM-24-auth-backend`, `bugfix/…`).
   - Feature branches are created from the sprint branch and their PRs target it. The sprint branch merges into `dev` once per sprint.
   - **Never commit directly to `main`, `dev` or the sprint branch.** All changes require a Pull Request.
-  - Per-member tasks and branch rules for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md); branch names follow `feature/SCRUM-nn-short-name`.
+  - Per-member tasks for PA3 are in `docs/pa3/<member>/TODO.md`; branch names follow `feature/SCRUM-nn-short-name`.
 - **Code Review & Testing Guidelines:**
   - Every PR must have at least **one approving review** from a designated peer reviewer before merging.
   - PRs must pass automated CI checks (linters, unit tests) and maintain ≥70% test coverage on core business logic.

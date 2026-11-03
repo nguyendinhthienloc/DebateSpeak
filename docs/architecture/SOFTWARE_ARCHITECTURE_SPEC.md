@@ -10,7 +10,7 @@
 The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/pdf/README.md) for the reproducible build command.
 
 **Build 1 contract (SCRUM-19 / Gate G1, merged via PR #8):**
-[G1_SPEC_BUILD1.md](../pa2/G1_SPEC_BUILD1.md) defines the request/response/error shapes,
+[G1_SPEC_BUILD1.md](G1_SPEC_BUILD1.md) defines the request/response/error shapes,
 session transport, persistence mapping and complete state-transition matrix needed by
 the Build 1 implementation. For Build 1 it takes precedence over the older proposed
 room/profile route names below. No endpoint implementation is claimed; it is scheduled for Sprint 3.

@@ -74,7 +74,7 @@ The team utilizes **Jira** for end-to-end task tracking following strict course 
 
 ## 2A. Platforms of Work
 
-Every platform the team uses, who owns its setup, and how it connects. Keep this table in sync with `docs/pa2/TODO.md` and `docs/pa2/CHECKLIST.md`.
+Every platform the team uses, who owns its setup, and how it connects. Keep this table in sync with the per-member `docs/pa3/<member>/TODO.md` files.
 
 | Platform | Used for | Connection / location | Owner |
 |---|---|---|---|
@@ -83,7 +83,7 @@ Every platform the team uses, who owns its setup, and how it connects. Keep this
 | Google Meet with Gemini notes | Scrum meetings and minutes | Team Meet link | Khoa (SCRUM-23 minutes) |
 | VS Code | Local editor; Atlassian extension for viewing Jira | Local install per member | Each member |
 | Docker Compose | Local PostgreSQL 16, Redis 7, LiveKit dev | `docker-compose.yml` | Lộc |
-| Spec Kit | Specifications in `/src` | `src/constitution.md`, `src/.specify/` | Lộc (SCRUM-22) |
+| Spec Kit | Specifications, plans and tasks | `.specify/`, `.github/skills/`, generated `specs/` | Lộc (SCRUM-22) |
 | LaTeX (`latexmk`) | PDFs converted from Markdown | `report/pdf/build.py` | Lộc |
 
 Each member signs in to Jira and GitHub with their own account. Do not share tokens or passwords in chat or in the repository.
@@ -95,11 +95,11 @@ Each member signs in to Jira and GitHub with their own account. Do not share tok
 - **Branching Strategy (Git Flow):**
   - `main`: Production-ready, stable releases (tagged `v1.0-pa1`, `v2.0-pa2`, etc.). Protected branch; direct pushes prohibited.
   - `dev`: Shared integration branch. Receives each sprint's branch after Sprint Review.
-  - `pa2` (and `pa3`, `pa4`, `pa5` for later sprints): Sprint branch, branched off `dev`. All task PRs for the sprint merge here.
-  - `feature/<task-ID-or-jira-key>-<short-description>`: One branch per task and per performer, branched off the sprint branch (`pa2`). PR target is always the sprint branch.
+  - `pa3` (and `pa4`, `pa5` for later sprints): Sprint branch, branched off `dev`. All task PRs for the sprint merge here.
+  - `feature/<task-ID-or-jira-key>-<short-description>`: One branch per task and per performer, branched off the sprint branch (`pa3`). PR target is always the sprint branch.
   - `bugfix/<task-ID-or-jira-key>-<short-description>`: Defect fixes, branched off the sprint branch.
-  - Merge path: `feature/*` → `pa2` (task PR, one reviewer) → `dev` (one PR per sprint, opened by the release custodian) → `main` (tagged release).
-  - Per-member tasks and branch rules for PA2 are in [docs/pa2/TODO.md](../pa2/TODO.md); branch names follow `feature/SCRUM-nn-short-name`.
+  - Merge path: `feature/*` → `pa3` (task PR, one reviewer) → `dev` (one PR per sprint, opened by the release custodian) → `main` (tagged release).
+  - Per-member tasks for PA3 are in `docs/pa3/<member>/TODO.md`; branch names follow `feature/SCRUM-nn-short-name`.
 - **Sprint 1 Centralized Documentation Custodian Role:**
   - During Sprint 1 (conception & foundation phase), all five team members collaborated in drafting, review, and editing of project deliverables (documented verbatim via per-section headers).
   - To prevent Git merge conflicts during rapid simultaneous drafting of Markdown files and ensure uniform LaTeX compilation via `latexmk`, **Nguyễn Đình Thiên Lộc served as Documentation Custodian & Git Release Manager**, centralizing integration, running linters, and packaging assignment archives.

@@ -26,7 +26,7 @@ This document describes intended product behavior. Features, quality targets, an
 
 | Ref. | Source | Use in this vision |
 |---|---|---|
-| R1 | [PA2-2026 assignment](../assignments/PA2-2026.pdf), Part B and submission guidelines, pp. 2–5 | Required sections, feature paragraphs, Mermaid diagrams, attribution, Markdown and PDF deliverables |
+| R1 | PA2-2026 assignment, Part B and submission guidelines, pp. 2–5 | Required sections, feature paragraphs, Mermaid diagrams, attribution, Markdown and PDF deliverables |
 | R2 | [Project Proposal](PROJECT_PROPOSAL.md), §§1–5 | Problem, audience, ten functional groups, scope |
 | R3 | [Software Architecture Specification](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), §§1–4, 6–12, 15–16, 18 | Functional requirements, quality targets, consent, grounding, evaluation limits |
 | R4 | [Existing App Survey](EXISTING_APP_SURVEY.md), §§2–5 | PA1 comparison and interaction patterns |

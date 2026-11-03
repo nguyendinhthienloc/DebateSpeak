@@ -113,7 +113,7 @@ flowchart TD
 **Build 1 clarification — SCRUM-19, 2026-10-27.**
 Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
 Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (PR #8 merged).
-Edited: Codex. The [Gate G1 contract](../pa2/G1_SPEC_BUILD1.md) specifies auth/profile
+Edited: Codex. The [Gate G1 contract](../architecture/G1_SPEC_BUILD1.md) specifies auth/profile
 and the invite-based two-person lobby, ending at READY. It uses in-memory access JWTs,
 an HttpOnly rotating refresh cookie and server-side session revocation. Topic selection
 uses explicitly seeded topics until FG-02 exists; no topic-management API is required
