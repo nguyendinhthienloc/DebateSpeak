@@ -65,13 +65,13 @@
 
 ### Sprint 2 assignments
 
-Sprint 2 is closed; its working files were removed and remain in Git history. See [pa3/PA2_FILE_MAP.md](../pa3/PA2_FILE_MAP.md). Sprint 3 assignments: `docs/pa3/<member>/TODO.md`.
+Sprint 2 is closed; its working files were removed and remain in Git history. See [pa3/README.md](../pa3/README.md). Sprint 3 assignments: `docs/pa3/<member>/TODO.md`.
 ---
 
 ### Sprint 3 (Weeks 5–6 / PA3): Use-Case Modeling & First Functional Slice (Build 2)
 **Sprint Goal:** Comprehensive use-case model with Mermaid diagrams, use-case specifications, UI prototypes, and full-stack implementation of 1 Functional Group. Also carries Build 1 (auth and room lobby), moved from Sprint 2.
 
-> Sprint 3 scope was shrunk on 2026-11-03: Build 1 is cut to what FG-03 needs, the database with mock data comes first, and FG-01/FG-02 plus PA4/PA5 prep are extras. See [../pa3/SCOPE.md](../pa3/SCOPE.md) and `docs/pa3/<member>/TODO.md`.
+> Sprint 3 scope was shrunk on 2026-11-03: Build 1 is cut to what FG-03 needs, the database with mock data comes first, and FG-01/FG-02 plus PA4/PA5 prep are extras. See [../pa3/README.md](../pa3/README.md) and `docs/pa3/<member>/TODO.md`.
 
 | Jira | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping |
 |---|---|---|---|---|---|
