@@ -71,6 +71,8 @@ Sprint 2 is closed; its working files were removed and remain in Git history. Se
 ### Sprint 3 (Weeks 5–6 / PA3): Use-Case Modeling & First Functional Slice (Build 2)
 **Sprint Goal:** Comprehensive use-case model with Mermaid diagrams, use-case specifications, UI prototypes, and full-stack implementation of 1 Functional Group. Also carries Build 1 (auth and room lobby), moved from Sprint 2.
 
+> Sprint 3 scope was shrunk on 2026-11-03: Build 1 is cut to what FG-03 needs, the database with mock data comes first, and FG-01/FG-02 plus PA4/PA5 prep are extras. See [../pa3/SCOPE.md](../pa3/SCOPE.md) and `docs/pa3/<member>/TODO.md`.
+
 | Jira | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping |
 |---|---|---|---|---|---|
 | — | Revised Project Plan & Vision Document with `Changes.md` (addressing TA feedback) | **R5** | **R1** | `docs/pa3/Changes.md`, revised docs | PA3 Part A, B |
