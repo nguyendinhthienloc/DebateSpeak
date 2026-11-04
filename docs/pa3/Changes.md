@@ -1,0 +1,52 @@
+# Changes.md — PA3 (compared with PA2)
+
+One file for PA3, one section per revised document. Each row: what changed, why, where.
+Status: **filled** = written, **TA** = needs the PA2 TA feedback items added.
+
+## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
+Owner: Tài. Reviewer: Lộc.
+
+| # | Change | Why | Status |
+|---|---|---|---|
+| 1.1 | Build 1 moved from Sprint 2 to Sprint 3 and shrunk to what FG-03 needs (table below) | PA2 had no code increment; PA3 grades one FG end to end | filled |
+| 1.2 | Spec Kit lives at the repo root, not `/src`; the duplicate in `src/` was deleted (identical constitution kept at `.specify/memory/constitution.md`) | PA3 to PA5 do not require `/src`; one copy avoids drift | filled |
+| 1.3 | Sprint 3 schedule: deadline Fri 2026-11-13, submission buffer 11-14 to 11-15 | Updated with real dates | filled |
+| 1.4 | Database first (11-04): migrations + seed give 5 users, 10 topics, 1 room | Every member can run the same data from day one | filled |
+| 1.5 | Extra preparation items (stretch): FG-02 topic API, LiveKit token spike, `STTAdapter`, `LLMAdapter` + grounding guard, mic screen, CI migrate/seed | Reduce risk for Builds 3 and 4; cut first if FG-03 slips | filled |
+| 1.6 | Branch and PR rules: `feature/SCRUM-<nn>-<name>`, PR into `pa3`, `pa3` → `dev` once per sprint | Keeps `dev` releasable | filled |
+| 1.7 | Changes from TA feedback on PA2 | Required by the brief | TA |
+
+**Build 1, shrunk**
+
+| Kept | Cut |
+|---|---|
+| Migrations + seed with mock data | Refresh-token rotation |
+| Register / login (Argon2id, access JWT) | Profile editing, CEFR screens |
+| Create room, join by invite code, `LOBBY` → `READY`, 409 on third user | `LIVE` / `ENDED` beyond FG-03 start |
+| Lobby UI | Separate M1 demo and smoke test (folded into the FG-03 video and E2E) |
+
+Build 1 Jira: SCRUM-24 auth, 25 frontend, 26 room API, 27 lobby UI, 28 state machine (SCRUM-29, 30 folded into FG-03). New: SCRUM-41 DB + seed, SCRUM-42 Docker DB.
+
+## 2. Vision Document (`docs/requirements/VISION_DOCUMENT.md`)
+Owner: Khoa. Reviewer: Lộc.
+
+| # | Change | Why | Status |
+|---|---|---|---|
+| 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
+| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | TA |
+| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | TA |
+| 2.4 | Changes from TA feedback on PA2 | Required by the brief | TA |
+
+## 3. Repository layout (supporting change)
+Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
+
+| PA2 file | Now |
+|---|---|
+| `PROJECT_PLAN.md` | Moved to `docs/requirements/` (Tài revises it) |
+| `G1_SPEC_BUILD1.md` | Moved to `docs/architecture/` |
+| `TODO.md`, `CHECKLIST.md` | Replaced by the per-member `TODO.md` files |
+| `JIRA_MAPPING.md` | Replaced by `docs/management/SPRINT_TASKS.md` |
+| `WEEKLY_REPORT`, `AI_USAGE_LOG`, `MEETINGS/` | Deleted; PA3 versions go in `docs/pa3/` (SCRUM-40), PA2 layout is the template |
+| `SPECKIT_TRAINING`, `speckit-training-Triet`, `PA1_LESSONS`, `drafts/` | Deleted |
+
+Open: review `docs/design/initial/figma-state.json` and `docs/reference/ORIGINAL_PROMPT_REFERENCE.md` (kept for now).
