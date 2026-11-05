@@ -114,6 +114,12 @@ Launch PostgreSQL 16, Redis 7, and the LiveKit WebRTC server in the background:
 docker compose up -d
 ```
 
+PA3 only needs the database. Start just that, from a clean volume if you want a fresh one:
+
+```bash
+docker compose up -d --wait db
+```
+
 Verify that all three containers are healthy:
 ```bash
 docker compose ps
