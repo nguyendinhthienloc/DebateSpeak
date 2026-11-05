@@ -15,6 +15,15 @@ The [initial UI design study](../design/initial/README.md) translates FG-01 (log
 ---
 
 ## 1. Introduction & Value Proposition
+
+**Frontend scaffold scope (November 6, 2026).** The user requested only page
+navigation and responsive layouts from the selected Cream & Yellow Figma design.
+The [scaffold contract](../design/UI_SCAFFOLD.md) covers linked account, room setup,
+profile, invitation, lobby and recovery screens. All data and success/error states
+are explicitly labeled previews; this does not deliver authentication, room
+services, audio, transcription or AI coaching, and does not count as a completed
+vertical product increment. The roadmap and functional-group acceptance criteria
+remain unchanged.
 *Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 1.1 Problem Statement

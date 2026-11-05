@@ -26,6 +26,25 @@ approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af
 
 ## 1. Executive Summary & Problem Formulation
 
+### Frontend navigation scaffold (November 6, 2026)
+
+The user authorized page routes and a responsive layout scaffold from the selected
+[Cream & Yellow Build 1 Figma flow](../design/BUILD1_FIGMA_FLOW.md). This is a UI
+preview on `feature/UI-scaffold`, not a completed Build 1 vertical increment.
+Use the existing Vite/React/TypeScript/Tailwind SPA with shared controls, semantic
+design tokens, local Inter fonts, and hash routes so refresh and direct links work
+on static hosting without server rewrites. Routes cover sign-in, registration,
+rooms, setup/settings, profile, invitation, waiting/ready lobby and room recovery
+examples; unknown routes provide a recovery link. Navigation updates document
+titles, scroll position and main-content focus, including browser back/forward.
+
+Preview navigation must be visibly identified. Sample participants and room codes
+are illustrative; no authentication, room mutation, persistence, API request,
+LiveKit connection, microphone capture, transcription or automated state transition
+is implemented. Media actions remain disabled with an explanation. Form values
+are transient UI state only, with no password storage. Build 1 contracts and the
+roadmap remain unchanged. See [the scaffold contract](../design/UI_SCAFFOLD.md).
+
 ### 1.1 Definition
 
 **DebateSpeak AI** is a web-based live spoken-debate and English-learning platform. Two human users enter a shared live room, similar in spirit to a lightweight video-call room but audio-first, and debate a selected topic using their microphones. While they talk, the system:
