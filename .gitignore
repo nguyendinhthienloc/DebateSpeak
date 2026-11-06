@@ -1,6 +1,5 @@
 # Environment files (CRITICAL: NEVER COMMIT SECRETS)
-.env
-.env.*
+.env*
 !.env.example
 
 # Python
@@ -84,3 +83,21 @@ test-results/
 *.vrb
 report.pdf
 report_build/
+PRODUCT.md
+.impeccable/
+docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md
+docs/design/BUILD1_FIGMA_FLOW.md
+docs/design/build1-figma-flow.json
+docs/design/CREATE_ROOM_PREVIEW_AUDIO_CONCEPT.md
+docs/design/FIGMA_BUILD1_CRITIQUE.md
+docs/design/FIGMA_CRITIQUE.md
+docs/design/MOTIVATION_PALETTES.md
+docs/design/motivation-palettes.json
+docs/design/PALETTE_EXPLORATION.md
+docs/design/palette-exploration.json
+docs/design/TWO_PAGE_DEMOS.md
+docs/design/two-page-demos.json
+docs/design/UI_SCAFFOLD.md
+docs/pa2/BUILD1_UX_BRIEF.md
+docs/pa2/BUILD1_UX_BRIEF.pdf
+docs/requirements/PROJECT_PROPOSAL.md
