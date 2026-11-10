@@ -1,5 +1,5 @@
 # SCRUM-19 — Gate G1: Build 1 specification
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (approved by the merge of PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (approved by the merge of PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 Prepared: 2026-10-27. Status: merged into `pa2` (PR #8); implementation is scheduled for
 Sprint 3 (PA3). Branch: `feature/G1-spec-build1`, based on `pa2` at
@@ -12,7 +12,7 @@ Authority: [CHECKLIST.md](CHECKLIST.md), [TODO.md](TODO.md),
 G1 requirements; it does not implement the application or close the gate.
 
 ## 1. Scope, decisions and human impact
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 Build 1 delivers registration, login/refresh/logout, own CEFR profile, room creation,
 invite-code joining and participant-only room snapshots. Two browsers reach READY;
@@ -37,7 +37,7 @@ This spec does not override AGENTS.md or claim any implementation is complete. D
 ordinary account use or force capture; room presence is not consent.
 
 ## 2. G1.1 — Persistence and invariants
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 | Entity / existing table | Build 1 fields and invariants |
 |---|---|
@@ -68,7 +68,7 @@ RANDOM assigns the creator PRO/CON securely and the partner the opposite. CREATO
 requires creator_stance PRO/CON. Do not permit join to choose arbitrary user identity.
 
 ## 3. G1.2 — State graph, guards and errors
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 The later SCRUM-28 pure transition function validates the following complete graph.
 Row = current, column = requested target. A dash means InvalidTransition; at an API
@@ -97,7 +97,7 @@ calling transition. Build 1 has no arbitrary `PATCH status` API. Unknown routes 
 test should exercise the real lifecycle service boundary or a future exposed transition.
 
 ## 4. G1.3 — Shared HTTP and response contracts
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 All paths below omit the configured API prefix, currently `/api/v1`. Use JSON,
 UUID strings and RFC 3339 UTC timestamps. Reject unknown request fields with 422.
@@ -177,7 +177,7 @@ may return 429 with Retry-After when throttled, or sanitized 503 when a required
 service is unavailable. Clients must not display raw exception traces.
 
 ## 5. G1.3 — Authentication and profile endpoints
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 | Method / path | Request | Success | Defined application errors |
 |---|---|---|---|
@@ -202,7 +202,7 @@ unknown user, wrong password, suspension or soft deletion; do not reveal which c
 failed. Sign-in/account mutation endpoints must not log bodies or secret cookie headers.
 
 ## 6. G1.3 — Room endpoints
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 | Method / path | Request | Success | Defined application errors |
 |---|---|---|---|
@@ -228,7 +228,7 @@ Refreshing the page must recover the caller's session then load the same persist
 Network loss in this lobby-only increment does not invent a LIVE reconnect protocol.
 
 ## 7. G1.4 — Token transport, rotation and logout
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 Access JWT: lifetime 15 minutes, verified signature using a server-configured algorithm
 allowlist, expiry and configured issuer/audience. Claims include sub=user UUID,
@@ -284,7 +284,7 @@ and [OWASP CSRF prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross
 These support the transport controls, not a claim that this unimplemented design is secure.
 
 ## 8. Acceptance matrix and handoff
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Lộc (PR #8). Edited: Trần Lê Anh Tuấn (24125107).
 
 All scenarios below are NOT RUN; they are implementation requirements for SCRUM-24 to SCRUM-29.
 

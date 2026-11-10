@@ -1,6 +1,5 @@
 # Environment files (CRITICAL: NEVER COMMIT SECRETS)
-.env
-.env.*
+.env*
 !.env.example
 
 # Python
