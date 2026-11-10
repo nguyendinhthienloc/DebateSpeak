@@ -6,22 +6,26 @@
 
 | PA3 objective | Result and evidence |
 |---|---|
-| Revised Project Plan, Vision, and `Changes.md` | Done |
-| Use-case model for all functional groups | Done |
-| Use-case specifications and UI prototypes | Done |
-| FG-03 room/session implementation | Done |
-| FG-03 tests and narrated demo | Done |
-| AI usage and weekly report | Done |
+Status as of 2026-11-10. Update on 2026-11-13 with the final result.
+
+| PA3 objective | Result and evidence |
+|---|---|
+| Revised Project Plan, Vision, and `Changes.md` | Partial. Plan revised; Vision still to be revised; TA feedback rows in `Changes.md` open |
+| Use-case model for all functional groups | Done (PR 19); review pending |
+| Use-case specifications and UI prototypes | Done (PR 19); review pending |
+| FG-03 room/session implementation | Not done. No auth API, room API, migrations or integrated UI on `pa3` yet |
+| FG-03 tests and narrated demo | Not done. No E2E test, no video |
+| AI usage and weekly report | Partial. Jira screenshots still to be added |
 
 ## Retrospective
 
 - **What went well**
-  - The team completed the PA3 documentation, including the revised project plan, vision document, use-case model, and use-case specifications.
-  - Tài and Triết coordinated their backend and frontend work to deliver the FG-03 room and live-session flow.
-  - The team reviewed the implementation, completed the planned tests, and recorded the narrated demo.
+  - The use-case model and use-case specifications with prototypes were completed.
+  - The room state machine and the grounding guard were merged with unit tests.
   - Regular Scrum check-ins helped the team identify dependencies and keep work visible.
 
 - **What went wrong**
+  - FG-03 is not integrated yet: the database migrations, auth API and room API were not merged by 2026-11-10, so the frontend and backend do not connect.
   - Some integration work took longer than expected because frontend and backend changes were developed in parallel.
   - Documentation and implementation needed repeated updates to remain consistent.
   - Testing and demo preparation were concentrated toward the end of the sprint.
@@ -53,4 +57,4 @@
 
 ## Review summary
 
-The sprints are completed with project is on schedule. 
+As of 2026-11-10 the documents are mostly in place, but FG-03 end to end (graded) is not done and the project is behind schedule. This summary is to be rewritten on 2026-11-13 from what is merged and verified.
