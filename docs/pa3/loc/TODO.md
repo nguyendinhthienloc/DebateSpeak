@@ -5,11 +5,11 @@ Team deadline: **Fri 2026-11-13**. Buffer for zip and submission: 11-14 to 11-15
 | Task | Jira | Branch | Due | Status |
 |---|---|---|---|---|
 | Merge cleanup PR 14 into `pa3` | PR 14 | n/a | 11-03 | Done |
-| Docker Compose database starts clean for every member (`docker compose up db`) | SCRUM-42 | `feature/SCRUM-42-docker-db` | 11-04 | In review |
-| CI job: run migrations + seed against Postgres | SCRUM-43 | `feature/SCRUM-43-ci-migrate-seed` | 11-06 | Stretch, blocked by SCRUM-41 |
-| Review FG-03 PRs and Changes.md | SCRUM-38, 35 | n/a (review) | 11-11 | Open |
-| Record narrated FG-03 demo (includes the lobby flow), upload to YouTube | SCRUM-39 | `feature/SCRUM-39-fg03-demo-video` | 11-12 | Open |
-| Build `PA3-Group[GroupId].zip` (docs as .md + PDF, Git log, Spec Kit artifacts), merge `pa3` → `dev` | none | n/a | 11-13 | Open |
+| Docker Compose database starts clean for every member (`docker compose up db`) | SCRUM-42 | `feature/SCRUM-42-docker-db` | 11-04 | Done (PR 15 merged) |
+| CI job: run migrations + seed against Postgres | SCRUM-43 | `feature/SCRUM-43-ci-migrate-seed` | 11-06 | Done (PR 17 merged). Job skips until SCRUM-41 lands, so not yet run against a real database |
+| Review FG-03 PRs and Changes.md | SCRUM-38, 35 | n/a (review) | 11-11 | Open. Nothing to review yet: no FG-03 PR; SCRUM-35 plan/vision not submitted |
+| Record narrated FG-03 demo (includes the lobby flow), upload to YouTube | SCRUM-39 | `feature/SCRUM-39-fg03-demo-video` | 11-12 | Blocked until FG-03 runs |
+| Build `PA3-Group[GroupId].zip` (docs as .md + PDF, Git log, Spec Kit artifacts), merge `pa3` → `dev` | none | n/a | 11-13 | Open. Local skeleton script ready; waits for FG-03, `specs/`, Jira screenshots, PDFs |
 
 Blocked by: FG-03 done before the video; SCRUM-41 (migrations + seed) before SCRUM-43.
 
