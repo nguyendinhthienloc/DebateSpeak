@@ -1,7 +1,7 @@
 # Changes.md — PA3 (compared with PA2)
 
 One file for PA3, one section per revised document. Each row: what changed, why, where.
-Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **none received** = no TA feedback was given to the group.
+Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
 Owner: Tài. Reviewer: Lộc.
@@ -33,8 +33,8 @@ Owner: Khoa. Reviewer: Lộc.
 | # | Change | Why | Status |
 |---|---|---|---|
 | 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
-| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | TA |
-| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | TA |
+| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | open |
+| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | open |
 | 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 ## 3. Repository layout (supporting change)
@@ -64,4 +64,4 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 | `.gitignore` | Broaden secret pattern to `.env*`, retain `.env.example` exception | Protect every dotenv filename without excluding the placeholder template |
 | `.env.example` | Empty optional browser-tooling placeholders | Keep local document tooling portable without hardcoding browser paths |
 
-Review, Git publication and Jira completion are not claimed. This section does not replace the pending TA feedback changes in sections 1–2.
+Review, Git publication and Jira completion are not claimed. This section does not replace the open rows in section 2.
