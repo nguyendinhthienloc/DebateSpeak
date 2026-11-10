@@ -1267,3 +1267,32 @@ These metrics define experiments; **results are not reported here.**
 - [ ] Functional groups FG-01…FG-10 map to actors (Section 2.3) and to roadmap sprints.
 - [ ] Every Must requirement has a sprint and at least one acceptance criterion.
 - [ ] No claim that AI judging, fact-checking, speech-to-text or multiple judges are unique.
+## 20. PA3 local implementation contracts — SCRUM-28, SCRUM-36, SCRUM-37, SCRUM-47
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: assigned human reviewers, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+These ticket contracts clarify the existing requirements above; they do not enable live media, future features, or AI provider calls.
+
+### 20.1 SCRUM-28: deterministic room lifecycle
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Tài (24125078), pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+Implement `app.domain.rooms` independently of FastAPI, SQLAlchemy and media providers. `RoomStatus` retains LOBBY, READY, LIVE, ENDED and CANCELLED. `transition(current, target)` accepts enum members, returns the target for one of the six G1 edges, and raises `InvalidTransition` otherwise. Invalid input types fail explicitly. Self-transitions are invalid. ENDED and CANCELLED are terminal. Allowed edges: LOBBY→READY, LOBBY→CANCELLED, READY→LOBBY, READY→LIVE, READY→CANCELLED, LIVE→ENDED.
+
+Expose a separate pure lifecycle guard with an immutable context (caller identity/authority, distinct participant identities, consent and microphone-ready identities, expiry, actual media availability, Build 1 live feature availability, and explicit end/expiry reason). The caller supplies time-derived expiry and authorization facts; the module never reads a clock or database. Start requires exactly two distinct members, both current consents, both microphone tests, actual media availability and an enabled live capability. Build 1 defaults to disabled LIVE. Creator cancellation and expiry work before LIVE; either participant can end LIVE, while timer/reconnection expiry is a trusted service action. A pending lobby that expires cannot become READY or LIVE. Declining consent causes no capture or transcription. Guard errors have stable domain codes. A graph edge is never sufficient authorization.
+
+The room service must lock/reload the room, derive context from authenticated server state, apply guards, persist status plus membership/consent changes atomically, then notify clients. An existing member's join retry returns its snapshot without invoking a self-transition. Map invalid edges/guards to 409 at an existing service/API boundary, authorization failures to 403, and hide nonmember room resources as 404 in accordance with G1. Do not add an arbitrary status endpoint. This ticket supplies the reusable domain component and exhaustive tests; SCRUM-26/38 own persistence/API/UI integration. No mock room backend is introduced.
+
+### 20.2 SCRUM-36 and SCRUM-37: design coverage
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Tài (24125078) for SCRUM-36 and Lộc (24125093) for SCRUM-37, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+`docs/pa3/use_cases.json` is the shared actor/use-case/FR inventory; `USE_CASE_MODEL.md` contains the overview and ten functional-group diagrams. `USE_CASE_SPECIFICATIONS.md` details each inventoried use case with preconditions, triggers, main/alternative/error flows, postconditions and a linked prototype screenshot. Map FR-01 through FR-60, explicitly separating PA3 scope, future MVP, Should, stretch and post-MVP designs. Teacher class management remains outside this design. Use Mermaid flowcharts with a documented UML-style convention; include and extend relationships describe behavior, not chronological navigation.
+
+The standalone local prototype in `docs/pa3/prototypes/` is a review artifact with fictional data. It uses no microphone, network service, persistence or real credentials. It must show consent and mic readiness separately, blocked start, recovery/error states, transcript speaker attribution, quote-based feedback, evidence uncertainty, partial reports, protected admin/evaluator contexts and destructive confirmations. One screen and PNG per use case are traced by stable UC IDs. Screens for future features are explicitly labelled design only. Prototype artifacts do not constitute deployed product increments.
+
+### 20.3 SCRUM-47: adapter contract and evidence validation
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: human reviewer pending assignment. Edited: Trần Lê Anh Tuấn (24125107).
+
+Implement the existing async `LLMAdapter.complete_json` protocol and a validated `LLMResult` without a vendor SDK or network call. `parsed` must be a JSON object; model is nonempty; usage and latency are nonnegative. Return data must satisfy the requested Pydantic schema at the adapter boundary. Protocol ellipses define the documented interface, not a production stub. Provider implementations, retries and orchestration remain future work.
+
+The pure Grounding Guard receives finalized transcript segments and language/argument feedback. Segments carry immutable segment, debate and speaker identities and text. Each feedback item contains the same identities, a nonblank exact quote, a direct explanation and a concrete remediation. Preserve quote bytes/code points; do not lowercase, trim, fuzzy-match, normalize punctuation, or join adjacent segments to make a quote pass. Match only a substring of the identified finalized segment in the same debate owned by the same speaker. Empty/whitespace quotes, absent or ambiguous segment identities, other debates/speakers, partial STT and invented quotes fail closed with explicit rejection reasons. Every feedback item must pass all of its citations. Accepted/rejected results are separate, immutable, and preserve input order. Source and feedback inputs are not mutated. Grounding establishes attribution and quote presence, not correctness of an AI diagnosis. Tests use a documented test double, never real keys or provider calls. No new environment settings are required.
+
+---

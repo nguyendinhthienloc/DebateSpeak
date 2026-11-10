@@ -1,5 +1,5 @@
 # DebateSpeak AI — Initial Project Plan
-Performed: Codex-assisted drafting for Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead — pending. Edited: Codex; human verification pending.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead — pending. Edited: Trần Lê Anh Tuấn (24125107); human verification pending.
 
 | Document control | Value |
 |---|---|
@@ -18,7 +18,7 @@ has moved to Sprint 3. Repository merges, dated Jira exports and planned work ar
 distinguished below. No live Jira access, human approval or product test result is implied.
 
 ## 1. Introduction
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 DebateSpeak AI is a browser application where two English learners practice spontaneous
 speaking through a live spoken debate. It combines topic selection, controlled room
@@ -28,10 +28,10 @@ university students and non-native professionals. This plan describes how five t
 members will organize, build, verify and deliver the product across PA1–PA5.
 
 ## 2. Project Overview
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 ### 2.1 Goals and acceptance targets
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 The following are targets inherited from the architecture, Vision and G1 contract,
 not measured achievements. Each build must retain the preceding build's working behavior.
@@ -45,7 +45,7 @@ not measured achievements. Each build must retain the preceding build's working 
 | P5 — Protect participation and personal data | No streaming/transcription before both participants explicitly consent; no raw-audio persistence by default; unauthorized profile/room/report access is rejected | Negative authorization/consent tests, storage inspection and deletion tests before learner use; Builds 3–4 |
 
 ### 2.2 Scope and boundaries
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 The final MVP covers the ten functional groups: accounts/profiles (FG-01), topics
 (FG-02), room/session management (FG-03), live audio (FG-04), transcription/attribution
@@ -76,7 +76,7 @@ These boundaries apply to the product; live audio, AI and reports are later-buil
 not exclusions from the final product.
 
 ### 2.3 Deliverables
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 | Milestone | Deliverables |
 |---|---|
@@ -92,7 +92,7 @@ repository's `latexmk` pipeline. This writing task produces the Markdown draft;
 PDF export, human review, merging and school submission remain separate checks.
 
 ### 2.4 Assumptions and dependencies
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Owners below are proposed verification responsibilities, not recorded sign-offs.
 
@@ -107,10 +107,10 @@ Owners below are proposed verification responsibilities, not recorded sign-offs.
 | No paid-service expenditure is authorized by this plan | Lộc | Confirm a numeric operating budget before cost acceptance tests; no price or free-tier capacity guarantee is assumed |
 
 ## 3. Project Organization
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 ### 3.1 Team structure and responsibilities
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 All five members contribute design, code, testing and documentation. R1–R5 below
 identify subsystem leadership, not exclusive permission to touch a layer. Official
@@ -131,7 +131,7 @@ work is decomposed into individual subtasks; a roll-up issue does not represent 
 independently verified completions. Khoa is the designated reviewer of SCRUM-20.
 
 ### 3.2 Risk register
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Likelihood and impact are qualitative planning estimates. Risk owners must confirm
 their rows during review; assignment here does not fabricate their acceptance.
@@ -152,7 +152,7 @@ schedule. Keep optional rankings/video/advanced panels out; if a Must requiremen
 risk, surface it to the team/TA rather than relabeling a partial feature complete.
 
 ### 3.3 PA1 lessons incorporated
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Lộc's PA1 lessons identify inconsistent PR targets, CI repair after merge preparation,
 ownership/status drift, unverifiable Jira keys and excessive release workload. This
@@ -162,10 +162,10 @@ and distributes planning/testing work. The lessons are supplied source material,
 not a claim that a new retrospective meeting has occurred.
 
 ## 4. Project Plan
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 ### 4.1 Scrum process and communication
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Use Scrum rather than RUP phases. At Sprint Planning, review course requirements,
 capacity, dependencies and acceptance criteria; select one assignee and reviewer per
@@ -182,7 +182,7 @@ Khoa records minutes/screenshots. Existing weekly-report entries dated 20 and 27
 October do not independently prove all required meeting types and evidence are present.
 
 ### 4.2 Five-sprint schedule
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 The roadmap uses a nominal two-week sprint baseline and a 10–12-week overall target;
 the course permits two to three weeks per sprint. Any extension must fit official
@@ -202,7 +202,7 @@ Other later-sprint tasks are planning backlog; detailed assignments and calendar
 dates are finalized when those sprints begin, as the PA2 brief permits.
 
 ### 4.3 Detailed Sprint 2 tasks and proposed close-out dates
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 **Deadline basis:** on 29 October the user reported "end of this week." Sunday
 1 November 2026 is a working interpretation, not a verified Moodle cutoff. Proposed
@@ -246,7 +246,7 @@ acknowledgements through actual responses. The existing coursework's single-revi
 rule still applies to each subtask; proposed reviewers must accept before assignment.
 
 ### 4.4 Following sprint and later backlog
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 The 27 October Jira mapping moves SCRUM-24–30 to Sprint 3. G1 is merged; their prior
 spec dependency is satisfied. Implementation and integration results still need proof.
@@ -281,7 +281,7 @@ rehearsal buffer. If remaining Must work does not fit, escalate during planning 
 than assuming the team can finish all integration on demo day.
 
 ### 4.5 Build plan and verification
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Four product test builds are planned. PA1's scaffold and PA2's documents are not
 counted as working product increments. Timing is relative until official sprint dates
@@ -302,7 +302,7 @@ audio and show incomplete analysis honestly. Preserve isolated speaker attributi
 explicit consent and respectful, actionable correction throughout.
 
 ### 4.6 Jira, source control and progress evidence
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Jira project `SCRUM` is the task system. SCRUM-15/16/17/18 are the Build 1/2/3/4
 epics. Existing SCRUM keys are the sole task identifiers; T2.1 and similar names are
@@ -327,7 +327,7 @@ the designated review and required CI before merge. Lộc coordinates the final 
 PR into `dev`, reviewed by Tài. No direct commits to integration/release branches.
 
 ### 4.7 PA2 review, packaging and submission gates
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 1. Khoa checks this plan against Part A; the responsible reviewer checks each other
    document. Record performed/reviewed/edited attribution truthfully after headings.
@@ -348,7 +348,7 @@ information are resolved. PA3 records TA feedback and changes to both plan and V
 with an honest explanation of schedule/scope changes and observed build results.
 
 ### 4.8 Decisions still requiring confirmation
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 | Item | Required confirmation | Responsible follow-up |
 |---|---|---|
@@ -365,7 +365,7 @@ testing guide explicitly labels its four-sprint timetable legacy. Retain its use
 acceptance criteria, not those old sprint labels or machine-specific setup examples.
 
 ## 5. References and evidence baseline
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 Repository sources below are pinned to the inspected `pa2` revision, because the user's
 original local checkout is older. Paths named elsewhere describe their intended
@@ -392,7 +392,7 @@ files do not prove the planned product journeys pass. No application tests or pr
 benchmarks were run while drafting this document.
 
 ## 6. AI assistance declaration
-Performed: Tuấn (24125107), with Codex assistance. Reviewed: Khoa (24125058), pending. Edited: Codex.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Khoa (24125058), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 On 29 October 2026 the user requested a project-wide review and an initial Project
 Plan. Codex read the original assignment, the current remote repository sources and

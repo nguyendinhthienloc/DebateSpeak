@@ -15,6 +15,8 @@ python report/pdf/build.py docs/requirements/PROJECT_PLAN.md --subtitle "Project
 
 The PDF is written next to the Markdown file with the same name. The title comes from the first `# ` line. Mermaid blocks, if any, are rendered locally and embedded as diagrams. Generated files stay in the ignored `report_build/` folder, and nothing is committed for you.
 
+Images referenced relative to the source Markdown are resolved from that source directory and extracted into the build's `media/` directory before latexmk runs. Keep the source screenshots alongside the Markdown when sharing or rebuilding a document. This supports the PA3 use-case prototype screenshots without machine-specific paths.
+
 ## Prerequisites
 
 Python 3.11+, a TeX distribution with `latexmk`, `pdflatex` and Vietnamese T5 fonts (packages `lmodern`, `bookmark`, `longtable`, `booktabs`, `array`, `graphicx`, `xcolor`, `geometry`), and Pandoc. Pandoc on `PATH` is preferred; the local install below is a fallback. Node.js and Mermaid CLI are needed only for documents with Mermaid diagrams. Package downloads require network access.
