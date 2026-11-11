@@ -4,32 +4,35 @@
 
 ## Sprint results
 
+Status as of 2026-11-10. Update on 2026-11-13 with the final result.
+
 | PA3 objective | Result and evidence |
 |---|---|
-| Revised Project Plan, Vision, and `Changes.md` | Done |
-| Use-case model for all functional groups | Done |
-| Use-case specifications and UI prototypes | Done |
-| FG-03 room/session implementation | Done |
-| FG-03 tests and narrated demo | Done |
-| AI usage and weekly report | Done |
+| Revised Project Plan, Vision, and `Changes.md` | Partial. `PROJECT_PLAN.md` is still the PA2 v0.1 draft and not yet revised; Vision not yet revised; `Changes.md` drafted |
+| Use-case model for all functional groups | Done (PR 19, merged) |
+| Use-case specifications and UI prototypes | Done (PR 19, merged) |
+| FG-03 room/session implementation | Not done. No auth API, room API, migrations or integrated UI on `pa3` yet |
+| FG-03 tests and narrated demo | Not done. No E2E test, no video |
+| AI usage and weekly report | Partial. Weekly report still has unconfirmed placeholders; the AI log lacks most members' PA3 use; Jira screenshots missing |
 
 ## Retrospective
 
 - **What went well**
-  - The team completed the PA3 documentation, including the revised project plan, vision document, use-case model, and use-case specifications.
-  - Tài and Triết coordinated their backend and frontend work to deliver the FG-03 room and live-session flow.
-  - The team reviewed the implementation, completed the planned tests, and recorded the narrated demo.
+  - The use-case model and use-case specifications with prototypes were completed.
+  - The room state machine and the grounding guard were merged with unit tests.
   - Regular Scrum check-ins helped the team identify dependencies and keep work visible.
 
 - **What went wrong**
-  - Some integration work took longer than expected because frontend and backend changes were developed in parallel.
-  - Documentation and implementation needed repeated updates to remain consistent.
-  - Testing and demo preparation were concentrated toward the end of the sprint.
+  - FG-03 is not integrated yet: the database migrations, auth API and room API were not merged by 2026-11-10, so neither the FG-03 frontend nor the backend API exists on `pa3`.
+  - Work went into documents and isolated domain modules, not into the vertical slice FG-03 needs.
+  - The first version of this Sprint Review stated FG-03 was done without being checked against the repository.
+  - No E2E test or demo exists yet.
 
 - **Problems and causes**
-  - **Integration delays:** Some interface details were clarified after implementation had started, leading to rework.
-  - **Documentation drift:** Requirements and implementation changed at different times, so documents needed additional review.
-  - **Late testing and demo preparation:** The team prioritized implementation first and did not reserve enough time for early end-to-end checks.
+  - **Dependency chain on one owner:** SCRUM-41, 24, 26 and 38 are all assigned to Tài, so a delay in the first blocks the rest.
+  - **Late integration:** the UI scaffold lives on `feature/UI-scaffold` and was not merged into `pa3`, so frontend and backend never met.
+  - **Status not verified against evidence:** Jira and this document reported work as done that the repository did not show.
+  - Causes beyond these are to be written by the team on 2026-11-13.
 
 - **What to do differently in PA4**
   - Agree on interface contracts and acceptance criteria before parallel implementation begins.
@@ -53,4 +56,4 @@
 
 ## Review summary
 
-The sprints are completed with project is on schedule. 
+As of 2026-11-10 the documents are mostly in place, but FG-03 (the graded end-to-end slice) is not done and the project is behind schedule. This summary is to be rewritten on 2026-11-13 from what is merged and verified.

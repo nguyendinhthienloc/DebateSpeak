@@ -1,7 +1,7 @@
 # Changes.md — PA3 (compared with PA2)
 
 One file for PA3, one section per revised document. Each row: what changed, why, where.
-Status: **filled** = written, **TA** = needs the PA2 TA feedback items added.
+Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
 Owner: Tài. Reviewer: Lộc.
@@ -14,7 +14,7 @@ Owner: Tài. Reviewer: Lộc.
 | 1.4 | Database first (11-04): migrations + seed give 5 users, 10 topics, 1 room | Every member can run the same data from day one | filled |
 | 1.5 | Extra preparation items (stretch): FG-02 topic API, LiveKit token spike, `STTAdapter`, `LLMAdapter` + grounding guard, mic screen, CI migrate/seed | Reduce risk for Builds 3 and 4; cut first if FG-03 slips | filled |
 | 1.6 | Branch and PR rules: `feature/SCRUM-<nn>-<name>`, PR into `pa3`, `pa3` → `dev` once per sprint | Keeps `dev` releasable | filled |
-| 1.7 | Changes from TA feedback on PA2 | Required by the brief | TA |
+| 1.7 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 **Build 1, shrunk**
 
@@ -33,9 +33,9 @@ Owner: Khoa. Reviewer: Lộc.
 | # | Change | Why | Status |
 |---|---|---|---|
 | 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
-| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | TA |
-| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | TA |
-| 2.4 | Changes from TA feedback on PA2 | Required by the brief | TA |
+| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | open |
+| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | open |
+| 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 ## 3. Repository layout (supporting change)
 Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
@@ -64,4 +64,4 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 | `.gitignore` | Broaden secret pattern to `.env*`, retain `.env.example` exception | Protect every dotenv filename without excluding the placeholder template |
 | `.env.example` | Empty optional browser-tooling placeholders | Keep local document tooling portable without hardcoding browser paths |
 
-Review, Git publication and Jira completion are not claimed. This section does not replace the pending TA feedback changes in sections 1–2.
+Review, Git publication and Jira completion are not claimed. This section does not replace the open rows in section 2.
