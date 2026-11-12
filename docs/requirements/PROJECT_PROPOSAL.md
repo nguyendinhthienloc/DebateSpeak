@@ -16,6 +16,19 @@ The [initial UI design study](../design/initial/README.md) translates FG-01 (log
 
 ## 1. Introduction & Value Proposition
 
+**API-ready authentication frontend (November 12, 2026).** The user requested
+sign-up and sign-in based on the repository's existing design and clarified that
+the API/database need not be finished. The proposed frontend slice replaces
+preview-only auth actions with validated forms and a typed client for the G1
+registration/login contracts, including loading states, safe error recovery and
+memory-only session handling. Successful actions require API responses; browser
+tests simulate those responses without claiming real persistence. Room and media
+screens retain their preview boundaries. Backend authentication, database writes,
+refresh/logout integration and full FG-01 acceptance remain separate work.
+See [the auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
+Status: frontend implemented; build, lint and 43 browser contract tests passed.
+Backend/database acceptance remains unverified.
+
 **Frontend scaffold scope (November 6, 2026).** The user requested only page
 navigation and responsive layouts from the selected Cream & Yellow Figma design.
 The [scaffold contract](../design/UI_SCAFFOLD.md) covers linked account, room setup,

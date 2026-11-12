@@ -18,7 +18,7 @@ test('preview routes survive reload, back/forward and unknown URLs', async ({ pa
   await expect(page).toHaveTitle('Rooms · DebateSpeak AI');
 });
 
-test('preview flows never create a session, request media, or call a service', async ({ page }) => {
+test('room previews never create a session, request media, or call a service', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', request => {
     if (['fetch', 'xhr', 'websocket'].includes(request.resourceType())) requests.push(request.url());

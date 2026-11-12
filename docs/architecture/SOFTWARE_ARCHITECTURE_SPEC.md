@@ -26,6 +26,22 @@ approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af
 
 ## 1. Executive Summary & Problem Formulation
 
+### API-ready authentication frontend (November 12, 2026)
+
+The next scoped change connects the existing registration and sign-in screens to
+the G1 auth HTTP contract through a typed frontend client. Backend endpoints and
+database completion are not prerequisites for this frontend deliverable. Requests
+use a configurable API prefix, JSON, the G1 client header and credentialed fetch;
+success requires a valid API response. Account-created confirmation is transient,
+access tokens stay in runtime memory, and reload requires sign-in for this scope.
+Client validation, pending/error states and request-interception browser tests
+must cover both forms without a runtime fake-account store. Existing room/media
+screens remain previews. This is frontend integration preparation, not completion
+of backend auth security, persistence or the whole FG-01 vertical increment.
+See [the scoped auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
+Status: frontend implemented and verified with build, lint and 43 browser tests
+using intercepted HTTP responses. Real backend/database acceptance is not run.
+
 ### Frontend navigation scaffold (November 6, 2026)
 
 The user authorized page routes and a responsive layout scaffold from the selected

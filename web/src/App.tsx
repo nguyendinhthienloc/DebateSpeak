@@ -1,5 +1,7 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { ActionLink, PageHeading } from './components/ui';
+import { setSession, useSession } from './auth/session';
+import type { TokenResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
 import { CreateRoomPage, ExpiredRoomPage, InvitationPage, LobbyPage, RoomsPage } from './pages/RoomPages';
 import { defaultSettings } from './roomSettings';
@@ -10,6 +12,8 @@ export default function App() {
   const route = routes.find(item => item.path === path);
   const main = useRef<HTMLElement>(null);
   const [settings, setSettings] = useState(defaultSettings);
+  const [registeredEmail, setRegisteredEmail] = useState<string>();
+  const { session, expired } = useSession();
   const isAuth = ['/sign-in', '/register', '/account-created'].includes(path);
 
   useEffect(() => {
@@ -18,11 +22,30 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [path, route]);
 
+  useEffect(() => {
+    if (!['/sign-in', '/account-created'].includes(path)) setRegisteredEmail(undefined);
+  }, [path]);
+
+  useEffect(() => {
+    if (expired) window.location.hash = '/sign-in';
+  }, [expired]);
+
+  function signedIn(response: TokenResponse) {
+    setSession(response);
+    setRegisteredEmail(undefined);
+    window.location.hash = '/rooms';
+  }
+
+  function registered(email: string) {
+    setRegisteredEmail(email);
+    window.location.hash = '/account-created';
+  }
+
   function page() {
     switch (path) {
-      case '/sign-in': return <SignInPage />;
-      case '/register': return <RegisterPage />;
-      case '/account-created': return <SignInPage created />;
+      case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
+      case '/register': return <RegisterPage onRegistered={registered} />;
+      case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':
       case '/rooms/new/settings': return <CreateRoomPage editing={path.endsWith('/settings')} settings={settings} onChange={setSettings} />;
@@ -42,9 +65,12 @@ export default function App() {
       <a className="brand" href="#/rooms">DebateSpeak AI</a>
       {!isAuth && <ActionLink to="/profile" variant="text" className="account-link">Account</ActionLink>}
     </header>
-    <main id="main" ref={main} tabIndex={-1} key={path}>{page()}</main>
+    <main id="main" ref={main} tabIndex={-1} key={path}>
+      {session && <p className="small mb-4" role="status">Signed in as {session.user.display_name}</p>}
+      {page()}
+    </main>
     <footer className="preview-tools">
-      <div className="stack-6"><p className="label">Design preview</p><p className="small muted">Sample screens only. Accounts, rooms and audio are not connected.</p></div>
+      <div className="stack-6"><p className="label">{isAuth ? 'Account access' : 'Room design preview'}</p><p className="small muted">{isAuth ? 'Account forms use the configured API. Rooms and audio remain previews.' : 'Room and audio screens use sample data. No room is created or joined.'}</p></div>
       <div className="field preview-selector"><label htmlFor="preview-screen">Preview screen</label><select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
         {!route && <option value="" disabled>Page not found</option>}
         {routes.map(item => <option key={item.path} value={item.path}>{item.label}</option>)}

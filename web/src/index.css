@@ -82,6 +82,8 @@
   .short-action { align-self: flex-start; width: 180px; max-width: 100%; }
   .reveal { width: 72px; }
   .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; width: 100%; }
+  .field-error { color: var(--error); }
+  input[aria-invalid="true"] { border-color: var(--error); }
   .choices { display: flex; gap: 8px; min-width: 0; }
   .choice { position: relative; flex: 1; min-width: 0; cursor: pointer; }
   .choice input { position: absolute; opacity: 0; inset: 0; min-height: 0; cursor: pointer; }

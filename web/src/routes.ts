@@ -3,7 +3,7 @@ import { useSyncExternalStore } from 'react';
 export const routes = [
   { path: '/sign-in', label: 'Sign in' },
   { path: '/register', label: 'Create account' },
-  { path: '/account-created', label: 'Account created example' },
+  { path: '/account-created', label: 'Sign in after registration' },
   { path: '/rooms', label: 'Rooms' },
   { path: '/rooms/new', label: 'Create room' },
   { path: '/rooms/new/settings', label: 'Room settings' },

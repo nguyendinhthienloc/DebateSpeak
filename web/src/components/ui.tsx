@@ -7,20 +7,24 @@ export function ActionLink({ to, children, variant = 'primary', className = '' }
   return <a href={`#${to}`} className={`action action-${variant} ${className}`}>{children}</a>;
 }
 
-export function Field({ label, hint, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }) {
-  const id = useId();
+export function Field({ label, hint, error, id: explicitId, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string }) {
+  const generatedId = useId();
+  const id = explicitId ?? generatedId;
+  const describedBy = [hint && `${id}-hint`, error && `${id}-error`, input['aria-describedby']].filter(Boolean).join(' ') || undefined;
   return <div className="field">
     <label htmlFor={id}>{label}</label>
-    <input id={id} aria-describedby={hint ? `${id}-hint` : undefined} {...input} />
+    <input {...input} id={id} aria-invalid={error ? true : undefined} aria-describedby={describedBy} />
     {hint && <p id={`${id}-hint`} className="small muted">{hint}</p>}
+    {error && <p id={`${id}-error`} className="small field-error">{error}</p>}
   </div>;
 }
 
-export function Choices({ label, options, value, onChange, describe = false }: {
-  label: string; options: readonly string[]; value: string; onChange: (value: string) => void; describe?: boolean;
+export function Choices({ label, options, value, onChange, describe = false, error }: {
+  label: string; options: readonly string[]; value: string; onChange: (value: string) => void; describe?: boolean; error?: string;
 }) {
   const name = useId();
-  return <fieldset className="field">
+  return <fieldset className="field" aria-invalid={error ? true : undefined}
+    aria-describedby={error ? `${name}-error` : undefined} tabIndex={error ? -1 : undefined}>
     <legend>{label}</legend>
     <div className="choices">
       {options.map(option => <label className="choice" key={option}>
@@ -29,6 +33,7 @@ export function Choices({ label, options, value, onChange, describe = false }: {
       </label>)}
     </div>
     {describe && <p className="small">Selected: {value}</p>}
+    {error && <p id={`${name}-error`} className="small field-error">{error}</p>}
   </fieldset>;
 }
 
