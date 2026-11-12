@@ -3,7 +3,8 @@ import { ActionLink, PageHeading } from './components/ui';
 import { setSession, useSession } from './auth/session';
 import type { TokenResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
-import { CreateRoomPage, ExpiredRoomPage, InvitationPage, LobbyPage, RoomsPage } from './pages/RoomPages';
+import { CreateRoomPage } from './pages/RoomSetupPage';
+import { ExpiredRoomPage, InvitationPage, LobbyPage, RoomsPage } from './pages/RoomPages';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';
 
