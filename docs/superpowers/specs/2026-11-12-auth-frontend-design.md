@@ -80,6 +80,15 @@ without displaying submitted values. Translate known errors into safe UI copy.
 
 ## Acceptance and verification
 
+HTTP recovery copy distinguishes 400 invalid request, 401 invalid credentials,
+403 denied account access, 404 missing account service, 405 unsupported action,
+408/504 timeout, 409 duplicate registration or conflicting account state, 422
+field validation, 429 throttling, 500 server error, and 502/503 temporary service
+unavailability. Unknown HTTP errors use safe generic failure copy. A 422 without
+recognized field identifiers must not refer to nonexistent highlighted fields.
+HTTP errors with non-JSON bodies still map by status; raw bodies are never shown.
+Network failures and malformed successful responses retain distinct messages.
+
 Playwright request-interception tests verify exact request bodies/headers,
 registration-to-login-to-rooms, session identity, password handling, validation,
 duplicate/pending submissions, HTTP/network errors, cancellation, malformed
@@ -100,7 +109,7 @@ project proposal before product-code edits, as required by `AGENTS.md`.
 
 ## Verification result
 
-Production build and lint passed. All 43 Playwright browser tests passed with
+Production build and lint passed. All 65 Playwright browser tests passed with
 intercepted API responses, including the fresh review's malformed-user-payload
 regressions. A separate browser smoke check confirmed a nondefault API prefix.
 Mobile/desktop screenshots were inspected at 390px and 1102px; route reflow tests
@@ -110,3 +119,8 @@ Inter is the explicitly approved typography and was retained.
 
 Backend persistence, password hashing, JWT verification, refresh/logout and
 complete FG-01 acceptance have not been verified by this frontend deliverable.
+
+Error-message follow-up (2026-11-12): six targeted regressions failed against the
+old generic message before implementation. After status-specific recovery copy
+and a 422 fallback were added, build, lint and all 65 browser tests passed,
+including non-JSON error pages, unreachable services and local/server timeouts.

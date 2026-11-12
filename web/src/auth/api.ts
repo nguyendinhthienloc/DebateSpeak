@@ -35,16 +35,32 @@ function validationFields(body: unknown): FieldErrors {
 }
 
 function responseError(status: number, body: unknown, path: string): AuthApiError {
-  if (status === 422) return new AuthApiError('Check the highlighted fields and try again.', validationFields(body));
-  if (status === 401) return new AuthApiError('Email or password is incorrect.');
-  if (status === 403) return new AuthApiError('Sign-in is not allowed from this site. Contact the team if this continues.');
+  if (status === 422) {
+    const fields = validationFields(body);
+    return new AuthApiError(Object.keys(fields).length
+      ? 'Check the highlighted fields and try again.'
+      : 'The account service could not validate your details. Check them and try again.', fields);
+  }
   if (status === 409 && path === '/auth/register') {
     return new AuthApiError('An account already uses this email. Sign in or use another address.', {
       email: 'An account already uses this email.',
     });
   }
-  if (status === 429) return new AuthApiError('Too many attempts. Wait a moment before trying again.');
-  return new AuthApiError('The account service is unavailable. Try again in a moment.');
+  const messages: Partial<Record<number, string>> = {
+    400: 'The request could not be accepted. Check your details and try again.',
+    401: 'Email or password is incorrect.',
+    403: 'Account access is not allowed from this site. Contact the team if this continues.',
+    404: 'The account service could not be found. Contact the team.',
+    405: 'The account service does not support this action. Contact the team.',
+    408: 'The request timed out. Try again.',
+    409: 'This request conflicts with the current account state. Try again.',
+    429: 'Too many attempts. Wait a moment before trying again.',
+    500: 'The account service encountered an error. Try again in a moment.',
+    502: 'The account service is temporarily unavailable. Try again in a moment.',
+    503: 'The account service is temporarily unavailable. Try again in a moment.',
+    504: 'The request timed out. Try again.',
+  };
+  return new AuthApiError(messages[status] ?? 'The request could not be completed. Try again or contact the team.');
 }
 
 async function post<T>(path: string, body: Credentials | Registration, status: number,

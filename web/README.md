@@ -71,9 +71,24 @@ Unicode code points. Blank display names are omitted for the backend's `Learner`
 default; nonblank names allow up to 80 code points. CEFR defaults to B1.
 
 Errors support G1 problem JSON and standard FastAPI 422 arrays. Raw server
-messages/input are never displayed. The UI handles validation, 401, 403, 409,
-429, unavailable services, network failures, malformed success and a 15-second
-timeout. Submission is guarded while pending; leaving a form cancels its request.
+messages/input are never displayed. Recovery messages distinguish:
+
+| Failure | Message / recovery |
+| --- | --- |
+| Cannot reach the backend | Check the connection and retry; the browser cannot reliably distinguish offline, DNS, CORS or connection refusal |
+| 400 / 422 | Check the submitted details; highlight recognized invalid fields |
+| 401 | Email or password is incorrect; no account-eligibility details |
+| 403 | Account access is not allowed from this site; contact the team |
+| 404 | Account service could not be found; check the configured API URL/routes |
+| 405 | Account service does not support this action |
+| 408 / 504 / local 15-second deadline | Request timed out; retry |
+| 409 registration | Email already exists; sign in or use another address |
+| 429 | Too many attempts; wait before retrying |
+| 500 | Account service encountered an error |
+| 502 / 503 | Account service is temporarily unavailable |
+| Malformed success | Unexpected response; no successful registration/login is claimed |
+
+Submission is guarded while pending; leaving a form cancels its request.
 No account mutation is automatically retried. A timed-out/aborted registration
 may still complete on the server; a later duplicate response offers sign-in.
 

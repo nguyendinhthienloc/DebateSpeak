@@ -133,12 +133,23 @@ test('sends the auth client header and credentialed requests without caching', a
 });
 
 for (const scenario of [
+  { status: 400, route: 'login', message: 'The request could not be accepted. Check your details and try again.' },
   { status: 401, route: 'login', message: 'Email or password is incorrect.' },
-  { status: 403, route: 'login', message: 'Sign-in is not allowed from this site. Contact the team if this continues.' },
+  { status: 403, route: 'login', message: 'Account access is not allowed from this site. Contact the team if this continues.' },
+  { status: 403, route: 'register', message: 'Account access is not allowed from this site. Contact the team if this continues.' },
+  { status: 404, route: 'login', message: 'The account service could not be found. Contact the team.' },
+  { status: 404, route: 'register', message: 'The account service could not be found. Contact the team.' },
+  { status: 405, route: 'login', message: 'The account service does not support this action. Contact the team.' },
+  { status: 408, route: 'login', message: 'The request timed out. Try again.' },
   { status: 409, route: 'register', message: 'An account already uses this email. Sign in or use another address.' },
+  { status: 409, route: 'login', message: 'This request conflicts with the current account state. Try again.' },
+  { status: 422, route: 'login', message: 'The account service could not validate your details. Check them and try again.' },
   { status: 429, route: 'login', message: 'Too many attempts. Wait a moment before trying again.' },
-  { status: 503, route: 'login', message: 'The account service is unavailable. Try again in a moment.' },
-  { status: 404, route: 'login', message: 'The account service is unavailable. Try again in a moment.' },
+  { status: 500, route: 'login', message: 'The account service encountered an error. Try again in a moment.' },
+  { status: 502, route: 'login', message: 'The account service is temporarily unavailable. Try again in a moment.' },
+  { status: 503, route: 'login', message: 'The account service is temporarily unavailable. Try again in a moment.' },
+  { status: 504, route: 'login', message: 'The request timed out. Try again.' },
+  { status: 418, route: 'login', message: 'The request could not be completed. Try again or contact the team.' },
 ]) {
   test(`recovers from HTTP ${scenario.status} on ${scenario.route} without exposing server details`, async ({ page }) => {
     await page.route(`**/auth/${scenario.route}`, route => route.fulfill({ status: scenario.status,
@@ -155,6 +166,26 @@ for (const scenario of [
     await expect(page.getByText('Signed in as Linh', { exact: true })).toHaveCount(0);
   });
 }
+
+test('reports a missing endpoint even when the server returns an HTML error page', async ({ page }) => {
+  await page.route('**/auth/login', route => route.fulfill({ status: 404, contentType: 'text/html',
+    body: '<h1>Not found</h1><pre>SECRET SERVER TRACE</pre>' }));
+  await page.goto('/#/sign-in');
+  await fillCredentials(page);
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('The account service could not be found. Contact the team.');
+  await expect(page.getByText(/SECRET SERVER TRACE/)).toHaveCount(0);
+});
+
+test('reports an unexpected response when success contains HTML', async ({ page }) => {
+  await page.route('**/auth/login', route => route.fulfill({ status: 200, contentType: 'text/html',
+    body: '<h1>Frontend fallback page</h1>' }));
+  await page.goto('/#/sign-in');
+  await fillCredentials(page);
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('The account service returned an unexpected response. Try again or contact the team.');
+  await expect(page).toHaveURL(/#\/sign-in$/);
+});
 
 for (const detail of [
   { code: 'VALIDATION_ERROR', errors: [{ field: 'email', message: 'SECRET SERVER TRACE' }] },

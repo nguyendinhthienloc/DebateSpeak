@@ -26,8 +26,13 @@ tests simulate those responses without claiming real persistence. Room and media
 screens retain their preview boundaries. Backend authentication, database writes,
 refresh/logout integration and full FG-01 acceptance remain separate work.
 See [the auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
-Status: frontend implemented; build, lint and 43 browser contract tests passed.
+Status: frontend implemented; build, lint and 65 browser contract tests passed.
 Backend/database acceptance remains unverified.
+
+Auth recovery messages distinguish missing endpoints, unreachable services,
+invalid credentials, validation/conflicts, access denial, throttling, server
+failures, unexpected responses and timeouts. Messages describe the appropriate
+recovery action and do not expose backend exception details or account eligibility.
 
 **Frontend scaffold scope (November 6, 2026).** The user requested only page
 navigation and responsive layouts from the selected Cream & Yellow Figma design.

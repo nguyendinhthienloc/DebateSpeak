@@ -28,6 +28,14 @@ approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af
 
 ### API-ready authentication frontend (November 12, 2026)
 
+Auth error messages must distinguish an unreachable service, a missing auth route
+(404), an unsupported action (405), invalid credentials (401), invalid input
+(400/422), a registration conflict (409), throttling (429), server errors (500),
+temporary service failures (502/503), and request timeouts (408/504 or the local
+15-second deadline). An unreadable/malformed success is an unexpected-response
+error. Map statuses to safe client copy; never display raw server traces or
+submitted values. Registration and login share neutral access-denial wording.
+
 The next scoped change connects the existing registration and sign-in screens to
 the G1 auth HTTP contract through a typed frontend client. Backend endpoints and
 database completion are not prerequisites for this frontend deliverable. Requests
@@ -39,7 +47,7 @@ must cover both forms without a runtime fake-account store. Existing room/media
 screens remain previews. This is frontend integration preparation, not completion
 of backend auth security, persistence or the whole FG-01 vertical increment.
 See [the scoped auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
-Status: frontend implemented and verified with build, lint and 43 browser tests
+Status: frontend implemented and verified with build, lint and 65 browser tests
 using intercepted HTTP responses. Real backend/database acceptance is not run.
 
 ### Frontend navigation scaffold (November 6, 2026)
