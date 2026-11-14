@@ -247,3 +247,9 @@ Read these bounded ticket contracts alongside the original proposal above.
 - Reviewable outputs remain local at the user's request: no commit, push, PR, Jira transition, peer approval or successful end-to-end deployment is implied by local completion. Submission PDFs use the existing Pandoc/Mermaid/latexmk pipeline.
 
 ---
+## 7. SCRUM-49 — account presentation refinement
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+The local UI increment refines sign-in, registration, confirmed-registration sign-in and sample profile using the selected Cream & Yellow identity. Improve text hierarchy, related field grouping, adjacent password visibility, selected CEFR feedback and explicit profile-saving limitations. Keep Inter 400/600 and add Unicode-scoped Vietnamese glyph coverage without changing the Latin font or shrinking body text. Existing auth contracts, real-response validation and memory-only credentials remain unchanged; room/audio previews and disabled profile saving remain explicit.
+
+Acceptance evidence includes desktop/mobile before/after views, keyboard and enlarged-text checks, font-fallback checks and the existing mocked-boundary auth tests. The requested result is a local browser preview for user review, not a deployed service or a new Figma approval. Backend integration, microphone capture and teammate review are outside this presentation change.

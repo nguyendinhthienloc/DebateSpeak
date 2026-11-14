@@ -18,6 +18,11 @@ colors:
   on-contrast: "#FFFFFF"
   focus-on-contrast: "#FFD000"
 typography:
+  account-page-title:
+    fontFamily: "Inter"
+    fontSize: "2rem desktop / 1.75rem narrow"
+    fontWeight: 600
+    lineHeight: 1.25
   headline:
     fontFamily: "Inter"
     fontSize: "28px"
@@ -112,6 +117,15 @@ components:
 ---
 
 # Design System: DebateSpeak AI
+
+## SCRUM-49 local account refinement — November 14, 2026
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+The user requested implementation and a local before/after preview against the selected Cream & Yellow direction and the current sign-in screenshot. Account pages use the scoped account-page-title role (2rem, 600, 1.25; 1.75rem narrow), a 27rem task column, 1.25rem related-field rhythm and 1.5rem group separation. Labels/supporting text retain 0.875rem; essential body text remains 1rem. Existing room-specific type and geometry remain separate. The CSS semantic variables are the implementation reference; no design sidecar exists in this checkout.
+
+Place the named password visibility control in the same bordered field group, preserving a 44px target, visible focus, value and autocomplete. Account CEFR choices retain native radio semantics and add a visible check and Selected text. The sample-profile notice precedes editing; saving stays disabled with an adjacent explanation. Registration success appears only after the existing validated API response. Add only the local Vietnamese 400/600 subset under its Unicode range, retaining Latin 400/600 and a usable system fallback. No decorative palette, imagery, shadows or additional font weight is introduced.
+
+Tuấn explicitly waived new Figma edits after reporting that Triết said they were not required. Existing Figma frames remain unchanged. The implementation and attached browser evidence are prepared for peer review; no teammate approval is claimed.
 
 ## Overview
 
