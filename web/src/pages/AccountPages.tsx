@@ -120,6 +120,7 @@ export function ProfilePage() {
       <p id="profile-limit" className="small muted">Profile saving is not connected yet.</p>
     </div>
     <nav className="account-secondary" aria-label="Profile navigation">
+      <ActionLink to="/forgot-password" variant="text">Change password</ActionLink>
       <BackToRooms />
       <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
     </nav>

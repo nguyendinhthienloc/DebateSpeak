@@ -4,9 +4,12 @@ import { recoverAccount } from '../auth/api';
 import { isEmail, type FieldErrors } from '../auth/contracts';
 import { useAuthForm } from '../auth/useAuthForm';
 import { PasswordField } from './AccountPages';
+import { clearSession } from '../auth/session';
 
-export function RecoveryPage({ mode }: { mode: 'request' | 'verify' | 'reset' }) {
-  const [email, setEmail] = useState('');
+export function RecoveryPage({ mode, initialEmail = '', onEmailAccepted }: {
+  mode: 'request' | 'verify' | 'reset'; initialEmail?: string; onEmailAccepted: (email: string) => void;
+}) {
+  const [email, setEmail] = useState(initialEmail);
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [done, setDone] = useState(false);
@@ -38,6 +41,8 @@ export function RecoveryPage({ mode }: { mode: 'request' | 'verify' | 'reset' })
       ? recoverAccount('forgot-password', { email: input.email }, signal)
       : verifying ? recoverAccount('verify-email', input, signal)
         : recoverAccount('reset-password', { ...input, password }, signal), () => {
+      onEmailAccepted(input.email);
+      if (mode === 'reset') clearSession();
       setCode('');
       setPassword('');
       setDone(true);
@@ -50,7 +55,7 @@ export function RecoveryPage({ mode }: { mode: 'request' | 'verify' | 'reset' })
     void run(signal => recoverAccount('resend-verification', { email: email.trim() }, signal), () => setResent(true));
   }
 
-  if (done) return <div ref={result} tabIndex={-1} className="auth-form stack-16">
+  if (done) return <div ref={result} tabIndex={-1} className="account-page auth-form account-form">
     <PageHeading title={requesting ? 'Check your email' : verifying ? 'Email verified' : 'Password updated'}>
       {requesting ? 'If an account matches that email, we’ll send a code to reset your password.'
         : verifying ? 'Your email is verified. You can return to sign in.'
@@ -61,10 +66,16 @@ export function RecoveryPage({ mode }: { mode: 'request' | 'verify' | 'reset' })
       <ActionLink to="/reset-password">Enter reset code</ActionLink>
       <button className="action action-secondary" type="button" onClick={() => setDone(false)}>Try another email or resend</button>
       <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
-    </> : <ActionLink to="/sign-in">Back to sign in</ActionLink>}
+    </> : <>
+      <ActionLink to="/sign-in">Back to sign in</ActionLink>
+      {verifying && <>
+        <p className="small muted">Need a new password? Request a separate reset code to change it.</p>
+        <ActionLink to="/forgot-password" variant="secondary">Change password</ActionLink>
+      </>}
+    </>}
   </div>;
 
-  return <form ref={form} className="auth-form stack-16" noValidate onSubmit={submit} aria-busy={pending}>
+  return <form ref={form} className="account-page auth-form account-form" noValidate onSubmit={submit} aria-busy={pending}>
     <PageHeading title={requesting ? 'Forgot password?' : verifying ? 'Verify your email' : 'Reset password'}>
       {requesting ? 'Enter your email and we’ll help you get back to your account.'
         : verifying ? 'Enter your email and the code from your inbox to confirm it’s you.'

@@ -6,6 +6,15 @@ Feature: `001-frontend-baseline`. Existing branch: `feature/UI-scaffold`.
 This records work already built; it does not claim Spec Kit preceded that work.
 The user approved frontend-only account forms. Backend integration is unfinished.
 
+Revision 2026-11-14: account verification success and Profile must expose a
+Change password link to the password-reset request. That request issues a
+separate reset code; email verification never authorizes a password change.
+Preserve the email in memory between recovery steps, clear codes/passwords on
+navigation, and never use URLs or storage for credentials. Frontend source and
+browser evidence govern implementation; Figma is updated only on explicit request.
+Successful password reset clears any existing frontend session; server-side
+session revocation remains a backend requirement.
+
 ## User Scenarios & Testing
 
 ### US1 — Create an account and sign in (P1)

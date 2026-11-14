@@ -272,3 +272,12 @@ records implemented account forms and room/profile previews retrospectively.
 Its [API handoff](../../web/API_CONTRACT.md) is the short
 integration reference for the backend developer. Real account/email integration
 remains open; existing preview screens are not completed product increments.
+
+### Frontend delivery revision (2026-11-14)
+
+Account forms and recovery are FG-01; FG-03 room/session services are still
+missing from the frontend previews. Add a discoverable password-reset path from
+verification success and Profile, using a separate reset code. Real email and
+account persistence remain backend work. Frontend implementation is independent
+of both historical Figma links; edit/sync Figma only on explicit user request.
+Use code, DESIGN.md, Spec Kit features and browser evidence as current authority.

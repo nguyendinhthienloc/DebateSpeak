@@ -1381,3 +1381,17 @@ plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
 Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
 update these artifacts before code. Backend integration remains unfinished;
 this documentation does not change product behavior or complete FG-01.
+
+## Recovery navigation and frontend authority revision (2026-11-14)
+
+FG-01 owns login/registration (FR-01) and password reset (FR-03). FG-03 FR-10–17
+requires actual room/session services; the existing sample screens do not meet
+those requirements. Verification success and Profile expose Change password,
+which starts the existing reset-code flow. Verification codes must never be
+reused as reset authorization. Email may pass between recovery screens in memory;
+passwords/codes clear on navigation. No new backend endpoint is implied.
+
+Frontend source, DESIGN.md, specs and rendered browser checks govern current UI.
+Both historical Figma links (Foundations and Build 1 flow) are optional references;
+Figma work happens only on explicit user request. This supersedes older
+Figma-first implementation guidance. Keep all repository paths relative.

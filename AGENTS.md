@@ -7,6 +7,16 @@
 
 ## 1. Zero Absolute/Hardcoded Paths Policy
 
+### Frontend source of truth
+
+Frontend implementation is independent of Figma. Use `web/src/`, `DESIGN.md`,
+feature specifications in `specs/`, and browser checks for UI decisions.
+Neither the historical Foundations nor Build 1 flow Figma link is a prerequisite
+or an acceptance gate. Open, read, change or sync Figma only when the user
+explicitly requests it. Preserve the existing Cream & Yellow identity.
+The human API handoff lives at `web/API_CONTRACT.md`; keep endpoint paths and
+response examples consistent with `web/src/auth/`. Update specs before code.
+
 1. **NO HARDCODED ABSOLUTE PATHS:**
    - Never write machine-specific or OS-specific absolute paths such as:
      - `D:\APCS\...`

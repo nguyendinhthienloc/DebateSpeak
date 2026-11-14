@@ -37,6 +37,9 @@ Independent check: change room settings, explore sample lobbies, reload to reset
 
 ## Order
 
+- [x] T012 [US2] Add verification/Profile reset entry points and memory-only email handoff in `web/src/pages/RecoveryPage.tsx`, `AccountPages.tsx` and `App.tsx`.
+- [x] T013 [US2] Add regression coverage for the verification-to-reset journey in `web/tests/recovery.spec.ts`.
+
 Shared foundation precedes US1–3. US1 is the first account journey; US2 and US3
 can be checked independently after it. Different test files can be reviewed in
 parallel. T010 precedes T011. Build real account integration before claiming a

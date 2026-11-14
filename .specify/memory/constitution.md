@@ -2,7 +2,7 @@
 
 > **Document Status:** Ratified & Enforced  
 > **Target Audience:** All Team Members (Lộc, Triết, Tài, Khoa, Tuấn), AI Coding Agents (Copilot, Cursor, Antigravity, Claude, GPT), and Course Evaluators.  
-> **Governance Authority:** Supersedes all ad-hoc conventions. Enforced via Automated CI/CD, Spec Kit (`/src`), and PR Review Gates.
+> **Governance Authority:** Supersedes all ad-hoc conventions. Enforced via Automated CI/CD, Spec Kit (`specs/` and `.specify/`), and PR Review Gates.
 
 ---
 
@@ -21,7 +21,7 @@
 3. **Automated Enforcement:** Continuous integration must fail immediately if tracked secret patterns or un-ignored `.env` files are detected.
 
 ### Principle III: Specification-Driven Development (SDD & Spec Kit)
-1. **Spec Before Code:** Architectural schemas, route contracts, Pydantic data models, and test matrices must be authored and reviewed in `/src` before implementation commits.
+1. **Spec Before Code:** Architectural schemas, route contracts, Pydantic data models, and test matrices must be authored and reviewed in `specs/` and the corresponding `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` and `docs/requirements/PROJECT_PROPOSAL.md` before implementation commits.
 2. **Clean Architecture & No Placeholders:** No stub functions with bare `pass` or untracked `TODO`. Every code unit must map to an active requirement and test case.
 3. **Vendor Decoupling:** Business logic must remain completely decoupled from third-party vendor APIs through abstract adapter interfaces:
    - `STTAdapter` (LiveKit agents, cloud streaming STT, local fallback)

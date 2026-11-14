@@ -17,3 +17,19 @@ the backend works. Once the endpoints in [the contract](../../web/API_CONTRACT.m
 
 Room setup, lobby and profile screens are sample previews; do not count them as
 successful room/profile integration.
+
+## Investigation: verification and password changes (2026-11-14)
+
+- Reproduced missing Change password navigation after email verification.
+  Added it to verification success and Profile; carry email only in memory.
+- Reproduced stale signed-in status after a successful reset; now clear the
+  frontend session on validated reset success.
+- Reset codes and verification codes are separate. Test both expired-code
+  recovery and the full verify → request fresh reset code → set password flow.
+- Backend source inspection: `api/app/main.py` registers only `/health`, with
+  no auth router. Real register/login/verify/reset calls cannot work against
+  this checkout's backend until the six documented endpoints are implemented.
+  Backend runtime checks could not start: FastAPI is absent from the available
+  Python environment. Browser tests use intercepted responses, not real email.
+- FG-03 has a pure room-state helper at `api/app/domain/rooms.py` and UI previews;
+  neither provides persisted authenticated room/session APIs.

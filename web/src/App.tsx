@@ -16,6 +16,7 @@ export default function App() {
   const main = useRef<HTMLElement>(null);
   const [settings, setSettings] = useState(defaultSettings);
   const [registeredEmail, setRegisteredEmail] = useState<string>();
+  const [recoveryEmail, setRecoveryEmail] = useState('');
   const { session, expired } = useSession();
   const isAuth = ['/sign-in', '/register', '/account-created', '/forgot-password', '/reset-password', '/verify-email'].includes(path);
 
@@ -48,9 +49,9 @@ export default function App() {
     switch (path) {
       case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
       case '/register': return <RegisterPage onRegistered={registered} />;
-      case '/forgot-password': return <RecoveryPage mode="request" />;
-      case '/reset-password': return <RecoveryPage mode="reset" />;
-      case '/verify-email': return <RecoveryPage mode="verify" />;
+      case '/forgot-password': return <RecoveryPage mode="request" initialEmail={recoveryEmail || session?.user.email} onEmailAccepted={setRecoveryEmail} />;
+      case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
+      case '/verify-email': return <RecoveryPage mode="verify" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':

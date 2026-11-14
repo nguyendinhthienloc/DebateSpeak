@@ -1,5 +1,59 @@
 import { expect, test } from '@playwright/test';
 
+test('verified email can request a separate reset code and change password', async ({ page }) => {
+  await page.route('**/auth/verify-email', route => route.fulfill({ status: 200, json: { status: 'verified' } }));
+  await page.route('**/auth/forgot-password', async route => {
+    expect(route.request().postDataJSON()).toEqual({ email: 'learner@example.com' });
+    await route.fulfill({ status: 202, json: { status: 'accepted' } });
+  });
+  await page.route('**/auth/reset-password', async route => {
+    expect(route.request().postDataJSON()).toEqual({ email: 'learner@example.com', code: 'reset-code', password: 'new valid password' });
+    await route.fulfill({ status: 200, json: { status: 'reset' } });
+  });
+  await page.goto('/#/verify-email');
+  await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
+  await page.getByLabel('Email code').fill('verify-code');
+  await page.getByRole('button', { name: 'Verify email', exact: true }).click();
+  await page.getByRole('link', { name: 'Change password', exact: true }).click();
+  await expect(page).toHaveURL(/#\/forgot-password$/);
+  await expect(page.getByLabel('Email', { exact: true })).toHaveValue('learner@example.com');
+  await page.getByRole('button', { name: 'Send reset code' }).click();
+  await page.getByRole('link', { name: 'Enter reset code' }).click();
+  await expect(page.getByLabel('Email code')).toHaveValue('');
+  await expect(page.getByLabel('Email', { exact: true })).toHaveValue('learner@example.com');
+  await page.getByLabel('Email code').fill('reset-code');
+  await page.getByLabel('Password', { exact: true }).fill('new valid password');
+  await page.getByRole('button', { name: 'Reset password', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Password updated' })).toBeVisible();
+});
+
+test('profile offers a password reset entry and direct reset links work after reload', async ({ page }) => {
+  await page.goto('/#/profile');
+  await page.getByRole('link', { name: 'Change password', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Forgot password?' })).toBeVisible();
+  await page.goto('/#/reset-password');
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Reset password', exact: true })).toBeVisible();
+});
+
+test('successful password reset clears a signed-in memory session', async ({ page }) => {
+  const user = { id: 'd817b684-08e9-49c0-806a-a045fb7f060c', email: 'learner@example.com', display_name: 'Linh', cefr_level: 'B1', created_at: '2026-11-14T08:00:00Z' };
+  await page.route('**/auth/login', route => route.fulfill({ status: 200, json: { access_token: 'example-token', token_type: 'bearer', expires_in: 900, user } }));
+  await page.route('**/auth/reset-password', route => route.fulfill({ status: 200, json: { status: 'reset' } }));
+  await page.goto('/#/sign-in');
+  await page.getByLabel('Email', { exact: true }).fill(user.email);
+  await page.getByLabel('Password', { exact: true }).fill('old valid password');
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByText('Signed in as Linh', { exact: true })).toBeVisible();
+  await page.goto('/#/reset-password');
+  await page.getByLabel('Email', { exact: true }).fill(user.email);
+  await page.getByLabel('Email code').fill('reset-code');
+  await page.getByLabel('Password', { exact: true }).fill('new valid password');
+  await page.getByRole('button', { name: 'Reset password', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Password updated' })).toBeVisible();
+  await expect(page.getByText('Signed in as Linh', { exact: true })).toHaveCount(0);
+});
+
 for (const width of [320, 1102]) {
   test(`recovery screens fit at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -40,6 +94,7 @@ test('requests a reset code without claiming an account exists', async ({ page }
   });
   await page.goto('/#/sign-in');
   await page.getByRole('link', { name: 'Forgot password?' }).click();
+  await expect(page.getByRole('heading', { name: 'Forgot password?', exact: true })).toBeVisible();
   await page.getByLabel('Email', { exact: true }).fill(' learner@example.com ');
   await page.getByRole('button', { name: 'Send reset code' }).click();
   await expect(page.getByRole('heading', { name: 'Check your email' })).toBeVisible();

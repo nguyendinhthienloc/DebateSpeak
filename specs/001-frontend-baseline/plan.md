@@ -9,6 +9,13 @@ Keep the existing frontend and map its account journeys and previews to a single
 Spec Kit baseline. Keep the backend developer handoff in [../../web/API_CONTRACT.md](../../web/API_CONTRACT.md).
 Future feature work updates its specification and contract before code changes.
 
+Current revision: expose password reset from verification success and Profile,
+retain the accepted email in App memory across recovery routes, and clear
+credentials on navigation. Reuse existing endpoints and account-page CSS.
+Regression tests cover the entire verify → request reset → reset journey.
+Frontend implementation is independent of Figma; both historical links are
+optional reference material. Read/edit/sync Figma only on explicit request.
+
 ## Technical Context
 
 Vite 5, React 18, TypeScript 5 and Tailwind 3 SPA; hash routing; Inter typography.
@@ -25,8 +32,7 @@ Requests time out after 15 seconds; no measured performance claim is made.
   This baseline records that gap, rather than rewriting history.
 - Frontend-only scope was explicitly approved by the user. This is not the
   complete UI → API → database increment required for FG-01 acceptance.
-- Constitution references to `/src` are historical: current code is in `web/`
-  and `api/`, with root `.specify/`. No governance amendment is made here.
+- Current source paths are `web/` and `api/`; Spec Kit lives in root `.specify/` and `specs/`. Constitution path references have been corrected without changing governance requirements.
 
 ## Project Structure
 

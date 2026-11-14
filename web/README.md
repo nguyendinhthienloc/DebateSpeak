@@ -1,6 +1,6 @@
 # DebateSpeak frontend
 
-Responsive pages based on the selected Cream & Yellow Figma design. Sign-up and
+Responsive frontend using the Cream & Yellow design system. Sign-up and
 sign-in are API-ready forms using the existing G1 contract. The API currently
 implements only `/health`: real account creation and login require a conforming
 backend. Rooms, profile editing, audio, transcription and AI remain previews.
@@ -19,7 +19,7 @@ links or **Preview screen** selector at the bottom to explore every screen.
 **Create account** and **Sign in** submit to the configured API. Actions labeled
 **Preview** navigate to sample outcomes. Profile saving and audio checks are disabled.
 Room setting selections live only in memory and reset on reload; lobby screens
-are fixed Figma examples, not the output of a room service.
+are sample previews, not the output of a room service.
 
 ## Connect the auth API
 
@@ -76,3 +76,20 @@ keyboard controls and all routes at 320/390/1102/1440px. Room previews make no
 service/media requests. These tests verify the frontend contract, not database
 persistence, password hashing, JWT security or complete FG-01 acceptance.
 See [the approved auth scope](../docs/superpowers/specs/2026-11-12-auth-frontend-design.md).
+
+## Frontend workflow and current scope
+
+Frontend development is independent of both historical Figma links. Implement
+from `src/`, [DESIGN.md](../DESIGN.md) and [Spec Kit](../specs/README.md), then
+verify in the browser. Update Figma only when explicitly requested.
+
+Login, registration and recovery are FG-01. FG-03 room/session support remains
+previews: create/join APIs, persistence, participant authorization, server-side
+state transitions, dual consent, timing, reconnection and moderation are missing.
+Profile saving, account deletion, active-session management and refresh/logout
+also remain unfinished. See [the API contract](API_CONTRACT.md).
+
+After email verification, Change password opens the password-reset request.
+Profile has the same entry point. Request a fresh reset code, enter it with the
+new password, then sign in. A verification code cannot substitute for a reset
+code. Real email/password changes require the documented backend endpoints.
