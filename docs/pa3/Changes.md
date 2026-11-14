@@ -4,7 +4,7 @@ One file for PA3, one section per revised document. Each row: what changed, why,
 Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
-Owner: Tài. Reviewer: Lộc.
+Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
 
 | # | Change | Why | Status |
 |---|---|---|---|
@@ -42,7 +42,7 @@ Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `repor
 
 | PA2 file | Now |
 |---|---|
-| `PROJECT_PLAN.md` | Moved to `docs/requirements/` (Tài revises it) |
+| `PROJECT_PLAN.md` | Moved to `docs/requirements/` (Tuấn revises it) |
 | `G1_SPEC_BUILD1.md` | Moved to `docs/architecture/` |
 | `TODO.md`, `CHECKLIST.md` | Replaced by the per-member `TODO.md` files |
 | `JIRA_MAPPING.md` | Replaced by `docs/management/SPRINT_TASKS.md` |
