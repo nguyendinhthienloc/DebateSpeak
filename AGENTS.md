@@ -119,3 +119,17 @@ All documentation, task cards, and Git contributions must strictly attribute the
      - **Direct Callouts Grounded in Evidence:** If a debater evaded an argument, committed a logical fallacy (ad hominem, strawman, false dilemma), exhibited severe disfluency, or fabricated empirical claims, the agent must state the failure plainly, quote the exact transcript segment, and explain why it failed.
      - **Constructive, Clinical Precision:** Brutal honesty is not hostility; it is clinical, objective precision. Every sharp critique must be paired with the exact formula for intellectual and linguistic remediation.
 
+## 9. Shared Files and Ownership (per sprint)
+
+1. **One person edits one file.** No task may require several members to edit the same file.
+2. **Each member has a TODO file** in `docs/<sprint>/<member>/TODO.md`. Members record their own status there only.
+3. **Shared logs and reports have one owner.** That person interviews each member, then writes the entries. Each member confirms their own entries before submission.
+4. **The shared checklist has one owner,** who alone edits it, using the members' TODO files as input.
+
+## 10. Checklist and Submission Freeze (per sprint)
+
+1. **One checklist, one owner.** Only the owner edits the sprint checklist.
+2. **Checklist format.** One row per file: file path, owner, and completeness (missing, draft, or complete). Nothing else.
+3. **The submission folder is built only after the freeze.** The freeze happens when every checklist row is complete. Before that, no folder is built or renamed.
+4. **Folder name.** After the freeze, the folder is named `Group<ID>-PA<n>`, for example `Group02-PA4`.
+
