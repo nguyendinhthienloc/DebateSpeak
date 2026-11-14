@@ -60,10 +60,10 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 | B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off by Lộc, 2026-11-14 |
 | C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off by Lộc, 2026-11-14 |
 | D | 45 | 54 use-case specifications, 201 alternative outcomes, 116 prototype screenshots | Triết, Tuấn | Done (`docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf`, `docs/pa3/prototypes/`); reviewer sign-off and spot check pending |
-| E | 20 | FG-01 end to end with Spec Kit, E2E test, narrated YouTube video (changed from FG-03 on 2026-11-14) | Tài, Triết; Khoa (E2E); Lộc (video) | Partial: FG-01 frontend merged with browser tests; Spring Boot + PostgreSQL backend for all FG-01 endpoints on `backend-tai`, verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser); Spec Kit `specs/001` and `specs/002`; video <https://youtu.be/SzKVxb9nO2c> |
+| E | 20 | FG-01 end to end with Spec Kit, E2E test, narrated YouTube video (changed from FG-03 on 2026-11-14) | Tài, Triết; Khoa (E2E); Lộc (video) | Partial: FG-01 frontend merged with browser tests; Spring Boot + PostgreSQL backend for all FG-01 endpoints on `backend-tai`, verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser); Spec Kit `specs/001` and `specs/002`; video <https://youtu.be/6K9P5xVkhNo> |
 | F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log records tools per member (PR #41), tasks and prompts still to be added; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
 
-Part E is the largest gap. On 2026-11-14 the team moved Part E from FG-03 to FG-01, because FG-03 has no room API while FG-01 has a frontend and a backend. Rows E1 and E4 are met by the 2026-11-14 end-to-end run (`specs/002-fg01-accounts/tasks.md`); E3 is the FG-01 video <https://youtu.be/SzKVxb9nO2c>; E2 is covered by `specs/001-frontend-baseline` and `specs/002-fg01-accounts`. The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
+Part E is the largest gap. On 2026-11-14 the team moved Part E from FG-03 to FG-01, because FG-03 has no room API while FG-01 has a frontend and a backend. Rows E1 and E4 are met by the 2026-11-14 end-to-end run (`specs/002-fg01-accounts/tasks.md`); E3 is the FG-01 video <https://youtu.be/6K9P5xVkhNo>; E2 is covered by `specs/001-frontend-baseline` and `specs/002-fg01-accounts`. The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
 
 ### 2.4 Assumptions and dependencies
 *Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
@@ -151,7 +151,7 @@ Real dates from `docs/pa3/README.md` and `docs/pa3/CHECKLIST.md`.
 | **2026-11-13** | **Sprint 3 deadline (Friday)** | **Passed; Part E not met** |
 | 2026-11-14 to 11-15 | Submission buffer for the zip and upload | Open now (this document is dated 11-14) |
 
-The deadline has passed. As of 2026-11-14 the following are still open: FG-03 implementation (moved to PA4; Part E is FG-01, which ran end to end on 2026-11-14 from `backend-tai`), the Part E video is now <https://youtu.be/SzKVxb9nO2c> (E3, FG-01 demo, link added 2026-11-14), the E2E test (E4, SCRUM-38), per-member Spec Kit entries, a corrected weekly report, the tasks and prompts in the AI log (tools are recorded per member, PR #41), the meeting PDFs, rebuilt PDFs of the plan and vision, reviewer sign-offs for Parts C and D, the zip, the Git log export and the `pa3` to `dev` merge. Whether the buffer can cover them is not verified; what can be finished before the actual cutoff is an open decision (section 4.10).
+The deadline has passed. As of 2026-11-14 the following are still open: FG-03 implementation (moved to PA4; Part E is FG-01, which ran end to end on 2026-11-14 from `backend-tai`), the Part E video is now <https://youtu.be/6K9P5xVkhNo> (E3, FG-01 demo, link added 2026-11-14), the E2E test (E4, SCRUM-38), per-member Spec Kit entries, a corrected weekly report, the tasks and prompts in the AI log (tools are recorded per member, PR #41), the meeting PDFs, rebuilt PDFs of the plan and vision, reviewer sign-offs for Parts C and D, the zip, the Git log export and the `pa3` to `dev` merge. Whether the buffer can cover them is not verified; what can be finished before the actual cutoff is an open decision (section 4.10).
 
 ### 4.4 Build 1 and Build 2 scope for FG-03
 *Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
@@ -187,7 +187,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); SCRUM-27 mapping verified by the team on 2026-11-14 and not connected to a room API |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
 | SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | Moved to PA4; Part E delivered as FG-01 instead |
-| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | FG-01 demo video <https://youtu.be/SzKVxb9nO2c> (2026-11-14) replaces the earlier upload (<https://youtu.be/wJxqi3J0phE>, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
+| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | FG-01 demo video <https://youtu.be/6K9P5xVkhNo> (2026-11-14) replaces the earlier upload (<https://youtu.be/wJxqi3J0phE>, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
 | SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | Revised 0.2; reviewed by Lộc, 2026-11-14 |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
 | SCRUM-36 | Use-case model | Tuấn | pending | Done (PR #19); sign-off pending |
@@ -234,7 +234,7 @@ The shared status list is `docs/pa3/CHECKLIST.md`. The package `PA3-Group[GroupI
 | S2 | Git log export | Lộc | Missing |
 | S3 | Source code without `node_modules`, build output or `.env` | Lộc | Code incomplete (FG-03) |
 | S4 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Partial: `specs/001-frontend-baseline/` merged (PR #45); no FG-03 spec; per-member entries missing |
-| S5 | YouTube link for the Part E (FG-01) video | Lộc | Link: <https://youtu.be/SzKVxb9nO2c> (added 2026-11-14) |
+| S5 | YouTube link for the Part E (FG-01) video | Lộc | Link: <https://youtu.be/6K9P5xVkhNo> (added 2026-11-14) |
 | S6 | Zip of the package | Lộc | Missing |
 | S7 | `pa3` to `dev` merge after the package is complete | Lộc | Pending |
 
