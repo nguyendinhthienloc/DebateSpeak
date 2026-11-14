@@ -39,18 +39,18 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: no auth or room API, no migrations, no integrated UI on `pa3` | SCRUM-38 (To Do) |
-| E2 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Lộc | **Missing** | none |
+| E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: `pa3` has the auth and account UI (Triết, SCRUM-49/51 merged) and the lobby (SCRUM-52). The backend exists only as Tài's Java auth commit on `backend-tai`, which is not merged and is based on an old commit. No room API, migrations, or integrated FG-03 flow on `pa3` | `backend-tai` (3f585e0), SCRUM-38 (To Do) |
+| E2 | Spec Kit artifacts (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Partial**: `specs/001-frontend-baseline/` (spec, plan, tasks, contracts) merged via PR #45. No FG-03 feature spec yet | `specs/001-frontend-baseline/` |
 | E3 | Narrated FG-03 demo video on YouTube (unlisted or public), link added | Tài | Lộc | Done: uploaded, link `https://youtu.be/wJxqi3J0phE`. Visibility and narration not yet checked by the team | `https://youtu.be/wJxqi3J0phE` |
-| E4 | E2E test for FG-03 | Khoa | Lộc | **Missing** | none |
-| E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine (Chromium would not launch); cross-browser not done | PR #28 |
+| E4 | E2E test for FG-03 | Khoa | Lộc | **Missing**: no FG-03 test. Existing browser tests were not run on the build machine | none |
+| E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine; cross-browser not done | PR #28 |
 
 ## Part F: AI Usage and Weekly Report (5 pts)
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| F1 | AI usage log with every member's PA3 use | Khoa | Lộc | Partial: most members missing | `docs/pa3/AI_USAGE_LOG.md` |
-| F2 | Weekly report with no placeholders | Khoa | Lộc | Partial: "[Confirm actual status]" left in | `docs/pa3/WEEKLY_REPORT.md` |
+| F1 | AI usage log with every member's PA3 use | Khoa | Lộc | Partial: tools recorded per member (PR #41). Tasks and prompts still to be added by each member | `docs/pa3/AI_USAGE_LOG.md` |
+| F2 | Weekly report with no placeholders | Khoa | Lộc | Partial: placeholders "[Confirm actual status.]" remain in the weekly report | `docs/pa3/WEEKLY_REPORT.md` |
 | F3 | Meeting notes (planning and review), PDF | Khoa | Lộc | Markdown done, PDF missing | `docs/pa3/MEETINGS/` |
 | F4 | Jira screenshots | Lộc | Khoa | Done | `docs/pa3/jira-1.png`, `docs/pa3/jira-2.png` |
 
@@ -71,7 +71,7 @@ Every member needs their own Spec Kit entry, even a short one.
 | # | Item | Owner | Status |
 |---|---|---|---|
 | S1 | `PA3-Group[GroupId]/` folder with all docs as `.md` and `.pdf` | Lộc | Missing (local `PA3-Group2/` is partial and git-excluded) |
-| S2 | Git log export | Lộc | Missing |
-| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | Code incomplete |
+| S2 | Git log export | Lộc | Partial: `PA3-Group2/GIT_LOG.txt` exists from before the latest merges; re-export at packaging | `PA3-Group2/GIT_LOG.txt` |
+| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | Partial: web app builds on `pa3`; FG-03 backend not on `pa3`; the Java code sits on `backend-tai` |
 | S4 | `.zip` of the package | Lộc | Missing |
 | S5 | `pa3` → `dev` merge once the package is complete | Lộc | Pending |
