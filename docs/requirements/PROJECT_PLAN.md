@@ -51,14 +51,14 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 
 | Part | Points | Deliverable | Owner | Status on 2026-11-14 |
 |---|---|---|---|---|
-| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 (merged, PR #31); PDF rebuilt 2026-11-14; `Changes.md` has rows 1.1 to 1.8; reviewer sign-off pending |
+| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 (merged, PR #31); PDF rebuilt 2026-11-14; `Changes.md` has rows 1.1 to 1.10; reviewer sign-off pending |
 | B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off pending |
 | C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off pending |
 | D | 45 | 54 use-case specifications, 201 alternative outcomes, 116 prototype screenshots | Triết, Tuấn | Done (`docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf`, `docs/pa3/prototypes/`); reviewer sign-off and spot check pending |
-| E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Not met: no auth API, room API, migrations or integrated UI on `pa3`; no `specs/`; no video; no E2E test |
-| F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log lacks most members' PA3 use; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
+| E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Not met: the FG-03 backend is not on `pa3` (only Tài's Java auth commit 3f585e0 on `backend-tai`, unmerged, based on old commit 84aad76); no room API, migrations or integrated FG-03 flow; `specs/001-frontend-baseline/` merged (PR #45) but no FG-03 spec; video uploaded (PR #47), not yet checked by the team; no E2E test |
+| F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log records tools per member (PR #41), tasks and prompts still to be added; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
 
-Part E is the largest gap. The checklist rows E1 to E4 are Not met or Missing. The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
+Part E is the largest gap. The checklist rows E1, E3 (video not yet checked) and E4 are Not met or Missing, and E2 is partial (frontend baseline spec only, no FG-03 spec). The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
 
 ### 2.4 Assumptions and dependencies
 
@@ -96,7 +96,7 @@ Likelihood and impact are qualitative planning estimates. Owners must confirm th
 | R-04 | Time: the deadline (Fri 2026-11-13) has passed; the buffer ends 2026-11-15 | High / High | Prioritize FG-03 and the missing Part E evidence over extras (SCRUM-44 to 48); report the real state if it cannot be finished | Team | Part E items still open on 11-15 |
 | R-05 | False status claims in earlier reviews: the first Sprint Review said FG-03 was done without checking the repository | Medium / High | Every status in this plan cites a repository artifact; the Sprint Review is rewritten from merged and verified work | Khoa, Lộc | A statement without a linked artifact |
 | R-06 | CI job for migrations and seed (SCRUM-43, PR #17) is merged but skips until SCRUM-41 lands, so it has not run against a real database | Medium / Medium | Treat it as unverified; run it after SCRUM-41 merges | Lộc | SCRUM-41 merged but job still skipped |
-| R-07 | Missing evidence in the zip: `specs/`, per-member Spec Kit entries, video, E2E result, PDFs | High / High | Check the submission list in section 4.9 item by item before packaging | Lộc | Package build finds a missing file |
+| R-07 | Missing evidence in the zip: FG-03 spec, per-member Spec Kit entries, video check, E2E result, PDFs | High / High | Check the submission list in section 4.9 item by item before packaging | Lộc | Package build finds a missing file |
 | R-08 | Consent, authorization and grounded-feedback controls are cut to recover schedule | Low / High | Do not cut these controls; in PA3 the start stays disabled for unsupported media | Team | Any proposal to skip a consent test |
 
 Cut optional work (rankings, video, extra panels, FG-02 and stretch spikes) before cutting a Must requirement. If a Must requirement is at risk, tell the TA instead of relabeling a partial feature complete.
@@ -133,11 +133,11 @@ Real dates from `docs/pa3/README.md` and `docs/pa3/CHECKLIST.md`.
 | 2026-11-06 | Room API and lobby UI target; CI migrate and seed job (SCRUM-43) | Job merged (PR #17), unverified |
 | 2026-11-10 | Second check-in; FG-03 backend, frontend and E2E target; first Sprint Review status | FG-03 not done; first Sprint Review overstated progress and was corrected |
 | 2026-11-11 | Revised plan target (SCRUM-35) and Lộc's review target | Plan was not revised; reassigned to Tuấn on 2026-11-14 |
-| 2026-11-12 | Video (SCRUM-39), use-case specs and PDFs targets | Specs done; video blocked; PDFs partial |
+| 2026-11-12 | Video (SCRUM-39), use-case specs and PDFs targets | Specs done; video uploaded later (PR #47, 2026-11-14), content not checked; PDFs partial |
 | **2026-11-13** | **Sprint 3 deadline (Friday)** | **Passed; Part E not met** |
 | 2026-11-14 to 11-15 | Submission buffer for the zip and upload | Open now (this document is dated 11-14) |
 
-The deadline has passed. As of 2026-11-14 the following are still open: FG-03 implementation (E1), Spec Kit `specs/` (E2), the narrated video (E3, SCRUM-39), the E2E test (E4, SCRUM-38), per-member Spec Kit entries, a corrected weekly report and AI log, the meeting PDFs, rebuilt PDFs of the plan and vision, reviewer sign-offs for Parts C and D, the zip, the Git log export and the `pa3` to `dev` merge. Whether the buffer can cover them is not verified; what can be finished before the actual cutoff is an open decision (section 4.10).
+The deadline has passed. As of 2026-11-14 the following are still open: FG-03 implementation (E1; the backend is not on `pa3`, only Tài's unmerged Java auth commit 3f585e0 on `backend-tai`), the FG-03 Spec Kit spec (E2; `specs/001-frontend-baseline/` is merged via PR #45), the team check of the uploaded video (E3, SCRUM-39; https://youtu.be/wJxqi3J0phE, PR #47, visibility and content not checked), the E2E test (E4, SCRUM-38), per-member Spec Kit entries, a corrected weekly report, the tasks and prompts in the AI log (tools are recorded per member, PR #41), the meeting PDFs, rebuilt PDFs of the plan and vision, reviewer sign-offs for Parts C and D, the zip, the Git log export and the `pa3` to `dev` merge. Whether the buffer can cover them is not verified; what can be finished before the actual cutoff is an open decision (section 4.10).
 
 ### 4.4 Build 1 and Build 2 scope for FG-03
 Build 1 was shrunk to what FG-03 needs. Source: `docs/pa3/Changes.md` section 1 (rows 1.1, 1.4, 1.5).
@@ -165,13 +165,13 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-41 | Alembic migrations and seed | Tài | Khoa | Open; not on `pa3` |
 | SCRUM-42 | Docker database | Lộc | not verified | Done (PR #15 merged) |
 | SCRUM-43 | CI migrate and seed | Lộc | not verified | Merged (PR #17); skips until SCRUM-41; unverified |
-| SCRUM-24 | Auth API | Tài | not verified | Open; not on `pa3` |
-| SCRUM-25 | Frontend shell, register and login pages | Triết | not verified | Open in the TODO. The lobby work on `feature/SCRUM-25-ui-complete` was merged as PR #28 (SCRUM-52); the auth pages are not verified as merged |
+| SCRUM-24 | Auth API | Tài | not verified | Open; not on `pa3`. Java auth commit 3f585e0 on `backend-tai`, unmerged. Java backend decision by Tài, 2026-11-14, pending team confirmation (PR #43); AGENTS.md still says FastAPI |
+| SCRUM-25 | Frontend shell, register and login pages | Triết | not verified | Lobby work from `feature/SCRUM-25-ui-complete` merged as PR #28 (SCRUM-52); account UI merged as PR #39 (SCRUM-49); entry pages merged as PR #44 (SCRUM-50). Account recovery is gated off (PR #45). The shell and the register/login flow against a real auth API are not verified |
 | SCRUM-26 | Room API | Tài | not verified | Open; not on `pa3` |
-| SCRUM-27 | Lobby UI | Triết | not verified | Open; not on `pa3` |
+| SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); not verified against SCRUM-27 and not connected to a room API |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
 | SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | To Do; not met |
-| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Blocked until FG-03 runs |
+| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content not checked by the team; FG-03 itself does not run on `pa3` |
 | SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | This draft; review pending |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
 | SCRUM-36 | Use-case model | Tuấn | pending | Done (PR #19); sign-off pending |
@@ -179,7 +179,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-40 | AI usage log, weekly report, meetings, screenshots | Khoa, Lộc | Lộc | Partial |
 | SCRUM-47 | `LLMAdapter` and grounding guard | Tuấn | Khoa | Merged with unit tests per the Sprint Review; peer review not verified |
 | SCRUM-44, 45, 46, 48 | Extras: topic API, LiveKit token, `STTAdapter`, mic spike | Tài, Tài, Khoa, Triết | not verified | Stretch; no evidence on `pa3` |
-| SCRUM-49 to 52 | UI refinement packages (Tuấn, Tài, Khoa, Lộc) | as named | as named | Backlog To Do per member TODO; SCRUM-52 lobby merged as PR #28; browser tests not run on the build machine |
+| SCRUM-49 to 52 | UI refinement packages (Tuấn, Tài, Khoa, Lộc) | as named | as named | SCRUM-49 account UI merged (PR #39, Tuấn); SCRUM-50 entry pages extracted and dead code removed (PR #44, Tài), partly done: shell and recovery pages not done; SCRUM-51 narrow preview summary and SCRUM-49 type/spacing roles merged (PR #46); SCRUM-52 lobby merged (PR #28); browser tests not run on the build machine (Chromium does not launch) |
 | none | `PA3-Group[GroupId]` zip, Git log, `pa3` to `dev` merge | Lộc | n/a | Missing; local `PA3-Group2/` is partial |
 
 SCRUM-49 to 52 are UI refinement work added outside the graded FG-03 path. They do not replace FG-03.
@@ -213,8 +213,8 @@ The shared status list is `docs/pa3/CHECKLIST.md`. The package `PA3-Group[GroupI
 | S1 | `PA3-Group[GroupId]/` folder with all documents as `.md` and `.pdf` | Lộc | Missing; local folder partial and git-excluded |
 | S2 | Git log export | Lộc | Missing |
 | S3 | Source code without `node_modules`, build output or `.env` | Lộc | Code incomplete (FG-03) |
-| S4 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Missing |
-| S5 | YouTube link for the FG-03 video | Lộc | Missing |
+| S4 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Partial: `specs/001-frontend-baseline/` merged (PR #45); no FG-03 spec; per-member entries missing |
+| S5 | YouTube link for the FG-03 video | Lộc | Link exists (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content not checked |
 | S6 | Zip of the package | Lộc | Missing |
 | S7 | `pa3` to `dev` merge after the package is complete | Lộc | Pending |
 
