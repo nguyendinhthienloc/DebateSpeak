@@ -15,7 +15,7 @@
 | Role ID | Role Title | Member | Candidate Technologies (Tentative / Subject to Change) |
 |---|---|---|---|
 | **R1** | **Frontend & WebRTC/Audio Lead** | Nguyễn Bảo Minh Triết (`24125047`) | React, TypeScript, Tailwind CSS, LiveKit Client SDK |
-| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | FastAPI, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
+| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | Java (Spring Boot), pending team confirmation, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
 | **R3** | **AI Audio & Speech Pipeline Lead** | Nguyễn Anh Khoa (`24125058`) | Python, LiveKit Agents, Silero VAD, STT Adapter Protocol |
 | **R4** | **AI Analysis & Agent Orchestrator Lead** | Trần Lê Anh Tuấn (`24125107`) | Python, Pydantic v2, LLM Adapter Protocol, Redis Queue (ARQ) |
 | **R5** | **DevOps & QA / Fact-Checking Lead & Release Custodian** | Nguyễn Đình Thiên Lộc (`24125093`) | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
@@ -130,7 +130,7 @@ Sprint 2 is closed; its working files were removed and remain in Git history. Se
 | Tasks: SCRUM-21, SCRUM-33, SCRUM-25, SCRUM-27 |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 2: BACKEND & REAL-TIME MEDIA LEAD (Tài - 24125078)                                          |
-| Primary Focus: FastAPI API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
+| Primary Focus: Java (Spring Boot), pending team confirmation, API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
 | Tasks: SCRUM-24, SCRUM-26, SCRUM-31, SCRUM-32 |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 3: AI AUDIO & SPEECH PIPELINE LEAD (Khoa - 24125058)                                        |

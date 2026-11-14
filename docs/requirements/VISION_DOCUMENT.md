@@ -132,7 +132,7 @@ This comparison summarizes the project’s existing-app survey. It is not a fres
 ## 4. Product Overview
 *Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
-**Product perspective.** DebateSpeak is intended to be a standalone responsive web application. The planned architecture uses a Vite, React, TypeScript, and Tailwind CSS single-page application with a Python 3.11+ FastAPI backend, PostgreSQL, Redis, and provider adapters for real-time media, speech-to-text, language models, and search. These are design choices, not a claim that every service is currently implemented.
+**Product perspective.** DebateSpeak is intended to be a standalone responsive web application. The planned architecture uses a Vite, React, TypeScript, and Tailwind CSS single-page application with a Java (Spring Boot), pending team confirmation, backend, PostgreSQL, Redis, and provider adapters for real-time media, speech-to-text, language models, and search. These are design choices, not a claim that every service is currently implemented.
 
 **Core experience.** In the intended full product, a learner signs in, selects a topic, and invites a partner. Both participants review the processing notice and provide explicit consent before any remote audio processing begins. They complete a microphone check and proceed only when required room conditions are satisfied. After the debate, the product may provide a transcript and available learning feedback, with limitations clearly shown.
 
