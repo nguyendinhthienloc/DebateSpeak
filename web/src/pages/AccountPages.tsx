@@ -10,7 +10,7 @@ import './account.css';
 
 const levels = cefrLevels;
 
-function PasswordField({ value, onChange, error, creating = false }: {
+export function PasswordField({ value, onChange, error, creating = false }: {
   value: string; onChange: (value: string) => void; error?: string; creating?: boolean;
 }) {
   const [showPassword, setShowPassword] = useState(false);

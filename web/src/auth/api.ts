@@ -16,6 +16,7 @@ const fieldMessages: Record<AuthField, string> = {
   password: 'Check your password and try again.',
   display_name: 'Check your display name (up to 80 characters).',
   cefr_level: 'Choose A2, B1, B2 or C1.',
+  code: 'Check the code from your email and try again.',
 };
 
 function validationFields(body: unknown): FieldErrors {
@@ -35,6 +36,11 @@ function validationFields(body: unknown): FieldErrors {
 }
 
 function responseError(status: number, body: unknown, path: string): AuthApiError {
+  if (['/auth/verify-email', '/auth/reset-password'].includes(path) && [400, 401, 410].includes(status)) {
+    return new AuthApiError('This code is invalid or has expired. Request a new code and try again.', {
+      code: 'Use the latest code sent to your email.',
+    });
+  }
   if (status === 422) {
     const fields = validationFields(body);
     return new AuthApiError(Object.keys(fields).length
@@ -63,7 +69,7 @@ function responseError(status: number, body: unknown, path: string): AuthApiErro
   return new AuthApiError(messages[status] ?? 'The request could not be completed. Try again or contact the team.');
 }
 
-async function post<T>(path: string, body: Credentials | Registration, status: number,
+async function post<T>(path: string, body: object, status: number,
   valid: (value: unknown) => value is T, signal: AbortSignal): Promise<T> {
   const controller = new AbortController();
   const cancel = () => controller.abort();
@@ -100,4 +106,18 @@ export function register(input: Registration, signal: AbortSignal): Promise<User
 
 export function login(input: Credentials, signal: AbortSignal): Promise<TokenResponse> {
   return post('/auth/login', input, 200, isTokenResponse, signal);
+}
+
+export type RecoveryAction = 'forgot-password' | 'resend-verification' | 'verify-email' | 'reset-password';
+type RecoveryInput = {
+  'forgot-password': { email: string };
+  'resend-verification': { email: string };
+  'verify-email': { email: string; code: string };
+  'reset-password': { email: string; code: string; password: string };
+};
+
+export function recoverAccount<A extends RecoveryAction>(action: A, input: RecoveryInput[A], signal: AbortSignal) {
+  const expected = action === 'verify-email' ? 'verified' : action === 'reset-password' ? 'reset' : 'accepted';
+  return post(`/auth/${action}`, input, expected === 'accepted' ? 202 : 200,
+    (value): value is { status: string } => isRecord(value) && value.status === expected, signal);
 }
