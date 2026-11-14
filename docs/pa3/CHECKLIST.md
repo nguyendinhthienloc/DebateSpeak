@@ -41,7 +41,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 |---|---|---|---|---|---|
 | E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: no auth or room API, no migrations, no integrated UI on `pa3` | SCRUM-38 (To Do) |
 | E2 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Lộc | **Missing** | none |
-| E3 | Narrated FG-03 demo on YouTube, link added | Lộc | Khoa | **Missing** (SCRUM-39) | none |
+| E3 | Narrated FG-03 demo video, link added | Tài (recording) | Lộc | Link added: Google Drive `https://drive.google.com/file/d/1X-ZYMB25lIcQwK2usR1I_0IcLLsNblht/view`. Not verified by the team. PA3 asks for YouTube (unlisted or public); confirm the platform before submission | Google Drive link above |
 | E4 | E2E test for FG-03 | Khoa | Lộc | **Missing** | none |
 | E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine (Chromium would not launch); cross-browser not done | PR #28 |
 
