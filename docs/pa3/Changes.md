@@ -15,6 +15,8 @@ Owner: Tài. Reviewer: Lộc.
 | 1.5 | Extra preparation items (stretch): FG-02 topic API, LiveKit token spike, `STTAdapter`, `LLMAdapter` + grounding guard, mic screen, CI migrate/seed | Reduce risk for Builds 3 and 4; cut first if FG-03 slips | filled |
 | 1.6 | Branch and PR rules: `feature/SCRUM-<nn>-<name>`, PR into `pa3`, `pa3` → `dev` once per sprint | Keeps `dev` releasable | filled |
 | 1.7 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
+| 1.8 | Added PA3 rubric mapping, updated deliverable statuses, current risk register and work breakdown, verification approach, submission checklist, and open decisions | Make the revised plan reflect PA3 requirements and repository evidence | filled |
+| 1.9 | Removed PA2-only planning and close-out material | Keep the document focused on the current PA3 plan; earlier material remains available in Git history | filled |
 
 **Build 1, shrunk**
 
@@ -33,9 +35,10 @@ Owner: Khoa. Reviewer: Lộc.
 | # | Change | Why | Status |
 |---|---|---|---|
 | 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
-| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | open |
-| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | open |
+| 2.2 | Functional requirements (FG-01 to FG-10, FR ids cited, spot-checked against the architecture spec) and non-functional targets (NFR-01 to NFR-15) detailed | Brief, Part B | filled |
+| 2.3 | Alternatives and user environment written (§3 and §4 of the Vision Document); no new market audit | Brief, Part B | filled |
 | 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
+| 2.5 | Document control updated for the PA3 revision; clarified that the full product vision is broader than the current PA3 implementation, which focuses on FG-03, with registration/login supporting the room workflow and topic listing/filtering as extra scope | Make the revision status and current sprint boundary explicit; avoid implying that later product capabilities are implemented in PA3 | filled |
 
 ## 3. Repository layout (supporting change)
 Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
