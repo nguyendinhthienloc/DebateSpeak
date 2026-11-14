@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ActionLink, BackToRooms, Choices, Field, Note, PageHeading } from '../components/ui';
 import type { RoomSettings } from '../roomSettings';
 
@@ -91,39 +90,6 @@ export function InvitationPage() {
       <ActionLink to="/rooms" variant="secondary">Use a different code</ActionLink>
       <p className="small muted">Joining does not start audio or transcription.</p>
     </div>
-  </div>;
-}
-
-export function LobbyPage({ ready = false }: { ready?: boolean }) {
-  const [copyStatus, setCopyStatus] = useState('');
-  async function copyCode() {
-    try { await navigator.clipboard.writeText('ABCD2345'); setCopyStatus('Example code copied. It cannot be used to join a room.'); }
-    catch { setCopyStatus('Copy is unavailable. Select the example code above to copy it.'); }
-  }
-  return <div className="stack-20 room-controls">
-    <section className="stack-12">
-      <h1>{motion}</h1>
-      <p className="label">{ready ? 'Room setup complete · 2 of 2 joined' : 'Waiting for your partner · 1 of 2 joined'}</p>
-      <p className="small">Free flow · 10 minutes · Stances assigned at random</p><hr />
-    </section>
-    <div className={`lobby-columns ${ready ? '' : 'waiting'}`}>
-      <section className="participants" aria-labelledby="participants-heading">
-        <h2 id="participants-heading">Participants and stances</h2>
-        <div className="participant stack-8"><h2>Learner A · You</h2><p className="muted">A · {ready ? 'In favor (PRO)' : 'Stance assigned when your partner joins'}</p></div><hr />
-        <div className="participant stack-8"><h2>{ready ? 'Learner B' : 'Your partner has not joined yet'}</h2><p className="muted">B · {ready ? 'Against (CON)' : 'Open seat'}</p></div>
-      </section>
-      <section className="invitation stack-12" aria-labelledby="code-heading">
-        <hr /><h2 id="code-heading">Room code</h2>
-        <div className="code-row"><p className="headline">ABCD2345</p>{ready
-          ? <button type="button" className="action action-secondary" disabled aria-describedby="lobby-media-limit">Test microphone</button>
-          : <button type="button" className="action action-primary" onClick={copyCode}>Copy code</button>}</div>
-        <p className="small muted">{ready ? 'Both seats are filled in this example.' : 'Example code · no real invitation'}</p>
-        <p className="small muted">Expires at 15:30 · Example time</p>
-        {copyStatus && <p className="small" role="status">{copyStatus}</p>}
-      </section>
-    </div>
-    <p id="lobby-media-limit" className="small muted">Audio and debate start are not available in this build.</p>
-    <div className="stack-6"><ActionLink to="/rooms" variant={ready ? 'primary' : 'secondary'} className="short-action">Back to rooms</ActionLink><p className="small muted">Sample room · no seat is reserved.</p></div>
   </div>;
 }
 
