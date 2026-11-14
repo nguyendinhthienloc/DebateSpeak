@@ -1,13 +1,13 @@
-# DebateSpeak AI — Initial Project Plan
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead — pending. Edited: Trần Lê Anh Tuấn (24125107); human verification pending.
+# DebateSpeak AI — Project Plan
+Performed: pending owner verification. Reviewed: pending, Nguyễn Đình Thiên Lộc (24125093), as assigned in `docs/pa3/Changes.md`. Edited: PA3 revision reassigned to Trần Lê Anh Tuấn (24125107); human verification pending.
 
 | Document control | Value |
 |---|---|
-| Course / assignment | CS300 / CSC13002 — Introduction to Software Engineering; PA2-2026 Part A (15 points) |
-| Work item / owner / reviewer | SCRUM-20 / Tuấn / Khoa, as assigned in the current PA2 task documents |
+| Course / assignment | CS300 / CSC13002 — Introduction to Software Engineering; PA3-2026 Part A (5 points), revising the PA2 plan |
+| Work item / owner / reviewer | SCRUM-35 / Tuấn / Lộc (reassigned from Tài on 2026-11-14) |
 | Task branch / deliverable | `feature/SCRUM-20-project-plan` / `docs/pa2/PROJECT_PLAN.md`, confirmed by the supplied Jira screenshot |
-| Version / preparation date | 0.1 / 29 October 2026; dates use Asia/Bangkok (UTC+7) |
-| Status | Initial Markdown draft for user and peer review; revise in PA3 after TA feedback |
+| Version / preparation date | 0.2 / 14 November 2026 (PA3 revision of 0.1 / 29 October 2026); dates use Asia/Bangkok (UTC+7) |
+| Status | PA3 revision draft; PA2 TA feedback not received as of 2026-11-10; owner and reviewer verification pending |
 | Planning baseline | Remote `pa2` at `dd4851e592e499823c65d71589a7afaad9d39bef`, inspected on 29 October 2026 |
 | Deadline information | User reports PA2 is due at the end of this week; the exact Moodle date/time is not yet verified |
 | Group | Vision records Group 02; release owner must confirm the archive's official Group ID |

@@ -4,6 +4,7 @@ Team deadline: **Fri 2026-11-13**. Scope and rules: [../README.md](../README.md)
 
 | Task | Jira | Branch | Due | Status |
 |---|---|---|---|---|
+| Part A: revised Project Plan + `docs/pa3/Changes.md` (reassigned from Tài) | SCRUM-35 | `feature/SCRUM-35-plan-reassign` | 11-11 | Reassigned 2026-11-14; revision draft 0.2 in `docs/requirements/PROJECT_PLAN.md` |
 | Room state machine as a pure function + transition tests | SCRUM-28 | `feature/SCRUM-28-room-state-machine` | 11-04 | Local implementation tested; Tài review pending |
 | Part C: use-case model, Mermaid diagrams for all 10 FGs | SCRUM-36 | `feature/SCRUM-36-use-case-model` | 11-09 | Local model and PDF prepared; Tài review pending |
 | Part D: use-case specifications, every alternative flow (45 pts) | SCRUM-37 | `feature/SCRUM-37-use-case-specs` | 11-12 | Local specifications prepared; Lộc review pending |
