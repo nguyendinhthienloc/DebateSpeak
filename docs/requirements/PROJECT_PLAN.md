@@ -51,8 +51,8 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 
 | Part | Points | Deliverable | Owner | Status on 2026-11-14 |
 |---|---|---|---|---|
-| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 in this draft; review pending. PDF must be rebuilt from this version. `Changes.md` has rows 1.1 to 1.7 and needs a row for this revision |
-| B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27); reviewer sign-off pending; PDF not rebuilt (Mermaid CLI missing on the build machine) |
+| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 (merged, PR #31); PDF rebuilt 2026-11-14; `Changes.md` has rows 1.1 to 1.8; reviewer sign-off pending |
+| B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off pending |
 | C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off pending |
 | D | 45 | 54 use-case specifications, 201 alternative outcomes, 116 prototype screenshots | Triết, Tuấn | Done (`docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf`, `docs/pa3/prototypes/`); reviewer sign-off and spot check pending |
 | E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Not met: no auth API, room API, migrations or integrated UI on `pa3`; no `specs/`; no video; no E2E test |
@@ -166,7 +166,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-42 | Docker database | Lộc | not verified | Done (PR #15 merged) |
 | SCRUM-43 | CI migrate and seed | Lộc | not verified | Merged (PR #17); skips until SCRUM-41; unverified |
 | SCRUM-24 | Auth API | Tài | not verified | Open; not on `pa3` |
-| SCRUM-25 | Frontend shell, register and login pages | Triết | not verified | Open in the TODO; branch `feature/SCRUM-25-ui-complete` exists; not merged into `pa3` |
+| SCRUM-25 | Frontend shell, register and login pages | Triết | not verified | Open in the TODO. The lobby work on `feature/SCRUM-25-ui-complete` was merged as PR #28 (SCRUM-52); the auth pages are not verified as merged |
 | SCRUM-26 | Room API | Tài | not verified | Open; not on `pa3` |
 | SCRUM-27 | Lobby UI | Triết | not verified | Open; not on `pa3` |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
@@ -179,7 +179,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-40 | AI usage log, weekly report, meetings, screenshots | Khoa, Lộc | Lộc | Partial |
 | SCRUM-47 | `LLMAdapter` and grounding guard | Tuấn | Khoa | Merged with unit tests per the Sprint Review; peer review not verified |
 | SCRUM-44, 45, 46, 48 | Extras: topic API, LiveKit token, `STTAdapter`, mic spike | Tài, Tài, Khoa, Triết | not verified | Stretch; no evidence on `pa3` |
-| SCRUM-49 to 52 | UI refinement packages (Tuấn, Tài, Khoa, Lộc) | as named | as named | Backlog To Do per member TODO; SCRUM-52 has PR #28 open, browser tests not run |
+| SCRUM-49 to 52 | UI refinement packages (Tuấn, Tài, Khoa, Lộc) | as named | as named | Backlog To Do per member TODO; SCRUM-52 lobby merged as PR #28; browser tests not run on the build machine |
 | none | `PA3-Group[GroupId]` zip, Git log, `pa3` to `dev` merge | Lộc | n/a | Missing; local `PA3-Group2/` is partial |
 
 SCRUM-49 to 52 are UI refinement work added outside the graded FG-03 path. They do not replace FG-03.
