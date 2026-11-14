@@ -39,7 +39,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: `pa3` has the auth and account UI (Triết, SCRUM-49/51 merged) and the lobby (SCRUM-52). The backend exists only as Tài's Java auth commit on `backend-tai`, which is not merged and is based on an old commit. No room API, migrations, or integrated FG-03 flow on `pa3` | `backend-tai` (3f585e0), SCRUM-38 (To Do) |
+| E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: `pa3` has the auth and account UI (Triết, SCRUM-49/51 merged) and the lobby (SCRUM-52). Tài's Java auth backend is merged into `pa3` (PR #53) but has no build file (no pom.xml or build.gradle) and no tests, so it is unverified to compile or run. No room API, migrations, or integrated FG-03 flow on `pa3` | `api/app/auth/` (from 3f585e0, PR #53), SCRUM-38 (To Do) |
 | E2 | Spec Kit artifacts (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Partial**: `specs/001-frontend-baseline/` (spec, plan, tasks, contracts) merged via PR #45. No FG-03 feature spec yet | `specs/001-frontend-baseline/` |
 | E3 | Narrated FG-03 demo video on YouTube (unlisted or public), link added | Tài | Lộc | Done: uploaded, link `https://youtu.be/wJxqi3J0phE`. Visibility and narration verified by the team on 2026-11-14 | `https://youtu.be/wJxqi3J0phE` |
 | E4 | E2E test for FG-03 | Khoa | Lộc | **Missing**: no FG-03 test. Existing browser tests were not run on the build machine | none |
@@ -72,6 +72,6 @@ Every member needs their own Spec Kit entry, even a short one.
 |---|---|---|---|
 | S1 | `PA3-Group[GroupId]/` folder with all docs as `.md` and `.pdf` | Lộc | Missing (local `PA3-Group2/` is partial and git-excluded) |
 | S2 | Git log export | Lộc | Partial: `PA3-Group2/GIT_LOG.txt` exists from before the latest merges; re-export at packaging | `PA3-Group2/GIT_LOG.txt` |
-| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | Partial: web app builds on `pa3`; FG-03 backend not on `pa3`; the Java code sits on `backend-tai` |
+| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | Partial: web app builds on `pa3`; no FG-03 backend beyond the unverified Java auth code merged in PR #53 |
 | S4 | `.zip` of the package | Lộc | Missing |
 | S5 | `pa3` → `dev` merge once the package is complete | Lộc | Pending |
