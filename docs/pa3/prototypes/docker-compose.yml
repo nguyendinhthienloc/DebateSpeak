@@ -1,0 +1,22 @@
+# PostgreSQL for the FG-01 prototype. Only the database is needed.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: debatespeak-fg01-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-debatespeak}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-debatespeak_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-debatespeak}
+    ports:
+      - "5432:5432"
+    volumes:
+      - fg01_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-debatespeak} -d ${POSTGRES_DB:-debatespeak}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  fg01_postgres_data:

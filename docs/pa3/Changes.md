@@ -23,6 +23,7 @@ Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **
 | 1.12 | Part E changed from FG-03 to FG-01 (accounts and profiles); FG-03 moves to PA4. Spec Kit `specs/002-fg01-accounts` added; Spec Kit constitution stack updated to Java Spring Boot | FG-03 has no room API; FG-01 has a merged frontend and a Spring Boot + PostgreSQL backend (`backend-tai`) | filled (confirmed 2026-11-14 by Triết, who holds submission control) |
 | 1.13 | Known deviations recorded: BCrypt instead of Argon2id; schema created by Hibernate instead of migrations | Honest status; to fix in PA4 | filled |
 | 1.14 | Backend sources and build pushed (`backend-tai`, 3f5e8f1); FG-01 verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser); statuses in plan, checklist, weekly report and specs updated | Record verified Part E evidence | filled |
+| 1.15 | Runnable FG-01 source packaged in `docs/pa3/prototypes/`; the Part D clickable UI prototype and its screenshots moved to `docs/pa3/ui-prototypes/` with all links updated | One folder to run Part E; Part D evidence unchanged | filled |
 
 **Build 1, shrunk**
 

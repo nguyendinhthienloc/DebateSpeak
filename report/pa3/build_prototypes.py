@@ -19,7 +19,7 @@ def main() -> None:
     payload = json.dumps(
         {"catalogue": catalogue, "states": states}, ensure_ascii=False, indent=2
     )
-    (PA3 / "prototypes" / "data.js").write_text(
+    (PA3 / "ui-prototypes" / "data.js").write_text(
         "// Generated from ../use_cases.json and ../prototype_states.json.\n"
         f"window.PA3_DATA = {payload};\n",
         encoding="utf-8",
