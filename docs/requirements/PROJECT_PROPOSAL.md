@@ -15,6 +15,33 @@ The [initial UI design study](../design/initial/README.md) translates FG-01 (log
 ---
 
 ## 1. Introduction & Value Proposition
+
+**API-ready authentication frontend (November 12, 2026).** The user requested
+sign-up and sign-in based on the repository's existing design and clarified that
+the API/database need not be finished. The proposed frontend slice replaces
+preview-only auth actions with validated forms and a typed client for the G1
+registration/login contracts, including loading states, safe error recovery and
+memory-only session handling. Successful actions require API responses; browser
+tests simulate those responses without claiming real persistence. Room and media
+screens retain their preview boundaries. Backend authentication, database writes,
+refresh/logout integration and full FG-01 acceptance remain separate work.
+See [the auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
+Status: frontend implemented; build, lint and 65 browser contract tests passed.
+Backend/database acceptance remains unverified.
+
+Auth recovery messages distinguish missing endpoints, unreachable services,
+invalid credentials, validation/conflicts, access denial, throttling, server
+failures, unexpected responses and timeouts. Messages describe the appropriate
+recovery action and do not expose backend exception details or account eligibility.
+
+**Frontend scaffold scope (November 6, 2026).** The user requested only page
+navigation and responsive layouts from the selected Cream & Yellow Figma design.
+The [scaffold contract](../design/UI_SCAFFOLD.md) covers linked account, room setup,
+profile, invitation, lobby and recovery screens. All data and success/error states
+are explicitly labeled previews; this does not deliver authentication, room
+services, audio, transcription or AI coaching, and does not count as a completed
+vertical product increment. The roadmap and functional-group acceptance criteria
+remain unchanged.
 *Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 1.1 Problem Statement
