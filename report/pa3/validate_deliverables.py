@@ -58,7 +58,7 @@ def main() -> None:
         assert header[:8] == b"\x89PNG\r\n\x1a\n", relative
         width, height = struct.unpack(">II", header[16:24])
         assert width >= 300 and height >= 100, relative
-    javascript = (PA3 / "prototypes" / "prototype.js").read_text(encoding="utf-8")
+    javascript = (PA3 / "ui-prototypes" / "prototype.js").read_text(encoding="utf-8")
     for identifier in ids:
         assert f'"{identifier}": [' in javascript, (
             f"Missing UI composition: {identifier}"

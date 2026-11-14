@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const pa3 = path.join(root, "docs/pa3");
 const catalogue = JSON.parse(await fs.readFile(path.join(pa3, "use_cases.json"), "utf8"));
 const stateInventory = JSON.parse(await fs.readFile(path.join(pa3, "prototype_states.json"), "utf8"));
-const screenshots = path.join(pa3, "prototypes/screenshots");
+const screenshots = path.join(pa3, "ui-prototypes/screenshots");
 await fs.mkdir(screenshots, { recursive: true });
 const candidates = [
   process.env.BROWSER_EXECUTABLE,
@@ -24,7 +24,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1024 }, de
 const errors = [];
 page.on("pageerror", error => errors.push(error.message));
 await page.route("**/*", route => route.request().url().startsWith("file:") ? route.continue() : route.abort());
-const base = pathToFileURL(path.join(pa3, "prototypes/index.html")).href;
+const base = pathToFileURL(path.join(pa3, "ui-prototypes/index.html")).href;
 const results = [];
 function requireCondition(condition, detail) { if (!condition) throw new Error(detail); }
 try {

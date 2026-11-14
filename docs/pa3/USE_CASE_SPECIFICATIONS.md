@@ -122,11 +122,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Email at most 254 characters; password 12–128 without trimming; display name 1–80; CEFR A2/B1/B2/C1. Password hashing occurs server-side (Argon2id specified; the PA3 build uses BCrypt, Changes.md row 1.13). No passwords in screenshots/logs. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-01](prototypes/index.html#UC-01-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-01](ui-prototypes/index.html#UC-01-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-01 basic-flow prototype](prototypes/screenshots/uc-01-01.png)
+![UC-01-01 basic-flow prototype](ui-prototypes/screenshots/uc-01-01.png)
 
-![UC-01-01 alternative and exception prototype states](prototypes/screenshots/uc-01-01-alternatives.png)
+![UC-01-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-01-alternatives.png)
 
 ### UC-01-02 — Sign in
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -164,11 +164,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Sections 2.4 and 2.5 define auth errors and the FR-01 session lifecycle, including renewal, expiry, replay and lost-response handling. Keep access tokens only in runtime memory; never expose server secrets. Refresh rotation is implemented in PA3. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-02](prototypes/index.html#UC-01-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-02](ui-prototypes/index.html#UC-01-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-02 basic-flow prototype](prototypes/screenshots/uc-01-02.png)
+![UC-01-02 basic-flow prototype](ui-prototypes/screenshots/uc-01-02.png)
 
-![UC-01-02 alternative and exception prototype states](prototypes/screenshots/uc-01-02-alternatives.png)
+![UC-01-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-02-alternatives.png)
 
 ### UC-01-03 — Maintain learner profile
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -204,11 +204,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** CEFR is self-assessed, never certified. Native language is free text up to 64 characters; up to five goals, one per line, each up to 120 characters. Never accept user_id, role, email or password_hash as editable profile fields. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-03](prototypes/index.html#UC-01-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-03](ui-prototypes/index.html#UC-01-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-03 basic-flow prototype](prototypes/screenshots/uc-01-03.png)
+![UC-01-03 basic-flow prototype](ui-prototypes/screenshots/uc-01-03.png)
 
-![UC-01-03 alternative and exception prototype states](prototypes/screenshots/uc-01-03-alternatives.png)
+![UC-01-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-03-alternatives.png)
 
 ### UC-01-04 — Sign out
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -244,11 +244,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Do not claim all devices signed out. Back navigation must not reveal cached private data; no-store applies to private resources. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-04](prototypes/index.html#UC-01-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-04](ui-prototypes/index.html#UC-01-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-04 basic-flow prototype](prototypes/screenshots/uc-01-04.png)
+![UC-01-04 basic-flow prototype](ui-prototypes/screenshots/uc-01-04.png)
 
-![UC-01-04 alternative and exception prototype states](prototypes/screenshots/uc-01-04-alternatives.png)
+![UC-01-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-04-alternatives.png)
 
 ### UC-01-05 — Recover forgotten password
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -284,11 +284,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** The backend enforces code expiry and single use and stores only code hashes. A successful reset ends every session of the account. An email-verification code is never accepted as a reset code. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-05](prototypes/index.html#UC-01-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-05](ui-prototypes/index.html#UC-01-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-05 basic-flow prototype](prototypes/screenshots/uc-01-05.png)
+![UC-01-05 basic-flow prototype](ui-prototypes/screenshots/uc-01-05.png)
 
-![UC-01-05 alternative and exception prototype states](prototypes/screenshots/uc-01-05-alternatives.png)
+![UC-01-05 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-05-alternatives.png)
 
 ### UC-01-06 — Review active sessions
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -325,11 +325,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Signing out one other device at a time is supported; there is no action that signs out all devices. Never show raw access/refresh tokens, token hashes or full secret cookie values. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-06](prototypes/index.html#UC-01-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-06](ui-prototypes/index.html#UC-01-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-06 basic-flow prototype](prototypes/screenshots/uc-01-06.png)
+![UC-01-06 basic-flow prototype](ui-prototypes/screenshots/uc-01-06.png)
 
-![UC-01-06 alternative and exception prototype states](prototypes/screenshots/uc-01-06-alternatives.png)
+![UC-01-06 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-06-alternatives.png)
 
 ### UC-01-07 — Delete own account and data
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -366,11 +366,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Confirm erasure scope across derived artifacts and future chat. The PA3 build soft-deletes the account and signs out every device at once; the scheduled hard-delete job is not built yet. Do not promise instant physical deletion or preserve shareable report links after revocation. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-07](prototypes/index.html#UC-01-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-07](ui-prototypes/index.html#UC-01-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-07 basic-flow prototype](prototypes/screenshots/uc-01-07.png)
+![UC-01-07 basic-flow prototype](ui-prototypes/screenshots/uc-01-07.png)
 
-![UC-01-07 alternative and exception prototype states](prototypes/screenshots/uc-01-07-alternatives.png)
+![UC-01-07 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-07-alternatives.png)
 
 ### UC-01-08 — Suspend or reactivate account
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -408,11 +408,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Suspension is distinct from account deletion; reactivation does not undo a pending erasure or authorize transcript browsing. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-01-08](prototypes/index.html#UC-01-08). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-01-08](ui-prototypes/index.html#UC-01-08). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-01-08 basic-flow prototype](prototypes/screenshots/uc-01-08.png)
+![UC-01-08 basic-flow prototype](ui-prototypes/screenshots/uc-01-08.png)
 
-![UC-01-08 alternative and exception prototype states](prototypes/screenshots/uc-01-08-alternatives.png)
+![UC-01-08 alternative and exception prototype states](ui-prototypes/screenshots/uc-01-08-alternatives.png)
 
 ## FG-02 — Topics and difficulty
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -452,11 +452,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** PA3 topic API/filter is extra scope; a static seed list must be labelled accurately. CEFR choices are A2/B1/B2/C1. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-02-01](prototypes/index.html#UC-02-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-02-01](ui-prototypes/index.html#UC-02-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-02-01 basic-flow prototype](prototypes/screenshots/uc-02-01.png)
+![UC-02-01 basic-flow prototype](ui-prototypes/screenshots/uc-02-01.png)
 
-![UC-02-01 alternative and exception prototype states](prototypes/screenshots/uc-02-01-alternatives.png)
+![UC-02-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-02-01-alternatives.png)
 
 ### UC-02-02 — Manage topic library
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -493,11 +493,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Retirement is a state change, not a destructive delete of motions referenced by finished debates. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-02-02](prototypes/index.html#UC-02-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-02-02](ui-prototypes/index.html#UC-02-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-02-02 basic-flow prototype](prototypes/screenshots/uc-02-02.png)
+![UC-02-02 basic-flow prototype](ui-prototypes/screenshots/uc-02-02.png)
 
-![UC-02-02 alternative and exception prototype states](prototypes/screenshots/uc-02-02-alternatives.png)
+![UC-02-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-02-02-alternatives.png)
 
 ### UC-02-03 — Get personalized topic recommendations
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -533,11 +533,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** This extends UC-02-01; it does not block browsing, certify ability, or infer weaknesses from another learner data. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-02-03](prototypes/index.html#UC-02-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-02-03](ui-prototypes/index.html#UC-02-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-02-03 basic-flow prototype](prototypes/screenshots/uc-02-03.png)
+![UC-02-03 basic-flow prototype](ui-prototypes/screenshots/uc-02-03.png)
 
-![UC-02-03 alternative and exception prototype states](prototypes/screenshots/uc-02-03-alternatives.png)
+![UC-02-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-02-03-alternatives.png)
 
 ### UC-02-04 — Propose a custom topic
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -574,11 +574,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Stretch design only. The public-topic editor and this submission queue have different permissions. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-02-04](prototypes/index.html#UC-02-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-02-04](ui-prototypes/index.html#UC-02-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-02-04 basic-flow prototype](prototypes/screenshots/uc-02-04.png)
+![UC-02-04 basic-flow prototype](ui-prototypes/screenshots/uc-02-04.png)
 
-![UC-02-04 alternative and exception prototype states](prototypes/screenshots/uc-02-04-alternatives.png)
+![UC-02-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-02-04-alternatives.png)
 
 ## FG-03 — Room and session management
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -618,11 +618,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Exactly two debater seats; duration integer 60–1800 seconds; lobby 30 minutes; eight-character secure invite. Build 1 uses /rooms, not an arbitrary status endpoint. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-01](prototypes/index.html#UC-03-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-01](ui-prototypes/index.html#UC-03-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-01 basic-flow prototype](prototypes/screenshots/uc-03-01.png)
+![UC-03-01 basic-flow prototype](ui-prototypes/screenshots/uc-03-01.png)
 
-![UC-03-01 alternative and exception prototype states](prototypes/screenshots/uc-03-01-alternatives.png)
+![UC-03-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-01-alternatives.png)
 
 ### UC-03-02 — Join invited room
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -661,11 +661,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Server identity comes from auth; lock plus unique seat/membership constraints enforce capacity. No consent value is inferred or copied from the partner. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-02](prototypes/index.html#UC-03-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-02](ui-prototypes/index.html#UC-03-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-02 basic-flow prototype](prototypes/screenshots/uc-03-02.png)
+![UC-03-02 basic-flow prototype](ui-prototypes/screenshots/uc-03-02.png)
 
-![UC-03-02 alternative and exception prototype states](prototypes/screenshots/uc-03-02-alternatives.png)
+![UC-03-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-02-alternatives.png)
 
 ### UC-03-03 — View lobby and readiness
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
@@ -703,11 +703,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** A Build 1 Start control is disabled with a clear unavailable explanation; do not create media or future endpoints to animate the prototype. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-03](prototypes/index.html#UC-03-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-03](ui-prototypes/index.html#UC-03-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-03 basic-flow prototype](prototypes/screenshots/uc-03-03.png)
+![UC-03-03 basic-flow prototype](ui-prototypes/screenshots/uc-03-03.png)
 
-![UC-03-03 alternative and exception prototype states](prototypes/screenshots/uc-03-03-alternatives.png)
+![UC-03-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-03-alternatives.png)
 
 ### UC-03-04 — Give or withdraw processing consent
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -744,11 +744,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Room presence, account terms, browser permission and another learner decision are not substitutes for consent. New audience/chat processing grants remain separate. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-04](prototypes/index.html#UC-03-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-04](ui-prototypes/index.html#UC-03-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-04 basic-flow prototype](prototypes/screenshots/uc-03-04.png)
+![UC-03-04 basic-flow prototype](ui-prototypes/screenshots/uc-03-04.png)
 
-![UC-03-04 alternative and exception prototype states](prototypes/screenshots/uc-03-04-alternatives.png)
+![UC-03-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-04-alternatives.png)
 
 ### UC-03-05 — Start debate
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -785,13 +785,13 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** This future-media contract is not enabled by the SCRUM-28 pure transition function. Start requires actual media capability, not a hardcoded ready flag. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-05](prototypes/index.html#UC-03-05). The default screen shows the safe Build 1 blocked-start state; the contact sheet contains every named alternative/exception outcome. The additional authorized scenario illustrates the future main success flow only. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-05](ui-prototypes/index.html#UC-03-05). The default screen shows the safe Build 1 blocked-start state; the contact sheet contains every named alternative/exception outcome. The additional authorized scenario illustrates the future main success flow only. Illustrative data is not a real learner record.
 
-![UC-03-05 basic-flow prototype](prototypes/screenshots/uc-03-05.png)
+![UC-03-05 basic-flow prototype](ui-prototypes/screenshots/uc-03-05.png)
 
-![UC-03-05 alternative and exception prototype states](prototypes/screenshots/uc-03-05-alternatives.png)
+![UC-03-05 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-05-alternatives.png)
 
-![Future fully authorized start scenario; independently recorded consents/mics/media, no real capture](prototypes/screenshots/uc-03-05-authorized.png)
+![Future fully authorized start scenario; independently recorded consents/mics/media, no real capture](ui-prototypes/screenshots/uc-03-05-authorized.png)
 
 ### UC-03-06 — Leave or end debate
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -829,11 +829,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Both participants may end LIVE; a prompt must not trap someone in an unsafe debate. Creator cancellation uses CANCELLED only before LIVE. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-06](prototypes/index.html#UC-03-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-06](ui-prototypes/index.html#UC-03-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-06 basic-flow prototype](prototypes/screenshots/uc-03-06.png)
+![UC-03-06 basic-flow prototype](ui-prototypes/screenshots/uc-03-06.png)
 
-![UC-03-06 alternative and exception prototype states](prototypes/screenshots/uc-03-06-alternatives.png)
+![UC-03-06 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-06-alternatives.png)
 
 ### UC-03-07 — Follow debate and turn timers
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -870,11 +870,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Timed turns are guidance, not automatic audio enforcement. Browser suspension/reconnect must fetch the current stage rather than replaying old ticks. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-07](prototypes/index.html#UC-03-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-07](ui-prototypes/index.html#UC-03-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-07 basic-flow prototype](prototypes/screenshots/uc-03-07.png)
+![UC-03-07 basic-flow prototype](ui-prototypes/screenshots/uc-03-07.png)
 
-![UC-03-07 alternative and exception prototype states](prototypes/screenshots/uc-03-07-alternatives.png)
+![UC-03-07 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-07-alternatives.png)
 
 ### UC-03-08 — Report abusive behavior
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -911,11 +911,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Report details are not posted to the opponent or fed to a public leaderboard. Moderator access is limited to the evidence needed for the case. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-08](prototypes/index.html#UC-03-08). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-08](ui-prototypes/index.html#UC-03-08). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-08 basic-flow prototype](prototypes/screenshots/uc-03-08.png)
+![UC-03-08 basic-flow prototype](ui-prototypes/screenshots/uc-03-08.png)
 
-![UC-03-08 alternative and exception prototype states](prototypes/screenshots/uc-03-08-alternatives.png)
+![UC-03-08 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-08-alternatives.png)
 
 ### UC-03-09 — Review abuse and close room
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -952,11 +952,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Do not add LIVE→CANCELLED to simplify closure. A moderation permission is not blanket permission to browse every learner transcript. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-09](prototypes/index.html#UC-03-09). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-09](ui-prototypes/index.html#UC-03-09). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-09 basic-flow prototype](prototypes/screenshots/uc-03-09.png)
+![UC-03-09 basic-flow prototype](ui-prototypes/screenshots/uc-03-09.png)
 
-![UC-03-09 alternative and exception prototype states](prototypes/screenshots/uc-03-09-alternatives.png)
+![UC-03-09 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-09-alternatives.png)
 
 ### UC-03-10 — Use private room text chat
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -993,11 +993,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Design only; no class/group chat, audience publishing, public messaging or moderation bot is added by this use case. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-10](prototypes/index.html#UC-03-10). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-10](ui-prototypes/index.html#UC-03-10). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-10 basic-flow prototype](prototypes/screenshots/uc-03-10.png)
+![UC-03-10 basic-flow prototype](ui-prototypes/screenshots/uc-03-10.png)
 
-![UC-03-10 alternative and exception prototype states](prototypes/screenshots/uc-03-10-alternatives.png)
+![UC-03-10 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-10-alternatives.png)
 
 ### UC-03-11 — Practise solo with an AI opponent
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1034,11 +1034,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** This design intentionally does not weaken the current FR-11 two-debater invariant. Solo states, TTS and token/cost controls require future architectural approval. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-11](prototypes/index.html#UC-03-11). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-11](ui-prototypes/index.html#UC-03-11). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-11 basic-flow prototype](prototypes/screenshots/uc-03-11.png)
+![UC-03-11 basic-flow prototype](ui-prototypes/screenshots/uc-03-11.png)
 
-![UC-03-11 alternative and exception prototype states](prototypes/screenshots/uc-03-11-alternatives.png)
+![UC-03-11 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-11-alternatives.png)
 
 ### UC-03-12 — Authorize and join audience access
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1076,13 +1076,13 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Audience capacity values and revocation latency need the future media contract; no unlimited audience or account-role bypass is assumed. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-12](prototypes/index.html#UC-03-12). The default screen shows audience entry blocked while sharing authorization is pending; the contact sheet contains every named alternative/exception outcome. The additional authorized scenario illustrates future subscribe-only audience access only. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-12](ui-prototypes/index.html#UC-03-12). The default screen shows audience entry blocked while sharing authorization is pending; the contact sheet contains every named alternative/exception outcome. The additional authorized scenario illustrates future subscribe-only audience access only. Illustrative data is not a real learner record.
 
-![UC-03-12 basic-flow prototype](prototypes/screenshots/uc-03-12.png)
+![UC-03-12 basic-flow prototype](ui-prototypes/screenshots/uc-03-12.png)
 
-![UC-03-12 alternative and exception prototype states](prototypes/screenshots/uc-03-12-alternatives.png)
+![UC-03-12 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-12-alternatives.png)
 
-![Future authorized subscribe-only audience scenario; both debaters independently approve sharing, no publishing or real media](prototypes/screenshots/uc-03-12-authorized.png)
+![Future authorized subscribe-only audience scenario; both debaters independently approve sharing, no publishing or real media](ui-prototypes/screenshots/uc-03-12-authorized.png)
 
 ### UC-03-13 — Validate start readiness
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1118,11 +1118,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Supporting behavior, not a public Validate endpoint. The readiness inspector prototype represents learner-visible gate status, not server-debug internals. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-03-13](prototypes/index.html#UC-03-13). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-03-13](ui-prototypes/index.html#UC-03-13). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-03-13 basic-flow prototype](prototypes/screenshots/uc-03-13.png)
+![UC-03-13 basic-flow prototype](ui-prototypes/screenshots/uc-03-13.png)
 
-![UC-03-13 alternative and exception prototype states](prototypes/screenshots/uc-03-13-alternatives.png)
+![UC-03-13 alternative and exception prototype states](ui-prototypes/screenshots/uc-03-13-alternatives.png)
 
 ## FG-04 — Real-time audio
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1162,11 +1162,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Browser permission is distinct from processing consent. READY still represents presence; mic denial blocks LIVE rather than changing the occupied-seat definition. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-04-01](prototypes/index.html#UC-04-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-04-01](ui-prototypes/index.html#UC-04-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-04-01 basic-flow prototype](prototypes/screenshots/uc-04-01.png)
+![UC-04-01 basic-flow prototype](ui-prototypes/screenshots/uc-04-01.png)
 
-![UC-04-01 alternative and exception prototype states](prototypes/screenshots/uc-04-01-alternatives.png)
+![UC-04-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-04-01-alternatives.png)
 
 ### UC-04-02 — Exchange audio and control mute
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1205,11 +1205,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Prioritize audio latency over analysis. Raw audio is not persisted by default; independent tracks preserve deterministic speaker attribution. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-04-02](prototypes/index.html#UC-04-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-04-02](ui-prototypes/index.html#UC-04-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-04-02 basic-flow prototype](prototypes/screenshots/uc-04-02.png)
+![UC-04-02 basic-flow prototype](ui-prototypes/screenshots/uc-04-02.png)
 
-![UC-04-02 alternative and exception prototype states](prototypes/screenshots/uc-04-02-alternatives.png)
+![UC-04-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-04-02-alternatives.png)
 
 ### UC-04-03 — Recover a dropped connection
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1246,11 +1246,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Default grace is 60 seconds. Early-end analysis requires at least 60 seconds of speech; show insufficient evidence otherwise. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-04-03](prototypes/index.html#UC-04-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-04-03](ui-prototypes/index.html#UC-04-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-04-03 basic-flow prototype](prototypes/screenshots/uc-04-03.png)
+![UC-04-03 basic-flow prototype](ui-prototypes/screenshots/uc-04-03.png)
 
-![UC-04-03 alternative and exception prototype states](prototypes/screenshots/uc-04-03-alternatives.png)
+![UC-04-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-04-03-alternatives.png)
 
 ### UC-04-04 — Enable optional live video
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1286,11 +1286,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Stretch design; no video recording is implied. This is an extension of UC-04-02 and does not expand existing audience permissions. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-04-04](prototypes/index.html#UC-04-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-04-04](ui-prototypes/index.html#UC-04-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-04-04 basic-flow prototype](prototypes/screenshots/uc-04-04.png)
+![UC-04-04 basic-flow prototype](ui-prototypes/screenshots/uc-04-04.png)
 
-![UC-04-04 alternative and exception prototype states](prototypes/screenshots/uc-04-04-alternatives.png)
+![UC-04-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-04-04-alternatives.png)
 
 ## FG-05 — Transcription and attribution
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1331,11 +1331,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Partial hypotheses are not persisted. Final segments include word timing/confidence where required; preserve fillers rather than cleaning away learning signals. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-05-01](prototypes/index.html#UC-05-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-05-01](ui-prototypes/index.html#UC-05-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-05-01 basic-flow prototype](prototypes/screenshots/uc-05-01.png)
+![UC-05-01 basic-flow prototype](ui-prototypes/screenshots/uc-05-01.png)
 
-![UC-05-01 alternative and exception prototype states](prototypes/screenshots/uc-05-01-alternatives.png)
+![UC-05-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-05-01-alternatives.png)
 
 ### UC-05-02 — Review and export full transcript
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1371,11 +1371,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** No raw audio download is implied. Exported filenames and Markdown text must be safe and must not include session credentials. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-05-02](prototypes/index.html#UC-05-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-05-02](ui-prototypes/index.html#UC-05-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-05-02 basic-flow prototype](prototypes/screenshots/uc-05-02.png)
+![UC-05-02 basic-flow prototype](ui-prototypes/screenshots/uc-05-02.png)
 
-![UC-05-02 alternative and exception prototype states](prototypes/screenshots/uc-05-02-alternatives.png)
+![UC-05-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-05-02-alternatives.png)
 
 ### UC-05-03 — Use mixed-audio diarization fallback
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1411,11 +1411,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** The proposed mixed-audio WebSocket is future-only; this use case adds no working upload endpoint to PA3. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-05-03](prototypes/index.html#UC-05-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-05-03](ui-prototypes/index.html#UC-05-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-05-03 basic-flow prototype](prototypes/screenshots/uc-05-03.png)
+![UC-05-03 basic-flow prototype](ui-prototypes/screenshots/uc-05-03.png)
 
-![UC-05-03 alternative and exception prototype states](prototypes/screenshots/uc-05-03-alternatives.png)
+![UC-05-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-05-03-alternatives.png)
 
 ## FG-06 — English language analysis
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1455,11 +1455,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Default priority-item caps: A2 3, B1 5, B2 7, C1 10. Do not interrupt LIVE speech with dense feedback; a matched quote alone does not prove a grammar error. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-06-01](prototypes/index.html#UC-06-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-06-01](ui-prototypes/index.html#UC-06-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-06-01 basic-flow prototype](prototypes/screenshots/uc-06-01.png)
+![UC-06-01 basic-flow prototype](ui-prototypes/screenshots/uc-06-01.png)
 
-![UC-06-01 alternative and exception prototype states](prototypes/screenshots/uc-06-01-alternatives.png)
+![UC-06-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-06-01-alternatives.png)
 
 ### UC-06-02 — Review speaking metrics
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1495,11 +1495,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** WPM excludes silences over 2 seconds; pauses use at least 0.8 seconds; MATTR uses window 50. Filler handling needs context for words such as like/so; metrics are formative, not proficiency certification. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-06-02](prototypes/index.html#UC-06-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-06-02](ui-prototypes/index.html#UC-06-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-06-02 basic-flow prototype](prototypes/screenshots/uc-06-02.png)
+![UC-06-02 basic-flow prototype](ui-prototypes/screenshots/uc-06-02.png)
 
-![UC-06-02 alternative and exception prototype states](prototypes/screenshots/uc-06-02-alternatives.png)
+![UC-06-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-06-02-alternatives.png)
 
 ### UC-06-03 — Review recurring language patterns
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1535,11 +1535,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Avoid diagnosing a stable personal defect from one sentence. Counts are observations of retained evidence, not certified error rates. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-06-03](prototypes/index.html#UC-06-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-06-03](ui-prototypes/index.html#UC-06-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-06-03 basic-flow prototype](prototypes/screenshots/uc-06-03.png)
+![UC-06-03 basic-flow prototype](ui-prototypes/screenshots/uc-06-03.png)
 
-![UC-06-03 alternative and exception prototype states](prototypes/screenshots/uc-06-03-alternatives.png)
+![UC-06-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-06-03-alternatives.png)
 
 ### UC-06-04 — Review pronunciation assessment
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1575,11 +1575,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** STT confidence is not pronunciation accuracy. Provider selection, sample retention and limits require a future reviewed contract; no working provider is claimed here. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-06-04](prototypes/index.html#UC-06-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-06-04](ui-prototypes/index.html#UC-06-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-06-04 basic-flow prototype](prototypes/screenshots/uc-06-04.png)
+![UC-06-04 basic-flow prototype](ui-prototypes/screenshots/uc-06-04.png)
 
-![UC-06-04 alternative and exception prototype states](prototypes/screenshots/uc-06-04-alternatives.png)
+![UC-06-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-06-04-alternatives.png)
 
 ### UC-06-05 — Validate cited transcript evidence
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1616,11 +1616,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Supporting behavior; the learner-facing prototype is a citation/context inspector, not a private model-debug endpoint. Grounding is provenance validation and does not establish critique correctness. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-06-05](prototypes/index.html#UC-06-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-06-05](ui-prototypes/index.html#UC-06-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-06-05 basic-flow prototype](prototypes/screenshots/uc-06-05.png)
+![UC-06-05 basic-flow prototype](ui-prototypes/screenshots/uc-06-05.png)
 
-![UC-06-05 alternative and exception prototype states](prototypes/screenshots/uc-06-05-alternatives.png)
+![UC-06-05 alternative and exception prototype states](ui-prototypes/screenshots/uc-06-05-alternatives.png)
 
 ## FG-07 — Argument analysis
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1660,11 +1660,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** A rebuttal assessment must identify the opponent point and the learner response, not simply label a speaker weak. Detailed analysis belongs after the debate. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-07-01](prototypes/index.html#UC-07-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-07-01](ui-prototypes/index.html#UC-07-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-07-01 basic-flow prototype](prototypes/screenshots/uc-07-01.png)
+![UC-07-01 basic-flow prototype](ui-prototypes/screenshots/uc-07-01.png)
 
-![UC-07-01 alternative and exception prototype states](prototypes/screenshots/uc-07-01-alternatives.png)
+![UC-07-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-07-01-alternatives.png)
 
 ### UC-07-02 — Review potential logical fallacies
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1700,11 +1700,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Use potential when interpretation is uncertain. Ad hominem/strawman/false-dilemma labels need actual reasoning context, not isolated wording. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-07-02](prototypes/index.html#UC-07-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-07-02](ui-prototypes/index.html#UC-07-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-07-02 basic-flow prototype](prototypes/screenshots/uc-07-02.png)
+![UC-07-02 basic-flow prototype](ui-prototypes/screenshots/uc-07-02.png)
 
-![UC-07-02 alternative and exception prototype states](prototypes/screenshots/uc-07-02-alternatives.png)
+![UC-07-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-07-02-alternatives.png)
 
 ## FG-08 — Fact checking
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1746,11 +1746,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** External text is untrusted data, never instructions. Default limits: top eight claims, up to five results/query, snippets truncated to 1,000 characters. Exact snippet quotes and provenance remain visible. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-08-01](prototypes/index.html#UC-08-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-08-01](ui-prototypes/index.html#UC-08-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-08-01 basic-flow prototype](prototypes/screenshots/uc-08-01.png)
+![UC-08-01 basic-flow prototype](ui-prototypes/screenshots/uc-08-01.png)
 
-![UC-08-01 alternative and exception prototype states](prototypes/screenshots/uc-08-01-alternatives.png)
+![UC-08-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-08-01-alternatives.png)
 
 ### UC-08-02 — Show optional live fact-check overlay
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1786,11 +1786,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Stretch extension of UC-04-02. Keep critical feedback post-debate by default and avoid repeated alerts during socially intense discussion. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-08-02](prototypes/index.html#UC-08-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-08-02](ui-prototypes/index.html#UC-08-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-08-02 basic-flow prototype](prototypes/screenshots/uc-08-02.png)
+![UC-08-02 basic-flow prototype](ui-prototypes/screenshots/uc-08-02.png)
 
-![UC-08-02 alternative and exception prototype states](prototypes/screenshots/uc-08-02-alternatives.png)
+![UC-08-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-08-02-alternatives.png)
 
 ## FG-09 — Evaluation and consensus
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1830,11 +1830,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Architecture Section 11.3 defines six numeric dimensions per speaker—ArgumentQuality, Relevance, Evidence, Reasoning, Rebuttal and Counterarguments—each 0–100; fallacy/clarity notes remain qualitative. Both speakers therefore have twelve numeric values in a complete evaluation. MVP uses one debate judge and self-reported confidence at most 0.8; claim Evaluator/Skeptic disagreement is separate from debate-score consensus. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-01](prototypes/index.html#UC-09-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-01](ui-prototypes/index.html#UC-09-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-01 basic-flow prototype](prototypes/screenshots/uc-09-01.png)
+![UC-09-01 basic-flow prototype](ui-prototypes/screenshots/uc-09-01.png)
 
-![UC-09-01 alternative and exception prototype states](prototypes/screenshots/uc-09-01-alternatives.png)
+![UC-09-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-01-alternatives.png)
 
 ### UC-09-02 — Configure analysis and inspect usage
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1871,11 +1871,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** API keys belong only in server-side environment/secret management, never browser fields or screenshots. Configuring a feature cannot bypass consent or approve a deferred capability. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-02](prototypes/index.html#UC-09-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-02](ui-prototypes/index.html#UC-09-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-02 basic-flow prototype](prototypes/screenshots/uc-09-02.png)
+![UC-09-02 basic-flow prototype](ui-prototypes/screenshots/uc-09-02.png)
 
-![UC-09-02 alternative and exception prototype states](prototypes/screenshots/uc-09-02-alternatives.png)
+![UC-09-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-02-alternatives.png)
 
 ### UC-09-03 — Run optional heterogeneous judge panel
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1911,11 +1911,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Not the MVP default; approval and provider configuration are prerequisites. Different prompts to one model do not meet the heterogeneous-model requirement. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-03](prototypes/index.html#UC-09-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-03](ui-prototypes/index.html#UC-09-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-03 basic-flow prototype](prototypes/screenshots/uc-09-03.png)
+![UC-09-03 basic-flow prototype](ui-prototypes/screenshots/uc-09-03.png)
 
-![UC-09-03 alternative and exception prototype states](prototypes/screenshots/uc-09-03-alternatives.png)
+![UC-09-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-03-alternatives.png)
 
 ### UC-09-04 — Assign a human evaluator
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1951,11 +1951,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Evaluator is a separate role from Admin. Record assignment and consent provenance; this use case does not create classes or give global learner access. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-04](prototypes/index.html#UC-09-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-04](ui-prototypes/index.html#UC-09-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-04 basic-flow prototype](prototypes/screenshots/uc-09-04.png)
+![UC-09-04 basic-flow prototype](ui-prototypes/screenshots/uc-09-04.png)
 
-![UC-09-04 alternative and exception prototype states](prototypes/screenshots/uc-09-04-alternatives.png)
+![UC-09-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-04-alternatives.png)
 
 ### UC-09-05 — Submit human grading card
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -1992,11 +1992,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** All six dimensions from Architecture Section 11.3 are required for each speaker, with individual values in 0–100; fallacy/clarity notes are qualitative rather than additional numeric dimensions. Rubric/card versions and evaluator identity remain visible to authorized debaters. Submit is explicit; drafting never implies publication. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-05](prototypes/index.html#UC-09-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-05](ui-prototypes/index.html#UC-09-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-05 basic-flow prototype](prototypes/screenshots/uc-09-05.png)
+![UC-09-05 basic-flow prototype](ui-prototypes/screenshots/uc-09-05.png)
 
-![UC-09-05 alternative and exception prototype states](prototypes/screenshots/uc-09-05-alternatives.png)
+![UC-09-05 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-05-alternatives.png)
 
 ### UC-09-06 — View shared human grades
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2033,11 +2033,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Extension of UC-09-01; human grading is not required for the core AI evaluation view to work. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-09-06](prototypes/index.html#UC-09-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-09-06](ui-prototypes/index.html#UC-09-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-09-06 basic-flow prototype](prototypes/screenshots/uc-09-06.png)
+![UC-09-06 basic-flow prototype](ui-prototypes/screenshots/uc-09-06.png)
 
-![UC-09-06 alternative and exception prototype states](prototypes/screenshots/uc-09-06-alternatives.png)
+![UC-09-06 alternative and exception prototype states](ui-prototypes/screenshots/uc-09-06-alternatives.png)
 
 ## FG-10 — History and learning reports
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2077,11 +2077,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Report generation is post-debate and asynchronous. Clinical critique requires a precise repair; do not give participation-trophy praise or certified CEFR advancement claims. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-01](prototypes/index.html#UC-10-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-01](ui-prototypes/index.html#UC-10-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-01 basic-flow prototype](prototypes/screenshots/uc-10-01.png)
+![UC-10-01 basic-flow prototype](ui-prototypes/screenshots/uc-10-01.png)
 
-![UC-10-01 alternative and exception prototype states](prototypes/screenshots/uc-10-01-alternatives.png)
+![UC-10-01 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-01-alternatives.png)
 
 ### UC-10-02 — Browse own debate history
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2118,11 +2118,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** No public leaderboard, opponent profile browsing or teacher access is implied. Empty history remains empty until actual sessions exist. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-02](prototypes/index.html#UC-10-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-02](ui-prototypes/index.html#UC-10-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-02 basic-flow prototype](prototypes/screenshots/uc-10-02.png)
+![UC-10-02 basic-flow prototype](ui-prototypes/screenshots/uc-10-02.png)
 
-![UC-10-02 alternative and exception prototype states](prototypes/screenshots/uc-10-02-alternatives.png)
+![UC-10-02 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-02-alternatives.png)
 
 ### UC-10-03 — Review longitudinal progress
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2158,11 +2158,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Privacy/deletion rules apply to aggregates too. Missing/failed reports are gaps, not zero scores; avoid implying statistical certainty from small samples. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-03](prototypes/index.html#UC-10-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-03](ui-prototypes/index.html#UC-10-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-03 basic-flow prototype](prototypes/screenshots/uc-10-03.png)
+![UC-10-03 basic-flow prototype](ui-prototypes/screenshots/uc-10-03.png)
 
-![UC-10-03 alternative and exception prototype states](prototypes/screenshots/uc-10-03-alternatives.png)
+![UC-10-03 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-03-alternatives.png)
 
 ### UC-10-04 — Track analysis status and retry
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2199,11 +2199,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Stage retry policy and usage are server-controlled. Deletion wins over regeneration; never recreate erased learner data from stale jobs. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-04](prototypes/index.html#UC-10-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-04](ui-prototypes/index.html#UC-10-04). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-04 basic-flow prototype](prototypes/screenshots/uc-10-04.png)
+![UC-10-04 basic-flow prototype](ui-prototypes/screenshots/uc-10-04.png)
 
-![UC-10-04 alternative and exception prototype states](prototypes/screenshots/uc-10-04-alternatives.png)
+![UC-10-04 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-04-alternatives.png)
 
 ### UC-10-05 — Export report PDF
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2239,11 +2239,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Stretch product feature; distinct from compiling PA3 submission documents with latexmk. A local download is not consent to publish the report. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-05](prototypes/index.html#UC-10-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-05](ui-prototypes/index.html#UC-10-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-05 basic-flow prototype](prototypes/screenshots/uc-10-05.png)
+![UC-10-05 basic-flow prototype](ui-prototypes/screenshots/uc-10-05.png)
 
-![UC-10-05 alternative and exception prototype states](prototypes/screenshots/uc-10-05-alternatives.png)
+![UC-10-05 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-05-alternatives.png)
 
 ### UC-10-06 — Process deletion and retention requests
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2280,11 +2280,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Default transcript retention is 90 days and user-configurable; accepted account hard deletion is due within seven days. Audit status must not retain erased transcript/quote contents. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-06](prototypes/index.html#UC-10-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-06](ui-prototypes/index.html#UC-10-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-06 basic-flow prototype](prototypes/screenshots/uc-10-06.png)
+![UC-10-06 basic-flow prototype](ui-prototypes/screenshots/uc-10-06.png)
 
-![UC-10-06 alternative and exception prototype states](prototypes/screenshots/uc-10-06-alternatives.png)
+![UC-10-06 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-06-alternatives.png)
 
 ### UC-10-07 — View consented student dashboards
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2321,11 +2321,11 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Special requirements:** Design-only FR-57 boundary. Class creation, rosters, invitations and assignments remain undesigned long-term goals; this use case neither implements nor models those workflows. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
-**UI prototype:** [Open UC-10-07](prototypes/index.html#UC-10-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
+**UI prototype:** [Open UC-10-07](ui-prototypes/index.html#UC-10-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
-![UC-10-07 basic-flow prototype](prototypes/screenshots/uc-10-07.png)
+![UC-10-07 basic-flow prototype](ui-prototypes/screenshots/uc-10-07.png)
 
-![UC-10-07 alternative and exception prototype states](prototypes/screenshots/uc-10-07-alternatives.png)
+![UC-10-07 alternative and exception prototype states](ui-prototypes/screenshots/uc-10-07-alternatives.png)
 
 ## 4. Review and acceptance checklist
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -2337,4 +2337,4 @@ The 54 entries below follow the shared catalogue order. Each specification links
 - Prototype controls are local simulations. Screenshots demonstrate design completeness, not API/database/media implementation.
 - Triết's co-owner review is recorded on 2026-11-14. Lộc's assigned review remains pending.
 
-**Traceability:** [Use-case model and FR-to-UC coverage](USE_CASE_MODEL.md), [catalogue](use_cases.json), [prototype state manifest](prototype_states.json), [prototype source and reproduction](prototypes/README.md).
+**Traceability:** [Use-case model and FR-to-UC coverage](USE_CASE_MODEL.md), [catalogue](use_cases.json), [prototype state manifest](prototype_states.json), [prototype source and reproduction](ui-prototypes/README.md).

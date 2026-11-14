@@ -32,8 +32,8 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
 | D1 | 54 specifications, 201 alternative outcomes | Triết, Tuấn | Triết | Done | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf` |
-| D2 | Prototype screenshots (116) | Triết | Triết | Done | `docs/pa3/prototypes/screenshots/` |
-| D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Done: reviewed by Triết, 2026-11-14. Lộc's assigned review of the specifications is still pending | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/prototypes/README.md` |
+| D2 | Prototype screenshots (116) | Triết | Triết | Done | `docs/pa3/ui-prototypes/screenshots/` |
+| D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Done: reviewed by Triết, 2026-11-14. Lộc's assigned review of the specifications is still pending | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/ui-prototypes/README.md` |
 
 ## Part E: FG-01 End to End with Spec Kit (20 pts)
 
@@ -74,6 +74,6 @@ Every member needs their own Spec Kit entry, even a short one.
 |---|---|---|---|
 | S1 | `PA3-Group02/` folder with all docs as `.md` and `.pdf` | Lộc | Done: every Markdown file has a current PDF; the code slot is `04-fg03-implementation/source/` | `PA3-Group02/` |
 | S2 | Git log export | Lộc | Done: `PA3-Group02/GIT_LOG.txt` re-exported 2026-11-14, with author emails removed | `PA3-Group02/GIT_LOG.txt` |
-| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | **Open**: FG-01 source is `web/` plus `api/authify/` (without `target/` and secrets) | — |
+| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | Done: runnable FG-01 source in `docs/pa3/prototypes/` (web, API, database compose, `.env.example`, run guide); builds and passes 96 tests from that folder | `docs/pa3/prototypes/README.md` |
 | S4 | `.zip` of the package | Lộc | Ready to rebuild once the FG-03 code is in | `D:\DebateSpeak\PA3-Group02.zip` |
 | S5 | `pa3` → `dev` merge once the package is complete | Lộc | Pending |
