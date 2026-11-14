@@ -37,6 +37,7 @@ Owner: Khoa. Reviewer: Lộc.
 | 2.2 | Functional requirements (FG-01 to FG-10, FR ids cited, spot-checked against the architecture spec) and non-functional targets (NFR-01 to NFR-15) detailed | Brief, Part B | filled |
 | 2.3 | Alternatives and user environment written (§3 and §4 of the Vision Document); no new market audit | Brief, Part B | filled |
 | 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
+| 2.5 | Document control updated for the PA3 revision; clarified that the full product vision is broader than the current PA3 implementation, which focuses on FG-03, with registration/login supporting the room workflow and topic listing/filtering as extra scope | Make the revision status and current sprint boundary explicit; avoid implying that later product capabilities are implemented in PA3 | filled |
 
 ## 3. Repository layout (supporting change)
 Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
