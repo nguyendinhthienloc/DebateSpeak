@@ -10,11 +10,11 @@
 
 ## Team-wide AI use in PA3 (recorded 2026-11-14)
 
-The whole team uses AI for the same three kinds of work. Per-member entries below record the category only. Each member must confirm or correct their own row before submission, because the log must reflect the actual tools and prompts used.
+The whole team uses AI for the same three kinds of work. Per-member rows list the tools each member reported. Each member should still add the actual tasks and prompts used before submission.
 
 | Date | Member | Tool | Task | What AI did | What was changed by human | Notes |
 |---|---|---|---|---|---|---|
-| 2026-11-14 | Nguyễn Đình Thiên Lộc | Claude Code | Code review; Jira automation; document creation | Helped with code review, Jira automation and document drafting (member to detail) | Lộc set scope and reviewed changes | Member to confirm the list of tools and prompts |
-| 2026-11-14 | Nguyễn Bảo Minh Triết | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
-| 2026-11-14 | Nguyễn Hồng Tấn Tài | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
-| 2026-11-14 | Nguyễn Anh Khoa | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
+| 2026-11-14 | Nguyễn Đình Thiên Lộc | Claude, Antigravity | Code review; Jira automation; document creation | Helped with code review, Jira automation and document drafting (member to detail) | Lộc set scope and reviewed changes | Tools as reported by the member; prompts to be listed |
+| 2026-11-14 | Nguyễn Bảo Minh Triết | Codex | Code review; Jira automation; document creation | As reported by the member (to detail) | Member reviews own changes | Tool as reported; prompts to be listed |
+| 2026-11-14 | Nguyễn Hồng Tấn Tài | Codex | Code review; Jira automation; document creation | As reported by the member (to detail) | Member reviews own changes | Tool as reported; prompts to be listed |
+| 2026-11-14 | Nguyễn Anh Khoa | Copilot with Claude | Code review; Jira automation; document creation | As reported by the member (to detail) | Member reviews own changes | Tools as reported; prompts to be listed |
