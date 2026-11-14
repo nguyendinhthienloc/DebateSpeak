@@ -8,7 +8,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| A1 | Revised Project Plan (Markdown) | Tuấn | Lộc | Done: version 0.2 written 2026-11-14 (merged, PR #31 and #32 path). Reviewer sign-off pending | `docs/requirements/PROJECT_PLAN.md` |
+| A1 | Revised Project Plan (Markdown) | Tuấn | Lộc | Done: version 0.2 written 2026-11-14 (merged, PR #31). Reviewer sign-off pending | `docs/requirements/PROJECT_PLAN.md` |
 | A2 | Revised Project Plan (PDF) | Tuấn | Lộc | Done: rebuilt from 0.2 on 2026-11-14 | `docs/requirements/PROJECT_PLAN.pdf` |
 | A3 | `Changes.md` covers every revised document | Tuấn | Lộc | Done for plan and vision. Reviewer sign-off pending | `docs/pa3/Changes.md` |
 | A4 | Changes from TA feedback on PA2 | Tuấn | Lộc | None received as of 2026-11-10 | `docs/pa3/Changes.md` row 1.7 |
