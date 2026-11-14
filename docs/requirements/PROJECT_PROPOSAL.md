@@ -269,6 +269,6 @@ instruction. This is frontend delivery, not complete FG-01 acceptance.
 
 The [Spec Kit frontend baseline](../../specs/001-frontend-baseline/spec.md)
 records implemented account forms and room/profile previews retrospectively.
-Its [API handoff](../../specs/001-frontend-baseline/contracts/auth.md) is the short
+Its [API handoff](../../web/API_CONTRACT.md) is the short
 integration reference for the backend developer. Real account/email integration
 remains open; existing preview screens are not completed product increments.

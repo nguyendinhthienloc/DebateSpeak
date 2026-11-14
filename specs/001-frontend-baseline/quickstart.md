@@ -5,7 +5,7 @@ Use `npm run build`, `npm run lint` and `npm run test:e2e` for frontend checks.
 Playwright may need `npx playwright install chromium` on a new machine.
 
 Browser tests currently intercept account responses; passing them does not prove
-the backend works. Once the endpoints in [the contract](contracts/auth.md) exist:
+the backend works. Once the endpoints in [the contract](../../web/API_CONTRACT.md) exist:
 
 1. Set `VITE_API_BASE_URL` in the root `.env`, restart Vite and allow its origin in CORS.
 2. Register, then sign in; check the returned learner name and reload behavior.

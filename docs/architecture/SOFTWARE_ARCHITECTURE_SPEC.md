@@ -1377,7 +1377,7 @@ These frontend contracts do not establish server security or email delivery.
 
 The existing frontend is now recorded retrospectively in
 [specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
-plan, tasks and a [short human-readable API handoff](../../specs/001-frontend-baseline/contracts/auth.md).
+plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
 Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
 update these artifacts before code. Backend integration remains unfinished;
 this documentation does not change product behavior or complete FG-01.

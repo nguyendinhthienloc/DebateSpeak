@@ -23,7 +23,7 @@ are fixed Figma examples, not the output of a room service.
 
 ## Connect the auth API
 
-Use the [short backend handoff](../specs/001-frontend-baseline/contracts/auth.md)
+Use the [short backend handoff](API_CONTRACT.md)
 for all six endpoints, request/response examples, validation and errors.
 The [Spec Kit baseline](../specs/001-frontend-baseline/spec.md) records current
 scope; [tasks](../specs/001-frontend-baseline/tasks.md) distinguish completed

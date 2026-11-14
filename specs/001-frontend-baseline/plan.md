@@ -1,4 +1,4 @@
-﻿# Implementation Plan: Frontend baseline
+# Implementation Plan: Frontend baseline
 
 Date: 2026-11-14. [Specification](spec.md).
 Retrospective adoption of Spec Kit; no new product behavior in this documentation task.
@@ -6,7 +6,7 @@ Retrospective adoption of Spec Kit; no new product behavior in this documentatio
 ## Summary
 
 Keep the existing frontend and map its account journeys and previews to a single
-Spec Kit baseline. Keep the backend developer handoff in [contracts/auth.md](contracts/auth.md).
+Spec Kit baseline. Keep the backend developer handoff in [../../web/API_CONTRACT.md](../../web/API_CONTRACT.md).
 Future feature work updates its specification and contract before code changes.
 
 ## Technical Context

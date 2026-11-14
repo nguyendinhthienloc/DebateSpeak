@@ -31,8 +31,8 @@ Independent check: change room settings, explore sample lobbies, reload to reset
 
 ## Handoff and remaining integration
 
-- [x] T009 Publish the concise backend handoff in `specs/001-frontend-baseline/contracts/auth.md`; link from `web/README.md`.
-- [ ] T010 Confirm verification-required login behavior with the backend developer and record it in `specs/001-frontend-baseline/contracts/auth.md`.
+- [x] T009 Publish the concise backend handoff in `web/API_CONTRACT.md`; link from `web/README.md`.
+- [ ] T010 Confirm verification-required login behavior with the backend developer and record it in `web/API_CONTRACT.md`.
 - [ ] T011 Validate real backend/email integration using `specs/001-frontend-baseline/quickstart.md`; record results there.
 
 ## Order
