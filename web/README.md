@@ -1,9 +1,8 @@
 # DebateSpeak frontend
 
 Responsive frontend using the Cream & Yellow design system. Sign-up and
-sign-in are API-ready forms using the existing G1 contract. The API currently
-implements only `/health`: real account creation and login require a conforming
-backend. Profile, sign out, active sessions, account deletion and admin
+sign-in are API-ready forms using the existing G1 contract. The Spring Boot API
+(`api/authify`, branch `backend-tai`) implements these endpoints. Profile, sign out, active sessions, account deletion and admin
 suspension are API-ready too. Rooms, audio, transcription and AI remain previews.
 
 ## Run
@@ -103,9 +102,10 @@ code. Real email/password changes require the documented backend endpoints.
 
 The frontend now has screens for every FG-01 use case. What it cannot do yet:
 
-- **No backend.** `api/` only serves `/health`. Every account screen shows an
-  error until the endpoints in [API_INTEGRATION.md](API_INTEGRATION.md) exist.
-  All account tests mock the HTTP boundary; none prove real persistence,
+- **Backend not yet verified end to end.** The Spring Boot API implements every
+  endpoint in [API_INTEGRATION.md](API_INTEGRATION.md); run it with
+  [the 002 quickstart](../specs/002-fg01-accounts/quickstart.md). All account
+  tests mock the HTTP boundary; none prove real persistence,
   password hashing, JWT signing, email delivery or session revocation.
 - **Session restore depends on the refresh cookie.** Reload calls
   `/auth/refresh` once. Without a backend that sets the HttpOnly cookie, reload

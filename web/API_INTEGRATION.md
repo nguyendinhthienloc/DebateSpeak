@@ -1,7 +1,9 @@
 # FG-01 backend integration guide
 
-For the backend engineer implementing accounts in `api/`. The frontend already
-calls every endpoint below. Today `api/` only has `/health`, so all of them fail.
+For the backend engineer working on accounts. The frontend calls every endpoint
+below. The Spring Boot service `api/authify` (branch `backend-tai`) implements
+all of them with PostgreSQL; an end-to-end run is still pending
+([specs/002-fg01-accounts](../specs/002-fg01-accounts/tasks.md)).
 
 [API_CONTRACT.md](API_CONTRACT.md) covers the first six endpoints (register,
 login, verification and reset) and the shared field rules. This guide adds
@@ -17,36 +19,37 @@ what the frontend accepts is `src/auth/contracts.ts` and `src/auth/api.ts`.
   `Content-Type: application/json`.
 - CORS for a separate origin: allow the exact frontend origin (no `*`),
   credentials, methods `GET, POST, PATCH, DELETE`, and headers `Content-Type`,
-  `Authorization`, `X-DebateSpeak-Client`. The current `api/app/main.py`
-  combines `allow_origins=["*"]` with `allow_credentials=True`; replace that.
+  `Authorization`, `X-DebateSpeak-Client`. `SecurityConfig.java` allows
+  `http://localhost:5173` with credentials; add the deployed origin later.
 - The frontend times out after 15 seconds.
 
 ## 2. Integration map
 
 What has to be built, and where the frontend already calls it. "Status" is
 the backend status on 2026-11-14. Frontend paths are relative to `web/src/`.
-Backend paths follow the layout in §7; none of them exist yet.
+Backend paths follow the layout in §7. "Built" means compiled on
+`backend-tai`; tick it in `specs/002` tasks after the end-to-end run.
 
 ### Endpoints
 
 | # | Endpoint | Frontend function (`auth/api.ts`) | Called from (screen) | Backend file to create | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | `POST /auth/register` | `register()` | `pages/AccountPages.tsx` → `RegisterPage` (`#/register`) | `api/app/auth/router.py` | Missing |
-| 2 | `POST /auth/login` | `login()` | `pages/AccountPages.tsx` → `SignInPage` (`#/sign-in`) | `api/app/auth/router.py` | Missing |
-| 3 | `POST /auth/forgot-password` | `recoverAccount('forgot-password')` | `pages/RecoveryPage.tsx` (`#/forgot-password`) | `api/app/auth/router.py` | Missing |
-| 4 | `POST /auth/resend-verification` | `recoverAccount('resend-verification')` | `pages/RecoveryPage.tsx` (`#/verify-email`) | `api/app/auth/router.py` | Missing |
-| 5 | `POST /auth/verify-email` | `recoverAccount('verify-email')` | `pages/RecoveryPage.tsx` (`#/verify-email`) | `api/app/auth/router.py` | Missing |
-| 6 | `POST /auth/reset-password` | `recoverAccount('reset-password')` | `pages/RecoveryPage.tsx` (`#/reset-password`) | `api/app/auth/router.py` | Missing |
-| 7 | `POST /auth/refresh` | `refresh()` | `App.tsx` → `restoreOnce()` on page load, and the token-expiry handler | `api/app/auth/router.py` | Missing |
-| 8 | `POST /auth/logout` | `logout()` | `App.tsx` → `signOut()` (header, Profile, Sessions "Sign out here") | `api/app/auth/router.py` | Missing |
-| 9 | `GET /users/me` | `getProfile()` | `pages/AccountPages.tsx` → `SignedInProfile` (`#/profile`) | `api/app/users/router.py` | Missing |
-| 10 | `PATCH /users/me` | `updateProfile()` | `pages/AccountPages.tsx` → `SignedInProfile` (`#/profile`) | `api/app/users/router.py` | Missing |
-| 11 | `DELETE /users/me` | `deleteAccount()` | `pages/AccountSettingsPages.tsx` → `DeleteAccountPage` (`#/account/delete`) | `api/app/users/router.py` | Missing |
-| 12 | `GET /auth/sessions` | `listSessions()` | `pages/AccountSettingsPages.tsx` → `SessionsPage` (`#/account/sessions`) | `api/app/auth/router.py` | Missing |
-| 13 | `DELETE /auth/sessions/{id}` | `revokeSession()` | `pages/AccountSettingsPages.tsx` → `SessionsPage` (`#/account/sessions`) | `api/app/auth/router.py` | Missing |
-| 14 | `GET /admin/users?email=` | `findUser()` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/app/admin/router.py` | Missing |
-| 15 | `POST /admin/users/{id}/suspend` | `setSuspended(id, true, reason)` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/app/admin/router.py` | Missing |
-| 16 | `POST /admin/users/{id}/reactivate` | `setSuspended(id, false)` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/app/admin/router.py` | Missing |
+| 1 | `POST /auth/register` | `register()` | `pages/AccountPages.tsx` → `RegisterPage` (`#/register`) | `api/authify/.../controller/AuthController.java` | Built |
+| 2 | `POST /auth/login` | `login()` | `pages/AccountPages.tsx` → `SignInPage` (`#/sign-in`) | `api/authify/.../controller/AuthController.java` | Built |
+| 3 | `POST /auth/forgot-password` | `recoverAccount('forgot-password')` | `pages/RecoveryPage.tsx` (`#/forgot-password`) | `api/authify/.../controller/AuthController.java` | Built |
+| 4 | `POST /auth/resend-verification` | `recoverAccount('resend-verification')` | `pages/RecoveryPage.tsx` (`#/verify-email`) | `api/authify/.../controller/AuthController.java` | Built |
+| 5 | `POST /auth/verify-email` | `recoverAccount('verify-email')` | `pages/RecoveryPage.tsx` (`#/verify-email`) | `api/authify/.../controller/AuthController.java` | Built |
+| 6 | `POST /auth/reset-password` | `recoverAccount('reset-password')` | `pages/RecoveryPage.tsx` (`#/reset-password`) | `api/authify/.../controller/AuthController.java` | Built |
+| 7 | `POST /auth/refresh` | `refresh()` | `App.tsx` → `restoreOnce()` on page load, and the token-expiry handler | `api/authify/.../controller/AuthController.java` | Built |
+| 8 | `POST /auth/logout` | `logout()` | `App.tsx` → `signOut()` (header, Profile, Sessions "Sign out here") | `api/authify/.../controller/AuthController.java` | Built |
+| 9 | `GET /users/me` | `getProfile()` | `pages/AccountPages.tsx` → `SignedInProfile` (`#/profile`) | `api/authify/.../controller/AuthController.java` | Built |
+| 10 | `PATCH /users/me` | `updateProfile()` | `pages/AccountPages.tsx` → `SignedInProfile` (`#/profile`) | `api/authify/.../controller/AuthController.java` | Built |
+| 11 | `DELETE /users/me` | `deleteAccount()` | `pages/AccountSettingsPages.tsx` → `DeleteAccountPage` (`#/account/delete`) | `api/authify/.../controller/AuthController.java` | Built |
+| 12 | `GET /auth/sessions` | `listSessions()` | `pages/AccountSettingsPages.tsx` → `SessionsPage` (`#/account/sessions`) | `api/authify/.../controller/AuthController.java` | Built |
+| 13 | `DELETE /auth/sessions/{id}` | `revokeSession()` | `pages/AccountSettingsPages.tsx` → `SessionsPage` (`#/account/sessions`) | `api/authify/.../controller/AuthController.java` | Built |
+| 14 | `GET /admin/users?email=` | `findUser()` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/authify/.../controller/AuthController.java` | Built |
+| 15 | `POST /admin/users/{id}/suspend` | `setSuspended(id, true, reason)` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/authify/.../controller/AuthController.java` | Built |
+| 16 | `POST /admin/users/{id}/reactivate` | `setSuspended(id, false)` | `pages/AdminPage.tsx` → `AdminUsersPage` (`#/admin/users`) | `api/authify/.../controller/AuthController.java` | Built |
 
 Response shapes the frontend validates are the type guards in
 `auth/contracts.ts`: `isUserResponse`, `isTokenResponse`, `isProfileResponse`,
@@ -57,28 +60,25 @@ Response shapes the frontend validates are the type guards in
 
 | Piece | Used by | Backend path | Status |
 | --- | --- | --- | --- |
-| Mount routers under `settings.API_V1_PREFIX` (`/api/v1`) | all | `api/app/main.py` | Only `/health` is mounted |
-| CORS: exact frontend origin (`FRONTEND_URL`), credentials on | all | `api/app/main.py` | Wrong: uses `*` with credentials |
-| `get_current_user` (Bearer JWT → user, rejects suspended/deleted) | #9–16 | `api/app/auth/deps.py` | Missing |
-| `require_admin` | #14–16 | `api/app/auth/deps.py` | Missing |
-| Client-header and Origin check for cookie endpoints | #7, #8, #12 | `api/app/auth/deps.py` | Missing |
-| Argon2id hashing, JWT signing, refresh rotation, code hashing | #1–8 | `api/app/auth/service.py` | Missing |
-| Email sending for codes | #3, #4 | adapter under `api/app/adapters/` | Missing |
-| Rate limiting (Redis) | #1–6, #11 | `api/app/auth/service.py` or middleware | Missing |
-| Hard-delete job after 7 days (ARQ) | #11 | worker task | Missing |
-| Models and Alembic migrations (§6) | all | `api/app/models/`, `api/alembic/` | Missing (only `alembic.ini`) |
+| Routes under `/api/v1` | all | `controller/AuthController.java` | Built |
+| CORS: exact frontend origin, credentials on | all | `config/SecurityConfig.java` | Built (localhost:5173) |
+| Bearer JWT → user, rejects suspended/deleted | #9–16 | `service/AuthService.java`, `JwtService.java` | Built |
+| Admin role check; no self-suspension | #14–16 | `service/AuthService.java` | Built |
+| Client-header check on `/api/v1/auth/*` | #1–8, #12 | `config/SecurityConfig.java` | Built |
+| Password and code hashing, JWT, refresh rotation | #1–8 | `service/AuthService.java` | Built with BCrypt (architecture says Argon2id; open) |
+| Email sending for codes | #3, #4 | `service/EmailService.java` | Built; SMTP credentials must come from env |
+| Rate limiting | #1–6, #11 | — | Missing |
+| Hard-delete job after 7 days | #11 | — | Missing (soft delete only) |
+| Tables `users`, `auth_sessions`, `auth_codes`, `account_suspensions` | all | `entity/`, `repository/` | Built; created by Hibernate, no migrations |
 
 ### Configuration
 
 | Variable | Where | Note |
 | --- | --- | --- |
 | `VITE_API_BASE_URL` | repo-root `.env`, read by `web/` | e.g. `http://localhost:8000/api/v1`. Restart Vite after changing it. |
-| `FRONTEND_URL` | repo-root `.env`, for the API's CORS | The exact web origin, e.g. `http://localhost:5173`. Not read by `config.py` yet. |
-| JWT secret | `api/app/config.py` reads `SECRET_KEY`; `.env.example` names it `JWT_SECRET` | **Mismatch.** Pick one name. Also remove the hardcoded default secret in `config.py` so a missing value fails at startup. |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | `config.py` default 15, `.env.example` 30 | **Mismatch.** Architecture says 15. The frontend just uses `expires_in`. |
-| `REFRESH_TOKEN_EXPIRE_DAYS` | both: 7 | Refresh cookie lifetime. |
-| `DATABASE_URL`, `REDIS_URL` | both | Already defined. |
-| Email provider settings | not defined | Add placeholders to `.env.example` when the email adapter is chosen. |
+| `DATABASE_URL`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` | API environment | JDBC URL, e.g. `jdbc:postgresql://localhost:5432/debatespeak` to match `docker-compose.yml`. |
+| `APP_JWT_SECRET`, `APP_JWT_EXPIRATION_SECONDS` | API environment | Must not be committed. Architecture says 15-minute access tokens. |
+| `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` | API environment | SMTP sender for codes. Must not be committed. |
 
 ## 3. Tokens and sessions
 
@@ -191,7 +191,7 @@ The User object plus:
 
 Use the shapes in API_CONTRACT.md: `422` with
 `{"code":"validation_error","errors":[{"field":"goals","message":"..."}]}` (or
-standard FastAPI `detail[].loc`). Field names the UI maps: `email`, `password`,
+a `detail[].loc` list). Field names the UI maps: `email`, `password`,
 `display_name`, `cefr_level`, `code`, `native_language`, `goals`, `reason`.
 The UI never shows server message text, only its own copy.
 
@@ -204,7 +204,7 @@ Special bodies the UI reads:
 
 ## 5. Required server behaviour
 
-- **Passwords:** Argon2id. 12–128 Unicode characters, spaces kept.
+- **Passwords:** Argon2id per architecture (the PA3 build uses BCrypt). 12–128 Unicode characters, spaces kept.
 - **Code requests** (`forgot-password`, `resend-verification`) return the same
   202 for known and unknown emails. Never reveal account existence.
 - **Password reset** revokes every refresh family for that user.
@@ -212,7 +212,7 @@ Special bodies the UI reads:
   same `Path`).
 - **Delete account:** verify the password, set `users.deleted_at`, revoke all
   families, return 202. Hard-delete the user and all transcripts, analyses and
-  reports within 7 days (FR-04, e.g. an ARQ job). Deleted users cannot log in.
+  reports within 7 days (FR-04, a scheduled job; not built yet). Deleted users cannot log in.
 - **Suspend:** check `role = ADMIN` on the server (never trust the frontend),
   set `is_suspended`, revoke all families, write an audit row (admin id, target
   id, reason, time). Login then returns 403 `account_suspended`; refresh
@@ -220,41 +220,40 @@ Special bodies the UI reads:
 - **Reactivate:** clear `is_suspended`, audit it. No sessions are restored.
 - **Rate limits (429):** login, register, code requests, reset, verify and
   delete account.
-- **Secrets:** JWT secret and database URL come from `.env`; add placeholders to
-  `.env.example` only.
+- **Secrets:** JWT secret, mail credentials and database password come from
+  environment variables; add placeholders to `.env.example` only.
 
-## 6. Data model changes
+## 6. Data model
 
-Existing in the architecture spec (§13): `users`, `user_profiles`,
-`auth_refresh_tokens`. Still needed:
+| Table | Columns |
+| --- | --- |
+| `users` | id, email, password_hash, display_name, cefr_level, role, email_verified, is_suspended, native_language, goals, created_at, deleted_at |
+| `auth_sessions` | family_id, user_id, current_token, previous_token, rotated_at, device, created_at, last_used_at, expires_at, revoked |
+| `auth_codes` | id, email, purpose (`verify` or `reset`), code_hash, expires_at, consumed_at |
+| `account_suspensions` | id, user_id, admin_id, reason, created_at, lifted_at |
 
-- A way to list sessions with `device` and `last_used_at`. Either add those
-  columns for the family (simplest: an `auth_sessions` table keyed by
-  `family_id`), or store them on the family's first token row.
-- `account_suspensions (id, user_id, admin_id, reason, created_at, lifted_at)`
-  for the audit trail.
-- Email verification and reset codes: store only hashes, with expiry, purpose
-  (`verify` or `reset`) and `consumed_at`. A verification code must never
-  pass as a reset code.
+A verification code must never pass as a reset code.
 
-## 7. Suggested FastAPI layout
-
-Matches AGENTS.md (FastAPI, SQLAlchemy 2 async, Alembic):
+## 7. Spring Boot layout
 
 ```text
-api/app/auth/router.py      /auth/* (register, login, refresh, logout, codes, sessions)
-api/app/auth/service.py     hashing, JWT, refresh rotation, codes
-api/app/auth/deps.py        get_current_user, require_admin
-api/app/users/router.py     /users/me GET, PATCH, DELETE
-api/app/admin/router.py     /admin/users ...
-api/app/models/             SQLAlchemy models; migrations in api/alembic/
+api/authify/src/main/java/org/debatespeak/authify/
+  controller/AuthController.java   every /api/v1 route
+  service/AuthService.java         accounts, sessions, codes, admin
+  service/JwtService.java          access tokens
+  service/EmailService.java        code emails
+  entity/, repository/             JPA entities and Spring Data repositories
+  dto/                             request and response records
+  exception/                       error bodies (422, 403 account_suspended)
+  config/SecurityConfig.java       CORS, client header, BCrypt
 ```
 
-Mount every router under `/api/v1` in `api/app/main.py`.
+Run it with `.\mvnw spring-boot:run` from `api/authify` (JDK 21); see
+[specs/002 quickstart](../specs/002-fg01-accounts/quickstart.md).
 
 ## 8. Checking your backend against the frontend
 
-1. Start the API, set `VITE_API_BASE_URL=http://localhost:8000/api/v1` in the
+1. Start the database and API (002 quickstart), set `VITE_API_BASE_URL=http://localhost:8000/api/v1` in the
    repo-root `.env`, and run `npm run dev` in `web/`.
 2. Walk through: register → verify email → sign in → reload (still signed in)
    → Account → edit and save profile → Active sessions (sign in in a second

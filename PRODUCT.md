@@ -56,7 +56,7 @@ Reports combine speaker-linked quotes, language metrics, argument findings, sele
 
 ### Engineering and human safeguards
 
-- Preserve Vite + React + TypeScript + Tailwind CSS SPA architecture; no SSR. Backend requirements are Python 3.11+ FastAPI, SQLAlchemy 2 async ORM, Alembic, PostgreSQL 16, Redis 7, and ARQ.
+- Preserve Vite + React + TypeScript + Tailwind CSS SPA architecture; no SSR. The backend API is Java 21 Spring Boot (decided 2026-11-14) with PostgreSQL 16; AI workers stay in Python with Redis 7 and ARQ.
 - Use LiveKit Cloud for independent speaker audio tracks and vendor-independent `STTAdapter`, `LLMAdapter`, and `SearchAdapter` boundaries. Heavy analysis stays outside the audio-critical path.
 - No remote audio streaming or transcription before explicit, uncoerced consent from both debaters. A later local microphone test requires an explicit action and browser permission, with no upload, storage, or transcription before dual consent. Build 1 does not capture microphones at all.
 - Declining consent must not block ordinary account use. Either participant can end a live session. Preserve dignity and avoid cognitive overload or disruptive correction during speech.

@@ -1,5 +1,5 @@
 # DebateSpeak AI — Project Plan
-Performed: pending owner verification, Trần Lê Anh Tuấn (24125107). Reviewed: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14, as assigned in `docs/pa3/Changes.md`. Edited: PA3 revision of version 0.1; human verification pending.
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14, as assigned in `docs/pa3/Changes.md`. Edited: Trần Lê Anh Tuấn (24125107), PA3 revision of version 0.1; Nguyễn Bảo Minh Triết (24125047), 2026-11-14 (Part E scope).
 
 | Document control | Value |
 |---|---|
@@ -14,13 +14,16 @@ Performed: pending owner verification, Trần Lê Anh Tuấn (24125107). Reviewe
 Status words in this plan mean what the repository shows on 2026-11-14. A task is Done only when its work is merged and verified. Jira status is not used as evidence, because earlier Jira and review statements were found to be wrong (section 3.2, R-05).
 
 ## 1. Introduction and purpose
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 DebateSpeak AI is a browser application where two English learners practice spontaneous speaking through a live spoken debate. It combines topic selection, controlled room participation, speaker-attributed transcription and evidence-grounded learning feedback. The audience is learners at self-assessed CEFR levels A2 to C1.
 
 This plan tells the team and the reviewers how the work of PA3 (Sprint 3) is organized, what was delivered, what was not, and how the remaining sprints are planned. Version 0.2 replaces the PA2 draft. It states the PA3 position honestly: the use-case documents are done, and the graded FG-03 end-to-end slice is not.
 
 ## 2. Project Overview
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ### 2.1 Goals and acceptance targets
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 These are targets from the architecture, Vision and G1 contract, not measured results.
 
 | Goal | Observable target | Verification / planned milestone |
@@ -32,13 +35,14 @@ These are targets from the architecture, Vision and G1 contract, not measured re
 | P5 — Protect participation and data | No streaming or transcription before both participants consent (FR-13); no raw audio stored by default (NFR-09); unauthorized access rejected | Negative authorization and consent tests; Builds 3 and 4 |
 
 ### 2.2 Scope and boundaries
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 The product vision (`docs/requirements/VISION_DOCUMENT.md`, version 0.2) covers ten functional groups: accounts and profiles (FG-01), topics (FG-02), room and session management (FG-03), live audio (FG-04), transcription and attribution (FG-05), English analysis (FG-06), argument analysis (FG-07), fact checking (FG-08), evaluation and consensus (FG-09), and history and reports (FG-10). The vision is the product scope. PA3 is one slice of it.
 
 | Stage | Scope | State on 2026-11-14 |
 |---|---|---|
 | PA2 / Sprint 2 | Documents only: plan, vision, Spec Kit init, AI and weekly report | Done and submitted |
 | Build 1 / Sprint 3 | What FG-03 needs: migrations and seed, register and login, create and join a room, `LOBBY` to `READY`, lobby UI | Not integrated: not on `pa3` (section 4.4) |
-| Build 2 / Sprint 3 | FG-03 end to end (UI to API to database), topic selection, synchronized start boundary, Spec Kit, narrated video | Not done |
+| Build 2 / Sprint 3 | FG-03 end to end (UI to API to database), topic selection, synchronized start boundary, Spec Kit, narrated video | Not done; moved to PA4 (Part E is FG-01) |
 | Build 3 / Sprint 4 | FG-04 and FG-05: consent-gated LiveKit audio and streaming STT | Not started; later build |
 | Build 4 / Sprint 5 | FG-06 to FG-10, hardening, final demo | Not started; later build |
 
@@ -47,6 +51,7 @@ FG-03 is the graded PA3 function. FG-01 (register and login) supports it. FG-02 
 Out of the MVP: native mobile apps, video and audience rooms, automated partner matching, payments, tournaments and rankings, teacher dashboards, phoneme-level diagnosis, large judge panels, model training and multi-region infrastructure.
 
 ### 2.3 Deliverables
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST.md` (as of 2026-11-14) and `docs/pa3/MEETINGS/SPRINT_REVIEW.md`.
 
 | Part | Points | Deliverable | Owner | Status on 2026-11-14 |
@@ -55,12 +60,13 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 | B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off by Lộc, 2026-11-14 |
 | C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off by Lộc, 2026-11-14 |
 | D | 45 | 54 use-case specifications, 201 alternative outcomes, 116 prototype screenshots | Triết, Tuấn | Done (`docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf`, `docs/pa3/prototypes/`); reviewer sign-off and spot check pending |
-| E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Partial, not verified: register and login UI and Java auth code on `pa3`; no database migrations, no FG-01 E2E test, no FG-01 spec |
+| E | 20 | FG-01 end to end with Spec Kit, E2E test, narrated YouTube video (changed from FG-03 on 2026-11-14) | Tài, Triết; Khoa (E2E); Lộc (video) | Partial: FG-01 frontend merged with browser tests; Spring Boot + PostgreSQL backend for all FG-01 endpoints on `backend-tai`, end-to-end run pending; Spec Kit `specs/001` and `specs/002` |
 | F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log records tools per member (PR #41), tasks and prompts still to be added; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
 
-Part E is the largest gap. The checklist rows E1, E3 (video verified) and E4 are Not met or Missing, and E2 is partial (frontend baseline spec only, no FG-03 spec). The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
+Part E is the largest gap. On 2026-11-14 the team moved Part E from FG-03 to FG-01, because FG-03 has no room API while FG-01 has a frontend and a backend. Checklist rows E1, E3 and E4 still need an end-to-end run against the real API and a matching video; E2 is covered by `specs/001-frontend-baseline` and `specs/002-fg01-accounts`. The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
 
 ### 2.4 Assumptions and dependencies
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Assumption | Verification owner | If false |
 |---|---|---|
@@ -71,8 +77,10 @@ Part E is the largest gap. The checklist rows E1, E3 (video verified) and E4 are
 | No paid-service expenditure is authorized | Lộc | Confirm a budget before cost tests |
 
 ## 3. Project Organization
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ### 3.1 Team structure and responsibilities
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 All five members design, code, test and document. The roles follow `AGENTS.md`.
 
 | Member | Student ID | Official team role | PA3 responsibility |
@@ -86,6 +94,7 @@ All five members design, code, test and document. The roles follow `AGENTS.md`.
 Each actionable ticket has one assignee and one reviewer. A merged PR counts as reviewed under the team's rule; review sign-offs listed as pending above are not recorded approvals.
 
 ### 3.2 Risk register
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Likelihood and impact are qualitative planning estimates. Owners must confirm their rows.
 
 | ID | Risk | Likelihood / impact | Mitigation and response | Owner | Trigger |
@@ -93,7 +102,7 @@ Likelihood and impact are qualitative planning estimates. Owners must confirm th
 | R-01 | FG-03 integration gap: migrations, auth API and room API are not on `pa3`; the frontend scaffold lives on `feature/UI-scaffold`, so frontend and backend never met. Already happened | High / High | Merge SCRUM-41, then 24, 26; merge the scaffold into `pa3`; wire UI to API; run Khoa's E2E; cut extras first. Integrate in small steps and record results | Tài with Triết | Any FG-03 PR not merged at the next check-in |
 | R-02 | Single owner dependency: SCRUM-41, 24, 26 and 38 are all assigned to Tài, so a delay in the first blocks the rest | High / High | Split the chain; assign a second implementer or pair for the room API and FG-03 backend; Tuấn's state machine is a ready input | Team, decided at the next planning meeting | A task in the chain stays open past its date |
 | R-03 | Stale Jira status: Jira and repository docs disagree (for example SCRUM-28 shows "merged" in the Sprint Review but "local, review pending" in Tuấn's TODO) | High / Medium | Reconcile Jira, PR state and docs together before submission; treat the repository as evidence | Lộc with each owner | Mismatch found at any review |
-| R-04 | Time: the deadline (Fri 2026-11-13) has passed; the buffer ends 2026-11-15 | High / High | Prioritize FG-03 and the missing Part E evidence over extras (SCRUM-44 to 48); report the real state if it cannot be finished. The merged Java auth (PR #53) has no build file, so it cannot be counted as working until it builds and is tested | Team | Part E items still open on 11-15 |
+| R-04 | Time: the deadline (Fri 2026-11-13) has passed; the buffer ends 2026-11-15 | High / High | Deliver Part E as FG-01 (frontend merged, backend on `backend-tai`) and move FG-03 to PA4; report the real state if it cannot be finished. The backend counts as working only once its sources and build file are committed and it runs end to end | Team | Part E items still open on 11-15 |
 | R-05 | False status claims in earlier reviews: the first Sprint Review said FG-03 was done without checking the repository | Medium / High | Every status in this plan cites a repository artifact; the Sprint Review is rewritten from merged and verified work | Khoa, Lộc | A statement without a linked artifact |
 | R-06 | CI job for migrations and seed (SCRUM-43, PR #17) is merged but skips until SCRUM-41 lands, so it has not run against a real database | Medium / Medium | Treat it as unverified; run it after SCRUM-41 merges | Lộc | SCRUM-41 merged but job still skipped |
 | R-07 | Missing evidence in the zip: FG-03 spec, per-member Spec Kit entries, video check, E2E result, PDFs | High / High | Check the submission list in section 4.9 item by item before packaging | Lộc | Package build finds a missing file |
@@ -102,16 +111,20 @@ Likelihood and impact are qualitative planning estimates. Owners must confirm th
 Cut optional work (rankings, video, extra panels, FG-02 and stretch spikes) before cutting a Must requirement. If a Must requirement is at risk, tell the TA instead of relabeling a partial feature complete.
 
 ### 3.3 Lessons incorporated
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 From the PA1 lessons and the PA3 Sprint Review: agree interface contracts before parallel work; integrate and test small increments through the sprint; update Jira when work changes; plan demo preparation before the last days; do not put documents ahead of the graded slice. These are lessons recorded in the repository, not a new retrospective.
 
 ## 4. Project Plan
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ### 4.1 Scrum process and communication
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Scrum with sprint planning, at least two documented check-ins, a Sprint Review and a Retrospective. Messenger carries daily coordination, Google Meet carries meetings, GitHub PRs carry technical review, and Jira carries assignment and progress. Response times follow `docs/management/TEAM_CONTRACT.md`. Unfinished work is re-planned and reported, not marked Done.
 
 Meeting evidence for PA3: weekly reports for 05/11/2026 and 10/11/2026 (`docs/pa3/WEEKLY_REPORT.md`) and the notes in `docs/pa3/MEETINGS/`. `SPRINT_PLANNING.md` in that folder currently describes PA4, and `SPRINT_REVIEW.md` is dated 2026-11-10 and awaits its 2026-11-13 update. These need correction before submission.
 
 ### 4.2 Five-sprint schedule
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 From `docs/ROADMAP.md`. Weeks are relative roadmap labels.
 
 | Sprint / PA | Weeks | Goal | Verification milestone |
@@ -123,6 +136,7 @@ From `docs/ROADMAP.md`. Weeks are relative roadmap labels.
 | 5 / PA5 | 9–10 | Analysis, reports, testing, hardening, final demo | Build 4 and 15-minute live demo (planned) |
 
 ### 4.3 Sprint 3 (PA3) schedule
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Real dates from `docs/pa3/README.md` and `docs/pa3/CHECKLIST.md`.
 
 | Date | Event | Outcome |
@@ -140,6 +154,7 @@ Real dates from `docs/pa3/README.md` and `docs/pa3/CHECKLIST.md`.
 The deadline has passed. As of 2026-11-14 the following are still open: FG-03 implementation (E1; Tài's Java auth backend is merged via PR #53 but has no build file or tests and is unverified; no room API), the FG-03 Spec Kit spec (E2; `specs/001-frontend-baseline/` is merged via PR #45), the team check of the uploaded video (E3, SCRUM-39; https://youtu.be/wJxqi3J0phE, PR #47, visibility and content not checked), the E2E test (E4, SCRUM-38), per-member Spec Kit entries, a corrected weekly report, the tasks and prompts in the AI log (tools are recorded per member, PR #41), the meeting PDFs, rebuilt PDFs of the plan and vision, reviewer sign-offs for Parts C and D, the zip, the Git log export and the `pa3` to `dev` merge. Whether the buffer can cover them is not verified; what can be finished before the actual cutoff is an open decision (section 4.10).
 
 ### 4.4 Build 1 and Build 2 scope for FG-03
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Build 1 was shrunk to what FG-03 needs. Source: `docs/pa3/Changes.md` section 1 (rows 1.1, 1.4, 1.5).
 
 | Kept in Build 1 | Cut from Build 1 |
@@ -151,13 +166,14 @@ Build 1 was shrunk to what FG-03 needs. Source: `docs/pa3/Changes.md` section 1 
 
 Build 1 Jira keys: SCRUM-24 auth, SCRUM-25 frontend, SCRUM-26 room API, SCRUM-27 lobby UI, SCRUM-28 state machine; SCRUM-29 and SCRUM-30 folded into FG-03; new SCRUM-41 database and seed, SCRUM-42 Docker database.
 
-Build 2 is FG-03 end to end: topic selection, ready screen and a synchronized debate start, with UI to API to database connected, a Spec Kit trail and a narrated video. The start must not begin audio or transcription, because those are Build 3 and need dual consent (FR-13). The exact boundary of the start action is open decision D3.
+Build 2 is FG-03 end to end: topic selection, ready screen and a synchronized debate start, with UI to API to database connected, a Spec Kit trail and a narrated video. The start must not begin audio or transcription, because those are Build 3 and need dual consent (FR-13). The exact boundary of the start action is open decision D3. On 2026-11-14 Build 2 moved to PA4; PA3 Part E is FG-01 instead (Changes.md row 1.12).
 
 Extra preparation (stretch, cut first): FG-02 topic API (SCRUM-44), LiveKit token spike (SCRUM-45), `STTAdapter` (SCRUM-46), `LLMAdapter` and grounding guard (SCRUM-47), microphone setup spike (SCRUM-48), CI migrate and seed (SCRUM-43).
 
 Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room), FR-11 (join, capacity two), FR-12 (state graph and server-side validation); FR-13 to FR-15 belong to the later session part of FG-03. Contracts for Build 1 are in `docs/architecture/G1_SPEC_BUILD1.md`.
 
 ### 4.5 Work breakdown and status on 2026-11-14
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 "Not verified" means the repository sources disagree or give no evidence.
 
 | Jira | Work | Owner | Reviewer | Status |
@@ -170,7 +186,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-26 | Room API | Tài | not verified | Open; not on `pa3` |
 | SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); SCRUM-27 mapping verified by the team on 2026-11-14 and not connected to a room API |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
-| SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | To Do; not met |
+| SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | Moved to PA4; Part E delivered as FG-01 instead |
 | SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
 | SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | Revised 0.2; reviewed by Lộc, 2026-11-14 |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
@@ -182,9 +198,10 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-49 to 52 | UI refinement packages (Tuấn, Tài, Khoa, Lộc) | as named | as named | SCRUM-49 account UI merged (PR #39, Tuấn); SCRUM-50 entry pages extracted and dead code removed (PR #44, Tài), partly done: shell and recovery pages not done; SCRUM-51 narrow preview summary and SCRUM-49 type/spacing roles merged (PR #46); SCRUM-52 lobby merged (PR #28); browser tests not run on the build machine (Chromium does not launch) |
 | none | `PA3-Group[GroupId]` zip, Git log, `pa3` to `dev` merge | Lộc | n/a | Missing; local `PA3-Group2/` is partial |
 
-SCRUM-49 to 52 are UI refinement work added outside the graded FG-03 path. They do not replace FG-03.
+SCRUM-49 to 52 are UI refinement work. The graded Part E path is now FG-01 (`specs/002-fg01-accounts`).
 
 ### 4.6 Sprint 4 and Sprint 5 outline
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Planned from `docs/ROADMAP.md`. Planned, not committed: detailed tasks, owners and dates are fixed at each sprint's planning meeting.
 
 | Sprint | Planned scope |
@@ -195,6 +212,7 @@ Planned from `docs/ROADMAP.md`. Planned, not committed: detailed tasks, owners a
 The Sprint Review actions for PA4 apply: agree audio and STT interfaces before implementation, integrate regularly and record results, keep documents aligned with delivered work, and reserve time for demo and evidence.
 
 ### 4.7 Quality and verification approach
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 - A feature counts as done only when merged into `pa3` through a reviewed PR and shown working. No claim without evidence: a PR number, test output, a screenshot or a video.
 - Tests: pytest for the state machine and room rules; PostgreSQL integration tests for room capacity and transitions; Playwright for the FG-03 browser journey (register, create, join, `READY`, third user gets 409); web checks from `web/`: `npm run build`, `npm run lint`, `npm run test:e2e`.
 - CI is the GitHub Actions workflow in `.github/workflows/ci.yml`. The migrate and seed job is unverified until SCRUM-41 lands (R-06).
@@ -203,9 +221,11 @@ The Sprint Review actions for PA4 apply: agree audio and STT interfaces before i
 - No application test or benchmark result is reported in this plan. None was run while writing it.
 
 ### 4.8 Jira, source control and progress evidence
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Jira project `SCRUM` is the task system. Branches are `feature/SCRUM-<nn>-<short-name>` (bug fixes `bugfix/...`) from `pa3`. PRs go into `pa3`, never into `dev` or `main`, and each needs a reviewer. Lộc merges `pa3` into `dev` once, at the end of the sprint. No one commits code directly to `pa3`. Jira status and PR state are different observations and are reconciled together (R-03). The Jira screenshots are `docs/pa3/jira-1.png` and `jira-2.png`; live Jira was not read for this version.
 
 ### 4.9 Submission package and checklist
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 The shared status list is `docs/pa3/CHECKLIST.md`. The package `PA3-Group[GroupId].zip` must hold:
 
 | # | Item | Owner | Status |
@@ -221,6 +241,7 @@ The shared status list is `docs/pa3/CHECKLIST.md`. The package `PA3-Group[GroupI
 PDFs come from `python report/pdf/build.py <file.md>` (Pandoc, Mermaid, `latexmk`). The rebuild of this plan's PDF is a separate step after this draft is reviewed.
 
 ### 4.10 Open decisions for the team
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Item | Decision needed | Follow-up |
 |---|---|---|
@@ -233,6 +254,7 @@ PDFs come from `python report/pdf/build.py <file.md>` (Pandoc, Mermaid, `latexmk
 | D7 — Status reconciliation | SCRUM-28 and SCRUM-47 merge and review state; Jira against the repository | Lộc, Tuấn |
 
 ## 5. References and evidence baseline
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Paths are repository-relative. No application tests were run and live Jira was not read when writing this version.
 
 | Ref. | Source | Use |
@@ -248,9 +270,11 @@ Paths are repository-relative. No application tests were run and live Jira was n
 | S9 | `AGENTS.md` | Official roles and engineering rules |
 
 ## 6. AI assistance declaration
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 This revision was drafted with AI assistance from the repository sources listed in section 5, at the request of the lead while the owner was not present. The owner has not yet read or verified it. The owner must check every status and date against the repository, and record the AI use in `docs/pa3/AI_USAGE_LOG.md`. No Jira, commit, push or PR action was performed as part of this writing task.
 
 ## 7. Revision record
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Version | Date | Change |
 |---|---|---|

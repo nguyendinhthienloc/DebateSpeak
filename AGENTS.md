@@ -141,5 +141,5 @@ All documentation, task cards, and Git contributions must strictly attribute the
 1. **One checklist, one owner.** Only the owner edits the sprint checklist.
 2. **Checklist format.** One row per file: file path, owner, and completeness (missing, draft, or complete). Nothing else.
 3. **The submission folder is built only after the freeze.** The freeze happens when every checklist row is complete. Before that, no folder is built or renamed.
-4. **Folder name.** After the freeze, the folder is named `Group<ID>-PA<n>`, for example `Group02-PA4`.
+4. **Folder name.** After the freeze, the folder is named `PA<n>-Group<ID>`, for example `PA3-Group02`, as the assignment requires.
 

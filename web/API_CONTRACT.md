@@ -1,7 +1,8 @@
 # Auth API contract
 
 This is the backend handoff for the existing account screens. The frontend is
-connected to the endpoints below, but the backend currently only has `/health`.
+connected to the endpoints below; the Spring Boot service `api/authify`
+(branch `backend-tai`) implements them.
 
 ## Connect
 
@@ -75,7 +76,7 @@ Login response example. For registration, return only the object inside `user`:
 | 429 | Too many attempts |
 | 5xx | Service failure |
 
-Example 422 response (standard FastAPI validation errors also work):
+Example 422 response (a `detail[].loc` list also works):
 
 ```json
 {

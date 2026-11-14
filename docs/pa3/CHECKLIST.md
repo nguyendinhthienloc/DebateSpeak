@@ -35,14 +35,16 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | D2 | Prototype screenshots (116) | Triết | Triết | Done | `docs/pa3/prototypes/screenshots/` |
 | D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Done: reviewed by Triết, 2026-11-14. Lộc's assigned review of the specifications is still pending | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/prototypes/README.md` |
 
-## Part E: FG-03 End to End with Spec Kit (20 pts)
+## Part E: FG-01 End to End with Spec Kit (20 pts)
+
+Part E changed from FG-03 to FG-01 on 2026-11-14: FG-03 has no room API, while FG-01 has a frontend (`web/`) and a Spring Boot + PostgreSQL backend (`backend-tai`). See `docs/pa3/Changes.md` row 1.12.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| E1 | FG-03 implemented end to end (frontend, backend, database) | Tài, Triết | Lộc | **Open, code only**: Tài and Triết are writing the code today, to go in `04-fg03-implementation/source/` | — |
-| E2 | Spec Kit artifacts for FG-03 (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Open, code only**: Tài and Triết produce these with the code. Spec Kit baseline `specs/001-frontend-baseline/` is merged | `specs/001-frontend-baseline/` |
-| E3 | Narrated demo video on YouTube (unlisted or public), link added, showing the Part E group | Tài | Lộc | Uploaded: `https://youtu.be/wJxqi3J0phE`. **Must be checked**: the video must show the Part E group. Team has not confirmed its content | `https://youtu.be/wJxqi3J0phE` |
-| E4 | E2E test for FG-03 | Khoa | Lộc | **Open, code only**: depends on the FG-03 build | — |
+| E1 | FG-01 implemented end to end (frontend, backend, database) | Tài, Triết | Lộc | **Verify**: frontend for UC-01-01 to 08 merged with browser tests; backend (16 endpoints, 4 tables) on `backend-tai`; committing its sources and an end-to-end run are pending | `web/`, `api/authify/`, `specs/002-fg01-accounts/quickstart.md` |
+| E2 | Spec Kit artifacts for FG-01 (`specs/`, plans, tasks) | Tài, Triết | Lộc | Written: frontend `001`, backend and database `002` (spec, plan, tasks, quickstart) | `specs/001-frontend-baseline/`, `specs/002-fg01-accounts/` |
+| E3 | Narrated demo video on YouTube (unlisted or public), link added, showing FG-01 | Tài | Lộc | Uploaded: `https://youtu.be/wJxqi3J0phE`. **Must be checked**: it must show FG-01 working against the real backend (`specs/002-fg01-accounts/spec.md` SC-003); re-record if it shows FG-03 previews | `https://youtu.be/wJxqi3J0phE` |
+| E4 | E2E test for FG-01 | Khoa | Lộc | Browser tests with a mocked HTTP boundary pass (`web/tests/auth.spec.ts`, `account-management.spec.ts`); a run against the real API is open | `web/tests/` |
 | E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine; cross-browser not done | PR #28 |
 
 ## Part F: AI Usage and Weekly Report (5 pts)
@@ -51,7 +53,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 |---|---|---|---|---|---|
 | F1 | AI usage log with every member's PA3 use | Khoa | Lộc | Done: tools and categories recorded for each member (PR #40, #41) | `docs/pa3/AI_USAGE_LOG.md` |
 | F2 | Weekly report with no placeholders | Khoa | Lộc | Done: placeholders replaced with verified repository status (PR #59) | `docs/pa3/WEEKLY_REPORT.md` |
-| F3 | Meeting notes (planning and review), PDF | Khoa | Lộc | Markdown done, PDF missing | `docs/pa3/MEETINGS/` |
+| F3 | Meeting notes (planning and review), PDF | Khoa | Lộc | Markdown and PDF present; Scrum meeting notes still missing | `docs/pa3/MEETINGS/` |
 | F4 | Jira screenshots | Lộc | Khoa | Done | `docs/pa3/jira-1.png`, `docs/pa3/jira-2.png` |
 
 ## Per-member Spec Kit entries (TA feedback on PA2)
@@ -72,6 +74,6 @@ Every member needs their own Spec Kit entry, even a short one.
 |---|---|---|---|
 | S1 | `PA3-Group02/` folder with all docs as `.md` and `.pdf` | Lộc | Done: every Markdown file has a current PDF; the code slot is `04-fg03-implementation/source/` | `PA3-Group02/` |
 | S2 | Git log export | Lộc | Done: `PA3-Group02/GIT_LOG.txt` re-exported 2026-11-14, with author emails removed | `PA3-Group02/GIT_LOG.txt` |
-| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | **Open, code only**: FG-03 source from Tài and Triết; web app builds on `pa3` | — |
+| S3 | Source code, no `node_modules`, build output, or `.env` | Lộc | **Open**: FG-01 source is `web/` plus `api/authify/` (without `target/` and secrets) | — |
 | S4 | `.zip` of the package | Lộc | Ready to rebuild once the FG-03 code is in | `D:\DebateSpeak\PA3-Group02.zip` |
 | S5 | `pa3` → `dev` merge once the package is complete | Lộc | Pending |

@@ -21,7 +21,7 @@
 3. **Automated Enforcement:** Continuous integration must fail immediately if tracked secret patterns or un-ignored `.env` files are detected.
 
 ### Principle III: Specification-Driven Development (SDD & Spec Kit)
-1. **Spec Before Code:** Architectural schemas, route contracts, Pydantic data models, and test matrices must be authored and reviewed in `specs/` and the corresponding `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` and `docs/requirements/PROJECT_PROPOSAL.md` before implementation commits.
+1. **Spec Before Code:** Architectural schemas, route contracts, request/response models, and test matrices must be authored and reviewed in `specs/` and the corresponding `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` and `docs/requirements/PROJECT_PROPOSAL.md` before implementation commits.
 2. **Clean Architecture & No Placeholders:** No stub functions with bare `pass` or untracked `TODO`. Every code unit must map to an active requirement and test case.
 3. **Vendor Decoupling:** Business logic must remain completely decoupled from third-party vendor APIs through abstract adapter interfaces:
    - `STTAdapter` (LiveKit agents, cloud streaming STT, local fallback)
@@ -52,11 +52,11 @@
 | Layer | Standard Technology | Non-Negotiable Invariants |
 |---|---|---|
 | **Frontend** | Vite + React (TypeScript) + Tailwind CSS | Single-Page Application (SPA) only; no SSR; responsive for mobile & desktop. |
-| **Backend API** | FastAPI (Python 3.11+) | Async endpoints, SQLAlchemy 2 async ORM, Alembic migrations, Pydantic v2 validation. |
+| **Backend API** | Java 21 + Spring Boot (decided by Tài, 2026-11-14) | REST under `/api/v1`, Spring Data JPA, Bean Validation; Python remains for AI workers only. |
 | **Database & Cache** | PostgreSQL 16 + Redis 7 | PostgreSQL for relational entities; Redis for pub/sub events and ARQ background job queue. |
 | **Real-Time Audio** | LiveKit Cloud / LiveKit Server | Independent audio tracks per participant for deterministic speaker attribution. |
 | **Staging Gateway** | Caddy Reverse Proxy | Automatic TLS/HTTPS encryption (strictly required by modern browsers for WebRTC/microphone access). |
-| **Testing Harness** | pytest, pytest-asyncio, Playwright | Unit, integration, and end-to-end audio packet-drop chaos test coverage. |
+| **Testing Harness** | JUnit (API), pytest (AI workers), Playwright | Unit, integration, and end-to-end audio packet-drop chaos test coverage. |
 | **Academic Reports** | latexmk (`latexmk -pdf report.tex`) | High-quality, reproducible academic document compilation for all project assignments. |
 
 ---
@@ -67,7 +67,7 @@
    - Every sprint task has exactly one assignee and one designated reviewer.
    - Task completion dates progress naturally across the sprint; batch completions at sprint end are prohibited.
 2. **Pull Request Quality Gates:**
-   - Automated CI passing: Ruff linting & formatting (Python), ESLint & TSC (TypeScript), pytest suite, and secret scanning.
+   - Automated CI passing: Maven build and tests (Java), Ruff and pytest (Python workers), ESLint & TSC (TypeScript), and secret scanning.
    - At least one approved code review from the designated peer reviewer before merging to the sprint branch (`pa2`), and the sprint branch merges to `dev` only after Sprint Review.
 3. **Constitution Governance:**
    - This Constitution supersedes individual coding preferences.

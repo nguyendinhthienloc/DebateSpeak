@@ -1,4 +1,5 @@
 # AI Usage Log — PA3
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058)*
 
 | Date | Member | Tool | Task | What AI did | What was changed by human | Notes |
 |---|---|---|---|---|---|---|
@@ -9,6 +10,7 @@
 | 2026-11-14 | Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead | Codex | SCRUM-49: shared account UI, typography, tests and navigation review | Assisted with React/CSS changes, local Vietnamese fonts, specification updates, mocked-boundary tests and before/after captures | Tuấn inspected the preview, asked to waive Figma edits after checking with Triết, and authorized finishing the review handoff | [Evidence and review findings](tuan/scrum49/README.md); Lộc's review and merge pending. No real account or media operation. |
 
 ## Team-wide AI use in PA3 (recorded 2026-11-14)
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058)*
 
 The whole team uses AI for the same three kinds of work. Per-member rows list the tools each member reported. Each member should still add the actual tasks and prompts used before submission.
 

@@ -1,8 +1,10 @@
 # Sprint Review (PA3)
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 **Methodology:** Scrum
 
 ## Sprint results
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 Status as of 2026-11-10. Update on 2026-11-13 with the final result.
 
@@ -15,7 +17,13 @@ Status as of 2026-11-10. Update on 2026-11-13 with the final result.
 | FG-03 tests and narrated demo | Not done. No E2E test, no video |
 | AI usage and weekly report | Partial. Weekly report still has unconfirmed placeholders; the AI log lacks most members' PA3 use; Jira screenshots missing |
 
+## Update 2026-11-14: Part E scope change
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
+
+FG-03 could not be delivered: the room API (SCRUM-26, 38) was not built. The team moved Part E to FG-01, which has a complete frontend (UC-01-01 to 08, browser tests) and a Spring Boot + PostgreSQL backend on `backend-tai`. Evidence: `specs/002-fg01-accounts/`. FG-03 moves to PA4. The 2026-11-10 table above is kept as the record of that date.
+
 ## Retrospective
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 - **What went well**
   - The use-case model and use-case specifications with prototypes were completed.
@@ -46,6 +54,7 @@ Status as of 2026-11-10. Update on 2026-11-13 with the final result.
   - Meeting notes, Jira updates, and test evidence are easier to maintain when recorded during the sprint.
 
 ## Actions for next PA4
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Action | Owner | Target date |
 |---|---|---|
@@ -55,5 +64,6 @@ Status as of 2026-11-10. Update on 2026-11-13 with the final result.
 | Reserve time for demo rehearsal and evidence collection | Demo owner and team | Before PA4 sprint end |
 
 ## Review summary
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 As of 2026-11-10 the documents are mostly in place, but FG-03 (the graded end-to-end slice) is not done and the project is behind schedule. This summary is to be rewritten on 2026-11-13 from what is merged and verified.

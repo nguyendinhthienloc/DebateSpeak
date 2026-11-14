@@ -51,7 +51,7 @@ Requests time out after 15 seconds; no measured performance claim is made.
 | `web/src/pages/AccountSettingsPages.tsx`, `AdminPage.tsx` | US4 sessions, deletion, admin |
 | `web/src/App.tsx`, `routes.ts`, `components/ui.tsx`, `index.css` | Navigation and shared style |
 | `web/tests/` | Auth, recovery, scaffold and room-setting checks |
-| `api/app/main.py` | Health endpoint only; auth integration remains open |
+| `api/authify/` | Spring Boot API for every FG-01 endpoint; see `specs/002-fg01-accounts` |
 
 ## Delivery and Validation
 

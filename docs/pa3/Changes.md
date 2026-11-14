@@ -1,10 +1,11 @@
 # Changes.md — PA3 (compared with PA2)
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 One file for PA3, one section per revised document. Each row: what changed, why, where.
 Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
-Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | # | Change | Why | Status |
 |---|---|---|---|
@@ -19,6 +20,8 @@ Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
 | 1.9 | Backend stack changed from FastAPI (Python) to Java (Spring Boot) in `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` | Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14. AGENTS.md Section 4 not yet updated | filled (team confirmation pending) |
 | 1.10 | Plan status refreshed to the 2026-11-14 repository state: Part E, SCRUM statuses, video link, Java decision reference | Plan must match merged work | filled (reviewer sign-off by Lộc, 2026-11-14) |
 | 1.11 | Java auth backend merged into pa3 (PR #53); no build file yet; plan and checklist updated. | Keep the plan and checklist matching the repository | filled |
+| 1.12 | Part E changed from FG-03 to FG-01 (accounts and profiles); FG-03 moves to PA4. Spec Kit `specs/002-fg01-accounts` added; Spec Kit constitution stack updated to Java Spring Boot | FG-03 has no room API; FG-01 has a merged frontend and a Spring Boot + PostgreSQL backend (`backend-tai`) | filled (confirmed 2026-11-14 by Triết, who holds submission control) |
+| 1.13 | Known deviations recorded: BCrypt instead of Argon2id; schema created by Hibernate instead of migrations | Honest status; to fix in PA4 | filled |
 
 **Build 1, shrunk**
 
@@ -32,7 +35,7 @@ Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
 Build 1 Jira: SCRUM-24 auth, 25 frontend, 26 room API, 27 lobby UI, 28 state machine (SCRUM-29, 30 folded into FG-03). New: SCRUM-41 DB + seed, SCRUM-42 Docker DB.
 
 ## 2. Vision Document (`docs/requirements/VISION_DOCUMENT.md`)
-Owner: Khoa. Reviewer: Lộc.
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | # | Change | Why | Status |
 |---|---|---|---|
@@ -40,9 +43,11 @@ Owner: Khoa. Reviewer: Lộc.
 | 2.2 | Functional requirements (FG-01 to FG-10, FR ids cited, spot-checked against the architecture spec) and non-functional targets (NFR-01 to NFR-15) detailed | Brief, Part B | filled |
 | 2.3 | Alternatives and user environment written (§3 and §4 of the Vision Document); no new market audit | Brief, Part B | filled |
 | 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
-| 2.5 | Document control updated for the PA3 revision; clarified that the full product vision is broader than the current PA3 implementation, which focuses on FG-03, with registration/login supporting the room workflow and topic listing/filtering as extra scope | Make the revision status and current sprint boundary explicit; avoid implying that later product capabilities are implemented in PA3 | filled |
+| 2.5 | Document control updated for the PA3 revision; clarified that the full product vision is broader than the current PA3 implementation, which focused on FG-03 (Part E later changed to FG-01, row 1.12), with registration/login supporting the room workflow and topic listing/filtering as extra scope | Make the revision status and current sprint boundary explicit; avoid implying that later product capabilities are implemented in PA3 | filled |
+| 2.6 | PA3 implementation boundary, PA3 scope and the scope table now name FG-01 as the graded slice (changed from FG-03, see row 1.12) | Keep the Vision consistent with Part E | filled |
 
 ## 3. Repository layout (supporting change)
+*Performed: Trần Lê Anh Tuấn (24125107); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
 
 | PA2 file | Now |

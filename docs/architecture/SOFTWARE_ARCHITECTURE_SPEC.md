@@ -1400,7 +1400,11 @@ Figma-first implementation guidance. Keep all repository paths relative.
 
 ## FG-01 account management frontend scaffold (2026-11-14)
 
-The frontend now calls the remaining FG-01 endpoints. None exist in `api/` yet.
+The frontend now calls the remaining FG-01 endpoints. The Spring Boot service
+`api/authify` (branch `backend-tai`) implements all of them with PostgreSQL
+tables `users`, `auth_sessions`, `auth_codes` and `account_suspensions`
+(`specs/002-fg01-accounts`). Deviations: BCrypt instead of Argon2id; schema by
+Hibernate, not migrations.
 Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
 This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
 

@@ -1,8 +1,10 @@
 # Weekly Report (PA3)
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ============ 05/11/2026, Sprint 1 / PA3 ============
 
 ## Team members present
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 - Nguyễn Đình Thiên Lộc
 - Nguyễn Bảo Minh Triết
 - Nguyễn Hồng Tấn Tài
@@ -10,9 +12,11 @@
 - Trần Lê Anh Tuấn
 
 ## Team members absent
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 - None
 
 ## Status reports
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 - **Nguyễn Đình Thiên Lộc**
   - **Completed**
@@ -70,15 +74,18 @@
     - The backend and frontend teams need a shared, reviewed state-transition contract.
 
 ## Summary of the meeting
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 The team reviewed PA3 assignments and focused on getting the database, room state machine, authentication, and room API ready for the FG-03 vertical slice. The main dependencies discussed were the state-machine/API contract and access to an integrated feature for Khoa’s end-to-end test. Tasks not yet complete remain in progress and should be updated from Jira before submission.
 
 ---
 
 # Weekly Report (PA3)
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ============ 10/11/2026, Sprint 2 / PA3 ============
 
 ## Team members present
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 - Nguyễn Đình Thiên Lộc
 - Nguyễn Bảo Minh Triết
 - Nguyễn Hồng Tấn Tài
@@ -86,9 +93,11 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 - Trần Lê Anh Tuấn
 
 ## Team members absent
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 - None
 
 ## Status reports
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 - **Nguyễn Đình Thiên Lộc**
   - **Completed**
@@ -113,7 +122,7 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 - **Nguyễn Hồng Tấn Tài**
   - **Completed**
-    - Java auth code (register, login, JWT) is merged (PR #53). It has no build file and is not verified. The FG-03 room API is not started.
+    - Java auth code (register, login, JWT) is merged (PR #53). The full FG-01 backend (16 endpoints, PostgreSQL, refresh sessions, recovery, admin) is on `backend-tai`; its sources and build file still need to be committed and run end to end. The FG-03 room API is not started; Part E is now FG-01.
   - **To-do**
     - Verify SCRUM-41 migrations and seed data.
     - Finish and test SCRUM-24 and SCRUM-26 as needed.
@@ -146,4 +155,5 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 
 ## Summary of the meeting
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 The team reviewed the remaining PA3 work and prioritized completing and verifying FG-03, finishing the required use-case documents, and preparing the demo and submission materials. The group agreed to report only work supported by Jira, test results, merged changes, or completed deliverables. Any unfinished items or untested behavior should be clearly identified in the final submission.
