@@ -1,5 +1,5 @@
 # DebateSpeak AI — Project Plan
-Performed: pending owner verification, Trần Lê Anh Tuấn (24125107). Reviewed: pending, Nguyễn Đình Thiên Lộc (24125093), as assigned in `docs/pa3/Changes.md`. Edited: PA3 revision of version 0.1; human verification pending.
+Performed: pending owner verification, Trần Lê Anh Tuấn (24125107). Reviewed: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14, as assigned in `docs/pa3/Changes.md`. Edited: PA3 revision of version 0.1; human verification pending.
 
 | Document control | Value |
 |---|---|
@@ -8,7 +8,7 @@ Performed: pending owner verification, Trần Lê Anh Tuấn (24125107). Reviewe
 | Task branch | `feature/SCRUM-35-plan-reassign` |
 | Deliverable | `docs/requirements/PROJECT_PLAN.md` and its PDF, listed with `docs/pa3/Changes.md` |
 | Version / date | 0.2 / 14 November 2026 (revision of 0.1 / 29 October 2026); dates use Asia/Bangkok (UTC+7) |
-| Status | PA3 revision draft. Performed: pending owner verification. Reviewed: pending, Nguyễn Đình Thiên Lộc (24125093). Status is as of 2026-11-14 from the repository, not live Jira |
+| Status | PA3 revision draft. Performed: pending owner verification. Reviewed: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14. Status is as of 2026-11-14 from the repository, not live Jira |
 | Group | Vision records Group 02; the release owner must confirm the archive's official Group ID |
 
 Status words in this plan mean what the repository shows on 2026-11-14. A task is Done only when its work is merged and verified. Jira status is not used as evidence, because earlier Jira and review statements were found to be wrong (section 3.2, R-05).
@@ -51,9 +51,9 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 
 | Part | Points | Deliverable | Owner | Status on 2026-11-14 |
 |---|---|---|---|---|
-| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 (merged, PR #31); PDF rebuilt 2026-11-14; `Changes.md` has rows 1.1 to 1.10; reviewer sign-off pending |
-| B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off pending |
-| C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off pending |
+| A | 5 | Revised plan and `docs/pa3/Changes.md` | Tuấn | Plan revised to 0.2 (merged, PR #31); PDF rebuilt 2026-11-14; `Changes.md` has rows 1.1 to 1.10; reviewer sign-off by Lộc, 2026-11-14 |
+| B | 5 | Revised Vision Document | Khoa | Version 0.2 merged (PR #27, final touches PR #30); PDF rebuilt 2026-11-14 with Mermaid diagrams; reviewer sign-off by Lộc, 2026-11-14 |
+| C | 10 | Use-case model, 54 use cases, Mermaid diagrams | Tuấn | Done (`docs/pa3/USE_CASE_MODEL.md`, `.pdf`); reviewer sign-off by Lộc, 2026-11-14 |
 | D | 45 | 54 use-case specifications, 201 alternative outcomes, 116 prototype screenshots | Triết, Tuấn | Done (`docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf`, `docs/pa3/prototypes/`); reviewer sign-off and spot check pending |
 | E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Not met: Tài's Java auth backend (commit 3f585e0) is merged into `pa3` (PR #53) but has no build file and no tests, so it is unverified to compile or run; no room API, migrations or integrated FG-03 flow; `specs/001-frontend-baseline/` merged (PR #45) but no FG-03 spec; video uploaded (PR #47), not yet checked by the team; no E2E test |
 | F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log records tools per member (PR #41), tasks and prompts still to be added; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
@@ -172,7 +172,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
 | SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | To Do; not met |
 | SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
-| SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | This draft; review pending |
+| SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | Revised 0.2; reviewed by Lộc, 2026-11-14 |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
 | SCRUM-36 | Use-case model | Tuấn | pending | Done (PR #19); sign-off pending |
 | SCRUM-37 | Use-case specifications and prototypes | Triết, Tuấn | pending | Done (PR #19); sign-off pending |
@@ -199,7 +199,7 @@ The Sprint Review actions for PA4 apply: agree audio and STT interfaces before i
 - Tests: pytest for the state machine and room rules; PostgreSQL integration tests for room capacity and transitions; Playwright for the FG-03 browser journey (register, create, join, `READY`, third user gets 409); web checks from `web/`: `npm run build`, `npm run lint`, `npm run test:e2e`.
 - CI is the GitHub Actions workflow in `.github/workflows/ci.yml`. The migrate and seed job is unverified until SCRUM-41 lands (R-06).
 - Grounding (NFR-13): quote matching alone does not prove feedback is correct; human review is needed in Build 4.
-- Reviews: a merged PR counts as reviewed; sign-offs shown as pending in this plan are not claimed.
+- Reviews: a merged PR counts as reviewed. The plan and vision sign-offs by Lộc are recorded on 2026-11-14; other reviewer sign-offs are not claimed until recorded.
 - No application test or benchmark result is reported in this plan. None was run while writing it.
 
 ### 4.8 Jira, source control and progress evidence
