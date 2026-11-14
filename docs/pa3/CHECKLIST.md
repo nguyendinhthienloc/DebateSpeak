@@ -39,10 +39,10 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: `pa3` has the auth and account UI (Triết, SCRUM-49/51 merged) and the lobby (SCRUM-52). Tài's Java auth backend is merged into `pa3` (PR #53) but has no build file (no pom.xml or build.gradle) and no tests, so it is unverified to compile or run. No room API, migrations, or integrated FG-03 flow on `pa3` | `api/app/auth/` (from 3f585e0, PR #53), SCRUM-38 (To Do) |
-| E2 | Spec Kit artifacts (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Partial**: `specs/001-frontend-baseline/` (spec, plan, tasks, contracts) merged via PR #45. No FG-03 feature spec yet | `specs/001-frontend-baseline/` |
-| E3 | Narrated FG-03 demo video on YouTube (unlisted or public), link added | Tài | Lộc | Done: uploaded, link `https://youtu.be/wJxqi3J0phE`. Visibility and narration verified by the team on 2026-11-14 | `https://youtu.be/wJxqi3J0phE` |
-| E4 | E2E test for FG-03 | Khoa | Lộc | **Missing**: no FG-03 test. Existing browser tests were not run on the build machine | none |
+| E1 | Part E functional group: **FG-01 Account and profile** (team decision 2026-11-14, replacing FG-03). Full stack: frontend, backend, database | Tài, Triết | Lộc | **Partial, not verified**: register and login pages on `pa3` (Triết, PR #39/#45); Java auth code on `pa3` (Tài, PR #53) with no build file; no database migrations or verified persistence (`api/alembic/` absent); no FG-01 end-to-end test | `web/src/auth/`, `api/app/auth/` |
+| E2 | Spec Kit artifacts for the Part E group (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Partial**: `specs/001-frontend-baseline/` is merged (PR #45). No FG-01 backend spec. Draft FG-03 spec on PR #56 is no longer the graded group | `specs/001-frontend-baseline/` |
+| E3 | Narrated demo video on YouTube (unlisted or public), link added, showing the Part E group | Tài | Lộc | Uploaded: `https://youtu.be/wJxqi3J0phE`. **Must be checked**: the video must show the Part E group. Team has not confirmed its content | `https://youtu.be/wJxqi3J0phE` |
+| E4 | E2E test for the Part E group | Khoa | Lộc | **Missing**: no FG-01 end-to-end test. Browser tests not run on the build machine | none |
 | E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine; cross-browser not done | PR #28 |
 
 ## Part F: AI Usage and Weekly Report (5 pts)
