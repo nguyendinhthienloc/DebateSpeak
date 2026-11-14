@@ -10,7 +10,7 @@ window.PA3_DATA = {
       "role": "AI Orchestrator & Analysis Lead"
     },
     "scope_notes": {
-      "PA3": "Modelled in PA3; only existing Sprint 3 commitments are implementation scope. Topic browsing is extra and sign-out requires the auth contract.",
+      "PA3": "Modelled in PA3; only existing Sprint 3 commitments are implementation scope. Topic browsing is extra and sign-out requires the auth contract. UC-01-02 includes the future full-product session lifecycle in specification Section 2.5; reduced PA3 uses access-token register/login with no refresh rotation. Recovery links require UC-01-05 to be implemented and enabled.",
       "future-mvp": "MVP behaviour planned for later builds, except FG-03 session controls whose PA3 media boundary must remain explicit.",
       "should": "Conditional enhancement; cut before Must requirements if schedule slips.",
       "stretch": "Could requirement, not a PA3 implementation commitment.",
@@ -1062,13 +1062,13 @@ window.PA3_DATA = {
             "id": "E2",
             "label": "E2 — At step 3, email already exists.",
             "detail": "At step 3, email already exists.",
-            "outcome": "Return EMAIL_EXISTS without creating another account; offer sign-in or recovery."
+            "outcome": "Return EMAIL_EXISTS without creating another account; offer sign-in, and recovery only when UC-01-05 is implemented and enabled."
           },
           {
             "id": "E3",
             "label": "E3 — At step 3, throttling or a failed/ambiguous response occurs.",
             "detail": "At step 3, throttling or a failed/ambiguous response occurs.",
-            "outcome": "Respect Retry-After or reconcile by sign-in/recovery before retrying; never claim success without confirmation."
+            "outcome": "Apply Section 2.4 error handling: respect Retry-After or reconcile by sign-in before retrying; offer recovery only when UC-01-05 is implemented and enabled. Never claim success without confirmation."
           }
         ]
       },
@@ -1080,12 +1080,12 @@ window.PA3_DATA = {
         "steps": [
           "Visitor enters email and password and submits once.",
           "System validates credentials and account eligibility without revealing which check failed.",
-          "System establishes the authorized session using the active auth contract and returns the learner identity.",
+          "System establishes the authorized session and returns the learner identity using the explicit reduced-PA3 or full-product contract in Section 2.5.",
           "System opens the menu or a previously requested authorized page without creating a room or requesting microphone permission."
         ],
         "success": "A verified session identifies the user and enables only their authorized actions.",
         "minimum": "Failed sign-in grants no access and discloses no account eligibility details.",
-        "special": "Do not store access tokens in localStorage or expose server secrets. Full refresh-token rotation is a later auth implementation concern, not added by SCRUM-28/47.",
+        "special": "Sections 2.4 and 2.5 define auth errors and the FR-01 session lifecycle, including renewal, expiry, replay and lost-response handling. Keep access tokens only in runtime memory; never expose server secrets. Full refresh rotation remains outside reduced PA3 implementation scope.",
         "alternatives": [
           {
             "id": "A1",
@@ -1109,7 +1109,7 @@ window.PA3_DATA = {
             "id": "E3",
             "label": "E3 — At step 3, session creation or network confirmation fails.",
             "detail": "At step 3, session creation or network confirmation fails.",
-            "outcome": "Stay signed out or reconcile the current authorized session; do not show a fake logged-in screen."
+            "outcome": "Apply Section 2.4 error handling and remain signed out until a valid login response is received; do not show a fake logged-in screen."
           }
         ]
       },
