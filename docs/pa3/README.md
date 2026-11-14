@@ -10,14 +10,14 @@ Deadline **Fri 2026-11-13** (zip and submission buffer 11-14 to 11-15). Jira: Sp
 5. Lộc merges `pa3` into `dev` once, at the end of the sprint.
 
 ## What PA3 grades
-Revised plan and vision with `Changes.md` (A, B, 10 pts; the single [Changes.md](Changes.md) is mandatory, no file = no points), use-case model (C, 10), use-case specs with prototype screenshots (D, 45), FG-03 end to end with Spec Kit and a video (E, 20), AI usage and weekly report (F, 5). Spec Kit artifacts (`specs/`, plans, tasks) go in the zip.
+Revised plan and vision with `Changes.md` (A, B, 10 pts; the single [Changes.md](Changes.md) is mandatory, no file = no points), use-case model (C, 10), use-case specs with prototype screenshots (D, 45), FG-01 end to end with Spec Kit and a video (E, 20; changed from FG-03 on 2026-11-14), AI usage and weekly report (F, 5). Spec Kit artifacts (`specs/`, plans, tasks) go in the zip.
 
 ## Scope
 **Build 1 is shrunk to what FG-03 needs** (kept and cut lists: [Changes.md](Changes.md)).
 
-**Database first (11-04):** `docker compose up db`, `alembic upgrade head`, `python -m app.seed` gives 5 users, 10 topics (all CEFR levels), 1 room in `LOBBY`.
+**Database:** `docker compose up -d db`; the Spring Boot API creates its tables on start. Run steps: `specs/002-fg01-accounts/quickstart.md`.
 
-**Features running by 11-13:** FG-03 (graded), FG-01 register/login (needed by FG-03), FG-02 topic list/filter (extra).
+**Graded feature:** FG-01 accounts end to end (UC-01-01 to 08). FG-03 moves to PA4.
 
 **Extra prep (stretch, only if FG-03 and documents are on track):**
 

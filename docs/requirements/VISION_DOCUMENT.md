@@ -1,4 +1,5 @@
 # DebateSpeak AI — Vision Document
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Document control | Value |
 |---|---|
@@ -13,13 +14,13 @@
 This document describes the intended DebateSpeak AI product and its requirements. A feature described here is not necessarily implemented or verified. The product vision covers the intended learning experience; the PA3 implementation is a limited sprint slice, not the complete product.
 
 ## 1. Introduction
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 **Purpose.** This document establishes the shared product vision for DebateSpeak AI: a browser-based platform where English learners practice spoken argument through peer debate and receive useful, evidence-grounded feedback. It describes the intended users, their needs, the product’s distinguishing value, its functional groups, workflows, quality targets, and scope boundaries.
 
 **PA3 revision scope.** This is the second iteration of the Vision Document. The team’s PA3 change log records that no PA2 TA feedback had been received as of 2026-11-10. Accordingly, this revision does not invent TA comments. It clarifies the current sprint boundary and makes the requirements, alternatives, and user-environment descriptions explicit for review.
 
-**PA3 implementation boundary.** The product vision remains the complete DebateSpeak experience. For PA3, the graded implementation focuses on FG-03, Room and Session Management. Registration and login support that flow; topic listing and filtering are identified as extra scope in the PA3 sprint notes. Live audio, streaming speech-to-text, and AI analysis are not claims of PA3 completion.
+**PA3 implementation boundary.** The product vision remains the complete DebateSpeak experience. For PA3, the graded implementation is FG-01, Accounts and Profiles (changed from FG-03 on 2026-11-14 because the room API was not built). FG-03 moves to PA4. Live audio, streaming speech-to-text, and AI analysis are not claims of PA3 completion.
 
 **Audience.** The five-person engineering team, course instructors and teaching assistants, prospective learners, and people responsible for moderation and operation.
 
@@ -42,9 +43,10 @@ This document describes the intended DebateSpeak AI product and its requirements
 The proposal and architecture describe the intended product, while the PA3 sprint notes define the current implementation slice. A use case, feature, or quality target in this vision is not evidence that it has been built, measured, or approved.
 
 ## 2. Positioning
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ### Problem statement
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Element | Statement |
 |---|---|
@@ -56,6 +58,7 @@ The proposal and architecture describe the intended product, while the PA3 sprin
 These needs are working hypotheses based on the project proposal and app survey, not findings from a completed learner study. A future pilot should evaluate usability and perceived usefulness; it should not be represented as proof of improved proficiency without appropriate evidence.
 
 ### Product position statement
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Element | Statement |
 |---|---|
@@ -69,9 +72,10 @@ These needs are working hypotheses based on the project proposal and app survey,
 The intended value is the complete practice-to-reflection loop. A debate score is supporting feedback, not the product’s primary measure of a learner’s worth or progress.
 
 ## 3. Stakeholder and User Descriptions
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ### Stakeholder summary
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Stakeholder | Interest and responsibility | Expected value |
 |---|---|---|
@@ -92,6 +96,7 @@ The team’s official roles are listed below. A role assignment does not imply t
 | 24125107 | Trần Lê Anh Tuấn | AI Orchestrator & Analysis Lead |
 
 ### User summary
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | User profile | Context and needs | Product interaction |
 |---|---|---|
@@ -106,6 +111,7 @@ Learners and moderators are the primary human application roles. Teachers and TA
 **User environment.** Learners use a modern desktop or mobile browser, an Internet connection, and a microphone; headphones are recommended to reduce echo. The intended debate flow supports two authenticated participants. Live media features require suitable browser permissions and connectivity. PA3’s room-management slice must not be presented as a completed live-audio experience.
 
 ### Key needs and feature traceability
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Need | Priority | Product response |
 |---|---|---|
@@ -118,6 +124,7 @@ Learners and moderators are the primary human application roles. Teachers and TA
 | N-07: Manage inappropriate topics, abuse, and operating cost | Must | Topic moderation, reporting, restricted admin actions, and bounded processing: FG-02–03, FG-08–10 |
 
 ### Alternatives and competition
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 This comparison summarizes the project’s existing-app survey. It is not a fresh or exhaustive market audit and makes no claims about current competitor capabilities beyond that survey.
 
@@ -130,19 +137,20 @@ This comparison summarizes the project’s existing-app survey. It is not a fres
 | Classroom or tutor-led practice | Human judgment and guided conversation | Support repeatable peer practice; do not claim to replace qualified teachers or official assessments |
 
 ## 4. Product Overview
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 **Product perspective.** DebateSpeak is intended to be a standalone responsive web application. The planned architecture uses a Vite, React, TypeScript, and Tailwind CSS single-page application with a Java (Spring Boot), confirmed 2026-11-14; backend specs owned by Tài, backend, PostgreSQL, Redis, and provider adapters for real-time media, speech-to-text, language models, and search. These are design choices, not a claim that every service is currently implemented.
 
 **Core experience.** In the intended full product, a learner signs in, selects a topic, and invites a partner. Both participants review the processing notice and provide explicit consent before any remote audio processing begins. They complete a microphone check and proceed only when required room conditions are satisfied. After the debate, the product may provide a transcript and available learning feedback, with limitations clearly shown.
 
-**PA3 scope.** PA3’s graded implementation is the FG-03 room/session workflow. The PA3 sprint notes identify registration/login as necessary support for that workflow and topic listing/filtering as extra work. Room creation, invite-based joining, lobby/readiness, and capacity/state validation are relevant to the sprint slice. The existence of those requirements in this document does not establish that they are complete; implementation and verification must be demonstrated separately.
+**PA3 scope.** PA3’s graded implementation is FG-01 (registration, login, sessions, profile, deletion, recovery and admin suspension), changed from FG-03 on 2026-11-14. Room creation, invite-based joining, lobby/readiness, and capacity/state validation move to PA4. The existence of those requirements in this document does not establish that they are complete; implementation and verification must be demonstrated separately.
 
 **Full-product MVP boundary.** The intended product MVP spans accounts and profiles, curated topics, two-person rooms, explicit consent, live audio, speaker-attributed transcription, grounded language and argument feedback, bounded fact-checking, evaluation, and learning reports. These capabilities are planned across multiple increments and are not all part of PA3.
 
 **Deferred or optional scope.** Live video, audience rooms, tournaments, public rankings/ELO, automated partner matching, payments, teacher dashboards, advanced phoneme-level pronunciation scoring, and large judge panels are outside the current MVP boundary unless the team explicitly revises the scope.
 
 ### Assumptions and dependencies
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Assumption or dependency | Consequence and planned response |
 |---|---|
@@ -157,7 +165,7 @@ This comparison summarizes the project’s existing-app survey. It is not a fres
 **Human consequences.** Participation is voluntary. Declining consent must not be treated as consent, and the product should provide an accessible way to wait or leave. A microphone test should require an explicit user action and remain local unless the user separately starts an authorized media flow. Feedback should be specific and evidence-based, not insulting. If transcript quality or analysis is insufficient, the product should say so rather than invent results.
 
 ## 5. Product Features and Workflows
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 The feature identifiers preserve the ten functional groups in the proposal and map to the architecture’s functional requirements. These paragraphs describe intended product behavior and user value. They do not assert that a feature is implemented. PA3 work is scoped separately in §4 and in the PA3 sprint documents.
 
@@ -182,6 +190,7 @@ The feature identifiers preserve the ten functional groups in the proposal and m
 **FG-10 — Learning History and Personalized Reports (FR-48–54).** After a supported debate, each learner receives a report combining available transcript-linked feedback, language metrics, argument observations, and practice suggestions. Learners can review prior sessions and observe trends where implemented. Reports must indicate missing or unavailable analysis and must not present observations as certified proficiency gains.
 
 ### Workflow 1 — Join and complete a live debate
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ```mermaid
 flowchart TD
@@ -203,6 +212,7 @@ flowchart TD
 The diagram describes the intended full-product workflow, not PA3 implementation status. A room being ready does not grant consent. Remote audio processing must not begin before required participant authorization and media checks are satisfied.
 
 ### Workflow 2 — Turn a debate into follow-up practice
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 ```mermaid
 flowchart TD
@@ -220,7 +230,7 @@ flowchart TD
 These diagrams describe intended behavior, not evidence that the implementation passes the workflows. Detailed coaching, fact-checking, and judging should run outside the live audio-critical path.
 
 ## 6. Non-Functional Requirements and Success Measures
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 The following are planned, **unverified project targets** inherited from the architecture. Tests must record deployment resources, provider and model versions, browser versions, test conditions, sample sizes, and failures. A target is not an achieved result until measurements are collected and reviewed.
 
@@ -249,12 +259,12 @@ The following are planned, **unverified project targets** inherited from the arc
 **Safety and interpretation.** A valid quote is necessary but insufficient to establish a correct critique. Transcript errors can survive string matching, and automated scores may be uncertain. Feedback should identify evidence, explain a concrete issue, and suggest a practical next step without insulting the learner or assigning motives.
 
 ## 7. PA3 Scope, Source Alignment, and Decisions
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Topic | PA3 treatment in this revision | Follow-up |
 |---|---|---|
 | PA3 revision and TA feedback | The PA3 change log records that no PA2 TA feedback had been received by 2026-11-10; no TA comment is invented here | If new feedback is received, record the actual comment and resulting change in `docs/pa3/Changes.md` |
-| Current implementation scope | FG-03 room/session management is the PA3 graded slice; registration/login support it; topic listing/filtering is noted as extra | Keep implementation and verification claims aligned with merged code and test evidence |
+| Current implementation scope | FG-01 accounts and profiles is the PA3 graded slice (changed from FG-03 on 2026-11-14); FG-03 moves to PA4 | Keep implementation and verification claims aligned with merged code and test evidence |
 | Later product capabilities | Live audio, streaming STT, coaching, evidence checks, judging, and reports remain part of the intended product, but are not claimed as completed in PA3 | Track delivery in the later sprint plans and report actual completion separately |
 | Functional and non-functional requirements | This revision states the intended functional groups and measurable, unverified quality targets | Confirm that identifiers and targets remain aligned with the current architecture specification |
 | Alternatives and user environment | The comparison summarizes the existing-app survey; environment assumptions and browser/network dependencies are stated | Do not present the survey as a new or exhaustive market study |
@@ -266,7 +276,7 @@ The following are planned, **unverified project targets** inherited from the arc
 **Review completion.** The assigned reviewer should check this revision against the current architecture, proposal, PA3 scope, and `Changes.md`. Review status should be recorded only after the reviewer has actually completed the review. Jira status, implementation evidence, PDF generation, and submission status must be verified separately.
 
 ## 8. PA3 Revision and AI Assistance Record
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14*
+*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), 2026-11-14; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
 | Item | Record |
 |---|---|

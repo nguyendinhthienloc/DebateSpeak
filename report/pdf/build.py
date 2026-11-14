@@ -99,6 +99,12 @@ def main() -> None:
     (build / "source.md").write_text(markdown, encoding="utf-8")
     (build / "header.tex").write_text(
         r"""\usepackage{graphicx}
+\usepackage{url}
+\AtBeginDocument{\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p
+  \do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F
+  \do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V
+  \do\W\do\X\do\Y\do\Z\do0\do1\do2\do3\do4\do5\do6\do7\do8\do9}}
 \pagestyle{plain}
 \setlength{\emergencystretch}{3em}
 \DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
@@ -145,6 +151,7 @@ def main() -> None:
         "--variable=fontenc:T5", "--variable=colorlinks:true",
         "--variable=linkcolor:blue", "--variable=urlcolor:blue",
         "--include-in-header=header.tex",
+        "--lua-filter=" + str(Path(__file__).resolve().parent / "breakable-code.lua"),
     ], build)
     run([latexmk, "-pdf", "-interaction=nonstopmode", "-halt-on-error", "report.tex"], build)
     destination = source.with_suffix(".pdf")

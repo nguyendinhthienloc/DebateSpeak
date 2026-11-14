@@ -7,6 +7,16 @@
 
 ## 1. Zero Absolute/Hardcoded Paths Policy
 
+### Frontend source of truth
+
+Frontend implementation is independent of Figma. Use `web/src/`, `DESIGN.md`,
+feature specifications in `specs/`, and browser checks for UI decisions.
+Neither the historical Foundations nor Build 1 flow Figma link is a prerequisite
+or an acceptance gate. Open, read, change or sync Figma only when the user
+explicitly requests it. Preserve the existing Cream & Yellow identity.
+The human API handoff lives at `web/API_CONTRACT.md`; keep endpoint paths and
+response examples consistent with `web/src/auth/`. Update specs before code.
+
 1. **NO HARDCODED ABSOLUTE PATHS:**
    - Never write machine-specific or OS-specific absolute paths such as:
      - `D:\APCS\...`
@@ -131,5 +141,5 @@ All documentation, task cards, and Git contributions must strictly attribute the
 1. **One checklist, one owner.** Only the owner edits the sprint checklist.
 2. **Checklist format.** One row per file: file path, owner, and completeness (missing, draft, or complete). Nothing else.
 3. **The submission folder is built only after the freeze.** The freeze happens when every checklist row is complete. Before that, no folder is built or renamed.
-4. **Folder name.** After the freeze, the folder is named `Group<ID>-PA<n>`, for example `Group02-PA4`.
+4. **Folder name.** After the freeze, the folder is named `PA<n>-Group<ID>`, for example `PA3-Group02`, as the assignment requires.
 

@@ -1,5 +1,9 @@
-import { isRecord, isTokenResponse, isUserResponse } from './contracts';
-import type { AuthField, Credentials, FieldErrors, Registration, TokenResponse, UserResponse } from './contracts';
+import { isAdminUser, isProfileResponse, isRecord, isSessionList, isTokenResponse, isUserResponse } from './contracts';
+import type {
+  ActiveSession, AdminUser, AuthField, Credentials, FieldErrors, ProfileResponse, ProfileUpdate, Registration,
+  TokenResponse, UserResponse,
+} from './contracts';
+import { clearSession, getAccessToken } from './session';
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL?.trim() || '/api/v1').replace(/\/+$/, '');
 const unexpectedResponse = 'The account service returned an unexpected response. Try again or contact the team.';
@@ -17,6 +21,9 @@ const fieldMessages: Record<AuthField, string> = {
   display_name: 'Check your display name (up to 80 characters).',
   cefr_level: 'Choose A2, B1, B2 or C1.',
   code: 'Check the code from your email and try again.',
+  native_language: 'Check your native language (up to 64 characters).',
+  goals: 'Use up to 5 goals of up to 120 characters each.',
+  reason: 'Give a reason of up to 500 characters.',
 };
 
 function validationFields(body: unknown): FieldErrors {
@@ -35,7 +42,22 @@ function validationFields(body: unknown): FieldErrors {
   return errors;
 }
 
-function responseError(status: number, body: unknown, path: string): AuthApiError {
+function responseError(status: number, body: unknown, path: string, method: string): AuthApiError {
+  if (status === 403 && path === '/auth/login' && isRecord(body) && body.code === 'account_suspended') {
+    return new AuthApiError('This account is suspended. Contact the team if you think this is a mistake.');
+  }
+  if (status === 403 && path === '/users/me' && method === 'DELETE') {
+    return new AuthApiError('Password is incorrect. Your account was not deleted.', { password: 'Check your password and try again.' });
+  }
+  if (status === 403 && path.startsWith('/admin/')) {
+    return new AuthApiError('Only administrators can do this.');
+  }
+  if (status === 404 && path.startsWith('/admin/users?')) {
+    return new AuthApiError('No account uses this email.', { email: 'No account uses this email.' });
+  }
+  if (status === 404 && path.startsWith('/auth/sessions/')) {
+    return new AuthApiError('This session has already ended. Refresh the list.');
+  }
   if (['/auth/verify-email', '/auth/reset-password'].includes(path) && [400, 401, 410].includes(status)) {
     return new AuthApiError('This code is invalid or has expired. Request a new code and try again.', {
       code: 'Use the latest code sent to your email.',
@@ -69,8 +91,29 @@ function responseError(status: number, body: unknown, path: string): AuthApiErro
   return new AuthApiError(messages[status] ?? 'The request could not be completed. Try again or contact the team.');
 }
 
-async function post<T>(path: string, body: object, status: number,
-  valid: (value: unknown) => value is T, signal: AbortSignal): Promise<T> {
+interface RequestOptions<T> {
+  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  body?: object;
+  status: number;
+  valid: (value: unknown) => value is T;
+  /** Send the in-memory access token. A 401 then ends the session. */
+  auth?: boolean;
+}
+
+const sessionExpired = 'Your session expired. Sign in again.';
+const noBody = (value: unknown): value is null => value === null;
+
+async function request<T>(path: string, { method = 'POST', body, status, valid, auth = false }: RequestOptions<T>,
+  signal: AbortSignal): Promise<T> {
+  const headers: Record<string, string> = {};
+  if (body) headers['Content-Type'] = 'application/json';
+  headers.Accept = 'application/json';
+  headers['X-DebateSpeak-Client'] = 'web';
+  if (auth) {
+    const token = getAccessToken();
+    if (!token) throw new AuthApiError(sessionExpired);
+    headers.Authorization = `Bearer ${token}`;
+  }
   const controller = new AbortController();
   const cancel = () => controller.abort();
   signal.addEventListener('abort', cancel, { once: true });
@@ -79,14 +122,17 @@ async function post<T>(path: string, body: object, status: number,
   const timeout = window.setTimeout(() => { timedOut = true; controller.abort(); }, 15_000);
   try {
     const response = await fetch(`${baseUrl}${path}`, {
-      method: 'POST', credentials: 'include', cache: 'no-store', signal: controller.signal,
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-DebateSpeak-Client': 'web' },
-      body: JSON.stringify(body),
+      method, credentials: 'include', cache: 'no-store', signal: controller.signal, headers,
+      ...(body ? { body: JSON.stringify(body) } : {}),
     });
     const payload: unknown = await response.json().catch(() => null);
     if (signal.aborted) throw new DOMException('Request cancelled', 'AbortError');
     if (timedOut) throw new AuthApiError('The request timed out. Try again.');
-    if (!response.ok) throw responseError(response.status, payload, path);
+    if (auth && response.status === 401) {
+      clearSession(true);
+      throw new AuthApiError(sessionExpired);
+    }
+    if (!response.ok) throw responseError(response.status, payload, path, method);
     if (response.status !== status || !valid(payload)) throw new AuthApiError(unexpectedResponse);
     return payload;
   } catch (error) {
@@ -101,11 +147,51 @@ async function post<T>(path: string, body: object, status: number,
 }
 
 export function register(input: Registration, signal: AbortSignal): Promise<UserResponse> {
-  return post('/auth/register', input, 201, isUserResponse, signal);
+  return request('/auth/register', { body: input, status: 201, valid: isUserResponse }, signal);
 }
 
 export function login(input: Credentials, signal: AbortSignal): Promise<TokenResponse> {
-  return post('/auth/login', input, 200, isTokenResponse, signal);
+  return request('/auth/login', { body: input, status: 200, valid: isTokenResponse }, signal);
+}
+
+/** Uses the HttpOnly refresh cookie; the frontend never reads that cookie. */
+export function refresh(signal: AbortSignal): Promise<TokenResponse> {
+  return request('/auth/refresh', { status: 200, valid: isTokenResponse }, signal);
+}
+
+export function logout(signal: AbortSignal): Promise<null> {
+  return request('/auth/logout', { status: 204, valid: noBody }, signal);
+}
+
+export function getProfile(signal: AbortSignal): Promise<ProfileResponse> {
+  return request('/users/me', { method: 'GET', status: 200, valid: isProfileResponse, auth: true }, signal);
+}
+
+export function updateProfile(input: ProfileUpdate, signal: AbortSignal): Promise<ProfileResponse> {
+  return request('/users/me', { method: 'PATCH', body: input, status: 200, valid: isProfileResponse, auth: true }, signal);
+}
+
+export function deleteAccount(password: string, signal: AbortSignal) {
+  return request('/users/me', { method: 'DELETE', body: { password }, status: 202, auth: true,
+    valid: (value): value is { status: 'scheduled' } => isRecord(value) && value.status === 'scheduled' }, signal);
+}
+
+export async function listSessions(signal: AbortSignal): Promise<ActiveSession[]> {
+  const result = await request('/auth/sessions', { method: 'GET', status: 200, valid: isSessionList, auth: true }, signal);
+  return result.sessions;
+}
+
+export function revokeSession(id: string, signal: AbortSignal): Promise<null> {
+  return request(`/auth/sessions/${encodeURIComponent(id)}`, { method: 'DELETE', status: 204, valid: noBody, auth: true }, signal);
+}
+
+export function findUser(email: string, signal: AbortSignal): Promise<AdminUser> {
+  return request(`/admin/users?${new URLSearchParams({ email })}`, { method: 'GET', status: 200, valid: isAdminUser, auth: true }, signal);
+}
+
+export function setSuspended(id: string, suspend: boolean, reason: string, signal: AbortSignal): Promise<AdminUser> {
+  const path = `/admin/users/${encodeURIComponent(id)}/${suspend ? 'suspend' : 'reactivate'}`;
+  return request(path, { ...(suspend ? { body: { reason } } : {}), status: 200, valid: isAdminUser, auth: true }, signal);
 }
 
 export type RecoveryAction = 'forgot-password' | 'resend-verification' | 'verify-email' | 'reset-password';
@@ -118,6 +204,6 @@ type RecoveryInput = {
 
 export function recoverAccount<A extends RecoveryAction>(action: A, input: RecoveryInput[A], signal: AbortSignal) {
   const expected = action === 'verify-email' ? 'verified' : action === 'reset-password' ? 'reset' : 'accepted';
-  return post(`/auth/${action}`, input, expected === 'accepted' ? 202 : 200,
-    (value): value is { status: string } => isRecord(value) && value.status === expected, signal);
+  return request(`/auth/${action}`, { body: input, status: expected === 'accepted' ? 202 : 200,
+    valid: (value): value is { status: string } => isRecord(value) && value.status === expected }, signal);
 }

@@ -32,7 +32,7 @@ The project follows a strict **Incremental Development Lifecycle**, delivering f
 - AI usage report and weekly report.
 
 ### Sprint 3: Use-Case Modeling, Build 1 & Build 2 (First Functional Slice)
-- **Build 1 (moved from Sprint 2):** User authentication (Argon2id, JWT), database models (SQLAlchemy / PostgreSQL), and Room Lobby state machine.
+- **Build 1 (moved from Sprint 2):** User authentication (JWT; BCrypt in the PA3 build, Argon2id planned), database models (Spring Data JPA / PostgreSQL), and Room Lobby state machine.
 - Formal use case specifications and sequence diagrams.
 - UI prototyping and component design in Tailwind CSS.
 - **Build 2:** End-to-end slice connecting frontend room lobby to backend state machine, topic selection, and synchronized debate start.

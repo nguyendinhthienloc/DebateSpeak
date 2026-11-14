@@ -11,7 +11,7 @@ test('sign-in shows no recovery links', async ({ page }) => {
 for (const route of ['forgot-password', 'verify-email', 'reset-password']) {
   test(`/${route} is inert and sends no request`, async ({ page }) => {
     let calls = 0;
-    await page.route('**/auth/**', async r => { calls++; await r.abort(); });
+    await page.route('**/api/v1/auth/**', async r => { if (!r.request().url().endsWith('/auth/refresh')) calls++; await r.abort(); });
     await page.goto(`/#/${route}`);
     await expect(page.getByRole('heading', { name: 'Account recovery is not available in this build' })).toBeVisible();
     await expect(page.locator('form')).toHaveCount(0);

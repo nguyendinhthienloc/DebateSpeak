@@ -16,6 +16,8 @@ test('registers then signs in through the G1 HTTP contract', async ({ page }) =>
   const requests: { path: string; body: unknown; client: string | undefined; contentType: string | undefined }[] = [];
   await page.route('**/api/v1/auth/*', async route => {
     const request = route.request();
+    // No refresh cookie in this journey: reload must not restore the session.
+    if (request.url().endsWith('/refresh')) return route.fulfill({ status: 401, json: { code: 'no_session' } });
     requests.push({ path: new URL(request.url()).pathname, body: request.postDataJSON(),
       client: request.headers()['x-debatespeak-client'], contentType: request.headers()['content-type'] });
     await route.fulfill({ status: request.url().endsWith('/register') ? 201 : 200,
@@ -48,7 +50,8 @@ test('registers then signs in through the G1 HTTP contract', async ({ page }) =>
 test('validates fields locally and focuses the first invalid input', async ({ page }) => {
   let calls = 0;
   page.on('request', request => {
-    if (request.method() === 'POST' && new URL(request.url()).pathname.startsWith('/api/v1/auth/')) calls++;
+    const path = new URL(request.url()).pathname;
+    if (request.method() === 'POST' && path.startsWith('/api/v1/auth/') && path !== '/api/v1/auth/refresh') calls++;
   });
   await page.goto('/#/register');
   await page.getByRole('button', { name: 'Create account', exact: true }).click();

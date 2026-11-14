@@ -83,7 +83,6 @@ test-results/
 *.vrb
 report.pdf
 report_build/
-PRODUCT.md
 .impeccable/
 docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md
 docs/design/BUILD1_FIGMA_FLOW.md
@@ -97,7 +96,5 @@ docs/design/PALETTE_EXPLORATION.md
 docs/design/palette-exploration.json
 docs/design/TWO_PAGE_DEMOS.md
 docs/design/two-page-demos.json
-docs/design/UI_SCAFFOLD.md
-docs/pa2/BUILD1_UX_BRIEF.md
 docs/pa2/BUILD1_UX_BRIEF.pdf
 docs/requirements/PROJECT_PROPOSAL.md

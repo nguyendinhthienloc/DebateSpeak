@@ -1,8 +1,10 @@
 # Frontend specifications
 
 [001 — Frontend baseline](001-frontend-baseline/spec.md) records the current
-account forms and room/profile previews. Start with its
-[short backend handoff](001-frontend-baseline/contracts/auth.md) to connect auth.
+account forms and room/profile previews.
+[002 — FG-01 accounts end to end](002-fg01-accounts/spec.md) adds the Spring Boot
+API and PostgreSQL half (PA3 Part E). Start with its
+[short backend handoff](../web/API_CONTRACT.md) to connect auth.
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain

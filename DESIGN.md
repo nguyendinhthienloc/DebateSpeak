@@ -118,6 +118,19 @@ components:
 
 # Design System: DebateSpeak AI
 
+## Current implementation authority (2026-11-14)
+
+Frontend work is independent of Figma. The current visual authority is this
+file, `web/src/index.css`, `web/src/pages/account.css`, shared components and
+rendered browser checks. Keep Cream & Yellow, Inter, responsive layouts and
+accessible controls. Figma updates require an explicit user request; neither
+Foundations nor Build 1 flow is a dependency, approval gate or sync requirement.
+The older Figma details below are historical design research, not current
+implementation instructions. For account APIs use `web/API_CONTRACT.md`.
+Recovery pages reuse account geometry and expose Change password after email
+verification and from Profile. That action requests a separate password-reset
+code; verification alone never grants password-change authorization.
+
 ## SCRUM-49 local account refinement — November 14, 2026
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
 
@@ -133,7 +146,7 @@ Tuấn explicitly waived new Figma edits after reporting that Triết said they 
 
 A quiet, readable interface for a socially demanding activity. Cream grounds the experience; ink carries language and structure; saturated yellow identifies deliberate actions. Confidence comes from clear controls, readable states and specific guidance rather than decoration or promises of improvement.
 
-This records the user's selected Figma direction and the actual editable foundations, not a completed frontend. The sources are [Foundations — Cream & Yellow](https://www.figma.com/design/atfafBv5VA3RxNrfHrn1gl?node-id=26-5) and the [complete Build 1 flow](https://www.figma.com/design/atfafBv5VA3RxNrfHrn1gl?node-id=34-18), with the `DebateSpeak / Cream & Yellow` colour collection and its single `Default` mode. The canvas contains 68 desktop/mobile screens, including two focus specimens, plus 24 proposed local-audio overlay states. The proposed checks are documented in [the Create Room concept](docs/design/CREATE_ROOM_PREVIEW_AUDIO_CONCEPT.md); they do not change the Build 1 media contract. Product behavior remains governed by [PRODUCT.md](PRODUCT.md), [the UX brief](docs/pa2/BUILD1_UX_BRIEF.md) and [Gate G1](docs/pa2/G1_SPEC_BUILD1.md).
+Historical reference only: the original visual exploration used [Foundations — Cream & Yellow](https://www.figma.com/design/atfafBv5VA3RxNrfHrn1gl?node-id=26-5) and the [complete Build 1 flow](https://www.figma.com/design/atfafBv5VA3RxNrfHrn1gl?node-id=34-18), with the `DebateSpeak / Cream & Yellow` colour collection and its single `Default` mode. The canvas contains 68 desktop/mobile screens, including two focus specimens, plus 24 proposed local-audio overlay states. The proposed checks are documented in [the Create Room concept](docs/design/CREATE_ROOM_PREVIEW_AUDIO_CONCEPT.md); they do not change the Build 1 media contract. Product behavior remains governed by [PRODUCT.md](PRODUCT.md), [the UX brief](docs/pa2/BUILD1_UX_BRIEF.md) and [Gate G1](docs/architecture/G1_SPEC_BUILD1.md).
 
 **Key Characteristics:**
 

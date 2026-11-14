@@ -6,13 +6,13 @@ Ticket: **SCRUM-37**, PA3 Part D. Prepared locally on 2026-11-09 for human revie
 Responsible owner: **Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead**. Co-owner: **Nguyễn Bảo Minh Triết (24125047), Frontend & WebRTC/Audio Lead**. Assigned reviewer: **Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead**; review pending. This attribution does not assert that a teammate has reviewed, edited, or approved the work.
 
 ## 1. Scope and reading guide
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 The [use-case model](USE_CASE_MODEL.md) and [machine-readable catalogue](use_cases.json) define the shared use-case identifiers. These specifications describe intended behavior across all ten functional groups; they do not claim that the complete product is implemented in PA3. `PA3` labels identify the first-slice design, `future-mvp` the later Must workflows, and `should`, `stretch`, or `post-mvp` explicitly conditional scope. The authoritative build progression is the [roadmap](../ROADMAP.md), not the older sprint-number column in the functional-requirement tables.
 
 Each entry includes a goal, actor, trigger, preconditions, main success scenario, alternatives/exceptions, success guarantee, minimum guarantee, rules, traceability, and a prototype screenshot. Alternative labels refer to main-flow step numbers. A denial or failure is an outcome to describe, not permission to bypass a security or consent requirement. The prototype is a local design artifact with illustrative data. Its navigation and controls do not implement authentication, persistence, audio, transcription, or AI processing.
 
-Sources: [architecture requirements and privacy rules](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), [Vision](../requirements/VISION_DOCUMENT.md), [Build 1 contract](../architecture/G1_SPEC_BUILD1.md), and [PA3 scope](README.md). PA3 scope reductions in [Changes.md](Changes.md) take precedence over older Build 1 refresh-token/profile expansion. In particular, full refresh rotation, profile editing, and live media are not asserted as completed by these tickets.
+Sources: [architecture requirements and privacy rules](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), [Vision](../requirements/VISION_DOCUMENT.md), [Build 1 contract](../architecture/G1_SPEC_BUILD1.md), and [PA3 scope](README.md). PA3 scope reductions in [Changes.md](Changes.md) take precedence over older Build 1 refresh-token/profile expansion. On 2026-11-14 FG-01 became the PA3 Part E slice: `PA3` now covers all eight FG-01 use cases, and Sections 2.4–2.5 describe the implemented auth contract. FG-03 room use cases move to PA4. Live media is not asserted as completed.
 
 ## 2. Shared contracts
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -41,9 +41,9 @@ Speaker attribution comes from the participant's independent media track. Partia
 Default fact-checking selects at most eight claims. Verdicts are Supported, Partially supported, Contradicted, Insufficient evidence, and Not verifiable. Disagreement is visible as Contested. The MVP debate score has one evaluator, is labelled accordingly, and its self-reported confidence is capped at 0.8. Analysis failure produces a visibly partial or unavailable section rather than a fabricated score. Reports are post-debate; optional analysis must not block audio or overwhelm the live conversation.
 
 ### 2.4 Shared error and UI behavior
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
-Build 1's `/api/v1` resources are `/auth/register`, `/auth/login`, `/rooms`, `/rooms/join`, and `/rooms/{id}`. Do not create future routes merely to make a prototype work. Expired identity requires sign-in; unavailable/nonmember room reads return a non-disclosing 404; full or nonjoinable rooms and invalid exposed transitions use 409; invalid fields use 422. When rate limited, preserve nonsensitive input and respect Retry-After; when a dependency is unavailable, show a recoverable state without exposing traces.
+The PA3 `/api/v1` resources are the FG-01 endpoints in `web/API_INTEGRATION.md` (`/auth/*`, `/users/me`, `/auth/sessions`, `/admin/users`). Room resources (`/rooms`, `/rooms/join`, `/rooms/{id}`) belong to FG-03 in PA4. Do not create future routes merely to make a prototype work. Expired identity requires sign-in; unavailable/nonmember room reads return a non-disclosing 404; full or nonjoinable rooms and invalid exposed transitions use 409; invalid fields use 422. When rate limited, preserve nonsensitive input and respect Retry-After; when a dependency is unavailable, show a recoverable state without exposing traces.
 
 All screens require visible keyboard focus, labelled controls, meaningful loading/empty/error states, and text status rather than color alone. Destructive actions have a separate confirmation. Live controls keep mute, connection status, and end/leave readily accessible. The prototype navigation supplies the design screenshots referenced below; it is not an end-to-end product acceptance test.
 
@@ -54,28 +54,29 @@ The following authentication error contract applies to UC-01-01 and UC-01-02, in
 | Unreachable service | Explain that the service could not be reached; allow a deliberate retry when connectivity returns. |
 | 404 / 405 | Distinguish an unavailable authentication route from an unsupported action; do not describe either as invalid credentials or account creation success. |
 | 400 / 422 | Show safe validation guidance for invalid input. |
-| 401 on sign-in | Show the same invalid-credentials message for unknown email, wrong password, suspension or deletion; grant no access. |
-| 403 | Use neutral access-denial wording on both forms, including rejected Origin/client headers; do not expose account eligibility or bypass the denial. |
+| 401 on sign-in | Show the same invalid-credentials message for unknown email, wrong password or a deleted account; grant no access. |
+| 403 | Use neutral access-denial wording, including rejected Origin/client headers. Exception: sign-in with the correct password to a suspended account returns `{"code":"account_suspended"}` and the form says the account is suspended. The server checks the password first, so suspension is never revealed to someone without the password. |
 | 409 on registration | Report the registration conflict; offer sign-in, and offer UC-01-05 recovery only when implemented and enabled. |
 | 429 | Show retry timing, respect Retry-After and prevent immediate repeated submission. |
 | 500 / 502 / 503 | Distinguish a server error from temporary service unavailability; show a recoverable outcome without claiming the operation succeeded. |
 | 408 / 504 / local 15-second deadline | Explain that the request timed out; registration may have committed, so reconcile through sign-in before retrying account creation. |
 | Unreadable or malformed success response | Show an unexpected-response error; do not claim registration or sign-in succeeded without a valid response. |
 
-An ambiguous registration response follows UC-01-01 E3. An ambiguous login response follows UC-01-02 E3; the reduced PA3 flow remains signed out until a valid login response is received. Recovery is never presented as available merely because a failure occurred.
+An ambiguous registration response follows UC-01-01 E3. An ambiguous login response follows UC-01-02 E3; the PA3 flow remains signed out until a valid login response is received. Recovery is never presented as available merely because a failure occurred.
 
 ### 2.5 Authentication session lifecycle and scope
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
-FR-01's full-product session behavior is part of UC-01-02, not a separate user goal or a mandatory include from registration. Registration always finishes signed out. The following design follows G1 sections 5 and 7; it does not expand the reduced PA3 implementation scope in Changes.md.
+FR-01's full-product session behavior is part of UC-01-02, not a separate user goal or a mandatory include from registration. Registration always finishes signed out. The following design follows G1 sections 5 and 7; PA3 implements it (Changes.md row 1.12).
 
-- **Reduced PA3:** Register/login use an access JWT held only in runtime memory. Reload or expiry requires sign-in; refresh rotation remains deferred. Never imply a renewable session when the capability is unavailable.
+- **PA3 build:** Implements the full-product lifecycle below. The access JWT stays in runtime memory. On page load the app calls `/auth/refresh` once to restore the session; on access expiry it tries one refresh before asking the user to sign in.
 - **Full-product sign-in:** A valid login returns a short-lived access JWT (15 minutes under G1) and sets a host-only HttpOnly refresh cookie, Secure on HTTPS and SameSite=Lax. Neither access nor refresh credentials enter localStorage/sessionStorage; JavaScript never receives the refresh value. Auth requests use the configured trusted Origin, client header and credentialed fetch.
 - **Renewal:** When access expires, serialize refresh attempts and allow at most one refresh attempt for an ordinary protected-request recovery. The server atomically consumes the current refresh credential and issues its successor plus a new access JWT. Rotation preserves the family's original seven-day absolute expiry. Retry the protected request only after confirmed renewal and only when its retry contract permits it.
 - **Expiry, revocation or replay:** A missing, expired, revoked or replayed refresh credential produces a generic invalid-session outcome. Replay revokes the entire family. Clear in-memory credentials and return to sign-in without a retry loop; server checks prevent revoked families or ineligible accounts from retaining access.
 - **Lost renewal response:** Do not automatically repeat a potentially consumed refresh credential. Clear in-memory access and require sign-in. Concurrent-tab replay likewise requires re-authentication.
 - **Sign-out:** UC-01-04 revokes the identifiable current family and clears the refresh cookie; an already absent/revoked session is an idempotent success. This does not sign out every device. Network failure leaves revocation unconfirmed as specified in UC-01-04 E1.
 
-Full refresh-session behavior is future implementation work, while the design and FR-01 traceability are recorded here. Password recovery remains conditional on UC-01-05 being implemented and enabled; otherwise offer sign-in only and do not expose an actionable recovery link.
+Refresh-session behavior is implemented in PA3 (`specs/002-fg01-accounts`). Password recovery remains conditional on UC-01-05 being implemented and enabled; otherwise offer sign-in only and do not expose an actionable recovery link.
 
 ## 3. Use-case specifications
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -86,7 +87,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-01-01 — Register account
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Create an account without granting media or AI-processing consent.
 
@@ -110,6 +111,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | A1 | At step 1, optional profile values are omitted. | System uses Learner and B1 defaults; registration may continue. |
+| A2 | After step 4, the visitor verifies their email. | Visitor enters the emailed code on Verify email, or requests a new one. Verification never signs in, and a verification code is never accepted as a reset code. |
 | E1 | At step 2, email/password/display name/CEFR is invalid. | Show field errors, retain nonsensitive fields, clear the password, and create no account. |
 | E2 | At step 3, email already exists. | Return EMAIL_EXISTS without creating another account; offer sign-in, and recovery only when UC-01-05 is implemented and enabled. |
 | E3 | At step 3, throttling or a failed/ambiguous response occurs. | Apply Section 2.4 error handling: respect Retry-After or reconcile by sign-in before retrying; offer recovery only when UC-01-05 is implemented and enabled. Never claim success without confirmation. |
@@ -118,7 +120,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Postconditions — minimum guarantee:** A failed atomic write leaves neither a partial account nor a partial profile.
 
-**Special requirements:** Email at most 254 characters; password 12–128 without trimming; display name 1–80; CEFR A2/B1/B2/C1. Argon2id hashing occurs server-side. No passwords in screenshots/logs. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** Email at most 254 characters; password 12–128 without trimming; display name 1–80; CEFR A2/B1/B2/C1. Password hashing occurs server-side (Argon2id specified; the PA3 build uses BCrypt, Changes.md row 1.13). No passwords in screenshots/logs. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-01](prototypes/index.html#UC-01-01). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -127,7 +129,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-01 alternative and exception prototype states](prototypes/screenshots/uc-01-01-alternatives.png)
 
 ### UC-01-02 — Sign in
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Authenticate and recover an authorized application session.
 
@@ -151,15 +153,16 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | A1 | At step 4, an invite destination was preserved. | After sign-in, reopen invite entry; joining still requires its own capacity/state checks. |
-| E1 | At step 2, credentials are wrong, suspended or deleted. | Show the same generic invalid-credentials message; issue no session. |
+| E1 | At step 2, credentials are wrong or the account is deleted. | Show the same generic invalid-credentials message; issue no session. |
 | E2 | At step 2, fields are malformed or login is rate limited. | Show validation or retry timing; retain email, clear password. |
 | E3 | At step 3, session creation or network confirmation fails. | Apply Section 2.4 error handling and remain signed out until a valid login response is received; do not show a fake logged-in screen. |
+| E4 | At step 2, the password is correct but the account is suspended. | Say the account is suspended (403 `account_suspended`); issue no session. |
 
 **Postconditions — success:** A verified session identifies the user and enables only their authorized actions.
 
 **Postconditions — minimum guarantee:** Failed sign-in grants no access and discloses no account eligibility details.
 
-**Special requirements:** Sections 2.4 and 2.5 define auth errors and the FR-01 session lifecycle, including renewal, expiry, replay and lost-response handling. Keep access tokens only in runtime memory; never expose server secrets. Full refresh rotation remains outside reduced PA3 implementation scope. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** Sections 2.4 and 2.5 define auth errors and the FR-01 session lifecycle, including renewal, expiry, replay and lost-response handling. Keep access tokens only in runtime memory; never expose server secrets. Refresh rotation is implemented in PA3. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-02](prototypes/index.html#UC-01-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -168,24 +171,24 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-02 alternative and exception prototype states](prototypes/screenshots/uc-01-02-alternatives.png)
 
 ### UC-01-03 — Maintain learner profile
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Maintain display name, native language, self-assessed CEFR and goals.
 
 | Field | Specification |
 |---|---|
 | Actors | Learner / Debater |
-| Scope / kind | `future-mvp`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
 | Requirements | FR-02 |
 | Trigger | Learner opens Profile and chooses Edit. |
-| Preconditions | Learner is authenticated and editing their own profile; this future workflow is enabled. |
+| Preconditions | Learner is authenticated and editing their own profile. |
 
 **Basic flow — main success scenario**
 
 1. System loads the learner current display name, native language, CEFR and goals.
 2. Learner changes the supported fields and reviews the self-assessment explanation.
 3. System validates the update against the authenticated identity and saves it atomically.
-4. System displays saved values and confirms that subsequent recommendations use them.
+4. System displays the saved values and confirms the save; the header shows the new display name.
 
 **Alternative and exception flows**
 
@@ -199,7 +202,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Postconditions — minimum guarantee:** No other account changes; invalid requests leave the saved profile unchanged.
 
-**Special requirements:** CEFR is self-assessed, never certified. Never accept user_id, role, email or password_hash as editable profile fields. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** CEFR is self-assessed, never certified. Native language is free text up to 64 characters; up to five goals, one per line, each up to 120 characters. Never accept user_id, role, email or password_hash as editable profile fields. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-03](prototypes/index.html#UC-01-03). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -208,7 +211,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-03 alternative and exception prototype states](prototypes/screenshots/uc-01-03-alternatives.png)
 
 ### UC-01-04 — Sign out
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** End the current session without keeping the account active in this browser.
 
@@ -232,7 +235,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | A1 | At step 2, session already expired or was revoked. | Treat sign-out as idempotent and show the signed-out page. |
-| E1 | At step 3, the network is unavailable. | Clear local access immediately, disclose that server revocation is unconfirmed, and retry revocation when possible. |
+| E1 | At step 3, the network is unavailable. | Clear local access immediately, disclose that server revocation is unconfirmed, and advise signing in again to check Active sessions (UC-01-06). |
 | A2 | At step 1, a LIVE room is open. | Stop this browser capture promptly and follow leave/end rules; sign-out does not authorize background recording. |
 
 **Postconditions — success:** This browser is signed out; confirmed server revocation is reflected honestly.
@@ -248,38 +251,38 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-04 alternative and exception prototype states](prototypes/screenshots/uc-01-04-alternatives.png)
 
 ### UC-01-05 — Recover forgotten password
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Regain account access through a verified password-reset process.
 
 | Field | Specification |
 |---|---|
-| Actors | Visitor |
-| Scope / kind | `should`; user-goal; design status, not implementation evidence |
+| Actors | Visitor; Learner (from Profile, Change password) |
+| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
 | Requirements | FR-03 |
-| Trigger | Visitor selects Forgot password. |
-| Preconditions | Visitor is signed out; the conditional recovery service has been implemented and enabled. |
+| Trigger | Visitor selects Forgot password, or a signed-in learner selects Change password on Profile. |
+| Preconditions | The recovery screens are enabled. The API implements them; the PA3 UI keeps them switched off until real email delivery is verified. |
 
 **Basic flow — main success scenario**
 
 1. Visitor submits an email address to the recovery form.
-2. System returns a uniform acknowledgement and sends a single-use, expiring recovery link if the account is eligible.
-3. Visitor opens the link and enters a new valid password.
-4. System verifies and consumes the reset credential atomically, changes the password and directs the visitor to sign in.
+2. System returns a uniform acknowledgement and sends a single-use, expiring reset code if the account is eligible.
+3. Visitor enters the email, the code and a new valid password on Reset password.
+4. System verifies and consumes the reset credential atomically, changes the password, ends every existing session of the account and directs the visitor to sign in.
 
 **Alternative and exception flows**
 
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | A1 | At step 2, email is unknown or ineligible. | Show the same acknowledgement; do not disclose account existence. |
-| E1 | At step 3, link is expired, invalid or already used. | Do not change the password; offer a fresh recovery request. |
+| E1 | At step 3, the code is expired, invalid or already used. | Do not change the password; offer a fresh recovery request. |
 | E2 | At step 4, password is invalid or delivery/service fails. | Keep the account unchanged; show a generic recovery error or retry path without displaying the reset credential. |
 
 **Postconditions — success:** A verified reset changes the password once; visitor signs in separately.
 
 **Postconditions — minimum guarantee:** No password change occurs without a verified, unused recovery credential.
 
-**Special requirements:** Recovery-token lifetime, delivery provider and session-revocation policy must be specified in the future auth ticket before implementation; they are not invented as working services here. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** The backend enforces code expiry and single use and stores only code hashes. A successful reset ends every session of the account. An email-verification code is never accepted as a reset code. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-05](prototypes/index.html#UC-01-05). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -288,23 +291,23 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-05 alternative and exception prototype states](prototypes/screenshots/uc-01-05-alternatives.png)
 
 ### UC-01-06 — Review active sessions
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Inspect own authenticated sessions without exposing session credentials.
 
 | Field | Specification |
 |---|---|
 | Actors | Authenticated user |
-| Scope / kind | `should`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
 | Requirements | FR-03 |
 | Trigger | User opens Active sessions. |
-| Preconditions | User is authenticated; own-session inspection is enabled. |
+| Preconditions | User is authenticated. |
 
 **Basic flow — main success scenario**
 
 1. System authorizes the current account and retrieves only its sessions.
 2. System displays nonsecret session metadata and marks the current browser.
-3. User inspects activity and refreshes the list.
+3. User inspects each device, its sign-in time and its last activity.
 4. System reconciles expired sessions and shows the current authorized list.
 
 **Alternative and exception flows**
@@ -313,13 +316,14 @@ The 54 entries below follow the shared catalogue order. Each specification links
 |---|---|---|
 | A1 | At step 2, no other active session exists. | Show an explicit current-session-only or empty state, not sample devices. |
 | E1 | At step 1, the session expires or another account is requested. | Require sign-in or deny access without returning another account session metadata. |
-| E2 | At step 4, retrieval fails. | Keep the last list visibly stale and offer refresh; do not imply a device was revoked. |
+| E2 | At step 4, retrieval fails. | Show the error with Try again; do not imply a device was revoked. |
+| A2 | At step 3, the user signs out another device. | After a separate confirmation the server ends that session, and that device must sign in again. On the current device the action is Sign out here (UC-01-04). |
 
 **Postconditions — success:** User sees a current or explicitly stale list of their sessions.
 
 **Postconditions — minimum guarantee:** Session credentials and other users sessions are never exposed.
 
-**Special requirements:** This FR requires viewing sessions, not unrequested device-control functionality. Never show raw access/refresh tokens, token hashes or full secret cookie values. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** Signing out one other device at a time is supported; there is no action that signs out all devices. Never show raw access/refresh tokens, token hashes or full secret cookie values. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-06](prototypes/index.html#UC-01-06). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -328,22 +332,22 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-06 alternative and exception prototype states](prototypes/screenshots/uc-01-06-alternatives.png)
 
 ### UC-01-07 — Delete own account and data
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Immediately disable the account and erase associated learning data within seven days.
 
 | Field | Specification |
 |---|---|
 | Actors | Learner / Debater |
-| Scope / kind | `future-mvp`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
 | Requirements | FR-04 |
 | Trigger | Learner selects Delete account. |
-| Preconditions | Learner is authenticated as the account to delete; deletion workflow is enabled. |
+| Preconditions | Learner is authenticated as the account to delete. |
 
 **Basic flow — main success scenario**
 
 1. System explains immediate loss of access and deletion of associated learning data within seven days.
-2. Learner reviews the affected data and separately confirms deletion.
+2. Learner reviews the affected data, enters their password and ticks a separate confirmation.
 3. System verifies identity, atomically soft-deletes the account and invalidates access.
 4. System schedules cascading erasure of transcripts, analysis, reports and optional chat, then shows a nonsecret confirmation.
 
@@ -352,7 +356,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | A1 | At step 2, learner cancels. | Close the confirmation; account and data remain unchanged. |
-| E1 | At step 3, identity is stale or confirmation is missing. | Reject deletion and require authorized confirmation; do not enqueue erasure. |
+| E1 | At step 3, identity is stale, the password is wrong or confirmation is missing. | Reject deletion and require authorized confirmation; do not enqueue erasure. |
 | E2 | At step 4, erasure processing is temporarily unavailable. | Keep the account disabled, retain a retryable deletion job and expose outstanding status to authorized administration. |
 | A2 | At step 3, deletion was already accepted. | Return the existing deletion outcome rather than scheduling duplicate jobs. |
 
@@ -360,7 +364,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 **Postconditions — minimum guarantee:** Cancellation changes nothing; accepted deletion never silently restores access when a worker fails.
 
-**Special requirements:** Confirm erasure scope across derived artifacts and future chat. Do not promise instant physical deletion or preserve shareable report links after revocation. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** Confirm erasure scope across derived artifacts and future chat. The PA3 build soft-deletes the account and signs out every device at once; the scheduled hard-delete job is not built yet. Do not promise instant physical deletion or preserve shareable report links after revocation. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-07](prototypes/index.html#UC-01-07). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 
@@ -369,22 +373,22 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-07 alternative and exception prototype states](prototypes/screenshots/uc-01-07-alternatives.png)
 
 ### UC-01-08 — Suspend or reactivate account
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Restrict or restore account access using authorized moderation.
 
 | Field | Specification |
 |---|---|
-| Actors | Moderator / Admin |
-| Scope / kind | `should`; user-goal; design status, not implementation evidence |
+| Actors | Admin (role `ADMIN`) |
+| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
 | Requirements | FR-05 |
-| Trigger | Admin opens an account moderation record. |
+| Trigger | Admin opens Manage accounts and looks up an account by its exact email. |
 | Preconditions | Moderator/Admin is authenticated with account-moderation permission. |
 
 **Basic flow — main success scenario**
 
 1. System verifies role and loads the authorized moderation status.
-2. Admin selects Suspend or Reactivate and enters a reason.
+2. Admin selects Suspend, enters a reason and confirms; or selects Reactivate.
 3. System validates the transition, applies the access restriction/restoration and records the actor and reason.
 4. System refreshes the account status without exposing private learning content.
 
@@ -395,6 +399,8 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | A1 | At step 2, admin cancels or requests an already-applied status. | Leave status unchanged or return the existing result without duplicate action. |
 | E1 | At step 1, caller lacks permission. | Deny the action without loading sensitive account details. |
 | E2 | At step 3, the record changed or the write fails. | Reload the current moderation status; do not show an unconfirmed suspension/reactivation. |
+| E3 | At step 1, the account found is the admin's own. | Offer no suspend or reactivate action; the server also rejects self-suspension. |
+| E4 | At step 1, no account uses the email. | Say that no account uses this email; change nothing. |
 
 **Postconditions — success:** An authorized moderation decision changes account access with an attributable record.
 
@@ -578,14 +584,14 @@ The 54 entries below follow the shared catalogue order. Each specification links
 *Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-03-01 — Create debate room
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Create a two-person LOBBY with a topic, stance mode, format, duration and invite.
 
 | Field | Specification |
 |---|---|
 | Actors | Learner / Debater |
-| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA4` (PA3 UI preview only); user-goal; design status, not implementation evidence |
 | Requirements | FR-10, FR-12 |
 | Trigger | Learner selects Create room. |
 | Preconditions | Learner is authenticated and has selected an active topic. |
@@ -619,14 +625,14 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-01 alternative and exception prototype states](prototypes/screenshots/uc-03-01-alternatives.png)
 
 ### UC-03-02 — Join invited room
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** Join by code or link while the server enforces two distinct debaters and room availability.
 
 | Field | Specification |
 |---|---|
 | Actors | Learner / Debater |
-| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA4` (PA3 UI preview only); user-goal; design status, not implementation evidence |
 | Requirements | FR-11, FR-12 |
 | Trigger | Learner submits Join room. |
 | Preconditions | Learner is authenticated and has an invite code or link. |
@@ -662,14 +668,14 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-02 alternative and exception prototype states](prototypes/screenshots/uc-03-02-alternatives.png)
 
 ### UC-03-03 — View lobby and readiness
-*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.*
 
 **Description / goal:** See authoritative room state and participant presence without treating presence as consent.
 
 | Field | Specification |
 |---|---|
 | Actors | Learner / Debater |
-| Scope / kind | `PA3`; user-goal; design status, not implementation evidence |
+| Scope / kind | `PA4` (PA3 UI preview only); user-goal; design status, not implementation evidence |
 | Requirements | FR-12 |
 | Trigger | Learner opens or refreshes their lobby. |
 | Preconditions | Learner is a current authenticated room participant. |

@@ -10,7 +10,8 @@ window.PA3_DATA = {
       "role": "AI Orchestrator & Analysis Lead"
     },
     "scope_notes": {
-      "PA3": "Modelled in PA3; only existing Sprint 3 commitments are implementation scope. Topic browsing is extra and sign-out requires the auth contract. UC-01-02 includes the future full-product session lifecycle in specification Section 2.5; reduced PA3 uses access-token register/login with no refresh rotation. Recovery links require UC-01-05 to be implemented and enabled.",
+      "PA3": "Implemented in PA3. FG-01 (all eight account use cases) is the Part E slice, with refresh sessions, profile, deletion and admin suspension. Recovery screens stay switched off until real email delivery is verified.",
+      "PA4": "Planned for PA4. FG-03 room screens exist in PA3 only as previews with sample data; no room API exists yet.",
       "future-mvp": "MVP behaviour planned for later builds, except FG-03 session controls whose PA3 media boundary must remain explicit.",
       "should": "Conditional enhancement; cut before Must requirements if schedule slips.",
       "stretch": "Could requirement, not a PA3 implementation commitment.",
@@ -131,7 +132,7 @@ window.PA3_DATA = {
         "requirements": [
           "FR-02"
         ],
-        "scope": "future-mvp",
+        "scope": "PA3",
         "kind": "user-goal",
         "goal": "Maintain display name, native language, self-assessed CEFR and goals.",
         "screen": "uc-01-03"
@@ -156,12 +157,13 @@ window.PA3_DATA = {
         "fg": "FG-01",
         "title": "Recover forgotten password",
         "actors": [
-          "VISITOR"
+          "VISITOR",
+          "LEARNER"
         ],
         "requirements": [
           "FR-03"
         ],
-        "scope": "should",
+        "scope": "PA3",
         "kind": "user-goal",
         "goal": "Regain account access through a verified password-reset process.",
         "screen": "uc-01-05"
@@ -176,7 +178,7 @@ window.PA3_DATA = {
         "requirements": [
           "FR-03"
         ],
-        "scope": "should",
+        "scope": "PA3",
         "kind": "user-goal",
         "goal": "Inspect own authenticated sessions without exposing session credentials.",
         "screen": "uc-01-06"
@@ -191,7 +193,7 @@ window.PA3_DATA = {
         "requirements": [
           "FR-04"
         ],
-        "scope": "future-mvp",
+        "scope": "PA3",
         "kind": "user-goal",
         "goal": "Immediately disable the account and erase associated learning data within seven days.",
         "screen": "uc-01-07"
@@ -206,7 +208,7 @@ window.PA3_DATA = {
         "requirements": [
           "FR-05"
         ],
-        "scope": "should",
+        "scope": "PA3",
         "kind": "user-goal",
         "goal": "Restrict or restore account access using authorized moderation.",
         "screen": "uc-01-08"
@@ -283,7 +285,7 @@ window.PA3_DATA = {
           "FR-10",
           "FR-12"
         ],
-        "scope": "PA3",
+        "scope": "PA4",
         "kind": "user-goal",
         "goal": "Create a two-person LOBBY with a topic, stance mode, format, duration and invite.",
         "screen": "uc-03-01"
@@ -299,7 +301,7 @@ window.PA3_DATA = {
           "FR-11",
           "FR-12"
         ],
-        "scope": "PA3",
+        "scope": "PA4",
         "kind": "user-goal",
         "goal": "Join by code or link while the server enforces two distinct debaters and room availability.",
         "screen": "uc-03-02"
@@ -314,7 +316,7 @@ window.PA3_DATA = {
         "requirements": [
           "FR-12"
         ],
-        "scope": "PA3",
+        "scope": "PA4",
         "kind": "user-goal",
         "goal": "See authoritative room state and participant presence without treating presence as consent.",
         "screen": "uc-03-03"
@@ -1186,17 +1188,17 @@ window.PA3_DATA = {
       {
         "id": "UC-01-05",
         "title": "Recover forgotten password",
-        "preconditions": "Visitor is signed out; the conditional recovery service has been implemented and enabled.",
-        "trigger": "Visitor selects Forgot password.",
+        "preconditions": "The recovery screens are enabled. The API implements them; the PA3 UI keeps them switched off until real email delivery is verified.",
+        "trigger": "Visitor selects Forgot password, or a signed-in learner selects Change password on Profile.",
         "steps": [
           "Visitor submits an email address to the recovery form.",
-          "System returns a uniform acknowledgement and sends a single-use, expiring recovery link if the account is eligible.",
-          "Visitor opens the link and enters a new valid password.",
-          "System verifies and consumes the reset credential atomically, changes the password and directs the visitor to sign in."
+          "System returns a uniform acknowledgement and sends a single-use, expiring reset code if the account is eligible.",
+          "Visitor enters the email, the code and a new valid password on Reset password.",
+          "System verifies and consumes the reset credential atomically, changes the password, ends every existing session of the account and directs the visitor to sign in."
         ],
         "success": "A verified reset changes the password once; visitor signs in separately.",
         "minimum": "No password change occurs without a verified, unused recovery credential.",
-        "special": "Recovery-token lifetime, delivery provider and session-revocation policy must be specified in the future auth ticket before implementation; they are not invented as working services here.",
+        "special": "The backend enforces code expiry and single use and stores only code hashes. A successful reset ends every session of the account. An email-verification code is never accepted as a reset code.",
         "alternatives": [
           {
             "id": "A1",
@@ -1206,8 +1208,8 @@ window.PA3_DATA = {
           },
           {
             "id": "E1",
-            "label": "E1 — At step 3, link is expired, invalid or already used.",
-            "detail": "At step 3, link is expired, invalid or already used.",
+            "label": "E1 — At step 3, the code is expired, invalid or already used.",
+            "detail": "At step 3, the code is expired, invalid or already used.",
             "outcome": "Do not change the password; offer a fresh recovery request."
           },
           {

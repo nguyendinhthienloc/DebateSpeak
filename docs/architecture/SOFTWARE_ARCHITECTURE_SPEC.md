@@ -1379,7 +1379,60 @@ These frontend contracts do not establish server security or email delivery.
 
 The existing frontend is now recorded retrospectively in
 [specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
-plan, tasks and a [short human-readable API handoff](../../specs/001-frontend-baseline/contracts/auth.md).
+plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
 Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
 update these artifacts before code. Backend integration remains unfinished;
 this documentation does not change product behavior or complete FG-01.
+
+## Recovery navigation and frontend authority revision (2026-11-14)
+
+FG-01 owns login/registration (FR-01) and password reset (FR-03). FG-03 FR-10–17
+requires actual room/session services; the existing sample screens do not meet
+those requirements. Verification success and Profile expose Change password,
+which starts the existing reset-code flow. Verification codes must never be
+reused as reset authorization. Email may pass between recovery screens in memory;
+passwords/codes clear on navigation. No new backend endpoint is implied.
+
+Frontend source, DESIGN.md, specs and rendered browser checks govern current UI.
+Both historical Figma links (Foundations and Build 1 flow) are optional references;
+Figma work happens only on explicit user request. This supersedes older
+Figma-first implementation guidance. Keep all repository paths relative.
+
+## FG-01 account management frontend scaffold (2026-11-14)
+
+The frontend now calls the remaining FG-01 endpoints. The Spring Boot service
+`api/authify` (branch `backend-tai`) implements all of them with PostgreSQL
+tables `users`, `auth_sessions`, `auth_codes` and `account_suspensions`
+(`specs/002-fg01-accounts`), verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). Deviations: BCrypt instead of Argon2id; schema by
+Hibernate, not migrations.
+Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
+This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
+
+| Method & path | Auth | Request | Success |
+|---|---|---|---|
+| `POST /auth/refresh` | Refresh cookie | none | 200 login response; 401 if no valid cookie |
+| `POST /auth/logout` | Refresh cookie | none | 204; idempotent |
+| `GET /users/me` | Bearer | none | 200 profile |
+| `PATCH /users/me` | Bearer | any of `display_name`, `cefr_level`, `native_language`, `goals` | 200 profile |
+| `DELETE /users/me` | Bearer | `password` | 202 `{status:"scheduled"}`; 403 wrong password |
+| `GET /auth/sessions` | Bearer + cookie | none | 200 `{sessions:[{id, created_at, last_used_at, device, current}]}` |
+| `DELETE /auth/sessions/{id}` | Bearer | none | 204 |
+| `GET /admin/users?email=` | Bearer, ADMIN | query | 200 admin user; 404 if none |
+| `POST /admin/users/{id}/suspend` | Bearer, ADMIN | `reason` | 200 admin user |
+| `POST /admin/users/{id}/reactivate` | Bearer, ADMIN | none | 200 admin user |
+
+Profile = login `user` plus `native_language` (string or null, up to 64
+characters) and `goals` (up to 5 strings, each up to 120 characters). The user
+object may include `role` (`LEARNER` or `ADMIN`). A session is one
+`auth_refresh_tokens` family. `device` is a short label derived from User-Agent
+at login; storing it needs a nullable `device TEXT` and a `last_used_at` column
+on the family's first row (or a `auth_sessions` table). Suspension adds an
+`account_suspensions` audit row (admin, reason, time) and revokes all refresh
+families; login for a suspended account returns 403 `{code:"account_suspended"}`.
+Deletion soft-deletes immediately (`deleted_at`), revokes all sessions and
+hard-deletes data within 7 days (FR-04).
+
+Frontend rules: access tokens stay in memory and travel only in `Authorization`;
+reload calls `/auth/refresh` once; a 401 on any Bearer call ends the session.
+Destructive actions require explicit confirmation. Admin links are hidden for
+non-admins, but the server is the only authority on role.

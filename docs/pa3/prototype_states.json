@@ -158,17 +158,17 @@
     {
       "id": "UC-01-05",
       "title": "Recover forgotten password",
-      "preconditions": "Visitor is signed out; the conditional recovery service has been implemented and enabled.",
-      "trigger": "Visitor selects Forgot password.",
+      "preconditions": "The recovery screens are enabled. The API implements them; the PA3 UI keeps them switched off until real email delivery is verified.",
+      "trigger": "Visitor selects Forgot password, or a signed-in learner selects Change password on Profile.",
       "steps": [
         "Visitor submits an email address to the recovery form.",
-        "System returns a uniform acknowledgement and sends a single-use, expiring recovery link if the account is eligible.",
-        "Visitor opens the link and enters a new valid password.",
-        "System verifies and consumes the reset credential atomically, changes the password and directs the visitor to sign in."
+        "System returns a uniform acknowledgement and sends a single-use, expiring reset code if the account is eligible.",
+        "Visitor enters the email, the code and a new valid password on Reset password.",
+        "System verifies and consumes the reset credential atomically, changes the password, ends every existing session of the account and directs the visitor to sign in."
       ],
       "success": "A verified reset changes the password once; visitor signs in separately.",
       "minimum": "No password change occurs without a verified, unused recovery credential.",
-      "special": "Recovery-token lifetime, delivery provider and session-revocation policy must be specified in the future auth ticket before implementation; they are not invented as working services here.",
+      "special": "The backend enforces code expiry and single use and stores only code hashes. A successful reset ends every session of the account. An email-verification code is never accepted as a reset code.",
       "alternatives": [
         {
           "id": "A1",
@@ -178,8 +178,8 @@
         },
         {
           "id": "E1",
-          "label": "E1 — At step 3, link is expired, invalid or already used.",
-          "detail": "At step 3, link is expired, invalid or already used.",
+          "label": "E1 — At step 3, the code is expired, invalid or already used.",
+          "detail": "At step 3, the code is expired, invalid or already used.",
           "outcome": "Do not change the password; offer a fresh recovery request."
         },
         {
