@@ -13,7 +13,7 @@ frontend is unchanged: point `VITE_API_BASE_URL` at the service.
 | Layer | Choice |
 |---|---|
 | Frontend | Vite + React 18 + TypeScript SPA (`web/`), see 001 |
-| API | Java 21, Spring Boot (Web, Security, Data JPA, Validation, Mail), Maven wrapper |
+| API | Java 17 (21 also works), Spring Boot 4.1 (Web, Security, Data JPA, Validation, Mail), Maven wrapper |
 | Database | PostgreSQL 16 (`docker-compose.yml` service `db`) |
 | Schema | Created by Hibernate (`ddl-auto=update`); versioned migrations are PA4 work |
 | Passwords and codes | BCrypt (`BCryptPasswordEncoder`). The architecture spec names Argon2id; this deviation is recorded and open |
@@ -59,9 +59,11 @@ All under `/api/v1`; full shapes in [web/API_INTEGRATION.md](../../web/API_INTEG
 | `DATABASE_URL`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` | JDBC connection |
 | `APP_JWT_SECRET`, `APP_JWT_EXPIRATION_SECONDS` | Access-token signing and lifetime |
 | `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` | SMTP sender |
+| `FRONTEND_URL` | Exact web origin for CORS and the Origin check (default `http://localhost:5173`) |
 | `VITE_API_BASE_URL` (frontend) | `http://localhost:8000/api/v1` |
 
 ## Known gaps
 
-BCrypt instead of Argon2id; no migrations; CEFR range must be A2–C1 to match
-the contract; no automated backend tests yet.
+BCrypt instead of Argon2id; no migrations; no rate limiting; no scheduled
+hard-delete job; no automated backend tests; secrets and `target/` still
+committed (tasks T002a, T003).

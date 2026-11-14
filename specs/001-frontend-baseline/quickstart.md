@@ -29,6 +29,7 @@ successful room/profile integration.
 - Backend source inspection: `api/app/main.py` registers only `/health`, with
   no auth router. Real register/login/verify/reset calls cannot work against
   this checkout's backend until the six documented endpoints are implemented.
+  (Superseded on 2026-11-14 by the real-backend run in `specs/002-fg01-accounts/tasks.md`.)
   Backend runtime checks could not start: FastAPI is absent from the available
   Python environment. Browser tests use intercepted responses, not real email.
 - FG-03 has a pure room-state helper at `api/app/domain/rooms.py` and UI previews;

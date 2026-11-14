@@ -6,23 +6,24 @@ Frontend tasks are in [001 tasks](../001-frontend-baseline/tasks.md).
 ## Setup
 
 - [x] T001 Spec, plan and tasks for the FG-01 backend slice (this folder).
-- [ ] T002 Commit `api/authify` sources, `pom.xml` and Maven wrapper; ignore `target/` (Tài).
-- [ ] T003 Move JWT and mail secrets to environment variables; add placeholders to `.env.example` (Tài).
+- [x] T002 Commit `api/authify` sources, `pom.xml` and Maven wrapper (Tài, commit `3f5e8f1`).
+- [ ] T002a Remove the committed `target/` folder from git (`git rm -r --cached api/authify/target`); commit the Java 17 setting in `pom.xml` (Tài).
+- [ ] T003 **Urgent:** move JWT and mail secrets (still in `src/main/resources/application.properties`) and revoke the exposed Gmail app password; move them to environment variables; add placeholders to `.env.example` (Tài).
 
 ## Data
 
-- [x] T004 Entities and repositories for `users`, `auth_sessions`, `auth_codes`, `account_suspensions` (compiled on `backend-tai`).
-- [ ] T005 Run against `docker compose up -d db` and confirm tables are created.
+- [x] T004 Entities and repositories for `users`, `auth_sessions`, `auth_codes`, `account_suspensions` (tables created in PostgreSQL).
+- [x] T005 Run against `docker compose up -d db` and confirm tables are created.
 
 ## US1–US2 Access and sessions
 
 - [x] T006 Register, login, refresh (rotating cookie), logout endpoints.
-- [ ] T007 Verify reload keeps the session and sign out ends it, using the real API.
+- [x] T007 Verify reload keeps the session and sign out ends it, using the real API (browser run).
 
 ## US3–US4 Profile, sessions, deletion
 
 - [x] T008 `/users/me` GET/PATCH/DELETE, `/auth/sessions` list and revoke.
-- [ ] T009 Verify with two browsers: revoke one session from the other.
+- [x] T009 Verify with two clients: revoke one session from the other; the revoked one cannot refresh.
 
 ## US5 Recovery
 
@@ -32,9 +33,22 @@ Frontend tasks are in [001 tasks](../001-frontend-baseline/tasks.md).
 ## US6 Admin
 
 - [x] T012 Admin lookup, suspend with reason, reactivate; self-suspension rejected.
-- [ ] T013 Verify a suspended user gets the suspended message at sign-in.
+- [x] T013 Verify a suspended user gets 403 `account_suspended` at sign-in, and a wrong password still gets 401.
 
 ## Polish
 
-- [ ] T014 Restrict CEFR to A2–C1 to match the contract.
+- [x] T014 Restrict CEFR to A2–C1 to match the contract.
 - [ ] T015 Record the narrated video of US1–US4 and US6 (Part E).
+
+## Verification record (2026-11-14)
+
+- Build: `mvnw clean package` on JDK 17 from commit `3f5e8f1` (with `java.version` set to 17).
+- API: 29 of 30 scripted checks pass (register, duplicate, CEFR, login, refresh rotation, profile,
+  role change rejected, sessions, revoke, admin find/suspend/reactivate, self-suspension, logout,
+  delete with password, deleted login). The failing check expected 403 for a missing client header on
+  login; the backend enforces that header only on `/auth/refresh` and `/auth/logout`.
+- Browser: the real frontend on Vite against the API passes register, sign in, reload keeps the
+  session, profile save persists, active sessions, sign out, admin suspend and reactivate, and
+  nothing in browser storage.
+- Not run: forgot-password, resend-verification, verify-email and reset-password, because they send
+  real email through the committed SMTP account.

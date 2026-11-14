@@ -1,6 +1,6 @@
 # Quickstart: run FG-01 end to end
 
-Requires Docker, JDK 21 and Node.js 20+.
+Requires Docker, JDK 17 or newer and Node.js 20+.
 
 1. Database, from the repository root:
    ```powershell
@@ -14,7 +14,11 @@ Requires Docker, JDK 21 and Node.js 20+.
    .\mvnw spring-boot:run
    ```
    The API listens on port 8000. Check `http://localhost:8000/api/v1/health`.
+   If `java -version` is not 17+, set `$env:JAVA_HOME` to a JDK 17+ folder first.
+   Seeded accounts: `learner@example.com` (learner) and `admin@debatespeak.org` (admin);
+   their passwords are in `AuthService.java`.
 3. Frontend: set `VITE_API_BASE_URL=http://localhost:8000/api/v1` in the root
    `.env`, then from `web/` run `npm run dev` and open `http://localhost:5173`
-   (use `localhost`, which the API allows for CORS).
+   (use `localhost`, which the API allows for CORS). If Vite runs on another port, start the
+   API with `$env:FRONTEND_URL` set to that exact origin, or every account call returns 403.
 4. Walk the checks in [spec.md](spec.md) US1–US6 and tick [tasks.md](tasks.md).

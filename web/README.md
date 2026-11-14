@@ -102,8 +102,8 @@ code. Real email/password changes require the documented backend endpoints.
 
 The frontend now has screens for every FG-01 use case. What it cannot do yet:
 
-- **Backend not yet verified end to end.** The Spring Boot API implements every
-  endpoint in [API_INTEGRATION.md](API_INTEGRATION.md); run it with
+- **Backend verified end to end on 2026-11-14** (JDK 17, PostgreSQL, real
+  browser), except the recovery emails. Run it with
   [the 002 quickstart](../specs/002-fg01-accounts/quickstart.md). All account
   tests mock the HTTP boundary; none prove real persistence,
   password hashing, JWT signing, email delivery or session revocation.

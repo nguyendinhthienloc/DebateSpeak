@@ -51,7 +51,7 @@ Independent check: each US4 endpoint with controlled success and failure respons
 - [x] T018 [US4] Cover US4 flows in `web/tests/account-management.spec.ts`.
 - [x] T019 Publish the backend handoff for US4 in `web/API_INTEGRATION.md`.
 - [x] T021 Keep the signed-in role after a profile save; block self-suspension (FR-009).
-- [ ] T020 Run these screens against the Spring Boot API (`specs/002-fg01-accounts` T005–T013).
+- [x] T020 Run these screens against the Spring Boot API (`specs/002-fg01-accounts` verification record).
 
 Shared foundation precedes US1–3. US1 is the first account journey; US2 and US3
 can be checked independently after it. Different test files can be reviewed in

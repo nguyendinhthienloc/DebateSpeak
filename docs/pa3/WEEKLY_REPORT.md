@@ -122,7 +122,7 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 - **Nguyễn Hồng Tấn Tài**
   - **Completed**
-    - Java auth code (register, login, JWT) is merged (PR #53). The full FG-01 backend (16 endpoints, PostgreSQL, refresh sessions, recovery, admin) is on `backend-tai`; its sources and build file still need to be committed and run end to end. The FG-03 room API is not started; Part E is now FG-01.
+    - Java auth code (register, login, JWT) is merged (PR #53). The full FG-01 backend (16 endpoints, PostgreSQL, refresh sessions, recovery, admin) is on `backend-tai` (commit 3f5e8f1) and verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). The FG-03 room API is not started; Part E is now FG-01.
   - **To-do**
     - Verify SCRUM-41 migrations and seed data.
     - Finish and test SCRUM-24 and SCRUM-26 as needed.

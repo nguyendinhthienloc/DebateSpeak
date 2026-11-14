@@ -289,4 +289,4 @@ active sessions and refresh-on-reload (FR-01, FR-03), account deletion (FR-04)
 and admin suspend/reactivate (FR-05). The Spring Boot backend on `backend-tai`
 implements the endpoints listed in SOFTWARE_ARCHITECTURE_SPEC.md and
 `web/API_INTEGRATION.md` with PostgreSQL. FG-01 is the PA3 Part E slice
-(`specs/002-fg01-accounts`); it is accepted once the end-to-end run passes.
+(`specs/002-fg01-accounts`); it was verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser).

@@ -2,8 +2,8 @@
 
 For the backend engineer working on accounts. The frontend calls every endpoint
 below. The Spring Boot service `api/authify` (branch `backend-tai`) implements
-all of them with PostgreSQL; an end-to-end run is still pending
-([specs/002-fg01-accounts](../specs/002-fg01-accounts/tasks.md)).
+all of them with PostgreSQL, verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser)
+([verification record](../specs/002-fg01-accounts/tasks.md)).
 
 [API_CONTRACT.md](API_CONTRACT.md) covers the first six endpoints (register,
 login, verification and reset) and the shared field rules. This guide adds
@@ -27,8 +27,8 @@ what the frontend accepts is `src/auth/contracts.ts` and `src/auth/api.ts`.
 
 What has to be built, and where the frontend already calls it. "Status" is
 the backend status on 2026-11-14. Frontend paths are relative to `web/src/`.
-Backend paths follow the layout in §7. "Built" means compiled on
-`backend-tai`; tick it in `specs/002` tasks after the end-to-end run.
+Backend paths follow the layout in §7. "Built" means present in
+`api/authify` on `backend-tai` and exercised in the 2026-11-14 end-to-end run.
 
 ### Endpoints
 
@@ -64,7 +64,7 @@ Response shapes the frontend validates are the type guards in
 | CORS: exact frontend origin, credentials on | all | `config/SecurityConfig.java` | Built (localhost:5173) |
 | Bearer JWT → user, rejects suspended/deleted | #9–16 | `service/AuthService.java`, `JwtService.java` | Built |
 | Admin role check; no self-suspension | #14–16 | `service/AuthService.java` | Built |
-| Client-header check on `/api/v1/auth/*` | #1–8, #12 | `config/SecurityConfig.java` | Built |
+| Client-header and Origin check | #7, #8 | `controller/AuthController.java` | Built (refresh and logout only) |
 | Password and code hashing, JWT, refresh rotation | #1–8 | `service/AuthService.java` | Built with BCrypt (architecture says Argon2id; open) |
 | Email sending for codes | #3, #4 | `service/EmailService.java` | Built; SMTP credentials must come from env |
 | Rate limiting | #1–6, #11 | — | Missing |
@@ -77,6 +77,7 @@ Response shapes the frontend validates are the type guards in
 | --- | --- | --- |
 | `VITE_API_BASE_URL` | repo-root `.env`, read by `web/` | e.g. `http://localhost:8000/api/v1`. Restart Vite after changing it. |
 | `DATABASE_URL`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` | API environment | JDBC URL, e.g. `jdbc:postgresql://localhost:5432/debatespeak` to match `docker-compose.yml`. |
+| `FRONTEND_URL` | API environment | Exact web origin for CORS and the Origin check; default `http://localhost:5173`. |
 | `APP_JWT_SECRET`, `APP_JWT_EXPIRATION_SECONDS` | API environment | Must not be committed. Architecture says 15-minute access tokens. |
 | `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` | API environment | SMTP sender for codes. Must not be committed. |
 
@@ -248,7 +249,7 @@ api/authify/src/main/java/org/debatespeak/authify/
   config/SecurityConfig.java       CORS, client header, BCrypt
 ```
 
-Run it with `.\mvnw spring-boot:run` from `api/authify` (JDK 21); see
+Run it with `.\mvnw spring-boot:run` from `api/authify` (JDK 17 or newer); see
 [specs/002 quickstart](../specs/002-fg01-accounts/quickstart.md).
 
 ## 8. Checking your backend against the frontend

@@ -1,7 +1,7 @@
 # Feature Specification: FG-01 accounts end to end (PA3 Part E)
 
-Created: 2026-11-14. Feature: `002-fg01-accounts`. Status: backend built on
-`backend-tai`; end-to-end verification pending (see [tasks](tasks.md)).
+Created: 2026-11-14. Feature: `002-fg01-accounts`. Status: backend on
+`backend-tai`, verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser); see [tasks](tasks.md).
 
 PA3 Part E grades one functional group across UI, API and data persistence.
 FG-03 has no room API, so Part E is FG-01 (accounts and profiles, UC-01-01 to

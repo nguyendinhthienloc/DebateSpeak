@@ -8,7 +8,7 @@ Team deadline: **Fri 2026-11-13**. Scope and rules: [../README.md](../README.md)
 | Auth API: register, login, Argon2id, access JWT | SCRUM-24 | `feature/SCRUM-24-auth-api` | 11-05 | Open |
 | Room API: create, join by invite code, 409 on third user | SCRUM-26 | `feature/SCRUM-26-room-api` | 11-06 | Open |
 | FG-03 backend lead: topic selection, synchronized debate start, tests (pytest) | SCRUM-38 | `feature/SCRUM-38-fg03-room-session` | 11-10 | Open |
-| ~~Part A: revised Project Plan + `docs/pa3/Changes.md`~~ | SCRUM-35 | — | 11-11 | Reassigned to Tuấn on 2026-11-14 |
+| Part A: revised Project Plan + `docs/pa3/Changes.md` | SCRUM-35 | — | 11-11 | Reassigned to Tuấn on 2026-11-14 |
 | *Extra:* FG-02 topic list/filter API | SCRUM-44 | `feature/SCRUM-44-topic-api` | 11-11 | Stretch |
 | *Extra:* LiveKit access-token endpoint spike | SCRUM-45 | `feature/SCRUM-45-livekit-token-spike` | 11-12 | Stretch |
 

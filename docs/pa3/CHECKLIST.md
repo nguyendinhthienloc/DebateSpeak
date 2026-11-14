@@ -41,10 +41,10 @@ Part E changed from FG-03 to FG-01 on 2026-11-14: FG-03 has no room API, while F
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| E1 | FG-01 implemented end to end (frontend, backend, database) | Tài, Triết | Lộc | **Verify**: frontend for UC-01-01 to 08 merged with browser tests; backend (16 endpoints, 4 tables) on `backend-tai`; committing its sources and an end-to-end run are pending | `web/`, `api/authify/`, `specs/002-fg01-accounts/quickstart.md` |
+| E1 | FG-01 implemented end to end (frontend, backend, database) | Tài, Triết | Lộc | Done: frontend merged; backend (16 endpoints, 4 tables, commit `3f5e8f1` on `backend-tai`) verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). Recovery emails not run. Open: secrets and `target/` still committed | `web/`, `api/authify/`, `specs/002-fg01-accounts/quickstart.md` |
 | E2 | Spec Kit artifacts for FG-01 (`specs/`, plans, tasks) | Tài, Triết | Lộc | Written: frontend `001`, backend and database `002` (spec, plan, tasks, quickstart) | `specs/001-frontend-baseline/`, `specs/002-fg01-accounts/` |
 | E3 | Narrated demo video on YouTube (unlisted or public), link added, showing FG-01 | Tài | Lộc | Uploaded: `https://youtu.be/wJxqi3J0phE`. **Must be checked**: it must show FG-01 working against the real backend (`specs/002-fg01-accounts/spec.md` SC-003); re-record if it shows FG-03 previews | `https://youtu.be/wJxqi3J0phE` |
-| E4 | E2E test for FG-01 | Khoa | Lộc | Browser tests with a mocked HTTP boundary pass (`web/tests/auth.spec.ts`, `account-management.spec.ts`); a run against the real API is open | `web/tests/` |
+| E4 | E2E test for FG-01 | Khoa | Lộc | Mocked browser tests pass (96); real-API run passes: 29/30 API checks and 8/8 browser steps (`specs/002-fg01-accounts/tasks.md`, verification record) | `web/tests/` |
 | E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine; cross-browser not done | PR #28 |
 
 ## Part F: AI Usage and Weekly Report (5 pts)
