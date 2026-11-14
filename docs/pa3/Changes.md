@@ -33,8 +33,8 @@ Owner: Khoa. Reviewer: Lộc.
 | # | Change | Why | Status |
 |---|---|---|---|
 | 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
-| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | open |
-| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | open |
+| 2.2 | Functional requirements (FG-01 to FG-10, FR ids cited, spot-checked against the architecture spec) and non-functional targets (NFR-01 to NFR-15) detailed | Brief, Part B | filled |
+| 2.3 | Alternatives and user environment written (§3 and §4 of the Vision Document); no new market audit | Brief, Part B | filled |
 | 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 ## 3. Repository layout (supporting change)

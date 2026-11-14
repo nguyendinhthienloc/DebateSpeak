@@ -5,7 +5,7 @@
 | Course / team | CS300 / CSC13002 — Introduction to Software Engineering / Group 02 |
 | Assignment | PA3-2026, Part B — Revised Vision Document |
 | Version / date | 0.2 / 2026-11-14 |
-| Status | PA3 revision draft; pending owner and reviewer verification |
+| Status | PA3 revision complete for owner review; reviewer sign-off pending |
 | Responsible owner | Nguyễn Anh Khoa — 24125058 — AI Audio & Speech Pipeline Lead |
 | Assigned reviewer | Nguyễn Đình Thiên Lộc — 24125093 — DevOps & QA / Fact-Checking Lead |
 | Work item | [SCRUM-35 — Revised plan and Vision](https://ndtloc0304.atlassian.net/browse/SCRUM-35) |
@@ -13,7 +13,7 @@
 This document describes the intended DebateSpeak AI product and its requirements. A feature described here is not necessarily implemented or verified. The product vision covers the intended learning experience; the PA3 implementation is a limited sprint slice, not the complete product.
 
 ## 1. Introduction
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 **Purpose.** This document establishes the shared product vision for DebateSpeak AI: a browser-based platform where English learners practice spoken argument through peer debate and receive useful, evidence-grounded feedback. It describes the intended users, their needs, the product’s distinguishing value, its functional groups, workflows, quality targets, and scope boundaries.
 
@@ -42,7 +42,7 @@ This document describes the intended DebateSpeak AI product and its requirements
 The proposal and architecture describe the intended product, while the PA3 sprint notes define the current implementation slice. A use case, feature, or quality target in this vision is not evidence that it has been built, measured, or approved.
 
 ## 2. Positioning
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 ### Problem statement
 
@@ -69,7 +69,7 @@ These needs are working hypotheses based on the project proposal and app survey,
 The intended value is the complete practice-to-reflection loop. A debate score is supporting feedback, not the product’s primary measure of a learner’s worth or progress.
 
 ## 3. Stakeholder and User Descriptions
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 ### Stakeholder summary
 
@@ -130,7 +130,7 @@ This comparison summarizes the project’s existing-app survey. It is not a fres
 | Classroom or tutor-led practice | Human judgment and guided conversation | Support repeatable peer practice; do not claim to replace qualified teachers or official assessments |
 
 ## 4. Product Overview
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 **Product perspective.** DebateSpeak is intended to be a standalone responsive web application. The planned architecture uses a Vite, React, TypeScript, and Tailwind CSS single-page application with a Python 3.11+ FastAPI backend, PostgreSQL, Redis, and provider adapters for real-time media, speech-to-text, language models, and search. These are design choices, not a claim that every service is currently implemented.
 
@@ -157,7 +157,7 @@ This comparison summarizes the project’s existing-app survey. It is not a fres
 **Human consequences.** Participation is voluntary. Declining consent must not be treated as consent, and the product should provide an accessible way to wait or leave. A microphone test should require an explicit user action and remain local unless the user separately starts an authorized media flow. Feedback should be specific and evidence-based, not insulting. If transcript quality or analysis is insufficient, the product should say so rather than invent results.
 
 ## 5. Product Features and Workflows
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 The feature identifiers preserve the ten functional groups in the proposal and map to the architecture’s functional requirements. These paragraphs describe intended product behavior and user value. They do not assert that a feature is implemented. PA3 work is scoped separately in §4 and in the PA3 sprint documents.
 
@@ -220,7 +220,7 @@ flowchart TD
 These diagrams describe intended behavior, not evidence that the implementation passes the workflows. Detailed coaching, fact-checking, and judging should run outside the live audio-critical path.
 
 ## 6. Non-Functional Requirements and Success Measures
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 The following are planned, **unverified project targets** inherited from the architecture. Tests must record deployment resources, provider and model versions, browser versions, test conditions, sample sizes, and failures. A target is not an achieved result until measurements are collected and reviewed.
 
@@ -249,7 +249,7 @@ The following are planned, **unverified project targets** inherited from the arc
 **Safety and interpretation.** A valid quote is necessary but insufficient to establish a correct critique. Transcript errors can survive string matching, and automated scores may be uncertain. Feedback should identify evidence, explain a concrete issue, and suggest a practical next step without insulting the learner or assigning motives.
 
 ## 7. PA3 Scope, Source Alignment, and Decisions
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 | Topic | PA3 treatment in this revision | Follow-up |
 |---|---|---|
@@ -266,7 +266,7 @@ The following are planned, **unverified project targets** inherited from the arc
 **Review completion.** The assigned reviewer should check this revision against the current architecture, proposal, PA3 scope, and `Changes.md`. Review status should be recorded only after the reviewer has actually completed the review. Jira status, implementation evidence, PDF generation, and submission status must be verified separately.
 
 ## 8. PA3 Revision and AI Assistance Record
-*Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Bảo Minh Triết (24125047)*
+*Performed: Nguyễn Anh Khoa (24125058); Review: pending, Nguyễn Đình Thiên Lộc (24125093)*
 
 | Item | Record |
 |---|---|
