@@ -136,6 +136,8 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 ### FG-01 — Accounts and profiles
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
 
+FR-01 maps to registration and sign-in. UC-01-02 also specifies the full-product refresh-session lifecycle (renewal, expiry, revocation, replay and lost responses) in [specification Section 2.5](USE_CASE_SPECIFICATIONS.md#25-authentication-session-lifecycle-and-scope). Refresh is supporting session behavior, not an additional user goal or an include from registration. Reduced PA3 implements access-token register/login only; full refresh rotation remains deferred. Recovery links from registration/sign-in are available only when UC-01-05 is implemented and enabled. Both auth flows inherit the detailed error contract in specification Section 2.4.
+
 ```mermaid
 flowchart LR
     VISITOR["Visitor"]
