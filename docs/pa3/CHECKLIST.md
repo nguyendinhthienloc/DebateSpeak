@@ -8,16 +8,16 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| A1 | Revised Project Plan (Markdown) | Tuấn | Lộc | Done: version 0.2 written 2026-11-14 (merged, PR #31). Reviewer sign-off pending | `docs/requirements/PROJECT_PLAN.md` |
+| A1 | Revised Project Plan (Markdown) | Tuấn | Lộc | Done: version 0.2 merged (PR #31, refreshed PR #49). Reviewed by Lộc, 2026-11-14 | `docs/requirements/PROJECT_PLAN.md` |
 | A2 | Revised Project Plan (PDF) | Tuấn | Lộc | Done: rebuilt from 0.2 on 2026-11-14 | `docs/requirements/PROJECT_PLAN.pdf` |
-| A3 | `Changes.md` covers every revised document | Tuấn | Lộc | Done for plan and vision. Reviewer sign-off pending | `docs/pa3/Changes.md` |
+| A3 | `Changes.md` covers every revised document | Tuấn | Lộc | Done for plan and vision (rows 1.1 to 1.11, 2.1 to 2.5). Reviewed by Lộc, 2026-11-14 | `docs/pa3/Changes.md` |
 | A4 | Changes from TA feedback on PA2 | Tuấn | Lộc | None received as of 2026-11-10 | `docs/pa3/Changes.md` row 1.7 |
 
 ## Part B: Vision Document (5 pts)
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| B1 | Vision Document revised (requirements, competitors, environments) | Khoa | Lộc | Done: version 0.2 merged (PR #27), final touches merged (PR #30). Reviewer sign-off pending | `docs/requirements/VISION_DOCUMENT.md` |
+| B1 | Vision Document revised (requirements, competitors, environments) | Khoa | Lộc | Done: version 0.2 merged (PR #27, final touches PR #30). Reviewed by Lộc, 2026-11-14 | `docs/requirements/VISION_DOCUMENT.md` |
 | B2 | Vision Document (PDF) | Khoa | Lộc | Done: rebuilt from 0.2 on 2026-11-14 with Mermaid diagrams | `docs/requirements/VISION_DOCUMENT.pdf` |
 
 ## Part C: Use-Case Model (10 pts)
@@ -49,7 +49,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| F1 | AI usage log with every member's PA3 use | Khoa | Lộc | Partial: tools recorded per member (PR #41). Tasks and prompts still to be added by each member | `docs/pa3/AI_USAGE_LOG.md` |
+| F1 | AI usage log with every member's PA3 use | Khoa | Lộc | Done: tools and categories recorded for each member (PR #40, #41) | `docs/pa3/AI_USAGE_LOG.md` |
 | F2 | Weekly report with no placeholders | Khoa | Lộc | Partial: placeholders "[Confirm actual status.]" remain in the weekly report | `docs/pa3/WEEKLY_REPORT.md` |
 | F3 | Meeting notes (planning and review), PDF | Khoa | Lộc | Markdown done, PDF missing | `docs/pa3/MEETINGS/` |
 | F4 | Jira screenshots | Lộc | Khoa | Done | `docs/pa3/jira-1.png`, `docs/pa3/jira-2.png` |
