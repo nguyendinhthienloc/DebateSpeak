@@ -18,9 +18,11 @@ Work record: [implementation guide](IMPLEMENTATION_GUIDE.md). These are artifact
 
 ## UI refinement — shared UI styling, typography and account pages
 
+Delivery progress (2026-11-14): implementation and navigation-baseline review are prepared on `feature/SCRUM-49-ui-type-account`. Before/after captures and review findings are attached in [the evidence record](scrum49/README.md). Tuấn instructed that Figma edits are not required after checking with Triết; the existing frames are preserved. The source-repository status below is not a live Jira transition. Lộc's peer review and merge remain pending.
+
 **Owner:** Trần Lê Anh Tuấn — **24125107** — **AI Orchestrator & Analysis Lead**.
 
-**Jira:** [SCRUM-49](https://ndtloc0304.atlassian.net/browse/SCRUM-49). **Estimate:** 10 points. **Status:** To Do.
+**Jira:** [SCRUM-49](https://ndtloc0304.atlassian.net/browse/SCRUM-49). **Estimate:** 10 points. **Delivery status:** Ready for review; Jira status not changed.
 
 **Reviewer:** Nguyễn Đình Thiên Lộc (24125093). **Scheduling:** Backlog; no new due date.
 
@@ -29,30 +31,33 @@ Source: [implementation plan](../../superpowers/plans/2026-11-06-ui-refinement.m
 This adds work only for this UI refinement scope; existing tasks, dates and
 statuses above are unchanged. Triết (24125047) is excluded from this addition.
 
-**Prerequisites:** Reviewed Figma direction and scaffold baseline available on pa3. Coordinate shared token vocabulary with all owners.
+**Scope decision (2026-11-14):** Tuấn reported that Triết does not require a Figma update and explicitly asked to skip that step. Use the existing Cream & Yellow direction and browser baseline; no new Figma approval is claimed. The scaffold baseline is available on pa3. Coordinate shared token vocabulary with all owners.
 
 **Owned files:** web/src/index.css; web/src/components/ui.tsx; web/src/pages/AccountPages.tsx; optional web/src/pages/account.css; web/tests/account-refinement.spec.ts.
 
 Breakdown: foundation/spec/Figma **2**, four account screens **4**, typography
 and form validation **2**, peer review **1**, integration/fixes **1**.
 
-- [ ] Revise representative sign-in/profile Figma frames and shared roles using
-  the brief. Record proposed color usage, role-based rem type, spacing and
-  default/hover/selected/focus/disabled treatment. Preserve baseline frames.
-- [ ] Before implementation, update `SOFTWARE_ARCHITECTURE_SPEC.md` and
-  `PROJECT_PROPOSAL.md` with the refinement boundary. After direction review,
-  update approved `DESIGN.md` tokens and sidecar together if present; do not
-  rewrite unrelated historical product decisions.
-- [ ] Implement shared roles and consume them in sign-in, registration,
+- [x] Figma-edit step waived by Tuấn's explicit instruction after checking with
+  Triết. Preserve baseline frames; implemented type/control roles are recorded
+  in `DESIGN.md` and CSS. No Figma work or approval is claimed.
+- [x] Update `SOFTWARE_ARCHITECTURE_SPEC.md` and `PROJECT_PROPOSAL.md` before
+  implementation; record the scoped roles in `DESIGN.md`. No sidecar exists.
+- [x] Implement shared roles and consume them in sign-in, registration,
   account-created example and profile. Align password reveal with the field,
   improve group rhythm and reduce redundant explanatory framing without removing
   preview/saving limitations or CEFR self-assessment guidance.
-- [ ] Validate all four routes at phone/desktop sizes; exercise password reveal,
+- [x] Validate all four routes at phone/desktop sizes; exercise password reveal,
   keyboard radios, 200% text sizing, long Vietnamese display names, cold-cache
   font loading and blocked-font fallback. Add a needed font subset only after
   verifying coverage; keep the existing two weights.
   Verify no password persistence and no service submission.
-- [ ] Review Tài's navigation package; integrate feedback on this package.
+- [x] Review the available navigation baseline used by Tài's package, including
+  skip link, account/room links, history, focus, reload and unknown/expired
+  recovery. Findings and UI-R02 follow-up are in the evidence record; no
+  unsubmitted UI-R02 work or approval is claimed.
+- [ ] Nguyễn Đình Thiên Lộc reviews the PR; address any requested changes and
+  merge only through the team's authorized process.
 
 **Done:** all four screens use the agreed type/control system, one clear primary
 task, readable fields and visible focus. Local Inter weights are actually loaded,
@@ -60,7 +65,8 @@ fallback remains usable, and before/after captures demonstrate changed hierarchy
 No body text is made smaller to achieve visual lightness.
 
 **Shared completion checks:** preserve Cream & Yellow, Inter 400/600, all preview
-routes and explicit sample/disabled-media boundaries. Review Figma before code;
+routes and explicit sample/disabled-media boundaries. The Figma-edit step is
+waived for this package per the scope decision above;
 update the relevant architecture/proposal specs first. Validate responsive and
 keyboard behavior, reduced motion, long text and 200% zoom. From `web/`, run
 `npm run build`, `npm run lint` and `npm run test:e2e`; attach before/after

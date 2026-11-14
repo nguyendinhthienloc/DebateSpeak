@@ -1,4 +1,5 @@
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { Check } from 'lucide-react';
 import type { RoutePath } from '../routes';
 
 export function ActionLink({ to, children, variant = 'primary', className = '' }: {
@@ -7,13 +8,16 @@ export function ActionLink({ to, children, variant = 'primary', className = '' }
   return <a href={`#${to}`} className={`action action-${variant} ${className}`}>{children}</a>;
 }
 
-export function Field({ label, hint, error, id: explicitId, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string }) {
+export function Field({ label, hint, error, trailingAction, id: explicitId, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string; trailingAction?: ReactNode }) {
   const generatedId = useId();
   const id = explicitId ?? generatedId;
   const describedBy = [hint && `${id}-hint`, error && `${id}-error`, input['aria-describedby']].filter(Boolean).join(' ') || undefined;
   return <div className="field">
     <label htmlFor={id}>{label}</label>
-    <input {...input} id={id} aria-invalid={error ? true : undefined} aria-describedby={describedBy} />
+    {trailingAction ? <div className={`field-control${error ? ' field-control-invalid' : ''}`}>
+      <input {...input} id={id} aria-invalid={error ? true : undefined} aria-describedby={describedBy} />
+      {trailingAction}
+    </div> : <input {...input} id={id} aria-invalid={error ? true : undefined} aria-describedby={describedBy} />}
     {hint && <p id={`${id}-hint`} className="small muted">{hint}</p>}
     {error && <p id={`${id}-error`} className="small field-error">{error}</p>}
   </div>;
@@ -29,7 +33,7 @@ export function Choices({ label, options, value, onChange, describe = false, err
     <div className="choices">
       {options.map(option => <label className="choice" key={option}>
         <input type="radio" name={name} value={option} checked={value === option} onChange={() => onChange(option)} />
-        <span>{option}</span>
+        <span>{value === option && <Check className="choice-check" size={16} aria-hidden="true" />}{option}</span>
       </label>)}
     </div>
     {describe && <p className="small">Selected: {value}</p>}
@@ -44,7 +48,7 @@ export function Note({ title, children, tone = 'neutral' }: {
 }
 
 export function PageHeading({ title, children }: { title: string; children?: ReactNode }) {
-  return <><h1>{title}</h1>{children && <p className="muted">{children}</p>}</>;
+  return <div className="page-heading"><h1>{title}</h1>{children && <p className="muted">{children}</p>}</div>;
 }
 
 export function BackToRooms() {

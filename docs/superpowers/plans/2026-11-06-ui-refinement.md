@@ -82,6 +82,13 @@ state and associated region. Do not replace them with a bespoke modal.
 
 ## UI-R01 — Tuấn: visual foundation and account flow (10 points)
 
+Scope update, 2026-11-14: Tuấn explicitly waived Figma edits after reporting
+that Triết said they were not required. The original Figma checklist item below
+is superseded for UI-R01 only. The existing direction/frames remain unchanged;
+implementation, browser evidence and peer review are still required. Current
+delivery status and the navigation-baseline review are recorded in
+[Tuấn's TODO](../../pa3/tuan/TODO.md) and its linked SCRUM-49 evidence record.
+
 Breakdown: foundation/spec/Figma **2**, four account screens **4**, typography
 and form validation **2**, peer review **1**, integration/fixes **1**.
 
