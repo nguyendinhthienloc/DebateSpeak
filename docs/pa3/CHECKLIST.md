@@ -9,7 +9,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
 | A1 | Revised Project Plan (Markdown) | Tài | Lộc | Partial: rewritten, but PA2 TA feedback not applied | `docs/requirements/PROJECT_PLAN.md` |
-| A2 | Revised Project Plan (PDF) | Tài | Lộc | Missing | none |
+| A2 | Revised Project Plan (PDF) | Tài | Lộc | PDF added in SCRUM-35 (c55fea8); content review pending | `docs/requirements/PROJECT_PLAN.pdf` |
 | A3 | `Changes.md` covers every revised document | Tài | Lộc | Partial: rows 2.2–2.4 open | `docs/pa3/Changes.md` |
 | A4 | Changes from TA feedback on PA2 | Tài | Lộc | None received as of 2026-11-10 | `docs/pa3/Changes.md` row 1.7 |
 
@@ -17,8 +17,8 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| B1 | Vision Document revised (requirements, competitors, environments) | Khoa | Lộc | Weak: only links changed | `docs/requirements/VISION_DOCUMENT.md` |
-| B2 | Vision Document (PDF) | Khoa | Lộc | Stale (dated Nov 3) | `docs/requirements/VISION_DOCUMENT.pdf` |
+| B1 | Vision Document revised (requirements, competitors, environments) | Khoa | Lộc | Revised in PR #27 (merged); reviewer sign-off pending. Doc lists Triết as reviewer, not Lộc | `docs/requirements/VISION_DOCUMENT.md` |
+| B2 | Vision Document (PDF) | Khoa | Lộc | Rebuilt in PR #27; check it matches the Markdown | `docs/requirements/VISION_DOCUMENT.pdf` |
 
 ## Part C: Use-Case Model (10 pts)
 
@@ -43,6 +43,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | E2 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Lộc | **Missing** | none |
 | E3 | Narrated FG-03 demo on YouTube, link added | Lộc | Khoa | **Missing** (SCRUM-39) | none |
 | E4 | E2E test for FG-03 | Khoa | Lộc | **Missing** | none |
+| E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | In review: PR #28 open, browser tests not run | PR #28 |
 
 ## Part F: AI Usage and Weekly Report (5 pts)
 
