@@ -8,10 +8,10 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
-| A1 | Revised Project Plan (Markdown) | Tài | Lộc | **Not revised**: still the v0.1 PA2 draft header and PA2 Performed/Reviewed lines. Only PA3 schedule rows exist | `docs/requirements/PROJECT_PLAN.md` |
-| A2 | Revised Project Plan (PDF) | Tài | Lộc | PDF exists but is built from the v0.1 draft; rebuild after A1 | `docs/requirements/PROJECT_PLAN.pdf` |
-| A3 | `Changes.md` covers every revised document | Tài | Lộc | Partial: plan rows 1.x filled, but the plan itself is not revised; vision rows 2.2–2.3 filled on `feature/SCRUM-35-vision-final` | `docs/pa3/Changes.md` |
-| A4 | Changes from TA feedback on PA2 | Tài | Lộc | None received as of 2026-11-10 | `docs/pa3/Changes.md` row 1.7 |
+| A1 | Revised Project Plan (Markdown) | Tuấn | Lộc | **Not revised**: still the v0.1 PA2 draft header and PA2 Performed/Reviewed lines. Only PA3 schedule rows exist | `docs/requirements/PROJECT_PLAN.md` |
+| A2 | Revised Project Plan (PDF) | Tuấn | Lộc | PDF exists but is built from the v0.1 draft; rebuild after A1 | `docs/requirements/PROJECT_PLAN.pdf` |
+| A3 | `Changes.md` covers every revised document | Tuấn | Lộc | Partial: plan rows 1.x filled, but the plan itself is not revised; vision rows 2.2–2.3 filled on `feature/SCRUM-35-vision-final` | `docs/pa3/Changes.md` |
+| A4 | Changes from TA feedback on PA2 | Tuấn | Lộc | None received as of 2026-11-10 | `docs/pa3/Changes.md` row 1.7 |
 
 ## Part B: Vision Document (5 pts)
 
