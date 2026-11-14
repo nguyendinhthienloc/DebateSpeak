@@ -20,7 +20,7 @@ Status as of 2026-11-10. Update on 2026-11-13 with the final result.
 ## Update 2026-11-14: Part E scope change
 *Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*
 
-FG-03 could not be delivered: the room API (SCRUM-26, 38) was not built. The team moved Part E to FG-01, which has a complete frontend (UC-01-01 to 08, browser tests) and a Spring Boot + PostgreSQL backend on `backend-tai`. Evidence: `specs/002-fg01-accounts/`. FG-03 moves to PA4. The 2026-11-10 table above is kept as the record of that date.
+FG-03 could not be delivered: the room API (SCRUM-26, 38) was not built. The team moved Part E to FG-01, which has a complete frontend (UC-01-01 to 08, browser tests) and a Spring Boot + PostgreSQL backend on `backend-tai`. Evidence: `specs/002-fg01-accounts/`. FG-03 moves to PA4. The narrated FG-01 demo is https://youtu.be/SzKVxb9nO2c. The 2026-11-10 table above is kept as the record of that date.
 
 ## Retrospective
 *Performed: Nguyễn Anh Khoa (24125058); Review: Nguyễn Đình Thiên Lộc (24125093), pending; Edited: Nguyễn Anh Khoa (24125058); Nguyễn Bảo Minh Triết (24125047), 2026-11-14*

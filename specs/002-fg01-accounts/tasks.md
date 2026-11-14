@@ -38,7 +38,7 @@ Frontend tasks are in [001 tasks](../001-frontend-baseline/tasks.md).
 ## Polish
 
 - [x] T014 Restrict CEFR to A2–C1 to match the contract.
-- [ ] T015 Record the narrated video of US1–US4 and US6 (Part E).
+- [x] T015 Record the narrated video of US1–US4 and US6 (Part E): https://youtu.be/SzKVxb9nO2c
 
 ## Verification record (2026-11-14)
 
