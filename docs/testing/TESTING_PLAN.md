@@ -369,7 +369,7 @@ Project_2/
 │   ├── pa2/ pa3/ pa4/ pa5/              # PAs 2 to 5 deliverables & specifications
 │   ├── architecture/                    # Software Architecture Specification
 │   └── management/                      # WBS tasks and process guidelines
-├── api/                                 # Java (Spring Boot), pending team confirmation, backend
+├── api/                                 # Java (Spring Boot), confirmed 2026-11-14; backend specs owned by Tài, backend
 │   ├── pyproject.toml
 │   ├── app/
 │   │   ├── main.py

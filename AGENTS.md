@@ -58,7 +58,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Single-Page Application (SPA) built with **Vite + React (TypeScript) + Tailwind CSS**.
    - No server-side rendering (SSR) frameworks. Responsive layout for both desktop and mobile web.
 2. **Backend Architecture:**
-   - **FastAPI (Python 3.11+)** with async endpoints, SQLAlchemy 2 async ORM, and Alembic migrations.
+   - **Java (Spring Boot)**, chosen by Tài on 2026-11-14 and confirmed by the user. Backend specs are owned by Tài. Stack details follow Tài's backend spec.
    - Database: **PostgreSQL 16**. Cache & Job Queue: **Redis 7** (using ARQ for async tasks).
 3. **Real-Time Media & Audio:**
    - Use **LiveKit Cloud** free tier for audio routing to guarantee WebRTC connectivity across NAT/firewalls.
