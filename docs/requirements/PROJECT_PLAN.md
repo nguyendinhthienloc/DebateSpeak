@@ -187,7 +187,7 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); SCRUM-27 mapping verified by the team on 2026-11-14 and not connected to a room API |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
 | SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | Moved to PA4; Part E delivered as FG-01 instead |
-| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
+| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (<https://youtu.be/wJxqi3J0phE>, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
 | SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | Revised 0.2; reviewed by Lộc, 2026-11-14 |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
 | SCRUM-36 | Use-case model | Tuấn | pending | Done (PR #19); sign-off pending |
@@ -234,7 +234,7 @@ The shared status list is `docs/pa3/CHECKLIST.md`. The package `PA3-Group[GroupI
 | S2 | Git log export | Lộc | Missing |
 | S3 | Source code without `node_modules`, build output or `.env` | Lộc | Code incomplete (FG-03) |
 | S4 | Spec Kit artifacts (`specs/`, plans, tasks) | all | Partial: `specs/001-frontend-baseline/` merged (PR #45); no FG-03 spec; per-member entries missing |
-| S5 | YouTube link for the FG-03 video | Lộc | Link exists (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content not checked |
+| S5 | YouTube link for the Part E (FG-01) video | Lộc | Link exists (<https://youtu.be/wJxqi3J0phE>, PR #47); visibility and content not checked |
 | S6 | Zip of the package | Lộc | Missing |
 | S7 | `pa3` to `dev` merge after the package is complete | Lộc | Pending |
 

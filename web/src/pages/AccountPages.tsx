@@ -100,6 +100,7 @@ export function RegisterPage({ onRegistered }: { onRegistered: (email: string) =
       <Choices label="Your English level" options={levels} value={level} onChange={value => setLevel(value as CefrLevel)} error={errors.cefr_level} describe />
       <p className="small muted">Choose your current level. You can change it later; this is not a certification.</p>
     </section>
+    <p className="small muted">Creating an account does not turn on your microphone or share anything for transcription or AI analysis. You choose that separately before each debate.</p>
     <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Creating account…' : 'Create account'}</button>
     <div className="account-switch"><span className="muted">Already have an account?</span><ActionLink to="/sign-in" variant="text">Sign in</ActionLink></div>
   </form>;

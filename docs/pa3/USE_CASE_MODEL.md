@@ -1,7 +1,7 @@
 # PA3 Part C — Use-Case Model (SCRUM-36)
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
-Prepared: 2026-11-09. Status: complete local model prepared for human review; no reviewer approval, Git commit, push, Jira transition or product implementation is claimed.
+Prepared: 2026-11-09. Revised 2026-11-14: delivery scopes now match the PA3 implementation (Part E is FG-01; FG-03 moves to PA4).
 
 ## 1. Scope and sources
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
@@ -134,9 +134,9 @@ For UC-03-05 the start request always runs UC-03-13 against current authoritativ
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ### FG-01 — Accounts and profiles
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.
 
-FR-01 maps to registration and sign-in. UC-01-02 also specifies the full-product refresh-session lifecycle (renewal, expiry, revocation, replay and lost responses) in [specification Section 2.5](USE_CASE_SPECIFICATIONS.md#25-authentication-session-lifecycle-and-scope). Refresh is supporting session behavior, not an additional user goal or an include from registration. Reduced PA3 implements access-token register/login only; full refresh rotation remains deferred. Recovery links from registration/sign-in are available only when UC-01-05 is implemented and enabled. Both auth flows inherit the detailed error contract in specification Section 2.4.
+FR-01 maps to registration and sign-in. UC-01-02 also specifies the full-product refresh-session lifecycle (renewal, expiry, revocation, replay and lost responses) in [specification Section 2.5](USE_CASE_SPECIFICATIONS.md#25-authentication-session-lifecycle-and-scope). Refresh is supporting session behavior, not an additional user goal or an include from registration. PA3 implements all eight FG-01 use cases end to end as the Part E slice: access JWT in memory, rotating HttpOnly refresh cookie, profile, sessions, deletion and admin suspension, stored in PostgreSQL. The API also implements UC-01-05 recovery and email verification; the frontend keeps recovery links hidden until real email delivery is verified. Both auth flows inherit the detailed error contract in specification Section 2.4.
 
 ```mermaid
 flowchart LR
@@ -159,6 +159,7 @@ flowchart LR
     LEARNER --- UC_01_03
     USER --- UC_01_04
     VISITOR --- UC_01_05
+    LEARNER --- UC_01_05
     USER --- UC_01_06
     LEARNER --- UC_01_07
     ADMIN --- UC_01_08
@@ -168,14 +169,14 @@ flowchart LR
 |---|---|---|---|
 | UC-01-01 | Register account | FR-01 | PA3 |
 | UC-01-02 | Sign in | FR-01 | PA3 |
-| UC-01-03 | Maintain learner profile | FR-02 | future-mvp |
+| UC-01-03 | Maintain learner profile | FR-02 | PA3 |
 | UC-01-04 | Sign out | FR-03 | PA3 |
-| UC-01-05 | Recover forgotten password | FR-03 | should |
-| UC-01-06 | Review active sessions | FR-03 | should |
-| UC-01-07 | Delete own account and data | FR-04 | future-mvp |
-| UC-01-08 | Suspend or reactivate account | FR-05 | should |
+| UC-01-05 | Recover forgotten password | FR-03 | PA3 (UI gated until email delivery is verified) |
+| UC-01-06 | Review active sessions | FR-03 | PA3 |
+| UC-01-07 | Delete own account and data | FR-04 | PA3 |
+| UC-01-08 | Suspend or reactivate account | FR-05 | PA3 |
 
-Account deletion immediately disables access, followed by hard deletion within seven days. A reset request must not reveal whether an email is registered. Profile CEFR is a self-assessment. Sign-out is needed by the room/account slice; full session management, password recovery and profile editing are not silently added to the reduced Build 1 scope.
+Account deletion immediately disables access, followed by hard deletion within seven days. A reset request must not reveal whether an email is registered. Profile CEFR is a self-assessment. In PA3 the whole of FG-01 is the graded slice. The scheduled hard-delete job after seven days is specified but not built yet. A signed-in learner reaches UC-01-05 from Profile (Change password). The build has one administrative role, `ADMIN`.
 
 ### FG-02 — Topics and difficulty
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
@@ -208,7 +209,7 @@ flowchart LR
 PA3 may use the agreed seeded topic catalogue until a topic API is available. Topic recommendation is a conditional extension of discovery, not a mandatory search step. Retiring a topic must not rewrite an existing debate's history.
 
 ### FG-03 — Rooms and sessions
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.
 
 ```mermaid
 flowchart LR
@@ -253,9 +254,9 @@ flowchart LR
 
 | ID | User goal / supporting behavior | FRs | Delivery scope |
 |---|---|---|---|
-| UC-03-01 | Create debate room | FR-10, FR-12 | PA3 |
-| UC-03-02 | Join invited room | FR-11, FR-12 | PA3 |
-| UC-03-03 | View lobby and readiness | FR-12 | PA3 |
+| UC-03-01 | Create debate room | FR-10, FR-12 | PA4 (PA3 UI preview only) |
+| UC-03-02 | Join invited room | FR-11, FR-12 | PA4 (PA3 UI preview only) |
+| UC-03-03 | View lobby and readiness | FR-12 | PA4 (PA3 UI preview only) |
 | UC-03-04 | Give or withdraw processing consent | FR-13 | future-mvp |
 | UC-03-05 | Start debate | FR-12, FR-13, FR-19 | future-mvp |
 | UC-03-06 | Leave or end debate | FR-12, FR-15 | future-mvp |
@@ -580,8 +581,8 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 - Raw audio is not stored by default. Erasure/retention workflows cover derived analyses and optional chat as well as the primary transcript.
 
 ## 8. Review and completion evidence
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107); Nguyễn Bảo Minh Triết (24125047), 2026-11-14.
 
 The inventory contains **54 use cases across ten functional groups**, including two mandatory supporting subcases. All 60 FRs are mapped. There is one overview and ten detailed Mermaid diagrams. [Part D](USE_CASE_SPECIFICATIONS.md) describes every catalogue ID and links its prototype and alternative-flow evidence. [use_cases.json](use_cases.json) enables automated cross-checking of IDs, actor references, requirements and screenshot coverage.
 
-Human reviewer: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead. Review completed 2026-11-14. Diagram rendering, PDF compilation and document-validation results are recorded in the overall local work record after execution; no successful check is inferred solely from this model's existence. The user has prohibited commit and push, so this work remains local and no ticket is marked Done.
+Human reviewer: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead. Review completed 2026-11-14. Diagram rendering, PDF compilation and document-validation results are recorded in the overall local work record after execution; no successful check is inferred solely from this model's existence. The model is merged into `pa3`. On 2026-11-14 delivery scopes were revised to the PA3 implementation: FG-01 is Part E, and UC-03-01 to UC-03-03 move to PA4.
