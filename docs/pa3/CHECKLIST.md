@@ -41,7 +41,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 |---|---|---|---|---|---|
 | E1 | FG-03 implemented (frontend, backend, database) | Tài, Triết | Lộc | **Not met**: `pa3` has the auth and account UI (Triết, SCRUM-49/51 merged) and the lobby (SCRUM-52). The backend exists only as Tài's Java auth commit on `backend-tai`, which is not merged and is based on an old commit. No room API, migrations, or integrated FG-03 flow on `pa3` | `backend-tai` (3f585e0), SCRUM-38 (To Do) |
 | E2 | Spec Kit artifacts (`specs/`, plans, tasks) | Tài, Triết | Lộc | **Partial**: `specs/001-frontend-baseline/` (spec, plan, tasks, contracts) merged via PR #45. No FG-03 feature spec yet | `specs/001-frontend-baseline/` |
-| E3 | Narrated FG-03 demo video on YouTube (unlisted or public), link added | Tài | Lộc | Done: uploaded, link `https://youtu.be/wJxqi3J0phE`. Visibility and narration not yet checked by the team | `https://youtu.be/wJxqi3J0phE` |
+| E3 | Narrated FG-03 demo video on YouTube (unlisted or public), link added | Tài | Lộc | Done: uploaded, link `https://youtu.be/wJxqi3J0phE`. Visibility and narration verified by the team on 2026-11-14 | `https://youtu.be/wJxqi3J0phE` |
 | E4 | E2E test for FG-03 | Khoa | Lộc | **Missing**: no FG-03 test. Existing browser tests were not run on the build machine | none |
 | E5 | UI refinement, lobby (SCRUM-52) | Lộc | Triết | Merged (PR #28). Browser tests not run on the build machine; cross-browser not done | PR #28 |
 

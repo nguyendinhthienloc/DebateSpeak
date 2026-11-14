@@ -58,7 +58,7 @@ PA3 deliverables mapped to the PA3 rubric. Status comes from `docs/pa3/CHECKLIST
 | E | 20 | FG-03 end to end with Spec Kit, E2E test, narrated YouTube video | Tài, Triết; Khoa (E2E); Lộc (video) | Not met: the FG-03 backend is not on `pa3` (only Tài's Java auth commit 3f585e0 on `backend-tai`, unmerged, based on old commit 84aad76); no room API, migrations or integrated FG-03 flow; `specs/001-frontend-baseline/` merged (PR #45) but no FG-03 spec; video uploaded (PR #47), not yet checked by the team; no E2E test |
 | F | 5 | AI usage log, weekly report, meeting notes, Jira screenshots | Khoa, Lộc | Partial: AI log records tools per member (PR #41), tasks and prompts still to be added; weekly report still has "[Confirm actual status]" markers; meeting PDF missing; Jira screenshots exist (`docs/pa3/jira-1.png`, `jira-2.png`) |
 
-Part E is the largest gap. The checklist rows E1, E3 (video not yet checked) and E4 are Not met or Missing, and E2 is partial (frontend baseline spec only, no FG-03 spec). The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
+Part E is the largest gap. The checklist rows E1, E3 (video verified) and E4 are Not met or Missing, and E2 is partial (frontend baseline spec only, no FG-03 spec). The per-member Spec Kit entries requested in PA2 TA feedback are Missing for all five members.
 
 ### 2.4 Assumptions and dependencies
 
@@ -168,10 +168,10 @@ Relevant requirement ids: FR-01 (register and authenticate), FR-10 (create room)
 | SCRUM-24 | Auth API | Tài | not verified | Open; not on `pa3`. Java auth commit 3f585e0 on `backend-tai`, unmerged. Java backend decision by Tài, 2026-11-14, pending team confirmation (PR #43); AGENTS.md still says FastAPI |
 | SCRUM-25 | Frontend shell, register and login pages | Triết | not verified | Lobby work from `feature/SCRUM-25-ui-complete` merged as PR #28 (SCRUM-52); account UI merged as PR #39 (SCRUM-49); entry pages merged as PR #44 (SCRUM-50). Account recovery is gated off (PR #45). The shell and the register/login flow against a real auth API are not verified |
 | SCRUM-26 | Room API | Tài | not verified | Open; not on `pa3` |
-| SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); not verified against SCRUM-27 and not connected to a room API |
+| SCRUM-27 | Lobby UI | Triết | not verified | Lobby UI merged as PR #28 (SCRUM-52); SCRUM-27 mapping verified by the team on 2026-11-14 and not connected to a room API |
 | SCRUM-28 | Room state machine and transition tests | Tuấn | Tài | Sprint Review says merged with unit tests; Tuấn's TODO says local, Tài review pending. Not verified |
 | SCRUM-38 | FG-03 backend, frontend and E2E | Tài, Triết; Khoa (E2E) | Lộc | To Do; not met |
-| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content not checked by the team; FG-03 itself does not run on `pa3` |
+| SCRUM-39 | Narrated FG-03 video | Lộc | Khoa | Video uploaded (https://youtu.be/wJxqi3J0phE, PR #47); visibility and content verified by the team on 2026-11-14; FG-03 itself does not run on `pa3` |
 | SCRUM-35 | Revised plan and `Changes.md` | Tuấn (from Tài) | Lộc | This draft; review pending |
 | SCRUM-35 | Revised Vision (0.2) | Khoa | Lộc | PR #27 merged; final touches on `feature/SCRUM-35-vision-final`; sign-off pending |
 | SCRUM-36 | Use-case model | Tuấn | pending | Done (PR #19); sign-off pending |
