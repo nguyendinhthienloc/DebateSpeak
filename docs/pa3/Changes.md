@@ -1,7 +1,7 @@
 # Changes.md — PA3 (compared with PA2)
 
 One file for PA3, one section per revised document. Each row: what changed, why, where.
-Status: **filled** = written, **TA** = needs the PA2 TA feedback items added.
+Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
 Owner: Tài. Reviewer: Lộc.
@@ -14,7 +14,7 @@ Owner: Tài. Reviewer: Lộc.
 | 1.4 | Database first (11-04): migrations + seed give 5 users, 10 topics, 1 room | Every member can run the same data from day one | filled |
 | 1.5 | Extra preparation items (stretch): FG-02 topic API, LiveKit token spike, `STTAdapter`, `LLMAdapter` + grounding guard, mic screen, CI migrate/seed | Reduce risk for Builds 3 and 4; cut first if FG-03 slips | filled |
 | 1.6 | Branch and PR rules: `feature/SCRUM-<nn>-<name>`, PR into `pa3`, `pa3` → `dev` once per sprint | Keeps `dev` releasable | filled |
-| 1.7 | Changes from TA feedback on PA2 | Required by the brief | TA |
+| 1.7 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 **Build 1, shrunk**
 
@@ -33,9 +33,9 @@ Owner: Khoa. Reviewer: Lộc.
 | # | Change | Why | Status |
 |---|---|---|---|
 | 2.1 | Links fixed after the repo cleanup | Files moved (section 3) | filled |
-| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | TA |
-| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | TA |
-| 2.4 | Changes from TA feedback on PA2 | Required by the brief | TA |
+| 2.2 | Functional and non-functional requirements detailed | Brief, Part B | open |
+| 2.3 | Alternatives, competitors, user environments completed | Brief, Part B | open |
+| 2.4 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 
 ## 3. Repository layout (supporting change)
 Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `report_build/`, PA1/PA2 briefs. Everything remains in Git history at `f789f5c`. Recover a file: `git show f789f5c:docs/pa2/<file>`.
@@ -50,3 +50,18 @@ Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `repor
 | `SPECKIT_TRAINING`, `speckit-training-Triet`, `PA1_LESSONS`, `drafts/` | Deleted |
 
 Open: review `docs/design/initial/figma-state.json` and `docs/reference/ORIGINAL_PROMPT_REFERENCE.md` (kept for now).
+
+## 4. Tuấn's local PA3 ticket deliverables (2026-11-09)
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: assigned ticket reviewers, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+| Ticket / artifact | Change | Reason / boundary |
+|---|---|---|
+| SCRUM-28; architecture and proposal contracts | Five-state pure transition graph, immutable lifecycle guards and unit tests | Share deterministic room rules with SCRUM-26/38; Build 1 LIVE stays disabled |
+| SCRUM-36; `USE_CASE_MODEL.md`, `use_cases.json` | 54 use cases, 11 Mermaid diagrams, FR-01–60 mapping | Complete Part C design coverage while distinguishing future/optional implementation |
+| SCRUM-37; `USE_CASE_SPECIFICATIONS.md`, prototype states and screenshots | All 54 basic flows plus 201 alternative/exception outcomes, local interactive prototype | Part D requires coherent UI evidence for both basic and alternative flows |
+| SCRUM-47; adapter and grounding modules/tests | Async provider protocol, strict result contract, exact speaker/segment/debate quote guard | Bounded preparation, no paid provider calls or future pipeline implementation |
+| PDF pipeline | Add source-relative resource lookup | Embed prototype screenshots through the existing Pandoc/latexmk build |
+| `.gitignore` | Broaden secret pattern to `.env*`, retain `.env.example` exception | Protect every dotenv filename without excluding the placeholder template |
+| `.env.example` | Empty optional browser-tooling placeholders | Keep local document tooling portable without hardcoding browser paths |
+
+Review, Git publication and Jira completion are not claimed. This section does not replace the open rows in section 2.

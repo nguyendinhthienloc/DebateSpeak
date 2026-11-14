@@ -1,0 +1,1026 @@
+{
+  "schema_version": 1,
+  "title": "DebateSpeak PA3 use-case catalogue",
+  "status": "Prepared for human review; no implementation or Jira completion is implied.",
+  "owner": {
+    "name": "Trần Lê Anh Tuấn",
+    "student_id": "24125107",
+    "role": "AI Orchestrator & Analysis Lead"
+  },
+  "scope_notes": {
+    "PA3": "Modelled in PA3; only existing Sprint 3 commitments are implementation scope. Topic browsing is extra and sign-out requires the auth contract.",
+    "future-mvp": "MVP behaviour planned for later builds, except FG-03 session controls whose PA3 media boundary must remain explicit.",
+    "should": "Conditional enhancement; cut before Must requirements if schedule slips.",
+    "stretch": "Could requirement, not a PA3 implementation commitment.",
+    "post-mvp": "Explicitly deferred FR-57..60; contracts are design-only and may not enable production UI."
+  },
+  "actors": [
+    {
+      "id": "USER",
+      "name": "Authenticated user",
+      "scope": "abstract",
+      "description": "Shared authenticated identity; general actor only, not a permission to access every role."
+    },
+    {
+      "id": "VISITOR",
+      "name": "Visitor",
+      "scope": "core",
+      "description": "Registers, signs in, or requests password recovery."
+    },
+    {
+      "id": "LEARNER",
+      "name": "Learner / Debater",
+      "scope": "core",
+      "description": "Practises with a partner and controls own learning data."
+    },
+    {
+      "id": "ADMIN",
+      "name": "Moderator / Admin",
+      "scope": "core",
+      "description": "Performs authorized moderation and operational tasks."
+    },
+    {
+      "id": "EVALUATOR",
+      "name": "Human evaluator",
+      "scope": "should",
+      "description": "Grades only assigned, ended debates under dual sharing consent."
+    },
+    {
+      "id": "TEACHER",
+      "name": "Teacher",
+      "scope": "post-mvp",
+      "description": "Reads explicitly shared student dashboards; no class-management workflows are designed."
+    },
+    {
+      "id": "AUDIENCE",
+      "name": "Audience member",
+      "scope": "post-mvp",
+      "description": "Receives only authorized room media; never publishes or grades."
+    },
+    {
+      "id": "MEDIA",
+      "name": "LiveKit Cloud",
+      "scope": "external",
+      "description": "Routes independent participant audio tracks."
+    },
+    {
+      "id": "STT",
+      "name": "STT / diarization provider",
+      "scope": "external",
+      "description": "Transcribes authorized audio through STTAdapter."
+    },
+    {
+      "id": "LLM",
+      "name": "LLM provider",
+      "scope": "external",
+      "description": "Returns schema-validated analysis through LLMAdapter; not the authorizing actor."
+    },
+    {
+      "id": "SEARCH",
+      "name": "Search / evidence provider",
+      "scope": "external",
+      "description": "Returns evidence snippets through SearchAdapter."
+    },
+    {
+      "id": "PRONUNCIATION",
+      "name": "Pronunciation provider",
+      "scope": "stretch",
+      "description": "Optional separate assessment provider."
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "UC-01-01",
+      "fg": "FG-01",
+      "title": "Register account",
+      "actors": [
+        "VISITOR"
+      ],
+      "requirements": [
+        "FR-01"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "Create an account without granting media or AI-processing consent.",
+      "screen": "uc-01-01"
+    },
+    {
+      "id": "UC-01-02",
+      "fg": "FG-01",
+      "title": "Sign in",
+      "actors": [
+        "VISITOR"
+      ],
+      "requirements": [
+        "FR-01"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "Authenticate and recover an authorized application session.",
+      "screen": "uc-01-02"
+    },
+    {
+      "id": "UC-01-03",
+      "fg": "FG-01",
+      "title": "Maintain learner profile",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-02"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Maintain display name, native language, self-assessed CEFR and goals.",
+      "screen": "uc-01-03"
+    },
+    {
+      "id": "UC-01-04",
+      "fg": "FG-01",
+      "title": "Sign out",
+      "actors": [
+        "USER"
+      ],
+      "requirements": [
+        "FR-03"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "End the current session without keeping the account active in this browser.",
+      "screen": "uc-01-04"
+    },
+    {
+      "id": "UC-01-05",
+      "fg": "FG-01",
+      "title": "Recover forgotten password",
+      "actors": [
+        "VISITOR"
+      ],
+      "requirements": [
+        "FR-03"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Regain account access through a verified password-reset process.",
+      "screen": "uc-01-05"
+    },
+    {
+      "id": "UC-01-06",
+      "fg": "FG-01",
+      "title": "Review active sessions",
+      "actors": [
+        "USER"
+      ],
+      "requirements": [
+        "FR-03"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Inspect own authenticated sessions without exposing session credentials.",
+      "screen": "uc-01-06"
+    },
+    {
+      "id": "UC-01-07",
+      "fg": "FG-01",
+      "title": "Delete own account and data",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-04"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Immediately disable the account and erase associated learning data within seven days.",
+      "screen": "uc-01-07"
+    },
+    {
+      "id": "UC-01-08",
+      "fg": "FG-01",
+      "title": "Suspend or reactivate account",
+      "actors": [
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-05"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Restrict or restore account access using authorized moderation.",
+      "screen": "uc-01-08"
+    },
+    {
+      "id": "UC-02-01",
+      "fg": "FG-02",
+      "title": "Browse and select topics",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-06"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "Find a curated topic by category, text and CEFR before creating a room.",
+      "screen": "uc-02-01"
+    },
+    {
+      "id": "UC-02-02",
+      "fg": "FG-02",
+      "title": "Manage topic library",
+      "actors": [
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-07"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Create, edit, tag and retire public topics without corrupting existing debate history.",
+      "screen": "uc-02-02"
+    },
+    {
+      "id": "UC-02-03",
+      "fg": "FG-02",
+      "title": "Get personalized topic recommendations",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-08"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Find topics appropriate to self-assessed CEFR and observed practice needs.",
+      "screen": "uc-02-03"
+    },
+    {
+      "id": "UC-02-04",
+      "fg": "FG-02",
+      "title": "Propose a custom topic",
+      "actors": [
+        "LEARNER",
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-09"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Submit a topic for moderation before it becomes publicly available.",
+      "screen": "uc-02-04"
+    },
+    {
+      "id": "UC-03-01",
+      "fg": "FG-03",
+      "title": "Create debate room",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-10",
+        "FR-12"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "Create a two-person LOBBY with a topic, stance mode, format, duration and invite.",
+      "screen": "uc-03-01"
+    },
+    {
+      "id": "UC-03-02",
+      "fg": "FG-03",
+      "title": "Join invited room",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-11",
+        "FR-12"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "Join by code or link while the server enforces two distinct debaters and room availability.",
+      "screen": "uc-03-02"
+    },
+    {
+      "id": "UC-03-03",
+      "fg": "FG-03",
+      "title": "View lobby and readiness",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-12"
+      ],
+      "scope": "PA3",
+      "kind": "user-goal",
+      "goal": "See authoritative room state and participant presence without treating presence as consent.",
+      "screen": "uc-03-03"
+    },
+    {
+      "id": "UC-03-04",
+      "fg": "FG-03",
+      "title": "Give or withdraw processing consent",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-13"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Control own informed consent for transcription and AI processing without coercion.",
+      "screen": "uc-03-04"
+    },
+    {
+      "id": "UC-03-05",
+      "fg": "FG-03",
+      "title": "Start debate",
+      "actors": [
+        "LEARNER",
+        "MEDIA"
+      ],
+      "requirements": [
+        "FR-12",
+        "FR-13",
+        "FR-19"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Enter LIVE only after server-side dual consent, mic readiness and actual media availability.",
+      "screen": "uc-03-05"
+    },
+    {
+      "id": "UC-03-06",
+      "fg": "FG-03",
+      "title": "Leave or end debate",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-12",
+        "FR-15"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Leave safely before LIVE or stop a live debate and all capture promptly.",
+      "screen": "uc-03-06"
+    },
+    {
+      "id": "UC-03-07",
+      "fg": "FG-03",
+      "title": "Follow debate and turn timers",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-14"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "See authoritative session and turn timing without enforcing silence through AI.",
+      "screen": "uc-03-07"
+    },
+    {
+      "id": "UC-03-08",
+      "fg": "FG-03",
+      "title": "Report abusive behavior",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-16"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Submit a room or transcript abuse report while retaining accessible leave/end controls.",
+      "screen": "uc-03-08"
+    },
+    {
+      "id": "UC-03-09",
+      "fg": "FG-03",
+      "title": "Review abuse and close room",
+      "actors": [
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-17"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Review submitted reports and apply authorized room closure with an audit record.",
+      "screen": "uc-03-09"
+    },
+    {
+      "id": "UC-03-10",
+      "fg": "FG-03",
+      "title": "Use private room text chat",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-58"
+      ],
+      "scope": "post-mvp",
+      "kind": "user-goal",
+      "goal": "Exchange room chat only when enabled; keep it separate from transcript and AI inputs by default.",
+      "screen": "uc-03-10"
+    },
+    {
+      "id": "UC-03-11",
+      "fg": "FG-03",
+      "title": "Practise solo with an AI opponent",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-59"
+      ],
+      "scope": "post-mvp",
+      "kind": "user-goal",
+      "goal": "Practise with generated opponent turns after a separate TTS contract and personal capture-consent design.",
+      "screen": "uc-03-11"
+    },
+    {
+      "id": "UC-03-12",
+      "fg": "FG-03",
+      "title": "Authorize and join audience access",
+      "actors": [
+        "LEARNER",
+        "AUDIENCE",
+        "MEDIA"
+      ],
+      "requirements": [
+        "FR-60"
+      ],
+      "scope": "post-mvp",
+      "kind": "user-goal",
+      "goal": "Admit capped, non-publishing audience access only with both debaters' consent.",
+      "screen": "uc-03-12"
+    },
+    {
+      "id": "UC-03-13",
+      "fg": "FG-03",
+      "title": "Validate start readiness",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-12",
+        "FR-13",
+        "FR-19"
+      ],
+      "scope": "future-mvp",
+      "kind": "supporting",
+      "goal": "As a mandatory start subcase, reject stale or missing membership, consent, mic, expiry or media-capability gates.",
+      "screen": "uc-03-13"
+    },
+    {
+      "id": "UC-04-01",
+      "fg": "FG-04",
+      "title": "Select and test microphone",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-19"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Choose an input and explicitly run a local mic test with permission-recovery guidance.",
+      "screen": "uc-04-01"
+    },
+    {
+      "id": "UC-04-02",
+      "fg": "FG-04",
+      "title": "Exchange audio and control mute",
+      "actors": [
+        "LEARNER",
+        "MEDIA"
+      ],
+      "requirements": [
+        "FR-18",
+        "FR-20"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Speak on independent tracks, hear the partner and control own mute after dual consent.",
+      "screen": "uc-04-02"
+    },
+    {
+      "id": "UC-04-03",
+      "fg": "FG-04",
+      "title": "Recover a dropped connection",
+      "actors": [
+        "LEARNER",
+        "MEDIA"
+      ],
+      "requirements": [
+        "FR-15",
+        "FR-21"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Rejoin the existing identity within a visible 60-second grace period or finish the session.",
+      "screen": "uc-04-03"
+    },
+    {
+      "id": "UC-04-04",
+      "fg": "FG-04",
+      "title": "Enable optional live video",
+      "actors": [
+        "LEARNER",
+        "MEDIA"
+      ],
+      "requirements": [
+        "FR-22"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Add video only through a separately consented optional flow that preserves audio priority.",
+      "screen": "uc-04-04"
+    },
+    {
+      "id": "UC-05-01",
+      "fg": "FG-05",
+      "title": "View speaker-attributed live transcript",
+      "actors": [
+        "LEARNER",
+        "STT"
+      ],
+      "requirements": [
+        "FR-23",
+        "FR-24",
+        "FR-25",
+        "FR-26"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Read partial and finalized timestamped transcript text linked deterministically to each speaker's track.",
+      "screen": "uc-05-01"
+    },
+    {
+      "id": "UC-05-02",
+      "fg": "FG-05",
+      "title": "Review and export full transcript",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-27"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Review an authorized finished transcript and download text or Markdown.",
+      "screen": "uc-05-02"
+    },
+    {
+      "id": "UC-05-03",
+      "fg": "FG-05",
+      "title": "Use mixed-audio diarization fallback",
+      "actors": [
+        "LEARNER",
+        "STT"
+      ],
+      "requirements": [
+        "FR-28"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Recover speaker-attributed text for an explicitly supported mixed-audio input without replacing track attribution by default.",
+      "screen": "uc-05-03"
+    },
+    {
+      "id": "UC-06-01",
+      "fg": "FG-06",
+      "title": "Review language corrections",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-31"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Receive CEFR-appropriate grammar and vocabulary feedback quoting the learner's exact transcript.",
+      "screen": "uc-06-01"
+    },
+    {
+      "id": "UC-06-02",
+      "fg": "FG-06",
+      "title": "Review speaking metrics",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-29"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Inspect deterministic pace, fillers, pauses, talk-time and lexical metrics with measurement limits.",
+      "screen": "uc-06-02"
+    },
+    {
+      "id": "UC-06-03",
+      "fg": "FG-06",
+      "title": "Review recurring language patterns",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-32"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Inspect evidenced recurring errors within and across own debates.",
+      "screen": "uc-06-03"
+    },
+    {
+      "id": "UC-06-04",
+      "fg": "FG-06",
+      "title": "Review pronunciation assessment",
+      "actors": [
+        "LEARNER",
+        "PRONUNCIATION"
+      ],
+      "requirements": [
+        "FR-33"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Receive separately authorized pronunciation assessment without equating accent with reasoning quality.",
+      "screen": "uc-06-04"
+    },
+    {
+      "id": "UC-06-05",
+      "fg": "FG-06",
+      "title": "Validate cited transcript evidence",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-37"
+      ],
+      "scope": "future-mvp",
+      "kind": "supporting",
+      "goal": "As a mandatory feedback subcase, reject missing, empty, non-verbatim, cross-speaker or cross-segment citations.",
+      "screen": "uc-06-05"
+    },
+    {
+      "id": "UC-07-01",
+      "fg": "FG-07",
+      "title": "Review argument structure and rebuttals",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-34",
+        "FR-35",
+        "FR-36"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Inspect claims, reasons, rebuttals, relevance and evidence quality using attributable transcript context.",
+      "screen": "uc-07-01"
+    },
+    {
+      "id": "UC-07-02",
+      "fg": "FG-07",
+      "title": "Review potential logical fallacies",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-37"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Inspect a potential fallacy with exact evidence, context, explanation and a specific repair.",
+      "screen": "uc-07-02"
+    },
+    {
+      "id": "UC-08-01",
+      "fg": "FG-08",
+      "title": "Inspect claim verdicts and evidence",
+      "actors": [
+        "LEARNER",
+        "LLM",
+        "SEARCH"
+      ],
+      "requirements": [
+        "FR-38",
+        "FR-39",
+        "FR-40",
+        "FR-41",
+        "FR-43"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Inspect bounded fact checks, five-way verdicts, source snippets, uncertainty and evaluator disagreement.",
+      "screen": "uc-08-01"
+    },
+    {
+      "id": "UC-08-02",
+      "fg": "FG-08",
+      "title": "Show optional live fact-check overlay",
+      "actors": [
+        "LEARNER",
+        "LLM",
+        "SEARCH"
+      ],
+      "requirements": [
+        "FR-42"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Opt into bounded live evidence overlays without delaying audio or presenting uncertain claims as settled.",
+      "screen": "uc-08-02"
+    },
+    {
+      "id": "UC-09-01",
+      "fg": "FG-09",
+      "title": "Review debate evaluation and consensus",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-44",
+        "FR-45"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Inspect a versioned rubric, deterministic consensus and contested flags with an honest single-judge baseline.",
+      "screen": "uc-09-01"
+    },
+    {
+      "id": "UC-09-02",
+      "fg": "FG-09",
+      "title": "Configure analysis and inspect usage",
+      "actors": [
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-46"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Manage provider/model, prompt versions, flags and budgets without exposing secrets to the client.",
+      "screen": "uc-09-02"
+    },
+    {
+      "id": "UC-09-03",
+      "fg": "FG-09",
+      "title": "Run optional heterogeneous judge panel",
+      "actors": [
+        "ADMIN",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-47"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Enable three or more different judge models only under reviewed budget and consensus rules.",
+      "screen": "uc-09-03"
+    },
+    {
+      "id": "UC-09-04",
+      "fg": "FG-09",
+      "title": "Assign a human evaluator",
+      "actors": [
+        "LEARNER",
+        "EVALUATOR"
+      ],
+      "requirements": [
+        "FR-55",
+        "FR-56"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Assign a reviewer to an ended debate only after both debaters authorize transcript and grade sharing.",
+      "screen": "uc-09-04"
+    },
+    {
+      "id": "UC-09-05",
+      "fg": "FG-09",
+      "title": "Submit human grading card",
+      "actors": [
+        "EVALUATOR"
+      ],
+      "requirements": [
+        "FR-55",
+        "FR-56"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Score only an assigned ended debate using the versioned shared rubric while preserving AI grades separately.",
+      "screen": "uc-09-05"
+    },
+    {
+      "id": "UC-09-06",
+      "fg": "FG-09",
+      "title": "View shared human grades",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-55",
+        "FR-56"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "See submitted human and AI evaluations side by side only while dual sharing authorization permits access.",
+      "screen": "uc-09-06"
+    },
+    {
+      "id": "UC-10-01",
+      "fg": "FG-10",
+      "title": "Review personalized learning report",
+      "actors": [
+        "LEARNER",
+        "LLM"
+      ],
+      "requirements": [
+        "FR-48",
+        "FR-49"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Review a post-debate summary, evidenced feedback and a concrete practice plan without fabricated completeness.",
+      "screen": "uc-10-01"
+    },
+    {
+      "id": "UC-10-02",
+      "fg": "FG-10",
+      "title": "Browse own debate history",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-50"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Find past authorized debates and open their transcript and report.",
+      "screen": "uc-10-02"
+    },
+    {
+      "id": "UC-10-03",
+      "fg": "FG-10",
+      "title": "Review longitudinal progress",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-51"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Compare observed metrics and recurring patterns while exposing missing data and non-certified proficiency limits.",
+      "screen": "uc-10-03"
+    },
+    {
+      "id": "UC-10-04",
+      "fg": "FG-10",
+      "title": "Track analysis status and retry",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-52"
+      ],
+      "scope": "should",
+      "kind": "user-goal",
+      "goal": "Inspect queued/running/failed stages and request a bounded retry while keeping partial results clearly labelled.",
+      "screen": "uc-10-04"
+    },
+    {
+      "id": "UC-10-05",
+      "fg": "FG-10",
+      "title": "Export report PDF",
+      "actors": [
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-53"
+      ],
+      "scope": "stretch",
+      "kind": "user-goal",
+      "goal": "Download an authorized report without silently including other learners' private details.",
+      "screen": "uc-10-05"
+    },
+    {
+      "id": "UC-10-06",
+      "fg": "FG-10",
+      "title": "Process deletion and retention requests",
+      "actors": [
+        "ADMIN"
+      ],
+      "requirements": [
+        "FR-54",
+        "FR-04"
+      ],
+      "scope": "future-mvp",
+      "kind": "user-goal",
+      "goal": "Apply authorized erasure and retention policies across transcripts, analyses, reports and optional chat.",
+      "screen": "uc-10-06"
+    },
+    {
+      "id": "UC-10-07",
+      "fg": "FG-10",
+      "title": "View consented student dashboards",
+      "actors": [
+        "TEACHER",
+        "LEARNER"
+      ],
+      "requirements": [
+        "FR-57"
+      ],
+      "scope": "post-mvp",
+      "kind": "user-goal",
+      "goal": "Give read-only access only for students who already joined a class and explicitly shared; revoke access at any time. Class creation, rosters and assignments remain undesigned.",
+      "screen": "uc-10-07"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "UC-03-05",
+      "target": "UC-03-13",
+      "type": "include",
+      "condition": "Every start request executes authoritative gate validation."
+    },
+    {
+      "source": "UC-06-01",
+      "target": "UC-06-05",
+      "type": "include",
+      "condition": "Every retained language feedback item must pass citation validation."
+    },
+    {
+      "source": "UC-07-01",
+      "target": "UC-06-05",
+      "type": "include",
+      "condition": "Every retained argument critique must pass citation validation."
+    },
+    {
+      "source": "UC-07-02",
+      "target": "UC-06-05",
+      "type": "include",
+      "condition": "Every retained potential-fallacy critique must pass citation validation."
+    },
+    {
+      "source": "UC-02-03",
+      "target": "UC-02-01",
+      "type": "extend",
+      "condition": "At topic discovery, when the learner requests personalized recommendations."
+    },
+    {
+      "source": "UC-04-04",
+      "target": "UC-04-02",
+      "type": "extend",
+      "condition": "At media setup, when optional video is enabled and separately authorized."
+    },
+    {
+      "source": "UC-08-02",
+      "target": "UC-04-02",
+      "type": "extend",
+      "condition": "During LIVE audio, when the learner opts into supported live evidence overlays."
+    },
+    {
+      "source": "UC-09-06",
+      "target": "UC-09-01",
+      "type": "extend",
+      "condition": "At the evaluation view, when a human grade is submitted and both debaters still authorize sharing."
+    },
+    {
+      "source": "UC-10-05",
+      "target": "UC-10-01",
+      "type": "extend",
+      "condition": "At report review, when the learner requests a supported PDF export."
+    }
+  ],
+  "actor_generalizations": [
+    {
+      "specific": "LEARNER",
+      "general": "USER"
+    },
+    {
+      "specific": "ADMIN",
+      "general": "USER"
+    },
+    {
+      "specific": "EVALUATOR",
+      "general": "USER"
+    },
+    {
+      "specific": "TEACHER",
+      "general": "USER"
+    }
+  ]
+}

@@ -138,7 +138,7 @@ flowchart TD
 - **Utility:** Creates an organized, predictable stage for the debate, ensuring both participants enter with agreed-upon rules and verified privacy consent.
 
 **Build 1 clarification — SCRUM-19, 2026-10-27.**
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
 Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (PR #8 merged).
 Edited: Codex. The [Gate G1 contract](../architecture/G1_SPEC_BUILD1.md) specifies auth/profile
 and the invite-based two-person lobby, ending at READY. It uses in-memory access JWTs,
@@ -235,3 +235,15 @@ To maintain realistic feasibility for a student project while demonstrating soun
 - **Enterprise Deployment & Monitoring (Post-MVP):**
   - *Academic Scope:* Automated GitHub Actions CI/CD deploying to a Linux host behind a Caddy reverse proxy.
   - *Future Consideration:* Kubernetes orchestration (Helm/K8s), zero-downtime blue-green deployments, and OpenTelemetry observability.
+## 6. PA3 ticket delivery clarification
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: assigned human reviewers, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+Read these bounded ticket contracts alongside the original proposal above.
+
+- SCRUM-28 delivers the five-state deterministic room lifecycle and domain guards, with tests for valid/invalid edges, capacity, expiry, authorization and explicit dual consent. Build 1 stops at READY; this component must not start audio/transcription or bypass SCRUM-26/38's transactional room service integration.
+- SCRUM-36 delivers the ten-functional-group use-case model and FR-01–60 traceability. SCRUM-37 delivers matching detailed flows, conditions and prototype screenshots, including errors, accessibility, consent refusal and recovery. Future/optional requirements are labelled designs rather than implemented PA3 features. Triết (Nguyễn Bảo Minh Triết, 24125047, Frontend & WebRTC/Audio Lead) is SCRUM-37 co-owner; peer review is pending.
+- SCRUM-47 is bounded preparation: the provider-independent async LLM contract and deterministic, speaker/segment/debate-specific exact-quote validation, with unit tests. Feedback without valid citations is discarded. Matching a quote never proves the diagnosis correct. No model provider, paid call, credential, real-time coaching pipeline or extra future database is introduced.
+- Human impact: joining is not consent, local prototype actions never capture audio, invalid state changes fail without changing room data, and retained feedback pairs evidence with actionable remediation. Media latency is unaffected because these changes introduce no live processing.
+- Reviewable outputs remain local at the user's request: no commit, push, PR, Jira transition, peer approval or successful end-to-end deployment is implied by local completion. Submission PDFs use the existing Pandoc/Mermaid/latexmk pipeline.
+
+---

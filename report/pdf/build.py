@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -113,6 +114,8 @@ def main() -> None:
         metadata.append(f"--metadata=date:{args.date}")
     run([
         pandoc, "source.md", "--from=markdown+pipe_tables+link_attributes-implicit_figures",
+        "--resource-path=" + os.pathsep.join(map(str, [source.parent, ROOT, build])),
+        "--extract-media=media",
         "--to=latex", "--standalone", "--output=report.tex", *metadata,
         "--variable=documentclass:article", "--variable=papersize:a4",
         "--variable=fontsize:10pt", "--variable=geometry:margin=20mm",
