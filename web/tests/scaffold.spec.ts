@@ -21,7 +21,9 @@ test('preview routes survive reload, back/forward and unknown URLs', async ({ pa
 test('room previews never create a session, request media, or call a service', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', request => {
-    if (['fetch', 'xhr', 'websocket'].includes(request.resourceType())) requests.push(request.url());
+    // The app-wide session restore on load is the only allowed call; rooms add none.
+    if (['fetch', 'xhr', 'websocket'].includes(request.resourceType())
+      && !request.url().endsWith('/api/v1/auth/refresh')) requests.push(request.url());
   });
   await page.addInitScript(() => {
     Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {

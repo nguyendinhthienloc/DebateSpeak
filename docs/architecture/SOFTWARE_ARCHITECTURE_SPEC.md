@@ -1395,3 +1395,38 @@ Frontend source, DESIGN.md, specs and rendered browser checks govern current UI.
 Both historical Figma links (Foundations and Build 1 flow) are optional references;
 Figma work happens only on explicit user request. This supersedes older
 Figma-first implementation guidance. Keep all repository paths relative.
+
+## FG-01 account management frontend scaffold (2026-11-14)
+
+The frontend now calls the remaining FG-01 endpoints. None exist in `api/` yet.
+Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
+This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
+
+| Method & path | Auth | Request | Success |
+|---|---|---|---|
+| `POST /auth/refresh` | Refresh cookie | none | 200 login response; 401 if no valid cookie |
+| `POST /auth/logout` | Refresh cookie | none | 204; idempotent |
+| `GET /users/me` | Bearer | none | 200 profile |
+| `PATCH /users/me` | Bearer | any of `display_name`, `cefr_level`, `native_language`, `goals` | 200 profile |
+| `DELETE /users/me` | Bearer | `password` | 202 `{status:"scheduled"}`; 403 wrong password |
+| `GET /auth/sessions` | Bearer + cookie | none | 200 `{sessions:[{id, created_at, last_used_at, device, current}]}` |
+| `DELETE /auth/sessions/{id}` | Bearer | none | 204 |
+| `GET /admin/users?email=` | Bearer, ADMIN | query | 200 admin user; 404 if none |
+| `POST /admin/users/{id}/suspend` | Bearer, ADMIN | `reason` | 200 admin user |
+| `POST /admin/users/{id}/reactivate` | Bearer, ADMIN | none | 200 admin user |
+
+Profile = login `user` plus `native_language` (string or null, up to 64
+characters) and `goals` (up to 5 strings, each up to 120 characters). The user
+object may include `role` (`LEARNER` or `ADMIN`). A session is one
+`auth_refresh_tokens` family. `device` is a short label derived from User-Agent
+at login; storing it needs a nullable `device TEXT` and a `last_used_at` column
+on the family's first row (or a `auth_sessions` table). Suspension adds an
+`account_suspensions` audit row (admin, reason, time) and revokes all refresh
+families; login for a suspended account returns 403 `{code:"account_suspended"}`.
+Deletion soft-deletes immediately (`deleted_at`), revokes all sessions and
+hard-deletes data within 7 days (FR-04).
+
+Frontend rules: access tokens stay in memory and travel only in `Authorization`;
+reload calls `/auth/refresh` once; a 401 on any Bearer call ends the session.
+Destructive actions require explicit confirmation. Admin links are hidden for
+non-admins, but the server is the only authority on role.

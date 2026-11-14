@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { ActionLink, BackToRooms, Choices, Field, Note, PageHeading } from '../components/ui';
 import type { FormEvent } from 'react';
-import { login, register } from '../auth/api';
-import { cefrLevels, type CefrLevel, type TokenResponse } from '../auth/contracts';
+import { AuthApiError, getProfile, login, register, updateProfile } from '../auth/api';
+import { cefrLevels, type CefrLevel, type ProfileResponse, type TokenResponse } from '../auth/contracts';
+import { updateSessionUser, useSession } from '../auth/session';
 import { useAuthForm } from '../auth/useAuthForm';
-import { validateCredentials, validateRegistration } from '../auth/validation';
+import { validateCredentials, validateProfile, validateRegistration } from '../auth/validation';
 import './account.css';
 
 const levels = cefrLevels;
@@ -28,12 +29,12 @@ export function PasswordField({ value, onChange, error, creating = false }: {
     </button>} />;
 }
 
-function FormError({ message }: { message: string }) {
+export function FormError({ message }: { message: string }) {
   return message ? <div className="note note-error" role="alert"><p className="small field-error">{message}</p></div> : null;
 }
 
-export function SignInPage({ registeredEmail, expired = false, onSignedIn }: {
-  registeredEmail?: string; expired?: boolean; onSignedIn: (response: TokenResponse) => void;
+export function SignInPage({ registeredEmail, expired = false, notice, onSignedIn }: {
+  registeredEmail?: string; expired?: boolean; notice?: string; onSignedIn: (response: TokenResponse) => void;
 }) {
   const [email, setEmail] = useState(registeredEmail ?? '');
   const [password, setPassword] = useState('');
@@ -50,6 +51,7 @@ export function SignInPage({ registeredEmail, expired = false, onSignedIn }: {
     <PageHeading title="Sign in">Create a room or join your partner.</PageHeading>
     {registeredEmail && <div role="status"><Note title="Account created" tone="success">Sign in with your email and password.</Note></div>}
     {expired && <p role="status" className="small">Your session expired. Sign in again.</p>}
+    {notice && <p role="status" className="small">{notice}</p>}
     <FormError message={message} />
     <div className="account-fields">
       <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
@@ -61,7 +63,7 @@ export function SignInPage({ registeredEmail, expired = false, onSignedIn }: {
     <div className="account-switch"><span className="muted">New to DebateSpeak?</span><ActionLink to="/register" variant="text">Create account</ActionLink></div>
     <ActionLink to="/verify-email" variant="text">Verify your email</ActionLink>
     <div className="account-limit">
-      <p className="small muted">For now, reload signs you out. Rooms and audio remain previews.</p>
+      <p className="small muted">Rooms and audio remain previews.</p>
       <ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>
     </div>
   </form>;
@@ -105,7 +107,12 @@ export function RegisterPage({ onRegistered }: { onRegistered: (email: string) =
   </form>;
 }
 
-export function ProfilePage() {
+export function ProfilePage({ onSignOut }: { onSignOut: () => void }) {
+  const { session } = useSession();
+  return session ? <SignedInProfile key={session.user.id} onSignOut={onSignOut} /> : <SampleProfile />;
+}
+
+function SampleProfile() {
   const [level, setLevel] = useState('B1');
   return <div className="account-page profile-page account-form">
     <PageHeading title="Your profile">Keep your display name and English level up to date.</PageHeading>
@@ -117,7 +124,7 @@ export function ProfilePage() {
     </div>
     <div className="account-save">
       <button type="button" className="action action-primary" disabled aria-describedby="profile-limit">Save changes</button>
-      <p id="profile-limit" className="small muted">Profile saving is not connected yet.</p>
+      <p id="profile-limit" className="small muted">This sample is not connected to an account. Sign in to save your profile.</p>
     </div>
     <nav className="account-secondary" aria-label="Profile navigation">
       <ActionLink to="/forgot-password" variant="text">Change password</ActionLink>
@@ -125,4 +132,89 @@ export function ProfilePage() {
       <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
     </nav>
   </div>;
+}
+
+function SignedInProfile({ onSignOut }: { onSignOut: () => void }) {
+  const [profile, setProfile] = useState<ProfileResponse>();
+  const [loadError, setLoadError] = useState('');
+  const [reload, setReload] = useState(0);
+  const [displayName, setDisplayName] = useState('');
+  const [nativeLanguage, setNativeLanguage] = useState('');
+  const [goals, setGoals] = useState('');
+  const [level, setLevel] = useState<CefrLevel>('B1');
+  const [saved, setSaved] = useState(false);
+  const { form, pending, errors, message, validate, run } = useAuthForm();
+  const { session } = useSession();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoadError('');
+    getProfile(controller.signal).then(value => {
+      setProfile(value);
+      setDisplayName(value.display_name);
+      setNativeLanguage(value.native_language ?? '');
+      setGoals(value.goals.join('\n'));
+      setLevel(value.cefr_level);
+    }, error => {
+      if (!controller.signal.aborted) setLoadError(error instanceof AuthApiError ? error.message : 'Could not load your profile.');
+    });
+    return () => controller.abort();
+  }, [reload]);
+
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const input = {
+      display_name: displayName.trim(),
+      native_language: nativeLanguage.trim() || null,
+      goals: goals.split('\n').map(goal => goal.trim()).filter(Boolean),
+      cefr_level: level,
+    };
+    setSaved(false);
+    if (validate(validateProfile(input))) {
+      void run(signal => updateProfile(input, signal), value => {
+        setProfile(value);
+        updateSessionUser(value);
+        setSaved(true);
+      });
+    }
+  }
+
+  const isAdmin = session?.user.role === 'ADMIN';
+  return <form ref={form} className="account-page profile-page account-form" noValidate onSubmit={submit} aria-busy={pending || !profile}>
+    <PageHeading title="Your profile">Keep your display name and English level up to date.</PageHeading>
+    {loadError && <div className="note note-error" role="alert"><p className="small field-error">{loadError}</p>
+      <button type="button" className="action action-text" onClick={() => setReload(reload + 1)}>Try again</button></div>}
+    {!profile && !loadError && <p role="status" className="small muted">Loading your profile…</p>}
+    {profile && <>
+      <p className="small muted">Signed in as {profile.email}</p>
+      {saved && <div role="status"><Note title="Profile saved" tone="success">Your changes are saved.</Note></div>}
+      <FormError message={message} />
+      <div className="account-fields">
+        <Field name="display_name" label="Display name" autoComplete="nickname" value={displayName}
+          onChange={event => setDisplayName(event.target.value)} error={errors.display_name} />
+        <Field name="native_language" label="Native language (optional)" value={nativeLanguage}
+          onChange={event => setNativeLanguage(event.target.value)} error={errors.native_language} placeholder="Vietnamese" />
+        <Choices label="English level" options={levels} value={level} onChange={value => setLevel(value as CefrLevel)} error={errors.cefr_level} describe />
+        <div className="field">
+          <label htmlFor="profile-goals">Learning goals (optional)</label>
+          <textarea id="profile-goals" name="goals" rows={4} value={goals} onChange={event => setGoals(event.target.value)}
+            aria-invalid={errors.goals ? true : undefined} aria-describedby={`profile-goals-hint${errors.goals ? ' profile-goals-error' : ''}`}
+            placeholder={'Reduce filler words\nImprove rebuttal structure'} />
+          <p id="profile-goals-hint" className="small muted">One goal per line, up to 5.</p>
+          {errors.goals && <p id="profile-goals-error" className="small field-error">{errors.goals}</p>}
+        </div>
+        <p className="small muted">Your level is a self-assessment, not a certification. Your email and account role cannot be changed here.</p>
+      </div>
+      <div className="account-save">
+        <button type="submit" className="action action-primary" disabled={pending}>{pending ? 'Saving…' : 'Save changes'}</button>
+      </div>
+    </>}
+    <nav className="account-secondary" aria-label="Account settings">
+      <ActionLink to="/forgot-password" variant="text">Change password</ActionLink>
+      <ActionLink to="/account/sessions" variant="text">Active sessions</ActionLink>
+      <ActionLink to="/account/delete" variant="text">Delete account</ActionLink>
+      {isAdmin && <ActionLink to="/admin/users" variant="text">Manage accounts</ActionLink>}
+      <button type="button" className="action action-text" onClick={onSignOut}>Sign out</button>
+    </nav>
+  </form>;
 }

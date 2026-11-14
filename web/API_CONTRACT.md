@@ -98,15 +98,10 @@ Verification success and Profile offer Change password: request a fresh reset
 code at `/auth/forgot-password`, then submit it to `/auth/reset-password`.
 Email verification codes are not password-reset credentials. Email is carried
 between these screens in memory; code/password fields start empty on navigation.
-Reload or expiry clears the frontend session; refresh/logout are not connected.
+Reload and expiry call `/auth/refresh`; sign out calls `/auth/logout`. Those and
+the profile, session, deletion and admin endpoints are in [API_INTEGRATION.md](API_INTEGRATION.md).
 Agree on the unverified-login flow before enforcing verification: the frontend
 has no dedicated redirect for it yet. Rooms, profile and audio remain previews.
 
 Use the [integration checklist](../specs/001-frontend-baseline/quickstart.md)
 to check these flows against the real backend.
-
-Investigation note (2026-11-14): this checkout has no registered auth router or
-verification/reset handler in `api/app/main.py`. A frontend navigation fix alone
-cannot make a real password change succeed against that backend. Verify actual
-email delivery, code validation, password hashing/persistence and session
-revocation when the endpoints are integrated; do not count mocked tests as proof.

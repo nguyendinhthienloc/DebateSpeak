@@ -1,14 +1,26 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { ActionLink, PageHeading } from './components/ui';
-import { setSession, useSession } from './auth/session';
+import { clearSession, finishRestoring, hasSession, setExpiryHandler, setSession, useSession } from './auth/session';
+import { logout, refresh } from './auth/api';
 import type { TokenResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
+import { DeleteAccountPage, RequireSession, SessionsPage } from './pages/AccountSettingsPages';
+import { AdminUsersPage } from './pages/AdminPage';
 import { RecoveryPage } from './pages/RecoveryPage';
 import { CreateRoomPage } from './pages/RoomSetupPage';
 import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomPages';
 import { LobbyPage } from './pages/LobbyPage';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';
+
+// One refresh per page load. Refresh tokens rotate, so a second concurrent call
+// (e.g. React StrictMode re-running effects) would replay a consumed token.
+let restoring: Promise<void> | undefined;
+function restoreOnce() {
+  restoring ??= refresh(new AbortController().signal)
+    .then(response => { if (!hasSession()) setSession(response); }, () => {})
+    .finally(finishRestoring);
+}
 
 export default function App() {
   const path = useRoute();
@@ -17,6 +29,7 @@ export default function App() {
   const [settings, setSettings] = useState(defaultSettings);
   const [registeredEmail, setRegisteredEmail] = useState<string>();
   const [recoveryEmail, setRecoveryEmail] = useState('');
+  const [notice, setNotice] = useState<string>();
   const { session, expired } = useSession();
   const isAuth = ['/sign-in', '/register', '/account-created', '/forgot-password', '/reset-password', '/verify-email'].includes(path);
 
@@ -28,7 +41,15 @@ export default function App() {
 
   useEffect(() => {
     if (!['/sign-in', '/account-created'].includes(path)) setRegisteredEmail(undefined);
+    if (path !== '/sign-in') setNotice(undefined);
   }, [path]);
+
+  // Restore a session from the HttpOnly refresh cookie on load, and refresh on expiry.
+  useEffect(() => {
+    setExpiryHandler(() => { refresh(new AbortController().signal).then(setSession, () => clearSession(true)); });
+    restoreOnce();
+    return () => setExpiryHandler(undefined);
+  }, []);
 
   useEffect(() => {
     if (expired) window.location.hash = '/sign-in';
@@ -40,6 +61,21 @@ export default function App() {
     window.location.hash = '/rooms';
   }
 
+  function signOut() {
+    clearSession();
+    setNotice('Signing you out…');
+    window.location.hash = '/sign-in';
+    logout(new AbortController().signal).then(
+      () => setNotice('You are signed out.'),
+      () => setNotice('You are signed out on this device, but the server did not confirm it. Sign in and check Active sessions.'));
+  }
+
+  function accountDeleted() {
+    clearSession();
+    setNotice('Your account is deleted. Your data will be permanently removed within 7 days.');
+    window.location.hash = '/sign-in';
+  }
+
   function registered(email: string) {
     setRegisteredEmail(email);
     window.location.hash = '/account-created';
@@ -47,7 +83,7 @@ export default function App() {
 
   function page() {
     switch (path) {
-      case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
+      case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} notice={notice} onSignedIn={signedIn} />;
       case '/register': return <RegisterPage onRegistered={registered} />;
       case '/forgot-password': return <RecoveryPage mode="request" initialEmail={recoveryEmail || session?.user.email} onEmailAccepted={setRecoveryEmail} />;
       case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
@@ -56,7 +92,10 @@ export default function App() {
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':
       case '/rooms/new/settings': return <CreateRoomPage editing={path.endsWith('/settings')} settings={settings} onChange={setSettings} />;
-      case '/profile': return <ProfilePage />;
+      case '/profile': return <ProfilePage onSignOut={signOut} />;
+      case '/account/sessions': return <RequireSession title="Active sessions"><SessionsPage onSignOut={signOut} /></RequireSession>;
+      case '/account/delete': return <RequireSession title="Delete account"><DeleteAccountPage onDeleted={accountDeleted} /></RequireSession>;
+      case '/admin/users': return <RequireSession title="Manage accounts"><AdminUsersPage /></RequireSession>;
       case '/invite': return <InvitationPage />;
       case '/rooms/waiting': return <LobbyPage />;
       case '/rooms/ready': return <LobbyPage ready />;
@@ -70,7 +109,10 @@ export default function App() {
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
     <header className="app-header">
       <a className="brand" href="#/rooms">DebateSpeak AI</a>
-      {!isAuth && <ActionLink to="/profile" variant="text" className="account-link">Account</ActionLink>}
+      {!isAuth && <div className="header-actions">
+        <ActionLink to="/profile" variant="text" className="account-link">Account</ActionLink>
+        {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
+      </div>}
     </header>
     <main id="main" ref={main} tabIndex={-1} key={path}>
       {session && <p className="small mb-4" role="status">Signed in as {session.user.display_name}</p>}

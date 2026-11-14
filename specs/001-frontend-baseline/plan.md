@@ -16,6 +16,13 @@ Regression tests cover the entire verify → request reset → reset journey.
 Frontend implementation is independent of Figma; both historical links are
 optional reference material. Read/edit/sync Figma only on explicit request.
 
+Revision 2026-11-14 (US4): one shared `request()` in `web/src/auth/api.ts`
+adds Bearer auth for signed-in calls. On load the app calls `/auth/refresh`
+once; on token expiry it tries refresh before showing "session expired". New
+screens: active sessions, delete account and admin accounts. Profile uses
+`/users/me` when signed in and keeps its labelled sample otherwise. The backend
+handoff for these endpoints is `web/API_INTEGRATION.md`.
+
 ## Technical Context
 
 Vite 5, React 18, TypeScript 5 and Tailwind 3 SPA; hash routing; Inter typography.
@@ -41,6 +48,7 @@ Requests time out after 15 seconds; no measured performance claim is made.
 | `web/src/pages/AccountPages.tsx`, `RecoveryPage.tsx` | US1–2 forms |
 | `web/src/auth/` | Typed requests, validation, memory session |
 | `web/src/pages/RoomPages.tsx`, `RoomSetupPage.tsx`, `roomSettings.ts` | US3 previews |
+| `web/src/pages/AccountSettingsPages.tsx`, `AdminPage.tsx` | US4 sessions, deletion, admin |
 | `web/src/App.tsx`, `routes.ts`, `components/ui.tsx`, `index.css` | Navigation and shared style |
 | `web/tests/` | Auth, recovery, scaffold and room-setting checks |
 | `api/app/main.py` | Health endpoint only; auth integration remains open |

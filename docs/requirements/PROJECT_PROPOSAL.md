@@ -281,3 +281,11 @@ verification success and Profile, using a separate reset code. Real email and
 account persistence remain backend work. Frontend implementation is independent
 of both historical Figma links; edit/sync Figma only on explicit user request.
 Use code, DESIGN.md, Spec Kit features and browser evidence as current authority.
+
+### FG-01 account management frontend (2026-11-14)
+
+The frontend now covers every FG-01 use case: profile editing (FR-02), sign out,
+active sessions and refresh-on-reload (FR-01, FR-03), account deletion (FR-04)
+and admin suspend/reactivate (FR-05). These are API-ready screens; the backend
+endpoints listed in SOFTWARE_ARCHITECTURE_SPEC.md and `web/API_INTEGRATION.md`
+are not implemented, so FG-01 is still not accepted as a vertical slice.
