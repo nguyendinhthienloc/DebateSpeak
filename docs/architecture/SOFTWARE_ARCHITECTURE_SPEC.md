@@ -10,7 +10,7 @@
 The PA2 Vision Document is a product-level companion, not evidence that these proposed components are implemented. Its publication pipeline must preserve the Markdown content and two Mermaid workflows, render diagrams locally, and compile the Markdown-derived LaTeX through `latexmk`; generated tools and intermediate files belong in ignored `report_build/`. See [the vision report guide](../../report/pdf/README.md) for the reproducible build command.
 
 **Build 1 contract (SCRUM-19 / Gate G1, merged via PR #8):**
-[G1_SPEC_BUILD1.md](../pa2/G1_SPEC_BUILD1.md) defines the request/response/error shapes,
+[G1_SPEC_BUILD1.md](G1_SPEC_BUILD1.md) defines the request/response/error shapes,
 session transport, persistence mapping and complete state-transition matrix needed by
 the Build 1 implementation. For Build 1 it takes precedence over the older proposed
 room/profile route names below. No endpoint implementation is claimed; it is scheduled for Sprint 3.
@@ -25,6 +25,49 @@ approved by the merge of PR #8. Prepared 2026-10-27 from `pa2` revision `dcb92af
 ---
 
 ## 1. Executive Summary & Problem Formulation
+
+### API-ready authentication frontend (November 12, 2026)
+
+Auth error messages must distinguish an unreachable service, a missing auth route
+(404), an unsupported action (405), invalid credentials (401), invalid input
+(400/422), a registration conflict (409), throttling (429), server errors (500),
+temporary service failures (502/503), and request timeouts (408/504 or the local
+15-second deadline). An unreadable/malformed success is an unexpected-response
+error. Map statuses to safe client copy; never display raw server traces or
+submitted values. Registration and login share neutral access-denial wording.
+
+The next scoped change connects the existing registration and sign-in screens to
+the G1 auth HTTP contract through a typed frontend client. Backend endpoints and
+database completion are not prerequisites for this frontend deliverable. Requests
+use a configurable API prefix, JSON, the G1 client header and credentialed fetch;
+success requires a valid API response. Account-created confirmation is transient,
+access tokens stay in runtime memory, and reload requires sign-in for this scope.
+Client validation, pending/error states and request-interception browser tests
+must cover both forms without a runtime fake-account store. Existing room/media
+screens remain previews. This is frontend integration preparation, not completion
+of backend auth security, persistence or the whole FG-01 vertical increment.
+See [the scoped auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
+Status: frontend implemented and verified with build, lint and 65 browser tests
+using intercepted HTTP responses. Real backend/database acceptance is not run.
+
+### Frontend navigation scaffold (November 6, 2026)
+
+The user authorized page routes and a responsive layout scaffold from the selected
+[Cream & Yellow Build 1 Figma flow](../design/BUILD1_FIGMA_FLOW.md). This is a UI
+preview on `feature/UI-scaffold`, not a completed Build 1 vertical increment.
+Use the existing Vite/React/TypeScript/Tailwind SPA with shared controls, semantic
+design tokens, local Inter fonts, and hash routes so refresh and direct links work
+on static hosting without server rewrites. Routes cover sign-in, registration,
+rooms, setup/settings, profile, invitation, waiting/ready lobby and room recovery
+examples; unknown routes provide a recovery link. Navigation updates document
+titles, scroll position and main-content focus, including browser back/forward.
+
+Preview navigation must be visibly identified. Sample participants and room codes
+are illustrative; no authentication, room mutation, persistence, API request,
+LiveKit connection, microphone capture, transcription or automated state transition
+is implemented. Media actions remain disabled with an explanation. Form values
+are transient UI state only, with no password storage. Build 1 contracts and the
+roadmap remain unchanged. See [the scaffold contract](../design/UI_SCAFFOLD.md).
 
 ### 1.1 Definition
 
@@ -314,7 +357,7 @@ All values are **project targets** to be verified in testing, not guarantees.
                  v                             v                      (transcript/events)
 +----------------+---------------+   +---------+------------------+
 | TIER 2: APPLICATION API         |   | TIER 3: REAL-TIME MEDIA    |
-|  FastAPI                        |   |  LiveKit server (SFU)      |
+|  Java (Spring Boot)             |   |  LiveKit server (SFU)      |
 |  - Auth, profiles, topics       |<->|  - Rooms, tracks, tokens   |
 |  - Room lifecycle & consent     |   +---------+------------------+
 |  - Transcript WS hub            |             | subscribes to per-participant tracks
@@ -343,7 +386,7 @@ All values are **project targets** to be verified in testing, not guarantees.
 | Component | Responsibility | Technology (confirmed) |
 |---|---|---|
 | Web client | UI, mic capture through LiveKit SDK, live transcript rendering, report viewing | Vite + React, TypeScript, Tailwind CSS |
-| API service | AuthN/AuthZ, CRUD, room state machine, consent, LiveKit token minting, transcript WebSocket hub, job creation | FastAPI, Pydantic v2, SQLAlchemy, Alembic |
+| API service | AuthN/AuthZ, CRUD, room state machine, consent, LiveKit token minting, transcript WebSocket hub, job creation | Java (Spring Boot) (Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14) |
 | Media layer | WebRTC audio routing and recording-free track exposure | LiveKit (self-hosted dev server or LiveKit Cloud) |
 | Transcription worker | Joins room as a hidden participant, subscribes to each audio track, segments speech with VAD, streams to STT, emits transcript events | LiveKit Agents (Python), Silero VAD, STT adapter |
 | Analysis workers | Run asynchronous AI stages after or during the debate | Python workers consuming a Redis-backed queue |
@@ -370,7 +413,7 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | Decision | Choice | Rationale |
 |---|---|---|
 | Real-time layer | **LiveKit** (preferred) over hand-built WebRTC | Provides SFU, token auth, per-participant tracks and server-side subscription, which removes the biggest team risk (WebRTC infrastructure) and enables track-based speaker attribution |
-| Backend | FastAPI | Async, typed, shares Python ecosystem with AI workers |
+| Backend | Java (Spring Boot) | Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14. Supersedes the earlier FastAPI choice; Python remains for AI workers, so the API/worker boundary must be defined over Redis jobs and HTTP, not shared code |
 | Database | PostgreSQL | Relational integrity for sessions, transcripts, reports; JSONB for flexible AI outputs |
 | Queue | Redis (e.g., ARQ/RQ) | Simple async job processing for a student team |
 | STT | Streaming hosted STT or `faster-whisper` behind an adapter | Hosted API gives lower latency; Whisper gives zero-cost/offline option |
@@ -378,6 +421,8 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | TTS | Browser `SpeechSynthesis` API (optional, for reading corrections aloud) | Zero cost; TTS is not required for the core flow |
 
 ---
+
+> **Decision note (backend stack).** Owner: Tài. Date: 2026-11-14. The backend is Java (Spring Boot), replacing the earlier FastAPI (Python 3.11+) proposal. Status: confirmed 2026-11-14; backend specs owned by Tài. Other Python-specific references (for example the room state machine note in the implementation section) are not yet revised.
 
 ## 6. Live Debate Room Architecture
 
@@ -1187,7 +1232,7 @@ The system treats **user speech and external retrieved content as DATA, not inst
 | Layer | Proposed | Alternatives | Notes |
 |---|---|---|---|
 | Frontend | Vite + React, TypeScript, Tailwind CSS | — | Responsive Single-Page Application; LiveKit Client SDK for media |
-| Backend | FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, `pyjwt`, `argon2-cffi` | — | Async endpoints, typed schemas |
+| Backend | Java (Spring Boot) | FastAPI, Pydantic v2, SQLAlchemy 2, Alembic (previous Python proposal) | Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14; libraries (ORM, migrations, JWT, Argon2) to be listed once the team confirms |
 | Database | PostgreSQL 16 | — | JSONB for multi-agent evaluation outputs |
 | Queue/cache | Redis with ARQ | — | Background queue and room pub/sub events |
 | Realtime Media | LiveKit SFU (Cloud free tier or containerized dev) | — | Eliminates NAT/firewall peer-to-peer connection issues |
@@ -1267,3 +1312,127 @@ These metrics define experiments; **results are not reported here.**
 - [ ] Functional groups FG-01…FG-10 map to actors (Section 2.3) and to roadmap sprints.
 - [ ] Every Must requirement has a sprint and at least one acceptance criterion.
 - [ ] No claim that AI judging, fact-checking, speech-to-text or multiple judges are unique.
+## 20. PA3 local implementation contracts — SCRUM-28, SCRUM-36, SCRUM-37, SCRUM-47
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: assigned human reviewers, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+These ticket contracts clarify the existing requirements above; they do not enable live media, future features, or AI provider calls.
+
+### 20.1 SCRUM-28: deterministic room lifecycle
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Tài (24125078), pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+Implement `app.domain.rooms` independently of FastAPI, SQLAlchemy and media providers. `RoomStatus` retains LOBBY, READY, LIVE, ENDED and CANCELLED. `transition(current, target)` accepts enum members, returns the target for one of the six G1 edges, and raises `InvalidTransition` otherwise. Invalid input types fail explicitly. Self-transitions are invalid. ENDED and CANCELLED are terminal. Allowed edges: LOBBY→READY, LOBBY→CANCELLED, READY→LOBBY, READY→LIVE, READY→CANCELLED, LIVE→ENDED.
+
+Expose a separate pure lifecycle guard with an immutable context (caller identity/authority, distinct participant identities, consent and microphone-ready identities, expiry, actual media availability, Build 1 live feature availability, and explicit end/expiry reason). The caller supplies time-derived expiry and authorization facts; the module never reads a clock or database. Start requires exactly two distinct members, both current consents, both microphone tests, actual media availability and an enabled live capability. Build 1 defaults to disabled LIVE. Creator cancellation and expiry work before LIVE; either participant can end LIVE, while timer/reconnection expiry is a trusted service action. A pending lobby that expires cannot become READY or LIVE. Declining consent causes no capture or transcription. Guard errors have stable domain codes. A graph edge is never sufficient authorization.
+
+The room service must lock/reload the room, derive context from authenticated server state, apply guards, persist status plus membership/consent changes atomically, then notify clients. An existing member's join retry returns its snapshot without invoking a self-transition. Map invalid edges/guards to 409 at an existing service/API boundary, authorization failures to 403, and hide nonmember room resources as 404 in accordance with G1. Do not add an arbitrary status endpoint. This ticket supplies the reusable domain component and exhaustive tests; SCRUM-26/38 own persistence/API/UI integration. No mock room backend is introduced.
+
+### 20.2 SCRUM-36 and SCRUM-37: design coverage
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Tài (24125078) for SCRUM-36 and Lộc (24125093) for SCRUM-37, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+`docs/pa3/use_cases.json` is the shared actor/use-case/FR inventory; `USE_CASE_MODEL.md` contains the overview and ten functional-group diagrams. `USE_CASE_SPECIFICATIONS.md` details each inventoried use case with preconditions, triggers, main/alternative/error flows, postconditions and a linked prototype screenshot. Map FR-01 through FR-60, explicitly separating PA3 scope, future MVP, Should, stretch and post-MVP designs. Teacher class management remains outside this design. Use Mermaid flowcharts with a documented UML-style convention; include and extend relationships describe behavior, not chronological navigation.
+
+The standalone local prototype in `docs/pa3/ui-prototypes/` is a review artifact with fictional data. It uses no microphone, network service, persistence or real credentials. It must show consent and mic readiness separately, blocked start, recovery/error states, transcript speaker attribution, quote-based feedback, evidence uncertainty, partial reports, protected admin/evaluator contexts and destructive confirmations. One screen and PNG per use case are traced by stable UC IDs. Screens for future features are explicitly labelled design only. Prototype artifacts do not constitute deployed product increments.
+
+### 20.3 SCRUM-47: adapter contract and evidence validation
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: human reviewer pending assignment. Edited: Trần Lê Anh Tuấn (24125107).
+
+Implement the existing async `LLMAdapter.complete_json` protocol and a validated `LLMResult` without a vendor SDK or network call. `parsed` must be a JSON object; model is nonempty; usage and latency are nonnegative. Return data must satisfy the requested Pydantic schema at the adapter boundary. Protocol ellipses define the documented interface, not a production stub. Provider implementations, retries and orchestration remain future work.
+
+The pure Grounding Guard receives finalized transcript segments and language/argument feedback. Segments carry immutable segment, debate and speaker identities and text. Each feedback item contains the same identities, a nonblank exact quote, a direct explanation and a concrete remediation. Preserve quote bytes/code points; do not lowercase, trim, fuzzy-match, normalize punctuation, or join adjacent segments to make a quote pass. Match only a substring of the identified finalized segment in the same debate owned by the same speaker. Empty/whitespace quotes, absent or ambiguous segment identities, other debates/speakers, partial STT and invented quotes fail closed with explicit rejection reasons. Every feedback item must pass all of its citations. Accepted/rejected results are separate, immutable, and preserve input order. Source and feedback inputs are not mutated. Grounding establishes attribution and quote presence, not correctness of an AI diagnosis. Tests use a documented test double, never real keys or provider calls. No new environment settings are required.
+
+---
+## 21. SCRUM-49 — account UI refinement (2026-11-14)
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+Refine the existing Cream & Yellow account pages in place: sign-in, registration, the confirmed-registration sign-in state, and the sample profile. The user requested a local working preview and a visible before/after explanation. Preserve all routes, validated auth request/response behavior, memory-only sessions, password-manager support and the explicit sample/profile/media limits. Direct navigation to account-created must not invent registration success. No auth, database, media or persistence behavior is added.
+
+Shared presentation contracts: semantic rem typography/leading; persistent labels and errors; a named Show/Hide password control adjacent to its input, with a 44px target; native CEFR radios with visible selected state and self-assessment guidance; form groups separated by meaning; clear success/error/disabled treatment. Keep the existing palette, local Inter weights 400/600, 48px primary controls and visible keyboard focus. Add only the Vietnamese font subset with its Unicode range so Latin text keeps using the Latin subset. No font or image is fetched from a remote provider.
+
+Use the selected Figma direction recorded in DESIGN.md and the supplied live screenshot as the baseline. Implement the user's requested local refinement for review; this does not claim new Figma frames were edited or that teammate approval was obtained. Shared Field, Choices, ActionLink and PageHeading interfaces remain compatible. Restrict account-specific geometry to account CSS rather than taking over the other members' room/navigation packages.
+
+Verify at 320/390/768/1102/1440px, with enlarged text, long Vietnamese names, keyboard radios/password reveal, cold/blocked fonts and reduced motion. Auth tests intercept HTTP at the boundary; no real credentials or account mutations are used. Preserve existing auth and room tests and record desktop/mobile before/after captures. Local preview runs on the existing Vite server; publication is not part of this request.
+
+## Account recovery and email verification frontend (2026-11-14)
+
+User-authorized scope: API-ready frontend, matching the existing Cream & Yellow
+account screens; Figma skipped by explicit request. No email backend is implemented.
+Add `/forgot-password`, `/reset-password`, and `/verify-email` hash routes. Users
+request an email code, then explicitly submit it with their email to verify or
+reset their password. Codes stay in component memory, never URLs or storage.
+Registration keeps its existing sign-in transition, with a verification link.
+
+Proposed JSON POST contracts under the configured API prefix:
+- `/auth/forgot-password`, `/auth/resend-verification`: `{email}` -> 202 `{status: "accepted"}`.
+- `/auth/verify-email`: `{email, code}` -> 200 `{status: "verified"}`.
+- `/auth/reset-password`: `{email, code, password}` -> 200 `{status: "reset"}`.
+Codes are opaque strings of 6-128 characters; server owns generation, expiry,
+single-use validation and rate limits. Backend must return identical accepted
+responses for known/unknown emails and must not reveal account existence.
+Invalid/expired codes use 400/401/410; 429 is retryable throttling. Reset must
+invalidate existing sessions server-side. No success UI before a valid response.
+Reuse existing request cancellation, timeout, field errors and password policy.
+Show neutral request confirmation, explicit resend, return-to-sign-in navigation,
+and no automatic sign-in after reset. No audio or consent behavior changes.
+These frontend contracts do not establish server security or email delivery.
+
+### Frontend Spec Kit baseline (2026-11-14)
+
+The existing frontend is now recorded retrospectively in
+[specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
+plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
+Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
+update these artifacts before code. Backend integration remains unfinished;
+this documentation does not change product behavior or complete FG-01.
+
+## Recovery navigation and frontend authority revision (2026-11-14)
+
+FG-01 owns login/registration (FR-01) and password reset (FR-03). FG-03 FR-10–17
+requires actual room/session services; the existing sample screens do not meet
+those requirements. Verification success and Profile expose Change password,
+which starts the existing reset-code flow. Verification codes must never be
+reused as reset authorization. Email may pass between recovery screens in memory;
+passwords/codes clear on navigation. No new backend endpoint is implied.
+
+Frontend source, DESIGN.md, specs and rendered browser checks govern current UI.
+Both historical Figma links (Foundations and Build 1 flow) are optional references;
+Figma work happens only on explicit user request. This supersedes older
+Figma-first implementation guidance. Keep all repository paths relative.
+
+## FG-01 account management frontend scaffold (2026-11-14)
+
+The frontend now calls the remaining FG-01 endpoints. The Spring Boot service
+`api/authify` (branch `backend-tai`) implements all of them with PostgreSQL
+tables `users`, `auth_sessions`, `auth_codes` and `account_suspensions`
+(`specs/002-fg01-accounts`), verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). Deviations: BCrypt instead of Argon2id; schema by
+Hibernate, not migrations.
+Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
+This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
+
+| Method & path | Auth | Request | Success |
+|---|---|---|---|
+| `POST /auth/refresh` | Refresh cookie | none | 200 login response; 401 if no valid cookie |
+| `POST /auth/logout` | Refresh cookie | none | 204; idempotent |
+| `GET /users/me` | Bearer | none | 200 profile |
+| `PATCH /users/me` | Bearer | any of `display_name`, `cefr_level`, `native_language`, `goals` | 200 profile |
+| `DELETE /users/me` | Bearer | `password` | 202 `{status:"scheduled"}`; 403 wrong password |
+| `GET /auth/sessions` | Bearer + cookie | none | 200 `{sessions:[{id, created_at, last_used_at, device, current}]}` |
+| `DELETE /auth/sessions/{id}` | Bearer | none | 204 |
+| `GET /admin/users?email=` | Bearer, ADMIN | query | 200 admin user; 404 if none |
+| `POST /admin/users/{id}/suspend` | Bearer, ADMIN | `reason` | 200 admin user |
+| `POST /admin/users/{id}/reactivate` | Bearer, ADMIN | none | 200 admin user |
+
+Profile = login `user` plus `native_language` (string or null, up to 64
+characters) and `goals` (up to 5 strings, each up to 120 characters). The user
+object may include `role` (`LEARNER` or `ADMIN`). A session is one
+`auth_refresh_tokens` family. `device` is a short label derived from User-Agent
+at login; storing it needs a nullable `device TEXT` and a `last_used_at` column
+on the family's first row (or a `auth_sessions` table). Suspension adds an
+`account_suspensions` audit row (admin, reason, time) and revokes all refresh
+families; login for a suspended account returns 403 `{code:"account_suspended"}`.
+Deletion soft-deletes immediately (`deleted_at`), revokes all sessions and
+hard-deletes data within 7 days (FR-04).
+
+Frontend rules: access tokens stay in memory and travel only in `Authorization`;
+reload calls `/auth/refresh` once; a 401 on any Bearer call ends the session.
+Destructive actions require explicit confirmation. Admin links are hidden for
+non-admins, but the server is the only authority on role.

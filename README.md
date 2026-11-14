@@ -1,8 +1,8 @@
 # DebateSpeak AI
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python: 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
+[![Java: 17](https://img.shields.io/badge/Java-17-blue.svg)](https://openjdk.org/)
+[![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-6DB33F.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-61DAFB.svg)](https://react.dev/)
 [![LiveKit](https://img.shields.io/badge/Audio-LiveKit%20WebRTC-FF4F00.svg)](https://livekit.io/)
 [![Docker](https://img.shields.io/badge/Deployment-Docker%20Compose-2496ED.svg)](https://www.docker.com/)
@@ -28,7 +28,7 @@ graph LR
     end
 
     subgraph Backend ["Application & Processing"]
-        API["FastAPI Server<br/>WebSockets & Auth"]
+        API["Spring Boot API<br/>WebSockets & Auth"]
         Worker["Transcription Worker<br/>Silero VAD + STT"]
         Agents["Multi-Agent Pipeline<br/>Language, Argument, Fact-Check"]
     end
@@ -62,7 +62,7 @@ graph LR
 | Layer | Primary Technologies | Purpose |
 |---|---|---|
 | **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Lucide Icons | Responsive SPA, room lobbies, live transcript view, interactive reports |
-| **Backend API** | FastAPI (Python 3.11+), SQLAlchemy 2 (async), Pydantic v2 | REST endpoints, WebSocket hub, JWT auth, room lifecycle state machine |
+| **Backend API** | Java 17, Spring Boot 4, Spring Data JPA (AI workers stay in Python) | REST endpoints, WebSocket hub, JWT auth, room lifecycle state machine |
 | **Data & Cache** | PostgreSQL 16, Redis 7 (ARQ task queue) | Relational persistence, session state, background job orchestration |
 | **Real-Time Audio** | LiveKit Cloud SFU, LiveKit Client SDK | Low-latency WebRTC audio streaming, per-speaker track routing |
 | **Speech Pipeline** | Silero VAD, STT Adapter (Cloud streaming API / local fallback) | Voice segmentation, word-level timestamps, pause detection |
@@ -112,6 +112,12 @@ Launch PostgreSQL 16, Redis 7, and the LiveKit WebRTC server in the background:
 
 ```bash
 docker compose up -d
+```
+
+PA3 only needs the database. Start just that, from a clean volume if you want a fresh one:
+
+```bash
+docker compose up -d --wait db
 ```
 
 Verify that all three containers are healthy:

@@ -2,6 +2,8 @@
 
 Companion to [SOFTWARE_ARCHITECTURE_SPEC.md](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md) and [DEV_TOOLS_AND_PROCESS.md](../management/DEV_TOOLS_AND_PROCESS.md).
 
+> **Backend stack note (2026-11-14):** the API is now Java Spring Boot. FastAPI, Alembic and pytest steps below apply only to the Python AI workers; API run steps are in [specs/002-fg01-accounts/quickstart.md](../../specs/002-fg01-accounts/quickstart.md).
+
 > Numeric targets are **project targets**, not results. This document defines experiments and metrics only; no results are reported.
 
 ---
@@ -369,7 +371,7 @@ Project_2/
 │   ├── pa2/ pa3/ pa4/ pa5/              # PAs 2 to 5 deliverables & specifications
 │   ├── architecture/                    # Software Architecture Specification
 │   └── management/                      # WBS tasks and process guidelines
-├── api/                                 # FastAPI backend
+├── api/                                 # Java (Spring Boot), confirmed 2026-11-14; backend specs owned by Tài, backend
 │   ├── pyproject.toml
 │   ├── app/
 │   │   ├── main.py

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -98,11 +99,40 @@ def main() -> None:
     (build / "source.md").write_text(markdown, encoding="utf-8")
     (build / "header.tex").write_text(
         r"""\usepackage{graphicx}
+\usepackage{url}
+\AtBeginDocument{\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p
+  \do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F
+  \do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V
+  \do\W\do\X\do\Y\do\Z\do0\do1\do2\do3\do4\do5\do6\do7\do8\do9}}
 \pagestyle{plain}
 \setlength{\emergencystretch}{3em}
 \DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
 \DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
 \DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2500}{-}
+\DeclareUnicodeCharacter{2502}{|}
+\DeclareUnicodeCharacter{250C}{+}
+\DeclareUnicodeCharacter{2510}{+}
+\DeclareUnicodeCharacter{2514}{+}
+\DeclareUnicodeCharacter{2518}{+}
+\DeclareUnicodeCharacter{251C}{|-}
+\DeclareUnicodeCharacter{2524}{-|}
+\DeclareUnicodeCharacter{252C}{+}
+\DeclareUnicodeCharacter{2534}{+}
+\DeclareUnicodeCharacter{253C}{+}
+\DeclareUnicodeCharacter{26A0}{(!)}
+\DeclareUnicodeCharacter{2713}{[x]}
+\DeclareUnicodeCharacter{2717}{[ ]}
+\DeclareUnicodeCharacter{2705}{[x]}
+\DeclareUnicodeCharacter{274C}{[ ]}
+\DeclareUnicodeCharacter{2714}{[x]}
+\DeclareUnicodeCharacter{25B6}{>}
+\DeclareUnicodeCharacter{25BA}{>}
+\DeclareUnicodeCharacter{25B8}{>}
+\DeclareUnicodeCharacter{FE0F}{}
+\DeclareUnicodeCharacter{FE0E}{}
+\DeclareUnicodeCharacter{1F3AF}{(target)}
 """,
         encoding="utf-8",
     )
@@ -113,12 +143,15 @@ def main() -> None:
         metadata.append(f"--metadata=date:{args.date}")
     run([
         pandoc, "source.md", "--from=markdown+pipe_tables+link_attributes-implicit_figures",
+        "--resource-path=" + os.pathsep.join(map(str, [source.parent, ROOT, build])),
+        "--extract-media=media",
         "--to=latex", "--standalone", "--output=report.tex", *metadata,
         "--variable=documentclass:article", "--variable=papersize:a4",
         "--variable=fontsize:10pt", "--variable=geometry:margin=20mm",
         "--variable=fontenc:T5", "--variable=colorlinks:true",
         "--variable=linkcolor:blue", "--variable=urlcolor:blue",
         "--include-in-header=header.tex",
+        "--lua-filter=" + str(Path(__file__).resolve().parent / "breakable-code.lua"),
     ], build)
     run([latexmk, "-pdf", "-interaction=nonstopmode", "-halt-on-error", "report.tex"], build)
     destination = source.with_suffix(".pdf")

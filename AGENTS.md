@@ -7,6 +7,16 @@
 
 ## 1. Zero Absolute/Hardcoded Paths Policy
 
+### Frontend source of truth
+
+Frontend implementation is independent of Figma. Use `web/src/`, `DESIGN.md`,
+feature specifications in `specs/`, and browser checks for UI decisions.
+Neither the historical Foundations nor Build 1 flow Figma link is a prerequisite
+or an acceptance gate. Open, read, change or sync Figma only when the user
+explicitly requests it. Preserve the existing Cream & Yellow identity.
+The human API handoff lives at `web/API_CONTRACT.md`; keep endpoint paths and
+response examples consistent with `web/src/auth/`. Update specs before code.
+
 1. **NO HARDCODED ABSOLUTE PATHS:**
    - Never write machine-specific or OS-specific absolute paths such as:
      - `D:\APCS\...`
@@ -58,7 +68,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Single-Page Application (SPA) built with **Vite + React (TypeScript) + Tailwind CSS**.
    - No server-side rendering (SSR) frameworks. Responsive layout for both desktop and mobile web.
 2. **Backend Architecture:**
-   - **FastAPI (Python 3.11+)** with async endpoints, SQLAlchemy 2 async ORM, and Alembic migrations.
+   - **Java (Spring Boot)**, chosen by Tài on 2026-11-14 and confirmed by the user. Backend specs are owned by Tài. Stack details follow Tài's backend spec.
    - Database: **PostgreSQL 16**. Cache & Job Queue: **Redis 7** (using ARQ for async tasks).
 3. **Real-Time Media & Audio:**
    - Use **LiveKit Cloud** free tier for audio routing to guarantee WebRTC connectivity across NAT/firewalls.
@@ -87,7 +97,7 @@ All documentation, task cards, and Git contributions must strictly attribute the
    - Every sprint, user story, and pull request must deliver an **end-to-end, vertically sliced, testable increment** of functionality.
    - Do not build isolated horizontal layers in silos (e.g. creating 20 empty database tables or 15 mocked UI pages with zero connection). Every feature increment must connect UI -> API -> Database/Service.
 2. **VERIFIED WORKING STATE PRESERVATION:**
-   - The `dev` and `main` branches (and the current sprint branch, e.g. `pa2`) must remain in a releasable, passing state at all times.
+   - The `dev` and `main` branches (and the current sprint branch, e.g. `pa3`) must remain in a releasable, passing state at all times.
    - Never break existing working features to introduce partial code for future sprints. Stubs must be feature-flagged or confined to isolated branches until integration tests pass.
 3. **INCREMENT PROGRESSION PATH:**
    - **Sprint 1 (PA1):** Project conception and setup (survey, proposal, CI, architecture spec). No product increment.
@@ -118,4 +128,18 @@ All documentation, task cards, and Git contributions must strictly attribute the
      - **No Participation Trophies:** Never offer false praise or superficial encouragement that masks fundamental reasoning fallacies or poor language mechanics.
      - **Direct Callouts Grounded in Evidence:** If a debater evaded an argument, committed a logical fallacy (ad hominem, strawman, false dilemma), exhibited severe disfluency, or fabricated empirical claims, the agent must state the failure plainly, quote the exact transcript segment, and explain why it failed.
      - **Constructive, Clinical Precision:** Brutal honesty is not hostility; it is clinical, objective precision. Every sharp critique must be paired with the exact formula for intellectual and linguistic remediation.
+
+## 9. Shared Files and Ownership (per sprint)
+
+1. **One person edits one file.** No task may require several members to edit the same file.
+2. **Each member has a TODO file** in `docs/<sprint>/<member>/TODO.md`. Members record their own status there only.
+3. **Shared logs and reports have one owner.** That person interviews each member, then writes the entries. Each member confirms their own entries before submission.
+4. **The shared checklist has one owner,** who alone edits it, using the members' TODO files as input.
+
+## 10. Checklist and Submission Freeze (per sprint)
+
+1. **One checklist, one owner.** Only the owner edits the sprint checklist.
+2. **Checklist format.** One row per file: file path, owner, and completeness (missing, draft, or complete). Nothing else.
+3. **The submission folder is built only after the freeze.** The freeze happens when every checklist row is complete. Before that, no folder is built or renamed.
+4. **Folder name.** After the freeze, the folder is named `PA<n>-Group<ID>`, for example `PA3-Group02`, as the assignment requires.
 

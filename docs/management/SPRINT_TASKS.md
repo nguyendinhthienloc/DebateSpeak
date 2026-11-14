@@ -15,7 +15,7 @@
 | Role ID | Role Title | Member | Candidate Technologies (Tentative / Subject to Change) |
 |---|---|---|---|
 | **R1** | **Frontend & WebRTC/Audio Lead** | Nguyễn Bảo Minh Triết (`24125047`) | React, TypeScript, Tailwind CSS, LiveKit Client SDK |
-| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | FastAPI, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
+| **R2** | **Backend & Real-Time Media Lead** | Nguyễn Hồng Tấn Tài (`24125078`) | Java (Spring Boot), confirmed 2026-11-14; backend specs owned by Tài, SQLAlchemy, Alembic, PostgreSQL, Redis, LiveKit API |
 | **R3** | **AI Audio & Speech Pipeline Lead** | Nguyễn Anh Khoa (`24125058`) | Python, LiveKit Agents, Silero VAD, STT Adapter Protocol |
 | **R4** | **AI Analysis & Agent Orchestrator Lead** | Trần Lê Anh Tuấn (`24125107`) | Python, Pydantic v2, LLM Adapter Protocol, Redis Queue (ARQ) |
 | **R5** | **DevOps & QA / Fact-Checking Lead & Release Custodian** | Nguyễn Đình Thiên Lộc (`24125093`) | Docker Compose, Caddy (TLS), GitHub Actions, Search Adapter, Playwright, pytest |
@@ -51,25 +51,27 @@
 
 | Jira | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping | Status |
 |---|---|---|---|---|---|---|
-| SCRUM-19 | Gate G1 spec: Build 1 API, state-machine and token contract | **R4** | **R5** | `docs/pa2/G1_SPEC_BUILD1.md` | PA2 supporting | Done |
-| SCRUM-20 | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/pa2/PROJECT_PLAN.md` | PA2 Part A | In Progress |
+| SCRUM-19 | Gate G1 spec: Build 1 API, state-machine and token contract | **R4** | **R5** | `docs/architecture/G1_SPEC_BUILD1.md` | PA2 supporting | Done |
+| SCRUM-20 | Author Project Plan: Goals, deliverables, risks, 5-sprint schedule, build plan | **R4** | **R3** | `docs/requirements/PROJECT_PLAN.md` | PA2 Part A | Done |
 | SCRUM-21 | Author Vision Document: Problem statement, positioning table, 10 feature paragraphs, workflows | **R1** | **R4** | `docs/requirements/VISION_DOCUMENT.md` | PA2 Part B | Done |
-| SCRUM-22 | Spec Kit Initialization in `/src`: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `src/constitution.md`, `.specify/` | PA2 Part C | Done |
-| SCRUM-23 | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | `docs/pa2/WEEKLY_REPORT.md` | PA2 Part D | Done |
-| SCRUM-31 | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Planned |
+| SCRUM-22 | Spec Kit Initialization: `constitution.md`, initial spec artifacts, team training evidence | **R5** | **R2** | `.specify/memory/constitution.md`, `.specify/` | PA2 Part C | Done |
+| SCRUM-23 | Sprint 2 AI Usage Report & Weekly Report (Agile meetings, Jira progress) | **R3** | **R1** | Git history (`docs/pa2/WEEKLY_REPORT.md`, removed) | PA2 Part D | Done |
+| SCRUM-31 | Submit the PA2 zip to the school's Moodle after `pa2` is merged into `dev` | **R2** | **R5** | Moodle submission | PA2 submission | Done |
 | SCRUM-32 | Backend database design document | **R2** | **R5** | `api/app/core/database_document.md` | PA2 supporting | Done |
-| SCRUM-33 | Vision Document PDF built from the Markdown | **R1** | **R5** | `docs/requirements/VISION_DOCUMENT.pdf` | PA2 Part B | Planned |
-| SCRUM-34 | Package PA2 (Git log, zip) and merge `pa2` into `dev` | **R5** | **R2** | `PA2-Group[GroupId].zip` | PA2 submission | Planned |
+| SCRUM-33 | Vision Document PDF built from the Markdown | **R1** | **R5** | `docs/requirements/VISION_DOCUMENT.pdf` | PA2 Part B | Done |
+| SCRUM-34 | Package PA2 (Git log, zip) and merge `pa2` into `dev` | **R5** | **R2** | `PA2-Group[GroupId].zip` | PA2 submission | Done |
 
 ---
 
 ### Sprint 2 assignments
 
-Who does what and branch rules: [pa2/TODO.md](../pa2/TODO.md). Jira mapping: [pa2/JIRA_MAPPING.md](../pa2/JIRA_MAPPING.md).
+Sprint 2 is closed; its working files were removed and remain in Git history. See [pa3/README.md](../pa3/README.md). Sprint 3 assignments: `docs/pa3/<member>/TODO.md`.
 ---
 
 ### Sprint 3 (Weeks 5–6 / PA3): Use-Case Modeling & First Functional Slice (Build 2)
 **Sprint Goal:** Comprehensive use-case model with Mermaid diagrams, use-case specifications, UI prototypes, and full-stack implementation of 1 Functional Group. Also carries Build 1 (auth and room lobby), moved from Sprint 2.
+
+> Sprint 3 scope was shrunk on 2026-11-03: Build 1 is cut to what FG-03 needs, the database with mock data comes first, and FG-01/FG-02 plus PA4/PA5 prep are extras. See [../pa3/README.md](../pa3/README.md) and `docs/pa3/<member>/TODO.md`.
 
 | Jira | Task Description | Assignee | Reviewer | Deliverable / Output | PA Mapping |
 |---|---|---|---|---|---|
@@ -128,7 +130,7 @@ Who does what and branch rules: [pa2/TODO.md](../pa2/TODO.md). Jira mapping: [pa
 | Tasks: SCRUM-21, SCRUM-33, SCRUM-25, SCRUM-27 |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 2: BACKEND & REAL-TIME MEDIA LEAD (Tài - 24125078)                                          |
-| Primary Focus: FastAPI API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
+| Primary Focus: Java (Spring Boot), confirmed 2026-11-14; backend specs owned by Tài, API, PostgreSQL Models, JWT Auth, Room State Machine, WebSockets, PubSub |
 | Tasks: SCRUM-24, SCRUM-26, SCRUM-31, SCRUM-32 |
 +--------------------------------------------------------------------------------------------------+
 | ROLE 3: AI AUDIO & SPEECH PIPELINE LEAD (Khoa - 24125058)                                        |

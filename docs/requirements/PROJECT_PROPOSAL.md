@@ -15,6 +15,33 @@ The [initial UI design study](../design/initial/README.md) translates FG-01 (log
 ---
 
 ## 1. Introduction & Value Proposition
+
+**API-ready authentication frontend (November 12, 2026).** The user requested
+sign-up and sign-in based on the repository's existing design and clarified that
+the API/database need not be finished. The proposed frontend slice replaces
+preview-only auth actions with validated forms and a typed client for the G1
+registration/login contracts, including loading states, safe error recovery and
+memory-only session handling. Successful actions require API responses; browser
+tests simulate those responses without claiming real persistence. Room and media
+screens retain their preview boundaries. Backend authentication, database writes,
+refresh/logout integration and full FG-01 acceptance remain separate work.
+See [the auth design](../superpowers/specs/2026-11-12-auth-frontend-design.md).
+Status: frontend implemented; build, lint and 65 browser contract tests passed.
+Backend/database acceptance remains unverified.
+
+Auth recovery messages distinguish missing endpoints, unreachable services,
+invalid credentials, validation/conflicts, access denial, throttling, server
+failures, unexpected responses and timeouts. Messages describe the appropriate
+recovery action and do not expose backend exception details or account eligibility.
+
+**Frontend scaffold scope (November 6, 2026).** The user requested only page
+navigation and responsive layouts from the selected Cream & Yellow Figma design.
+The [scaffold contract](../design/UI_SCAFFOLD.md) covers linked account, room setup,
+profile, invitation, lobby and recovery screens. All data and success/error states
+are explicitly labeled previews; this does not deliver authentication, room
+services, audio, transcription or AI coaching, and does not count as a completed
+vertical product increment. The roadmap and functional-group acceptance criteria
+remain unchanged.
 *Performed by: Nguyễn Bảo Minh Triết (24125047) | Reviewed by: Trần Lê Anh Tuấn (24125107) | Edited by: Nguyễn Đình Thiên Lộc (24125093)*
 
 ### 1.1 Problem Statement
@@ -111,9 +138,9 @@ flowchart TD
 - **Utility:** Creates an organized, predictable stage for the debate, ensuring both participants enter with agreed-upon rules and verified privacy consent.
 
 **Build 1 clarification — SCRUM-19, 2026-10-27.**
-Performed: Codex, assisting Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead.
 Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead (PR #8 merged).
-Edited: Codex. The [Gate G1 contract](../pa2/G1_SPEC_BUILD1.md) specifies auth/profile
+Edited: Codex. The [Gate G1 contract](../architecture/G1_SPEC_BUILD1.md) specifies auth/profile
 and the invite-based two-person lobby, ending at READY. It uses in-memory access JWTs,
 an HttpOnly rotating refresh cookie and server-side session revocation. Topic selection
 uses explicitly seeded topics until FG-02 exists; no topic-management API is required
@@ -208,3 +235,58 @@ To maintain realistic feasibility for a student project while demonstrating soun
 - **Enterprise Deployment & Monitoring (Post-MVP):**
   - *Academic Scope:* Automated GitHub Actions CI/CD deploying to a Linux host behind a Caddy reverse proxy.
   - *Future Consideration:* Kubernetes orchestration (Helm/K8s), zero-downtime blue-green deployments, and OpenTelemetry observability.
+## 6. PA3 ticket delivery clarification
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: assigned human reviewers, pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+Read these bounded ticket contracts alongside the original proposal above.
+
+- SCRUM-28 delivers the five-state deterministic room lifecycle and domain guards, with tests for valid/invalid edges, capacity, expiry, authorization and explicit dual consent. Build 1 stops at READY; this component must not start audio/transcription or bypass SCRUM-26/38's transactional room service integration.
+- SCRUM-36 delivers the ten-functional-group use-case model and FR-01–60 traceability. SCRUM-37 delivers matching detailed flows, conditions and prototype screenshots, including errors, accessibility, consent refusal and recovery. Future/optional requirements are labelled designs rather than implemented PA3 features. Triết (Nguyễn Bảo Minh Triết, 24125047, Frontend & WebRTC/Audio Lead) is SCRUM-37 co-owner; peer review is pending.
+- SCRUM-47 is bounded preparation: the provider-independent async LLM contract and deterministic, speaker/segment/debate-specific exact-quote validation, with unit tests. Feedback without valid citations is discarded. Matching a quote never proves the diagnosis correct. No model provider, paid call, credential, real-time coaching pipeline or extra future database is introduced.
+- Human impact: joining is not consent, local prototype actions never capture audio, invalid state changes fail without changing room data, and retained feedback pairs evidence with actionable remediation. Media latency is unaffected because these changes introduce no live processing.
+- Reviewable outputs remain local at the user's request: no commit, push, PR, Jira transition, peer approval or successful end-to-end deployment is implied by local completion. Submission PDFs use the existing Pandoc/Mermaid/latexmk pipeline.
+
+---
+## 7. SCRUM-49 — account presentation refinement
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+
+The local UI increment refines sign-in, registration, confirmed-registration sign-in and sample profile using the selected Cream & Yellow identity. Improve text hierarchy, related field grouping, adjacent password visibility, selected CEFR feedback and explicit profile-saving limitations. Keep Inter 400/600 and add Unicode-scoped Vietnamese glyph coverage without changing the Latin font or shrinking body text. Existing auth contracts, real-response validation and memory-only credentials remain unchanged; room/audio previews and disabled profile saving remain explicit.
+
+Acceptance evidence includes desktop/mobile before/after views, keyboard and enlarged-text checks, font-fallback checks and the existing mocked-boundary auth tests. The requested result is a local browser preview for user review, not a deployed service or a new Figma approval. Backend integration, microphone capture and teammate review are outside this presentation change.
+
+### Account recovery frontend scope (2026-11-14)
+
+Add API-ready email verification, forgotten-password request and password-reset
+screens using the existing Cream & Yellow account UI. Include email-code entry,
+resend, validation, pending, success and failure states. No account-existence
+claims or automatic login; no credentials/codes in URLs or browser storage.
+Email delivery, expiring single-use codes, throttling, verification enforcement
+and session revocation remain backend integration requirements. See the account
+recovery contracts in SOFTWARE_ARCHITECTURE_SPEC.md. Figma is skipped per user
+instruction. This is frontend delivery, not complete FG-01 acceptance.
+
+### Frontend specification tracking (2026-11-14)
+
+The [Spec Kit frontend baseline](../../specs/001-frontend-baseline/spec.md)
+records implemented account forms and room/profile previews retrospectively.
+Its [API handoff](../../web/API_CONTRACT.md) is the short
+integration reference for the backend developer. Real account/email integration
+remains open; existing preview screens are not completed product increments.
+
+### Frontend delivery revision (2026-11-14)
+
+Account forms and recovery are FG-01; FG-03 room/session services are still
+missing from the frontend previews. Add a discoverable password-reset path from
+verification success and Profile, using a separate reset code. Real email and
+account persistence remain backend work. Frontend implementation is independent
+of both historical Figma links; edit/sync Figma only on explicit user request.
+Use code, DESIGN.md, Spec Kit features and browser evidence as current authority.
+
+### FG-01 account management frontend (2026-11-14)
+
+The frontend now covers every FG-01 use case: profile editing (FR-02), sign out,
+active sessions and refresh-on-reload (FR-01, FR-03), account deletion (FR-04)
+and admin suspend/reactivate (FR-05). The Spring Boot backend on `backend-tai`
+implements the endpoints listed in SOFTWARE_ARCHITECTURE_SPEC.md and
+`web/API_INTEGRATION.md` with PostgreSQL. FG-01 is the PA3 Part E slice
+(`specs/002-fg01-accounts`); it was verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser).
