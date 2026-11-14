@@ -27,7 +27,7 @@ export interface TokenResponse {
   user: UserResponse;
 }
 
-export type AuthField = 'email' | 'password' | 'display_name' | 'cefr_level';
+export type AuthField = 'email' | 'password' | 'display_name' | 'cefr_level' | 'code';
 export type FieldErrors = Partial<Record<AuthField, string>>;
 
 export function isRecord(value: unknown): value is Record<string, unknown> {

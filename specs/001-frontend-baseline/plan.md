@@ -1,0 +1,53 @@
+﻿# Implementation Plan: Frontend baseline
+
+Date: 2026-11-14. [Specification](spec.md).
+Retrospective adoption of Spec Kit; no new product behavior in this documentation task.
+
+## Summary
+
+Keep the existing frontend and map its account journeys and previews to a single
+Spec Kit baseline. Keep the backend developer handoff in [contracts/auth.md](contracts/auth.md).
+Future feature work updates its specification and contract before code changes.
+
+## Technical Context
+
+Vite 5, React 18, TypeScript 5 and Tailwind 3 SPA; hash routing; Inter typography.
+Account requests use fetch; session and room settings stay in memory.
+Playwright covers browser behavior; TypeScript build and ESLint check source.
+Target: mobile and desktop browsers; no database changes in this baseline.
+Requests time out after 15 seconds; no measured performance claim is made.
+
+## Constitution Check
+
+- Portable paths, existing environment configuration and no committed credentials.
+- Existing SPA stack retained; no new vendors, audio capture or consent changes.
+- Spec-before-code was not followed through Spec Kit for earlier frontend work.
+  This baseline records that gap, rather than rewriting history.
+- Frontend-only scope was explicitly approved by the user. This is not the
+  complete UI → API → database increment required for FG-01 acceptance.
+- Constitution references to `/src` are historical: current code is in `web/`
+  and `api/`, with root `.specify/`. No governance amendment is made here.
+
+## Project Structure
+
+| Location | Responsibility |
+| --- | --- |
+| `web/src/pages/AccountPages.tsx`, `RecoveryPage.tsx` | US1–2 forms |
+| `web/src/auth/` | Typed requests, validation, memory session |
+| `web/src/pages/RoomPages.tsx`, `RoomSetupPage.tsx`, `roomSettings.ts` | US3 previews |
+| `web/src/App.tsx`, `routes.ts`, `components/ui.tsx`, `index.css` | Navigation and shared style |
+| `web/tests/` | Auth, recovery, scaffold and room-setting checks |
+| `api/app/main.py` | Health endpoint only; auth integration remains open |
+
+## Delivery and Validation
+
+1. Record current behavior in spec, model and tasks; retain older design notes as history.
+2. Publish one short contract for all six account endpoints; link it from the web README.
+3. Validate Spec Kit prerequisites, document links and contract-to-client consistency.
+4. When the backend exists, run the manual integration checks in [quickstart.md](quickstart.md).
+
+## Scope Exception
+
+The frontend-only delivery is the user’s explicit scope, not a waiver of backend
+security or a declaration that a complete vertical slice has shipped. Outstanding
+integration checks stay unchecked in tasks.md. Rechecked after documenting the design.

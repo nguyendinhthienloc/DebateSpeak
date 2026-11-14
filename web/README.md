@@ -23,83 +23,15 @@ are fixed Figma examples, not the output of a room service.
 
 ## Connect the auth API
 
-Set the public build-time variable in the repo-root `.env` (never commit that
-file), then restart Vite or rebuild:
+Use the [short backend handoff](../specs/001-frontend-baseline/contracts/auth.md)
+for all six endpoints, request/response examples, validation and errors.
+The [Spec Kit baseline](../specs/001-frontend-baseline/spec.md) records current
+scope; [tasks](../specs/001-frontend-baseline/tasks.md) distinguish completed
+frontend work from remaining integration.
 
-```dotenv
-VITE_API_BASE_URL=http://localhost:8000/api/v1
-```
-
-The value includes the API prefix, without endpoint names. Empty/unset defaults
-to `/api/v1` on the frontend origin; that deployment needs a reverse proxy routing
-`/api` to the backend. Vite loads the root environment; only `VITE_` values are
-exposed to the browser. Never put a secret in a `VITE_` variable.
-
-For separate frontend/backend origins, the backend must explicitly allow the
-frontend origin, credentialed CORS, and `Content-Type`/`X-DebateSpeak-Client`.
-The scaffold's current wildcard CORS must be replaced before real auth is enabled.
-Use same-site hosting for the G1 refresh-cookie model. Browser requests send
-`credentials: include`, `cache: no-store`, JSON and `X-DebateSpeak-Client: web`.
-Backend Origin validation, password hashing, JWT verification, throttling and
-database transactions remain backend responsibilities.
-
-| Endpoint under the configured prefix | JSON request | Required success |
-| --- | --- | --- |
-| `POST /auth/register` | `email`, `password`, optional `display_name`, `cefr_level` | 201 `UserResponse` |
-| `POST /auth/login` | `email`, `password` | 200 `TokenResponse` |
-
-`UserResponse` follows [G1](../docs/architecture/G1_SPEC_BUILD1.md):
-
-```json
-{
-  "id": "d817b684-08e9-49c0-806a-a045fb7f060c",
-  "email": "learner@example.com",
-  "display_name": "Learner",
-  "cefr_level": "B1",
-  "created_at": "2026-11-12T08:00:00Z"
-}
-```
-
-Login returns `access_token`, `token_type: "bearer"`, positive `expires_in`
-(seconds) and `user: UserResponse`. The frontend runtime-checks success responses.
-Registration creates no frontend session: it opens sign-in with a confirmation
-and the email prefilled. An arbitrary visit to `#/account-created` shows ordinary
-sign-in without claiming a successful registration.
-
-Email is trimmed; passwords preserve spaces and Unicode and require 12–128
-Unicode code points. Blank display names are omitted for the backend's `Learner`
-default; nonblank names allow up to 80 code points. CEFR defaults to B1.
-
-Errors support G1 problem JSON and standard FastAPI 422 arrays. Raw server
-messages/input are never displayed. Recovery messages distinguish:
-
-| Failure | Message / recovery |
-| --- | --- |
-| Cannot reach the backend | Check the connection and retry; the browser cannot reliably distinguish offline, DNS, CORS or connection refusal |
-| 400 / 422 | Check the submitted details; highlight recognized invalid fields |
-| 401 | Email or password is incorrect; no account-eligibility details |
-| 403 | Account access is not allowed from this site; contact the team |
-| 404 | Account service could not be found; check the configured API URL/routes |
-| 405 | Account service does not support this action |
-| 408 / 504 / local 15-second deadline | Request timed out; retry |
-| 409 registration | Email already exists; sign in or use another address |
-| 429 | Too many attempts; wait before retrying |
-| 500 | Account service encountered an error |
-| 502 / 503 | Account service is temporarily unavailable |
-| Malformed success | Unexpected response; no successful registration/login is claimed |
-
-Submission is guarded while pending; leaving a form cancels its request.
-No account mutation is automatically retried. A timed-out/aborted registration
-may still complete on the server; a later duplicate response offers sign-in.
-
-Access tokens and the returned user live only in runtime memory. The typed
-`getAccessToken()` in `src/auth/session.ts` is available to later authenticated
-clients; an expired session clears memory and returns the UI to sign-in. Reload
-clears the frontend session. Refresh and server logout/revocation are **not**
-implemented in this scope; any server-managed HttpOnly cookie is not read by JS
-and is not revoked just by reloading. No passwords/tokens go into localStorage,
-sessionStorage, URLs or logs. Room previews remain accessible without login and
-are not protected resources.
+Set `VITE_API_BASE_URL` in the repo-root `.env` and restart Vite. It defaults to
+`/api/v1`; include the full API prefix when overriding it. Never put secrets in
+`VITE_` variables. See the contract for CORS requirements.
 
 ## Routes
 
@@ -111,6 +43,9 @@ server rewrites. Browser back/forward, page titles and focus follow navigation.
 | `#/sign-in` | Sign in |
 | `#/register` | Registration |
 | `#/account-created` | Sign-in; confirmation only after a successful registration |
+| `#/forgot-password` | Request a reset code |
+| `#/reset-password` | Set a new password with an email code |
+| `#/verify-email` | Verify email or request a code |
 | `#/rooms` | Room entry |
 | `#/rooms/new` | Setup summary and preview |
 | `#/rooms/new/settings` | Room settings |

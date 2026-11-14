@@ -3,6 +3,7 @@ import { ActionLink, PageHeading } from './components/ui';
 import { setSession, useSession } from './auth/session';
 import type { TokenResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
+import { RecoveryPage } from './pages/RecoveryPage';
 import { CreateRoomPage } from './pages/RoomSetupPage';
 import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomPages';
 import { LobbyPage } from './pages/LobbyPage';
@@ -16,7 +17,7 @@ export default function App() {
   const [settings, setSettings] = useState(defaultSettings);
   const [registeredEmail, setRegisteredEmail] = useState<string>();
   const { session, expired } = useSession();
-  const isAuth = ['/sign-in', '/register', '/account-created'].includes(path);
+  const isAuth = ['/sign-in', '/register', '/account-created', '/forgot-password', '/reset-password', '/verify-email'].includes(path);
 
   useEffect(() => {
     document.title = `${route?.label ?? 'Page not found'} · DebateSpeak AI`;
@@ -47,6 +48,9 @@ export default function App() {
     switch (path) {
       case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
       case '/register': return <RegisterPage onRegistered={registered} />;
+      case '/forgot-password': return <RecoveryPage mode="request" />;
+      case '/reset-password': return <RecoveryPage mode="reset" />;
+      case '/verify-email': return <RecoveryPage mode="verify" />;
       case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':

@@ -253,3 +253,22 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 The local UI increment refines sign-in, registration, confirmed-registration sign-in and sample profile using the selected Cream & Yellow identity. Improve text hierarchy, related field grouping, adjacent password visibility, selected CEFR feedback and explicit profile-saving limitations. Keep Inter 400/600 and add Unicode-scoped Vietnamese glyph coverage without changing the Latin font or shrinking body text. Existing auth contracts, real-response validation and memory-only credentials remain unchanged; room/audio previews and disabled profile saving remain explicit.
 
 Acceptance evidence includes desktop/mobile before/after views, keyboard and enlarged-text checks, font-fallback checks and the existing mocked-boundary auth tests. The requested result is a local browser preview for user review, not a deployed service or a new Figma approval. Backend integration, microphone capture and teammate review are outside this presentation change.
+
+### Account recovery frontend scope (2026-11-14)
+
+Add API-ready email verification, forgotten-password request and password-reset
+screens using the existing Cream & Yellow account UI. Include email-code entry,
+resend, validation, pending, success and failure states. No account-existence
+claims or automatic login; no credentials/codes in URLs or browser storage.
+Email delivery, expiring single-use codes, throttling, verification enforcement
+and session revocation remain backend integration requirements. See the account
+recovery contracts in SOFTWARE_ARCHITECTURE_SPEC.md. Figma is skipped per user
+instruction. This is frontend delivery, not complete FG-01 acceptance.
+
+### Frontend specification tracking (2026-11-14)
+
+The [Spec Kit frontend baseline](../../specs/001-frontend-baseline/spec.md)
+records implemented account forms and room/profile previews retrospectively.
+Its [API handoff](../../specs/001-frontend-baseline/contracts/auth.md) is the short
+integration reference for the backend developer. Real account/email integration
+remains open; existing preview screens are not completed product increments.

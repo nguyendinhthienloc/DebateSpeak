@@ -1349,3 +1349,35 @@ Shared presentation contracts: semantic rem typography/leading; persistent label
 Use the selected Figma direction recorded in DESIGN.md and the supplied live screenshot as the baseline. Implement the user's requested local refinement for review; this does not claim new Figma frames were edited or that teammate approval was obtained. Shared Field, Choices, ActionLink and PageHeading interfaces remain compatible. Restrict account-specific geometry to account CSS rather than taking over the other members' room/navigation packages.
 
 Verify at 320/390/768/1102/1440px, with enlarged text, long Vietnamese names, keyboard radios/password reveal, cold/blocked fonts and reduced motion. Auth tests intercept HTTP at the boundary; no real credentials or account mutations are used. Preserve existing auth and room tests and record desktop/mobile before/after captures. Local preview runs on the existing Vite server; publication is not part of this request.
+
+## Account recovery and email verification frontend (2026-11-14)
+
+User-authorized scope: API-ready frontend, matching the existing Cream & Yellow
+account screens; Figma skipped by explicit request. No email backend is implemented.
+Add `/forgot-password`, `/reset-password`, and `/verify-email` hash routes. Users
+request an email code, then explicitly submit it with their email to verify or
+reset their password. Codes stay in component memory, never URLs or storage.
+Registration keeps its existing sign-in transition, with a verification link.
+
+Proposed JSON POST contracts under the configured API prefix:
+- `/auth/forgot-password`, `/auth/resend-verification`: `{email}` -> 202 `{status: "accepted"}`.
+- `/auth/verify-email`: `{email, code}` -> 200 `{status: "verified"}`.
+- `/auth/reset-password`: `{email, code, password}` -> 200 `{status: "reset"}`.
+Codes are opaque strings of 6-128 characters; server owns generation, expiry,
+single-use validation and rate limits. Backend must return identical accepted
+responses for known/unknown emails and must not reveal account existence.
+Invalid/expired codes use 400/401/410; 429 is retryable throttling. Reset must
+invalidate existing sessions server-side. No success UI before a valid response.
+Reuse existing request cancellation, timeout, field errors and password policy.
+Show neutral request confirmation, explicit resend, return-to-sign-in navigation,
+and no automatic sign-in after reset. No audio or consent behavior changes.
+These frontend contracts do not establish server security or email delivery.
+
+### Frontend Spec Kit baseline (2026-11-14)
+
+The existing frontend is now recorded retrospectively in
+[specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
+plan, tasks and a [short human-readable API handoff](../../specs/001-frontend-baseline/contracts/auth.md).
+Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
+update these artifacts before code. Backend integration remains unfinished;
+this documentation does not change product behavior or complete FG-01.

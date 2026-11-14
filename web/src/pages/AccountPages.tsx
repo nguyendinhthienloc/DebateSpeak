@@ -10,7 +10,7 @@ import './account.css';
 
 const levels = cefrLevels;
 
-function PasswordField({ value, onChange, error, creating = false }: {
+export function PasswordField({ value, onChange, error, creating = false }: {
   value: string; onChange: (value: string) => void; error?: string; creating?: boolean;
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,9 +55,11 @@ export function SignInPage({ registeredEmail, expired = false, onSignedIn }: {
       <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
       value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="learner@example.com" />
       <PasswordField value={password} onChange={setPassword} error={errors.password} />
+      <ActionLink to="/forgot-password" variant="text" className="self-start">Forgot password?</ActionLink>
     </div>
     <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Signing in…' : 'Sign in'}</button>
     <div className="account-switch"><span className="muted">New to DebateSpeak?</span><ActionLink to="/register" variant="text">Create account</ActionLink></div>
+    <ActionLink to="/verify-email" variant="text">Verify your email</ActionLink>
     <div className="account-limit">
       <p className="small muted">For now, reload signs you out. Rooms and audio remain previews.</p>
       <ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>
