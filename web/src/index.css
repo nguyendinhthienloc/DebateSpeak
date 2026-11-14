@@ -105,7 +105,9 @@
   .participants { padding-bottom: 8px; min-width: 0; }
   .participants > h2 { padding-bottom: 12px; }
   .participants hr { border-color: var(--border); }
-  .participant { padding: 16px 0; }
+  .participant { padding: 12px 0; border-top: 1px solid var(--border); }
+  .participant:first-of-type { border-top: 0; }
+  .participant-name { font-size: 18px; font-weight: 600; line-height: 1.3; }
   .code-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .code-row .action { min-width: 112px; }
   .preview-tools { display: flex; gap: 24px; align-items: center; justify-content: space-between; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
