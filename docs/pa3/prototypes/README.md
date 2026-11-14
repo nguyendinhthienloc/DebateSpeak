@@ -5,7 +5,7 @@ This folder holds everything needed to run functional group FG-01 (accounts and
 profiles, UC-01-01 to UC-01-08) end to end: the React frontend, the Spring Boot
 API and a PostgreSQL database. It is a copy of `web/` and `api/authify/` from the
 repository on 2026-11-14. The earlier clickable UI prototype for every use case
-(Part D) is in [`../ui-prototypes/`](../ui-prototypes/index.html).
+(Part D) is shown as screenshots in [`../screenshots/`](../screenshots/).
 
 Demo video: <https://youtu.be/6K9P5xVkhNo>
 
