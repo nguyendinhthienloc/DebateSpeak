@@ -17,6 +17,7 @@ Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
 | 1.7 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
 | 1.8 | Plan revised to version 0.2 for PA3: header and status, owner reassigned to Tuấn, PA3 content (sections 1–7), rows for FG-03 status and reviewer sign-offs | Part A requires a revised plan traced in Changes.md | filled (reviewer sign-off pending) |
 | 1.9 | Backend stack changed from FastAPI (Python) to Java (Spring Boot) in `docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md` | Decision by Tài, 2026-11-14; pending team confirmation. AGENTS.md Section 4 not yet updated | filled (team confirmation pending) |
+| 1.10 | Plan status refreshed to the 2026-11-14 repository state: Part E, SCRUM statuses, video link, Java decision reference | Plan must match merged work | filled (reviewer sign-off pending) |
 
 **Build 1, shrunk**
 
