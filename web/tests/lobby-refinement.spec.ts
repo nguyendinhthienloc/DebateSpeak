@@ -58,3 +58,22 @@ test('lobbies request no media or application services', async ({ page }) => {
   await page.goto(ready);
   expect(requests).toEqual([]);
 });
+
+test('both lobbies reflow at 768px and at a 200% zoom equivalent (640px) without horizontal scroll', async ({ page }) => {
+  for (const width of [768, 640]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of [waiting, ready]) {
+      await page.goto(route);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow, `${route} at ${width}px`).toBeLessThanOrEqual(0);
+    }
+  }
+});
+
+test('reduced motion keeps the lobby readable and copy feedback visible', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(waiting);
+  await page.getByRole('button', { name: 'Copy code', exact: true }).click();
+  await expect(page.getByRole('status')).toBeVisible();
+});
