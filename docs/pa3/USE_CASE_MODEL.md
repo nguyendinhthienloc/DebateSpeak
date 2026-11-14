@@ -1,10 +1,10 @@
 # PA3 Part C — Use-Case Model (SCRUM-36)
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 Prepared: 2026-11-09. Status: complete local model prepared for human review; no reviewer approval, Git commit, push, Jira transition or product implementation is claimed.
 
 ## 1. Scope and sources
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 This model covers the complete intended DebateSpeak product, including all 60 functional requirements. It is an analysis deliverable for PA3; the presence of a use case does not mean that its feature is implemented in PA3. The implemented sprint boundary remains the current roadmap and sprint scope.
 
@@ -20,7 +20,7 @@ This model covers the complete intended DebateSpeak product, including all 60 fu
 The JSON [catalogue](use_cases.json) is the shared index for this model, the [detailed specifications](USE_CASE_SPECIFICATIONS.md) and prototype screenshots. IDs remain stable when wording changes. Requirement mapping is many-to-many: several goals can implement one FR, and one goal can satisfy several related FRs.
 
 ## 2. Actors and authorization boundary
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 | ID | Actor | Scope and permitted interaction |
 |---|---|---|
@@ -42,7 +42,7 @@ An actor is a role outside the DebateSpeak application boundary. Internal Langua
 Generalization denotes shared authenticated identity only: Learner, Admin, Evaluator and Teacher specialize Authenticated user. It never grants an Evaluator administrator powers or access to an unassigned transcript. The AI opponent in a future solo mode is application behavior, never a second consenting human. The required TTS adapter for that mode has not been specified for production and must be designed before implementation.
 
 ## 3. Notation, relations and overview
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 Mermaid flowcharts approximate UML use-case notation: rounded stadium nodes are use cases, rectangular nodes outside the boundary are actors, and a `DebateSpeak` subgraph is the system boundary. A solid undirected line is actor participation. Dotted arrows labelled `<<include>>` go from a base use case to mandatory reused behavior. Dotted arrows labelled `<<extend>>` go from the optional use case to its base, under the stated extension condition. Solid arrows labelled `generalization` point from specialized actor to general actor. Mermaid does not provide the native UML hollow-triangle actor symbol; the explicit label defines the semantics.
 
@@ -114,7 +114,7 @@ flowchart LR
 ```
 
 ## 4. Relationship catalogue
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 | Base or extension | Related use case | Relation and condition |
 |---|---|---|
@@ -131,10 +131,10 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 For UC-03-05 the start request always runs UC-03-13 against current authoritative state, even if the UI previously showed ready. UC-06-05 validates speaker and segment identity in the authorized transcript collection as well as exact quote text. It does not prove that the criticism itself is correct. Optional live video and live fact checking remain unavailable unless their feature, consent and operational contracts have been implemented. Human-grade visibility is reevaluated on each access; an earlier consent record is not an unrestricted future grant.
 
 ## 5. Functional-group diagrams and use-case inventory
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ### FG-01 — Accounts and profiles
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 FR-01 maps to registration and sign-in. UC-01-02 also specifies the full-product refresh-session lifecycle (renewal, expiry, revocation, replay and lost responses) in [specification Section 2.5](USE_CASE_SPECIFICATIONS.md#25-authentication-session-lifecycle-and-scope). Refresh is supporting session behavior, not an additional user goal or an include from registration. Reduced PA3 implements access-token register/login only; full refresh rotation remains deferred. Recovery links from registration/sign-in are available only when UC-01-05 is implemented and enabled. Both auth flows inherit the detailed error contract in specification Section 2.4.
 
@@ -178,7 +178,7 @@ flowchart LR
 Account deletion immediately disables access, followed by hard deletion within seven days. A reset request must not reveal whether an email is registered. Profile CEFR is a self-assessment. Sign-out is needed by the room/account slice; full session management, password recovery and profile editing are not silently added to the reduced Build 1 scope.
 
 ### FG-02 — Topics and difficulty
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -208,7 +208,7 @@ flowchart LR
 PA3 may use the agreed seeded topic catalogue until a topic API is available. Topic recommendation is a conditional extension of discovery, not a mandatory search step. Retiring a topic must not rewrite an existing debate's history.
 
 ### FG-03 — Rooms and sessions
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -270,7 +270,7 @@ flowchart LR
 Exactly two debaters count toward capacity. LOBBY becoming READY indicates membership only. Dual consent and explicit local mic tests are separate start gates. Join retries return the same membership; a third distinct user is rejected even under concurrent joins. CANCELLED and ENDED are terminal. Build 1 stops at READY; the model must not activate media or a generic status-patching endpoint.
 
 ### FG-04 — Real-time media
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -302,7 +302,7 @@ flowchart LR
 No network audio publication or STT starts without dual consent. The local mic test begins only by explicit action and stays local. Audio has priority over optional video, overlays and analysis. A dropped connection retains the existing identity during a visible 60-second grace period.
 
 ### FG-05 — Transcript and attribution
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -329,7 +329,7 @@ flowchart LR
 Independent LiveKit track identity is the primary attribution source. Partial segments are replaced by final text and final segment persistence is idempotent. Low-confidence or missing text is displayed honestly. Mixed-audio diarization is an optional separately consented fallback, not permission to infer speaker identity in the normal path.
 
 ### FG-06 — Language analysis
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -363,7 +363,7 @@ flowchart LR
 Language criticism is direct, evidence-based and paired with a correction or practice action. The grounding subcase checks exact speaker/segment quotes; uncertain STT cannot become a confirmed learner error. Deterministic metrics expose their units and missing-data limitations. Pronunciation is a separate optional provider flow.
 
 ### FG-07 — Argument analysis
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -390,7 +390,7 @@ flowchart LR
 Argument quality is judged independently of accent and grammar. Potential fallacies require a quoted example and context, not a label generated without evidence. Each retained critique invokes the same deterministic citation guard as language feedback.
 
 ### FG-08 — Fact checking
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -419,7 +419,7 @@ flowchart LR
 Default fact-check workload is capped at eight selected claims. External evidence is untrusted data. Five verdicts and uncertainty are preserved; disagreement between Evidence Evaluator and Skeptic remains visible. A live overlay is optional and cannot block audio.
 
 ### FG-09 — Evaluation and consensus
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -459,7 +459,7 @@ flowchart LR
 The baseline debate score is a single-judge evaluation with self-reported confidence capped at 0.8. Multiple claim evaluators do not imply a heterogeneous debate-judge panel. Optional human grades are separate records available only for an assigned ENDED debate under dual sharing consent; the UI identifies the evaluator and rubric/card versions.
 
 ### FG-10 — History and reports
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 ```mermaid
 flowchart LR
@@ -501,7 +501,7 @@ flowchart LR
 Reports expose unavailable analysis rather than inventing sections or praising unsupported performance. Trends are observations, not certified proficiency gains. Teacher dashboards are read-only and revocable; class creation, invitations, rosters, assignments, group chat and multi-debater room design remain excluded long-term goals.
 
 ## 6. Requirement-to-use-case traceability
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 Every FR in the architecture's current FR-01–60 set appears below. A mapping means the behavior is modelled and specified; it is not evidence that the feature is implemented. Current build scheduling comes from the roadmap and PA3 scope.
 
@@ -569,7 +569,7 @@ Every FR in the architecture's current FR-01–60 set appears below. A mapping m
 | FR-60 | UC-03-12 |
 
 ## 7. Cross-cutting acceptance and human consequences
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 - Consent is explicit, uncoerced and separately controlled by each debater; signing in, joining, clicking READY or granting browser microphone permission does not grant transcription/analysis consent.
 - Refusing consent preserves normal account use and an accessible leave path. Before dual consent, a microphone test remains local, without upload, storage or transcription.
@@ -580,8 +580,8 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 - Raw audio is not stored by default. Erasure/retention workflows cover derived analyses and optional chat as well as the primary transcript.
 
 ## 8. Review and completion evidence
-Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).
 
 The inventory contains **54 use cases across ten functional groups**, including two mandatory supporting subcases. All 60 FRs are mapped. There is one overview and ten detailed Mermaid diagrams. [Part D](USE_CASE_SPECIFICATIONS.md) describes every catalogue ID and links its prototype and alternative-flow evidence. [use_cases.json](use_cases.json) enables automated cross-checking of IDs, actor references, requirements and screenshot coverage.
 
-Human reviewer: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead. Review remains pending. Diagram rendering, PDF compilation and document-validation results are recorded in the overall local work record after execution; no successful check is inferred solely from this model's existence. The user has prohibited commit and push, so this work remains local and no ticket is marked Done.
+Human reviewer: Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead. Review completed 2026-11-14. Diagram rendering, PDF compilation and document-validation results are recorded in the overall local work record after execution; no successful check is inferred solely from this model's existence. The user has prohibited commit and push, so this work remains local and no ticket is marked Done.

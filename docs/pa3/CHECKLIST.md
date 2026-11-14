@@ -25,7 +25,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
 | C1 | Use-case model with Mermaid diagrams, 54 use cases | Tuấn | pending | Done | `docs/pa3/USE_CASE_MODEL.md`, `.pdf` |
-| C2 | Reviewer sign-off | Tuấn | pending | Pending | — |
+| C2 | Reviewer sign-off on the use-case model | Tuấn | Tài | Reviewed by Tài, 2026-11-14 | `docs/pa3/USE_CASE_MODEL.md` |
 
 ## Part D: Use-Case Specifications and Prototypes (45 pts)
 
@@ -33,7 +33,7 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 |---|---|---|---|---|---|
 | D1 | 54 specifications, 201 alternative outcomes | Triết, Tuấn | pending | Done | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf` |
 | D2 | Prototype screenshots (116) | Triết | pending | Done | `docs/pa3/prototypes/screenshots/` |
-| D3 | Reviewer sign-off and spot check | Triết, Tuấn | pending | Pending | — |
+| D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Reviewed by Triết, 2026-11-14 (Tuấn's own review of his work is not applicable; Lộc's assigned review still pending) | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/prototypes/README.md` |
 
 ## Part E: FG-03 End to End with Spec Kit (20 pts)
 
