@@ -7,8 +7,9 @@ Frontend tasks are in [001 tasks](../001-frontend-baseline/tasks.md).
 
 - [x] T001 Spec, plan and tasks for the FG-01 backend slice (this folder).
 - [x] T002 Commit `api/authify` sources, `pom.xml` and Maven wrapper (Tài, commit `3f5e8f1`).
-- [ ] T002a Remove the committed `target/` folder from git (`git rm -r --cached api/authify/target`); commit the Java 17 setting in `pom.xml` (Tài).
-- [ ] T003 **Urgent:** move JWT and mail secrets (still in `src/main/resources/application.properties`) and revoke the exposed Gmail app password; move them to environment variables; add placeholders to `.env.example` (Tài).
+- [x] T002a Merge `backend-tai` without `target/` and the unrelated `slide.md`; set Java 17 in `pom.xml`.
+- [x] T003 Read the JWT key and mail credentials from environment variables; placeholders in `.env.example`.
+- [ ] T003a **Urgent (Tài):** revoke the Gmail app password and stop using the old JWT key; both remain in the `backend-tai` commit history.
 
 ## Data
 

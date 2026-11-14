@@ -11,6 +11,8 @@ Requires Docker, JDK 17 or newer and Node.js 20+.
    $env:DATABASE_URL="jdbc:postgresql://localhost:5432/debatespeak"
    $env:DATABASE_USERNAME="debatespeak"
    $env:DATABASE_PASSWORD="debatespeak_dev_password"
+   $env:APP_JWT_SECRET="<any random string of 32+ characters>"
+   # Only for recovery emails: $env:SPRING_MAIL_USERNAME and $env:SPRING_MAIL_PASSWORD
    .\mvnw spring-boot:run
    ```
    The API listens on port 8000. Check `http://localhost:8000/api/v1/health`.

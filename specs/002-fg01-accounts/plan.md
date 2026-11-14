@@ -65,5 +65,5 @@ All under `/api/v1`; full shapes in [web/API_INTEGRATION.md](../../web/API_INTEG
 ## Known gaps
 
 BCrypt instead of Argon2id; no migrations; no rate limiting; no scheduled
-hard-delete job; no automated backend tests; secrets and `target/` still
-committed (tasks T002a, T003).
+hard-delete job; no automated backend tests; the old Gmail app password and
+JWT key remain in `backend-tai` history until revoked (task T003a).
