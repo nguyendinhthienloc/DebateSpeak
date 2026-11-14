@@ -386,7 +386,7 @@ All values are **project targets** to be verified in testing, not guarantees.
 | Component | Responsibility | Technology (confirmed) |
 |---|---|---|
 | Web client | UI, mic capture through LiveKit SDK, live transcript rendering, report viewing | Vite + React, TypeScript, Tailwind CSS |
-| API service | AuthN/AuthZ, CRUD, room state machine, consent, LiveKit token minting, transcript WebSocket hub, job creation | Java (Spring Boot) (Decision by Tài, 2026-11-14; pending team confirmation) |
+| API service | AuthN/AuthZ, CRUD, room state machine, consent, LiveKit token minting, transcript WebSocket hub, job creation | Java (Spring Boot) (Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14) |
 | Media layer | WebRTC audio routing and recording-free track exposure | LiveKit (self-hosted dev server or LiveKit Cloud) |
 | Transcription worker | Joins room as a hidden participant, subscribes to each audio track, segments speech with VAD, streams to STT, emits transcript events | LiveKit Agents (Python), Silero VAD, STT adapter |
 | Analysis workers | Run asynchronous AI stages after or during the debate | Python workers consuming a Redis-backed queue |
@@ -413,7 +413,7 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | Decision | Choice | Rationale |
 |---|---|---|
 | Real-time layer | **LiveKit** (preferred) over hand-built WebRTC | Provides SFU, token auth, per-participant tracks and server-side subscription, which removes the biggest team risk (WebRTC infrastructure) and enables track-based speaker attribution |
-| Backend | Java (Spring Boot) | Decision by Tài, 2026-11-14; pending team confirmation. Supersedes the earlier FastAPI choice; Python remains for AI workers, so the API/worker boundary must be defined over Redis jobs and HTTP, not shared code |
+| Backend | Java (Spring Boot) | Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14. Supersedes the earlier FastAPI choice; Python remains for AI workers, so the API/worker boundary must be defined over Redis jobs and HTTP, not shared code |
 | Database | PostgreSQL | Relational integrity for sessions, transcripts, reports; JSONB for flexible AI outputs |
 | Queue | Redis (e.g., ARQ/RQ) | Simple async job processing for a student team |
 | STT | Streaming hosted STT or `faster-whisper` behind an adapter | Hosted API gives lower latency; Whisper gives zero-cost/offline option |
@@ -422,7 +422,7 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 
 ---
 
-> **Decision note (backend stack).** Owner: Tài. Date: 2026-11-14. The backend is Java (Spring Boot), replacing the earlier FastAPI (Python 3.11+) proposal. Status: pending team confirmation. Other Python-specific references (for example the room state machine note in the implementation section) are not yet revised.
+> **Decision note (backend stack).** Owner: Tài. Date: 2026-11-14. The backend is Java (Spring Boot), replacing the earlier FastAPI (Python 3.11+) proposal. Status: confirmed 2026-11-14; backend specs owned by Tài. Other Python-specific references (for example the room state machine note in the implementation section) are not yet revised.
 
 ## 6. Live Debate Room Architecture
 
@@ -1232,7 +1232,7 @@ The system treats **user speech and external retrieved content as DATA, not inst
 | Layer | Proposed | Alternatives | Notes |
 |---|---|---|---|
 | Frontend | Vite + React, TypeScript, Tailwind CSS | — | Responsive Single-Page Application; LiveKit Client SDK for media |
-| Backend | Java (Spring Boot) | FastAPI, Pydantic v2, SQLAlchemy 2, Alembic (previous Python proposal) | Decision by Tài, 2026-11-14; pending team confirmation; libraries (ORM, migrations, JWT, Argon2) to be listed once the team confirms |
+| Backend | Java (Spring Boot) | FastAPI, Pydantic v2, SQLAlchemy 2, Alembic (previous Python proposal) | Decided by Tài, 2026-11-14; confirmed by the user 2026-11-14; libraries (ORM, migrations, JWT, Argon2) to be listed once the team confirms |
 | Database | PostgreSQL 16 | — | JSONB for multi-agent evaluation outputs |
 | Queue/cache | Redis with ARQ | — | Background queue and room pub/sub events |
 | Realtime Media | LiveKit SFU (Cloud free tier or containerized dev) | — | Eliminates NAT/firewall peer-to-peer connection issues |
