@@ -4,7 +4,7 @@ import { setSession, useSession } from './auth/session';
 import type { TokenResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
 import { CreateRoomPage } from './pages/RoomSetupPage';
-import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomPages';
+import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomEntryPages';
 import { LobbyPage } from './pages/LobbyPage';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';

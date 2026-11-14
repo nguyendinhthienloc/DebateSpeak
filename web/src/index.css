@@ -123,10 +123,7 @@
   .note-warning > .label { color: var(--warning); }
   .room-controls { --control-radius: 6px; --field-radius: 4px; --control-border: var(--ink); }
   .setup-columns { display: grid; grid-template-columns: minmax(0, 510fr) minmax(0, 488fr); gap: 40px; align-items: start; }
-  .room-preview { background: var(--ink); color: var(--surface); padding: 24px; }
-  .room-preview hr { border-color: var(--border); }
   .audio-checks { border-top: 1px solid var(--ink); padding-top: 12px; }
-  .mobile-preview-link { display: none; }
   .lobby-columns { display: grid; grid-template-columns: minmax(0, 598fr) minmax(0, 416fr); gap: 24px; }
   .participants { padding-bottom: 8px; min-width: 0; }
   .participants > h2 { padding-bottom: 12px; }
@@ -143,8 +140,6 @@
   @media (max-width: 760px) {
     .app-shell { padding: 24px; }
     .setup-columns, .lobby-columns { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-    .room-preview { padding: 24px 20px; }
-    .mobile-preview-link { display: flex; }
     .waiting .invitation { grid-row: 1; }
     .preview-tools { flex-direction: column; align-items: stretch; }
     .preview-selector { max-width: none; }
