@@ -76,7 +76,7 @@ export function CreateRoomPage({ editing, settings, onChange }: { editing: boole
       {narrow
         ? <div className="stack-16">
           <details className="preview-details">
-            <summary>Preview details</summary>
+            <summary><span className="preview-summary"><span>Preview details</span><span className="small muted">{settingsLine(settings)}</span></span></summary>
             <PreviewBody settings={settings} ticks={ticks} />
           </details>
           <AudioChecks />

@@ -1,12 +1,12 @@
 # DebateSpeak — Use-Case Specifications and UI Prototypes
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 Ticket: **SCRUM-37**, PA3 Part D. Prepared locally on 2026-11-09 for human review.
 
 Responsible owner: **Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead**. Co-owner: **Nguyễn Bảo Minh Triết (24125047), Frontend & WebRTC/Audio Lead**. Assigned reviewer: **Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead**; review pending. This attribution does not assert that a teammate has reviewed, edited, or approved the work.
 
 ## 1. Scope and reading guide
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 The [use-case model](USE_CASE_MODEL.md) and [machine-readable catalogue](use_cases.json) define the shared use-case identifiers. These specifications describe intended behavior across all ten functional groups; they do not claim that the complete product is implemented in PA3. `PA3` labels identify the first-slice design, `future-mvp` the later Must workflows, and `should`, `stretch`, or `post-mvp` explicitly conditional scope. The authoritative build progression is the [roadmap](../ROADMAP.md), not the older sprint-number column in the functional-requirement tables.
 
@@ -15,17 +15,17 @@ Each entry includes a goal, actor, trigger, preconditions, main success scenario
 Sources: [architecture requirements and privacy rules](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), [Vision](../requirements/VISION_DOCUMENT.md), [Build 1 contract](../architecture/G1_SPEC_BUILD1.md), and [PA3 scope](README.md). PA3 scope reductions in [Changes.md](Changes.md) take precedence over older Build 1 refresh-token/profile expansion. In particular, full refresh rotation, profile editing, and live media are not asserted as completed by these tickets.
 
 ## 2. Shared contracts
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### 2.1 Identity, permissions, and persistence
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 Identity always comes from a verified server session, never a submitted `user_id`. Learners access their own profile and only debates they participate in. Moderator/Admin authorization is checked server-side for every restricted action; the role is not a general right to read private transcripts. An assigned human Evaluator has only assignment-scoped access. The post-MVP Teacher has read-only access only while the student's explicit sharing consent remains valid.
 
 Atomic writes either commit all related changes or leave the pre-operation state intact. A loading view does not mean a write succeeded. On ambiguous network failure, fetch the authorized resource before retrying a mutation; retry-sensitive operations must deduplicate rather than create duplicate participants, jobs, grades, or reports. No secret, password, token, or invite code enters application logs or error details. A permission denial never exposes another user's names, transcript, report, or account status.
 
 ### 2.2 Room and consent lifecycle
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 `LOBBY` means waiting for a second distinct authenticated learner; `READY` means both seats are occupied. Presence is not consent or microphone readiness. Legal edges are `LOBBY → READY/CANCELLED`, `READY → LOBBY/LIVE/CANCELLED`, and `LIVE → ENDED`; `ENDED` and `CANCELLED` are terminal. Self-transitions are invalid at the pure state-machine boundary; an idempotent read/retry does not invoke a self-transition. Build 1 exposes only create/join/read through READY, with expiry cancellation; session-start designs remain unavailable until the real consent/media prerequisites exist.
 
@@ -34,14 +34,14 @@ Before LIVE, each learner separately sees what is transcribed, sent to AI, retai
 The lobby expires after 30 minutes. Room capacity is two, enforced transactionally. Invite codes are eight uppercase characters; normalize trimming/case without logging them. A LIVE disconnect has a visible 60-second grace period; reconnecting restores the same identity and seat. At grace expiry the server ends the session and stops transmission. Analysis of an early-ended partial debate requires at least 60 seconds of speech, not merely 60 seconds of wall-clock room time.
 
 ### 2.3 Evidence, feedback, and reports
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 Speaker attribution comes from the participant's independent media track. Partial STT text may change; final segment persistence is idempotent and includes speaker, timing, and confidence. Feedback references an existing segment of the correct speaker and quotes a nonempty exact substring. Grounding validates provenance only; it does not prove that a criticism is correct. Low-confidence recognition is not presented as a confirmed learner error. Every retained sharp critique includes evidence and a concrete correction or practice action; do not insult learners, invent motives, or confuse accent with reasoning quality.
 
 Default fact-checking selects at most eight claims. Verdicts are Supported, Partially supported, Contradicted, Insufficient evidence, and Not verifiable. Disagreement is visible as Contested. The MVP debate score has one evaluator, is labelled accordingly, and its self-reported confidence is capped at 0.8. Analysis failure produces a visibly partial or unavailable section rather than a fabricated score. Reports are post-debate; optional analysis must not block audio or overwhelm the live conversation.
 
 ### 2.4 Shared error and UI behavior
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 Build 1's `/api/v1` resources are `/auth/register`, `/auth/login`, `/rooms`, `/rooms/join`, and `/rooms/{id}`. Do not create future routes merely to make a prototype work. Expired identity requires sign-in; unavailable/nonmember room reads return a non-disclosing 404; full or nonjoinable rooms and invalid exposed transitions use 409; invalid fields use 422. When rate limited, preserve nonsensitive input and respect Retry-After; when a dependency is unavailable, show a recoverable state without exposing traces.
 
@@ -78,15 +78,15 @@ FR-01's full-product session behavior is part of UC-01-02, not a separate user g
 Full refresh-session behavior is future implementation work, while the design and FR-01 traceability are recorded here. Password recovery remains conditional on UC-01-05 being implemented and enabled; otherwise offer sign-in only and do not expose an actionable recovery link.
 
 ## 3. Use-case specifications
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 The 54 entries below follow the shared catalogue order. Each specification links its basic-flow screen and an alternative/exception contact sheet. Conditions and recovery outcomes in those sheets match the numbered branches below. Shared security/availability failures in Section 2 also apply to every operation.
 
 ## FG-01 — Account and profile
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-01-01 — Register account
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Create an account without granting media or AI-processing consent.
 
@@ -127,7 +127,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-01 alternative and exception prototype states](prototypes/screenshots/uc-01-01-alternatives.png)
 
 ### UC-01-02 — Sign in
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Authenticate and recover an authorized application session.
 
@@ -168,7 +168,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-02 alternative and exception prototype states](prototypes/screenshots/uc-01-02-alternatives.png)
 
 ### UC-01-03 — Maintain learner profile
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Maintain display name, native language, self-assessed CEFR and goals.
 
@@ -208,7 +208,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-03 alternative and exception prototype states](prototypes/screenshots/uc-01-03-alternatives.png)
 
 ### UC-01-04 — Sign out
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** End the current session without keeping the account active in this browser.
 
@@ -248,7 +248,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-04 alternative and exception prototype states](prototypes/screenshots/uc-01-04-alternatives.png)
 
 ### UC-01-05 — Recover forgotten password
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Regain account access through a verified password-reset process.
 
@@ -288,7 +288,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-05 alternative and exception prototype states](prototypes/screenshots/uc-01-05-alternatives.png)
 
 ### UC-01-06 — Review active sessions
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect own authenticated sessions without exposing session credentials.
 
@@ -328,7 +328,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-06 alternative and exception prototype states](prototypes/screenshots/uc-01-06-alternatives.png)
 
 ### UC-01-07 — Delete own account and data
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Immediately disable the account and erase associated learning data within seven days.
 
@@ -369,7 +369,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-07 alternative and exception prototype states](prototypes/screenshots/uc-01-07-alternatives.png)
 
 ### UC-01-08 — Suspend or reactivate account
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Restrict or restore account access using authorized moderation.
 
@@ -409,10 +409,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-01-08 alternative and exception prototype states](prototypes/screenshots/uc-01-08-alternatives.png)
 
 ## FG-02 — Topics and difficulty
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-02-01 — Browse and select topics
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Find a curated topic by category, text and CEFR before creating a room.
 
@@ -453,7 +453,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-02-01 alternative and exception prototype states](prototypes/screenshots/uc-02-01-alternatives.png)
 
 ### UC-02-02 — Manage topic library
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Create, edit, tag and retire public topics without corrupting existing debate history.
 
@@ -494,7 +494,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-02-02 alternative and exception prototype states](prototypes/screenshots/uc-02-02-alternatives.png)
 
 ### UC-02-03 — Get personalized topic recommendations
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Find topics appropriate to self-assessed CEFR and observed practice needs.
 
@@ -534,7 +534,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-02-03 alternative and exception prototype states](prototypes/screenshots/uc-02-03-alternatives.png)
 
 ### UC-02-04 — Propose a custom topic
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Submit a topic for moderation before it becomes publicly available.
 
@@ -575,10 +575,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-02-04 alternative and exception prototype states](prototypes/screenshots/uc-02-04-alternatives.png)
 
 ## FG-03 — Room and session management
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-03-01 — Create debate room
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Create a two-person LOBBY with a topic, stance mode, format, duration and invite.
 
@@ -619,7 +619,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-01 alternative and exception prototype states](prototypes/screenshots/uc-03-01-alternatives.png)
 
 ### UC-03-02 — Join invited room
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Join by code or link while the server enforces two distinct debaters and room availability.
 
@@ -662,7 +662,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-02 alternative and exception prototype states](prototypes/screenshots/uc-03-02-alternatives.png)
 
 ### UC-03-03 — View lobby and readiness
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** See authoritative room state and participant presence without treating presence as consent.
 
@@ -704,7 +704,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-03 alternative and exception prototype states](prototypes/screenshots/uc-03-03-alternatives.png)
 
 ### UC-03-04 — Give or withdraw processing consent
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Control own informed consent for transcription and AI processing without coercion.
 
@@ -745,7 +745,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-04 alternative and exception prototype states](prototypes/screenshots/uc-03-04-alternatives.png)
 
 ### UC-03-05 — Start debate
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Enter LIVE only after server-side dual consent, mic readiness and actual media availability.
 
@@ -788,7 +788,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![Future fully authorized start scenario; independently recorded consents/mics/media, no real capture](prototypes/screenshots/uc-03-05-authorized.png)
 
 ### UC-03-06 — Leave or end debate
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Leave safely before LIVE or stop a live debate and all capture promptly.
 
@@ -830,7 +830,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-06 alternative and exception prototype states](prototypes/screenshots/uc-03-06-alternatives.png)
 
 ### UC-03-07 — Follow debate and turn timers
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** See authoritative session and turn timing without enforcing silence through AI.
 
@@ -871,7 +871,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-07 alternative and exception prototype states](prototypes/screenshots/uc-03-07-alternatives.png)
 
 ### UC-03-08 — Report abusive behavior
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Submit a room or transcript abuse report while retaining accessible leave/end controls.
 
@@ -912,7 +912,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-08 alternative and exception prototype states](prototypes/screenshots/uc-03-08-alternatives.png)
 
 ### UC-03-09 — Review abuse and close room
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Review submitted reports and apply authorized room closure with an audit record.
 
@@ -953,7 +953,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-09 alternative and exception prototype states](prototypes/screenshots/uc-03-09-alternatives.png)
 
 ### UC-03-10 — Use private room text chat
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Exchange room chat only when enabled; keep it separate from transcript and AI inputs by default.
 
@@ -994,7 +994,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-10 alternative and exception prototype states](prototypes/screenshots/uc-03-10-alternatives.png)
 
 ### UC-03-11 — Practise solo with an AI opponent
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Practise with generated opponent turns after a separate TTS contract and personal capture-consent design.
 
@@ -1035,7 +1035,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-11 alternative and exception prototype states](prototypes/screenshots/uc-03-11-alternatives.png)
 
 ### UC-03-12 — Authorize and join audience access
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Admit capped, non-publishing audience access only with both debaters' consent.
 
@@ -1079,7 +1079,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![Future authorized subscribe-only audience scenario; both debaters independently approve sharing, no publishing or real media](prototypes/screenshots/uc-03-12-authorized.png)
 
 ### UC-03-13 — Validate start readiness
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** As a mandatory start subcase, reject stale or missing membership, consent, mic, expiry or media-capability gates.
 
@@ -1119,10 +1119,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-03-13 alternative and exception prototype states](prototypes/screenshots/uc-03-13-alternatives.png)
 
 ## FG-04 — Real-time audio
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-04-01 — Select and test microphone
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Choose an input and explicitly run a local mic test with permission-recovery guidance.
 
@@ -1163,7 +1163,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-04-01 alternative and exception prototype states](prototypes/screenshots/uc-04-01-alternatives.png)
 
 ### UC-04-02 — Exchange audio and control mute
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Speak on independent tracks, hear the partner and control own mute after dual consent.
 
@@ -1206,7 +1206,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-04-02 alternative and exception prototype states](prototypes/screenshots/uc-04-02-alternatives.png)
 
 ### UC-04-03 — Recover a dropped connection
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Rejoin the existing identity within a visible 60-second grace period or finish the session.
 
@@ -1247,7 +1247,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-04-03 alternative and exception prototype states](prototypes/screenshots/uc-04-03-alternatives.png)
 
 ### UC-04-04 — Enable optional live video
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Add video only through a separately consented optional flow that preserves audio priority.
 
@@ -1287,10 +1287,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-04-04 alternative and exception prototype states](prototypes/screenshots/uc-04-04-alternatives.png)
 
 ## FG-05 — Transcription and attribution
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-05-01 — View speaker-attributed live transcript
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Read partial and finalized timestamped transcript text linked deterministically to each speaker's track.
 
@@ -1332,7 +1332,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-05-01 alternative and exception prototype states](prototypes/screenshots/uc-05-01-alternatives.png)
 
 ### UC-05-02 — Review and export full transcript
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Review an authorized finished transcript and download text or Markdown.
 
@@ -1372,7 +1372,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-05-02 alternative and exception prototype states](prototypes/screenshots/uc-05-02-alternatives.png)
 
 ### UC-05-03 — Use mixed-audio diarization fallback
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Recover speaker-attributed text for an explicitly supported mixed-audio input without replacing track attribution by default.
 
@@ -1412,10 +1412,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-05-03 alternative and exception prototype states](prototypes/screenshots/uc-05-03-alternatives.png)
 
 ## FG-06 — English language analysis
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-06-01 — Review language corrections
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Receive CEFR-appropriate grammar and vocabulary feedback quoting the learner's exact transcript.
 
@@ -1456,7 +1456,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-06-01 alternative and exception prototype states](prototypes/screenshots/uc-06-01-alternatives.png)
 
 ### UC-06-02 — Review speaking metrics
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect deterministic pace, fillers, pauses, talk-time and lexical metrics with measurement limits.
 
@@ -1496,7 +1496,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-06-02 alternative and exception prototype states](prototypes/screenshots/uc-06-02-alternatives.png)
 
 ### UC-06-03 — Review recurring language patterns
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect evidenced recurring errors within and across own debates.
 
@@ -1536,7 +1536,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-06-03 alternative and exception prototype states](prototypes/screenshots/uc-06-03-alternatives.png)
 
 ### UC-06-04 — Review pronunciation assessment
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Receive separately authorized pronunciation assessment without equating accent with reasoning quality.
 
@@ -1576,7 +1576,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-06-04 alternative and exception prototype states](prototypes/screenshots/uc-06-04-alternatives.png)
 
 ### UC-06-05 — Validate cited transcript evidence
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** As a mandatory feedback subcase, reject missing, empty, non-verbatim, cross-speaker or cross-segment citations.
 
@@ -1617,10 +1617,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-06-05 alternative and exception prototype states](prototypes/screenshots/uc-06-05-alternatives.png)
 
 ## FG-07 — Argument analysis
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-07-01 — Review argument structure and rebuttals
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect claims, reasons, rebuttals, relevance and evidence quality using attributable transcript context.
 
@@ -1661,7 +1661,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-07-01 alternative and exception prototype states](prototypes/screenshots/uc-07-01-alternatives.png)
 
 ### UC-07-02 — Review potential logical fallacies
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect a potential fallacy with exact evidence, context, explanation and a specific repair.
 
@@ -1701,10 +1701,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-07-02 alternative and exception prototype states](prototypes/screenshots/uc-07-02-alternatives.png)
 
 ## FG-08 — Fact checking
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-08-01 — Inspect claim verdicts and evidence
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect bounded fact checks, five-way verdicts, source snippets, uncertainty and evaluator disagreement.
 
@@ -1747,7 +1747,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-08-01 alternative and exception prototype states](prototypes/screenshots/uc-08-01-alternatives.png)
 
 ### UC-08-02 — Show optional live fact-check overlay
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Opt into bounded live evidence overlays without delaying audio or presenting uncertain claims as settled.
 
@@ -1787,10 +1787,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-08-02 alternative and exception prototype states](prototypes/screenshots/uc-08-02-alternatives.png)
 
 ## FG-09 — Evaluation and consensus
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-09-01 — Review debate evaluation and consensus
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect a versioned rubric, deterministic consensus and contested flags with an honest single-judge baseline.
 
@@ -1831,7 +1831,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-01 alternative and exception prototype states](prototypes/screenshots/uc-09-01-alternatives.png)
 
 ### UC-09-02 — Configure analysis and inspect usage
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Manage provider/model, prompt versions, flags and budgets without exposing secrets to the client.
 
@@ -1872,7 +1872,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-02 alternative and exception prototype states](prototypes/screenshots/uc-09-02-alternatives.png)
 
 ### UC-09-03 — Run optional heterogeneous judge panel
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Enable three or more different judge models only under reviewed budget and consensus rules.
 
@@ -1912,7 +1912,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-03 alternative and exception prototype states](prototypes/screenshots/uc-09-03-alternatives.png)
 
 ### UC-09-04 — Assign a human evaluator
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Assign a reviewer to an ended debate only after both debaters authorize transcript and grade sharing.
 
@@ -1952,7 +1952,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-04 alternative and exception prototype states](prototypes/screenshots/uc-09-04-alternatives.png)
 
 ### UC-09-05 — Submit human grading card
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Score only an assigned ended debate using the versioned shared rubric while preserving AI grades separately.
 
@@ -1993,7 +1993,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-05 alternative and exception prototype states](prototypes/screenshots/uc-09-05-alternatives.png)
 
 ### UC-09-06 — View shared human grades
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** See submitted human and AI evaluations side by side only while dual sharing authorization permits access.
 
@@ -2034,10 +2034,10 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-09-06 alternative and exception prototype states](prototypes/screenshots/uc-09-06-alternatives.png)
 
 ## FG-10 — History and learning reports
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 ### UC-10-01 — Review personalized learning report
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Review a post-debate summary, evidenced feedback and a concrete practice plan without fabricated completeness.
 
@@ -2078,7 +2078,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-01 alternative and exception prototype states](prototypes/screenshots/uc-10-01-alternatives.png)
 
 ### UC-10-02 — Browse own debate history
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Find past authorized debates and open their transcript and report.
 
@@ -2119,7 +2119,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-02 alternative and exception prototype states](prototypes/screenshots/uc-10-02-alternatives.png)
 
 ### UC-10-03 — Review longitudinal progress
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Compare observed metrics and recurring patterns while exposing missing data and non-certified proficiency limits.
 
@@ -2159,7 +2159,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-03 alternative and exception prototype states](prototypes/screenshots/uc-10-03-alternatives.png)
 
 ### UC-10-04 — Track analysis status and retry
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Inspect queued/running/failed stages and request a bounded retry while keeping partial results clearly labelled.
 
@@ -2200,7 +2200,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-04 alternative and exception prototype states](prototypes/screenshots/uc-10-04-alternatives.png)
 
 ### UC-10-05 — Export report PDF
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Download an authorized report without silently including other learners' private details.
 
@@ -2240,7 +2240,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-05 alternative and exception prototype states](prototypes/screenshots/uc-10-05-alternatives.png)
 
 ### UC-10-06 — Process deletion and retention requests
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Apply authorized erasure and retention policies across transcripts, analyses, reports and optional chat.
 
@@ -2281,7 +2281,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-06 alternative and exception prototype states](prototypes/screenshots/uc-10-06-alternatives.png)
 
 ### UC-10-07 — View consented student dashboards
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 **Description / goal:** Give read-only access only for students who already joined a class and explicitly shared; revoke access at any time. Class creation, rosters and assignments remain undesigned.
 
@@ -2322,13 +2322,13 @@ The 54 entries below follow the shared catalogue order. Each specification links
 ![UC-10-07 alternative and exception prototype states](prototypes/screenshots/uc-10-07-alternatives.png)
 
 ## 4. Review and acceptance checklist
-*Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
+*Performed: Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14. Edited: Trần Lê Anh Tuấn (24125107).*
 
 - Every catalogue use case has one specification with the same identifier, actors and functional-requirement mapping.
 - Every main flow has explicit preconditions and success/minimum guarantees; every declared branch has a visible prototype outcome and a recovery or safe denial.
 - Shared error classes are inherited by every use case. Optional, disabled, denied, expired, insufficient-data and partial-analysis outcomes stay explicit.
 - Model `include` relationships correspond to mandatory supporting behavior; `extend` relationships preserve an independently meaningful base workflow.
 - Prototype controls are local simulations. Screenshots demonstrate design completeness, not API/database/media implementation.
-- Triết co-owner review and Lộc assigned review remain pending; no peer approval, Jira transition, commit or push is asserted by this document.
+- Triết's co-owner review is recorded on 2026-11-14. Lộc's assigned review remains pending.
 
 **Traceability:** [Use-case model and FR-to-UC coverage](USE_CASE_MODEL.md), [catalogue](use_cases.json), [prototype state manifest](prototype_states.json), [prototype source and reproduction](prototypes/README.md).

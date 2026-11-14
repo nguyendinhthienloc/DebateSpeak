@@ -6,7 +6,7 @@ import { useAuthForm } from '../auth/useAuthForm';
 import { PasswordField } from './AccountPages';
 import { clearSession } from '../auth/session';
 
-export function RecoveryPage({ mode, initialEmail = '', onEmailAccepted }: {
+export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
   mode: 'request' | 'verify' | 'reset'; initialEmail?: string; onEmailAccepted: (email: string) => void;
 }) {
   const [email, setEmail] = useState(initialEmail);
@@ -97,4 +97,15 @@ export function RecoveryPage({ mode, initialEmail = '', onEmailAccepted }: {
     {mode === 'reset' && <ActionLink to="/forgot-password" variant="text">Request a new code</ActionLink>}
     <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
   </form>;
+}
+
+// UC-01-05 is not implemented or enabled in this build, so recovery stays inert.
+const RECOVERY_ENABLED = false;
+
+export function RecoveryPage(props: Parameters<typeof RecoveryForm>[0]) {
+  if (RECOVERY_ENABLED) return <RecoveryForm {...props} />;
+  return <div className="auth-form stack-16">
+    <PageHeading title="Account recovery is not available in this build" />
+    <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
+  </div>;
 }

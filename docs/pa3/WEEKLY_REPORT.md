@@ -103,7 +103,7 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 - **Nguyễn Bảo Minh Triết**
   - **Completed**
-    - Integrated or prepared the frontend room flow against the agreed backend contract. [Confirm actual status.]
+    - Frontend room screens are previews with sample data. Account pages (SCRUM-49 type and spacing roles, password alignment) and the lobby (SCRUM-52) are merged. Account recovery is gated off until UC-01-05 is enabled (PR #45).
   - **To-do**
     - Finish and verify SCRUM-25 and SCRUM-27.
     - Complete the frontend portion of SCRUM-38 with Tài.
@@ -113,7 +113,7 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 - **Nguyễn Hồng Tấn Tài**
   - **Completed**
-    - Integrated or prepared the backend room/auth flow for FG-03. [Confirm actual status.]
+    - Java auth code (register, login, JWT) is merged (PR #53). It has no build file and is not verified. The FG-03 room API is not started.
   - **To-do**
     - Verify SCRUM-41 migrations and seed data.
     - Finish and test SCRUM-24 and SCRUM-26 as needed.
@@ -136,7 +136,7 @@ The team reviewed PA3 assignments and focused on getting the database, room stat
 
 - **Trần Lê Anh Tuấn**
   - **Completed**
-    - Updated or reviewed the room state-machine and use-case documentation. [Confirm actual status.]
+    - Use-case model and specifications merged (PR #19, PR #26). Room state machine (Python) is in the repository with unit tests; the backend stack is now Java, so it must be ported.
   - **To-do**
     - Finish SCRUM-28 transition tests.
     - Complete SCRUM-36 use-case diagrams.
