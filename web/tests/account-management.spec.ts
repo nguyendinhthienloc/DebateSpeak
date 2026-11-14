@@ -67,6 +67,26 @@ test('profile loads from and saves to /users/me with the bearer token', async ({
   });
 });
 
+test('saving a profile without role keeps the admin role from sign-in', async ({ page }) => {
+  await restoreAs(page, { ...user, role: 'ADMIN' } as typeof user);
+  await page.route('**/api/v1/users/me', route => route.fulfill({ status: 200, json: profile }));
+  await page.goto('/#/profile');
+  await expect(page.getByRole('link', { name: 'Manage accounts' })).toBeVisible();
+  await page.getByRole('button', { name: 'Save changes', exact: true }).click();
+  await expect(page.getByText('Profile saved', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Manage accounts' })).toBeVisible();
+});
+
+test('an admin cannot suspend their own account', async ({ page }) => {
+  await restoreAs(page, { ...user, role: 'ADMIN' } as typeof user);
+  await page.route('**/api/v1/admin/users?*', route => route.fulfill({ status: 200, json: { ...other, id: user.id, email: user.email, role: 'ADMIN' } }));
+  await page.goto('/#/admin/users');
+  await page.getByLabel('Account email').fill(user.email);
+  await page.getByRole('button', { name: 'Find account' }).click();
+  await expect(page.getByText('This is your account. Another administrator must change its status.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Suspend account' })).toHaveCount(0);
+});
+
 test('profile validates locally and rejects malformed profile responses', async ({ page }) => {
   await restoreAs(page);
   let patches = 0;

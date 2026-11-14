@@ -89,6 +89,8 @@ screens and keyboard-only use must leave a clear recovery path.
   header; the refresh token stays in an HttpOnly cookie the frontend never reads (US4).
 - FR-008: Destructive actions (delete account, revoke session, suspend) require
   an explicit confirmation step and show the consequence before submitting (US4).
+- FR-009: Saving the profile keeps the signed-in role when the profile response
+  omits `role`; an admin cannot suspend their own account from the UI (US4).
 
 ### Key Entities
 

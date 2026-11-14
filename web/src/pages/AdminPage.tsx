@@ -63,7 +63,9 @@ export function AdminUsersPage() {
       <p className="small"><span className="account-status">{user.is_suspended ? 'Suspended' : 'Active'}</span></p>
       {changed && <div role="status"><Note title="Saved" tone="success">{changed}</Note></div>}
       <FormError message={action.message} />
-      {user.is_suspended
+      {user.id === session.user.id
+        ? <p className="small muted">This is your account. Another administrator must change its status.</p>
+        : user.is_suspended
         ? <button type="button" className="action action-primary" disabled={action.pending} onClick={() => apply(user, false)}>
           {action.pending ? 'Reactivating…' : 'Reactivate account'}</button>
         : <form ref={action.form} className="account-fields" noValidate onSubmit={event => { event.preventDefault(); if (confirming) apply(user, true); else setConfirming(true); }}>

@@ -50,6 +50,7 @@ Independent check: each US4 endpoint with controlled success and failure respons
 - [x] T017 [US4] Add admin suspend/reactivate in `web/src/pages/AdminPage.tsx`.
 - [x] T018 [US4] Cover US4 flows in `web/tests/account-management.spec.ts`.
 - [x] T019 Publish the backend handoff for US4 in `web/API_INTEGRATION.md`.
+- [x] T021 Keep the signed-in role after a profile save; block self-suspension (FR-009).
 - [ ] T020 Implement the US4 endpoints in `api/` and run them against these screens.
 
 Shared foundation precedes US1–3. US1 is the first account journey; US2 and US3

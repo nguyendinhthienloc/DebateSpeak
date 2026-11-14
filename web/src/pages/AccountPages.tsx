@@ -171,7 +171,8 @@ function SignedInProfile({ onSignOut }: { onSignOut: () => void }) {
     if (validate(validateProfile(input))) {
       void run(signal => updateProfile(input, signal), value => {
         setProfile(value);
-        updateSessionUser(value);
+        // A profile response may omit role; keep the one from sign-in.
+        updateSessionUser({ ...value, role: value.role ?? session?.user.role });
         setSaved(true);
       });
     }
