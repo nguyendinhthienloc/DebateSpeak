@@ -47,6 +47,35 @@ Build 1's `/api/v1` resources are `/auth/register`, `/auth/login`, `/rooms`, `/r
 
 All screens require visible keyboard focus, labelled controls, meaningful loading/empty/error states, and text status rather than color alone. Destructive actions have a separate confirmation. Live controls keep mute, connection status, and end/leave readily accessible. The prototype navigation supplies the design screenshots referenced below; it is not an end-to-end product acceptance test.
 
+The following authentication error contract applies to UC-01-01 and UC-01-02, including their validation and service-failure branches. It follows the architecture's API-ready authentication frontend contract. Retain nonsensitive input, clear passwords after failure, and never render raw server messages, submitted secrets or traces.
+
+| Response / condition | Required outcome and recovery |
+|---|---|
+| Unreachable service | Explain that the service could not be reached; allow a deliberate retry when connectivity returns. |
+| 404 / 405 | Distinguish an unavailable authentication route from an unsupported action; do not describe either as invalid credentials or account creation success. |
+| 400 / 422 | Show safe validation guidance for invalid input. |
+| 401 on sign-in | Show the same invalid-credentials message for unknown email, wrong password, suspension or deletion; grant no access. |
+| 403 | Use neutral access-denial wording on both forms, including rejected Origin/client headers; do not expose account eligibility or bypass the denial. |
+| 409 on registration | Report the registration conflict; offer sign-in, and offer UC-01-05 recovery only when implemented and enabled. |
+| 429 | Show retry timing, respect Retry-After and prevent immediate repeated submission. |
+| 500 / 502 / 503 | Distinguish a server error from temporary service unavailability; show a recoverable outcome without claiming the operation succeeded. |
+| 408 / 504 / local 15-second deadline | Explain that the request timed out; registration may have committed, so reconcile through sign-in before retrying account creation. |
+| Unreadable or malformed success response | Show an unexpected-response error; do not claim registration or sign-in succeeded without a valid response. |
+
+An ambiguous registration response follows UC-01-01 E3. An ambiguous login response follows UC-01-02 E3; the reduced PA3 flow remains signed out until a valid login response is received. Recovery is never presented as available merely because a failure occurred.
+
+### 2.5 Authentication session lifecycle and scope
+
+FR-01's full-product session behavior is part of UC-01-02, not a separate user goal or a mandatory include from registration. Registration always finishes signed out. The following design follows G1 sections 5 and 7; it does not expand the reduced PA3 implementation scope in Changes.md.
+
+- **Reduced PA3:** Register/login use an access JWT held only in runtime memory. Reload or expiry requires sign-in; refresh rotation remains deferred. Never imply a renewable session when the capability is unavailable.
+- **Full-product sign-in:** A valid login returns a short-lived access JWT (15 minutes under G1) and sets a host-only HttpOnly refresh cookie, Secure on HTTPS and SameSite=Lax. Neither access nor refresh credentials enter localStorage/sessionStorage; JavaScript never receives the refresh value. Auth requests use the configured trusted Origin, client header and credentialed fetch.
+- **Renewal:** When access expires, serialize refresh attempts and allow at most one refresh attempt for an ordinary protected-request recovery. The server atomically consumes the current refresh credential and issues its successor plus a new access JWT. Rotation preserves the family's original seven-day absolute expiry. Retry the protected request only after confirmed renewal and only when its retry contract permits it.
+- **Expiry, revocation or replay:** A missing, expired, revoked or replayed refresh credential produces a generic invalid-session outcome. Replay revokes the entire family. Clear in-memory credentials and return to sign-in without a retry loop; server checks prevent revoked families or ineligible accounts from retaining access.
+- **Lost renewal response:** Do not automatically repeat a potentially consumed refresh credential. Clear in-memory access and require sign-in. Concurrent-tab replay likewise requires re-authentication.
+- **Sign-out:** UC-01-04 revokes the identifiable current family and clears the refresh cookie; an already absent/revoked session is an idempotent success. This does not sign out every device. Network failure leaves revocation unconfirmed as specified in UC-01-04 E1.
+
+Full refresh-session behavior is future implementation work, while the design and FR-01 traceability are recorded here. Password recovery remains conditional on UC-01-05 being implemented and enabled; otherwise offer sign-in only and do not expose an actionable recovery link.
 
 ## 3. Use-case specifications
 *Performed: Tuấn (24125107). Reviewed: Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).*
@@ -82,8 +111,8 @@ The 54 entries below follow the shared catalogue order. Each specification links
 |---|---|---|
 | A1 | At step 1, optional profile values are omitted. | System uses Learner and B1 defaults; registration may continue. |
 | E1 | At step 2, email/password/display name/CEFR is invalid. | Show field errors, retain nonsensitive fields, clear the password, and create no account. |
-| E2 | At step 3, email already exists. | Return EMAIL_EXISTS without creating another account; offer sign-in or recovery. |
-| E3 | At step 3, throttling or a failed/ambiguous response occurs. | Respect Retry-After or reconcile by sign-in/recovery before retrying; never claim success without confirmation. |
+| E2 | At step 3, email already exists. | Return EMAIL_EXISTS without creating another account; offer sign-in, and recovery only when UC-01-05 is implemented and enabled. |
+| E3 | At step 3, throttling or a failed/ambiguous response occurs. | Apply Section 2.4 error handling: respect Retry-After or reconcile by sign-in before retrying; offer recovery only when UC-01-05 is implemented and enabled. Never claim success without confirmation. |
 
 **Postconditions — success:** One account and its profile exist; the visitor remains signed out.
 
@@ -114,7 +143,7 @@ The 54 entries below follow the shared catalogue order. Each specification links
 
 1. Visitor enters email and password and submits once.
 2. System validates credentials and account eligibility without revealing which check failed.
-3. System establishes the authorized session using the active auth contract and returns the learner identity.
+3. System establishes the authorized session and returns the learner identity using the explicit reduced-PA3 or full-product contract in Section 2.5.
 4. System opens the menu or a previously requested authorized page without creating a room or requesting microphone permission.
 
 **Alternative and exception flows**
@@ -124,13 +153,13 @@ The 54 entries below follow the shared catalogue order. Each specification links
 | A1 | At step 4, an invite destination was preserved. | After sign-in, reopen invite entry; joining still requires its own capacity/state checks. |
 | E1 | At step 2, credentials are wrong, suspended or deleted. | Show the same generic invalid-credentials message; issue no session. |
 | E2 | At step 2, fields are malformed or login is rate limited. | Show validation or retry timing; retain email, clear password. |
-| E3 | At step 3, session creation or network confirmation fails. | Stay signed out or reconcile the current authorized session; do not show a fake logged-in screen. |
+| E3 | At step 3, session creation or network confirmation fails. | Apply Section 2.4 error handling and remain signed out until a valid login response is received; do not show a fake logged-in screen. |
 
 **Postconditions — success:** A verified session identifies the user and enables only their authorized actions.
 
 **Postconditions — minimum guarantee:** Failed sign-in grants no access and discloses no account eligibility details.
 
-**Special requirements:** Do not store access tokens in localStorage or expose server secrets. Full refresh-token rotation is a later auth implementation concern, not added by SCRUM-28/47. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
+**Special requirements:** Sections 2.4 and 2.5 define auth errors and the FR-01 session lifecycle, including renewal, expiry, replay and lost-response handling. Keep access tokens only in runtime memory; never expose server secrets. Full refresh rotation remains outside reduced PA3 implementation scope. Shared permission, consent, accessibility and failure contracts in Section 2 apply.
 
 **UI prototype:** [Open UC-01-02](prototypes/index.html#UC-01-02). The first image represents the main workflow; the contact sheet contains every named alternative/exception outcome. Illustrative data is not a real learner record.
 

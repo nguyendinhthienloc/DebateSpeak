@@ -4,7 +4,7 @@ One file for PA3, one section per revised document. Each row: what changed, why,
 Status: **filled** = written, **TA** = needs the PA2 TA feedback items added, **open** = not yet written, **none received** = no TA feedback was given to the group.
 
 ## 1. Project Plan (`docs/requirements/PROJECT_PLAN.md`)
-Owner: Tài. Reviewer: Lộc.
+Owner: Tuấn (reassigned from Tài, 2026-11-14). Reviewer: Lộc.
 
 | # | Change | Why | Status |
 |---|---|---|---|
@@ -15,8 +15,7 @@ Owner: Tài. Reviewer: Lộc.
 | 1.5 | Extra preparation items (stretch): FG-02 topic API, LiveKit token spike, `STTAdapter`, `LLMAdapter` + grounding guard, mic screen, CI migrate/seed | Reduce risk for Builds 3 and 4; cut first if FG-03 slips | filled |
 | 1.6 | Branch and PR rules: `feature/SCRUM-<nn>-<name>`, PR into `pa3`, `pa3` → `dev` once per sprint | Keeps `dev` releasable | filled |
 | 1.7 | Changes from TA feedback on PA2 | No TA feedback on PA2 was received by the group as of 2026-11-10 | none received |
-| 1.8 | Added PA3 rubric mapping, updated deliverable statuses, current risk register and work breakdown, verification approach, submission checklist, and open decisions | Make the revised plan reflect PA3 requirements and repository evidence | filled |
-| 1.9 | Removed PA2-only planning and close-out material | Keep the document focused on the current PA3 plan; earlier material remains available in Git history | filled |
+| 1.8 | Plan revised to version 0.2 for PA3: header and status, owner reassigned to Tuấn, PA3 content (sections 1–7), rows for FG-03 status and reviewer sign-offs | Part A requires a revised plan traced in Changes.md | filled (reviewer sign-off pending) |
 
 **Build 1, shrunk**
 
@@ -45,7 +44,7 @@ Deleted: finished PA2 files, duplicate Spec Kit in `src/`, `git_log.txt`, `repor
 
 | PA2 file | Now |
 |---|---|
-| `PROJECT_PLAN.md` | Moved to `docs/requirements/` (Tài revises it) |
+| `PROJECT_PLAN.md` | Moved to `docs/requirements/` (Tuấn revises it) |
 | `G1_SPEC_BUILD1.md` | Moved to `docs/architecture/` |
 | `TODO.md`, `CHECKLIST.md` | Replaced by the per-member `TODO.md` files |
 | `JIRA_MAPPING.md` | Replaced by `docs/management/SPRINT_TASKS.md` |
