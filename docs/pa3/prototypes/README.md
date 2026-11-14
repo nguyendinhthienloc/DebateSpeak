@@ -4,14 +4,14 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 Open [index.html](index.html) directly in a browser. No development server is needed. Choose one of 54 use cases in the left navigation, then switch between Basic flow and Alternative & error flows. On small screens use the UC hash links from the specifications. All examples are fictional design compositions; no password, recording, account, provider request or deletion is transmitted or stored.
 
 ## Interaction and screenshot coverage
-Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Triết (24125047) and Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14; Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 The main screen combines the action view with a result preview. The alternative view contains one visible outcome screen per named alternative/exception branch, with a recovery control. Reviewer annotations explain the condition and expected outcome separately from the learner-facing notice. The 201 outcome screens are captured in 54 contact sheets. Each specification embeds its main screen and contact sheet. Six mobile examples use a 390-pixel viewport. The start and audience use cases additionally include authorized future-scenario screenshots; their default examples remain blocked.
 
 Start is blocked by default in the Build 1 scenario. The design-scenario switch loads a fictional future session with independently recorded consents, passed mic tests and media capability; it is not a control that grants the partner's consent. End, consent withdrawal, confirmation before deletion, per-debater grading ranges, moderation decisions and personal camera choice have distinct preview outcomes. Submission validation is illustrative; server-side validation and authorization remain mandatory in the product.
 
 ## Regeneration
-Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Triết (24125047) and Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).
+Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Triết (24125047), 2026-11-14; Lộc (24125093), pending. Edited: Trần Lê Anh Tuấn (24125107).
 
 From the repository root, with Python 3.11+ and Node installed:
 
