@@ -1,4 +1,13 @@
-﻿@import '@fontsource/inter/latin-400.css';
+﻿/* Type and spacing roles (rem; 16px = 1rem). Change sizes here only.
+   --type-headline 1.75rem  h1, .headline
+   --type-page 2rem         page title
+   --type-section 1.25rem   h2, brand
+   --type-name 1.125rem     participant name, small-screen brand
+   --type-body 1rem         body text
+   --type-label .875rem     labels, buttons
+   --type-support .875rem   .small helper text
+   --space-1..8             .375 .5 .75 1 1.25 1.5 .. 2rem; used by .stack-N */
+@import '@fontsource/inter/latin-400.css';
 @import '@fontsource/inter/latin-600.css';
 
 @font-face {
@@ -43,19 +52,28 @@
     --control-radius: 12px;
     --field-radius: 12px;
     --control-border: var(--border);
+    --type-headline: 1.75rem;
     --type-page: 2rem;
     --type-section: 1.25rem;
     --type-body: 1rem;
     --type-label: .875rem;
     --type-support: .875rem;
+    --type-name: 1.125rem;
+    --space-1: .375rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
     --leading-title: 1.25;
     --leading-body: 1.55;
     line-height: 1.45;
     scrollbar-color: var(--border) var(--background);
   }
   body { margin: 0; min-width: 0; }
-  h1, .headline { font-size: 28px; font-weight: 600; line-height: 1.45; }
-  h2 { font-size: 20px; font-weight: 600; line-height: 1.45; }
+  h1, .headline { font-size: var(--type-headline); font-weight: 600; line-height: 1.45; }
+  h2 { font-size: var(--type-section); font-weight: 600; line-height: 1.45; }
   p, h1, h2 { overflow-wrap: anywhere; }
   button, input, select { font: inherit; }
   button, a, input, select { -webkit-tap-highlight-color: transparent; }
@@ -78,14 +96,14 @@
 @layer components {
   .app-shell { width: 100%; max-width: 1102px; min-height: 100svh; margin: 0 auto; padding: 32px; }
   .app-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .brand { flex: 1; min-width: 0; font-size: 20px; font-weight: 600; overflow-wrap: anywhere; }
+  .brand { flex: 1; min-width: 0; font-size: var(--type-section); font-weight: 600; overflow-wrap: anywhere; }
   .account-link { width: 104px; flex-shrink: 0; }
   .auth-shell .app-header { min-height: 29px; margin-bottom: 24px; }
   .auth-form { max-width: 368px; margin: 0 auto; }
   .form-column { width: 100%; max-width: 560px; }
   .stack-6, .stack-8, .stack-12, .stack-16, .stack-20, .stack-24, .stack-32 { display: flex; flex-direction: column; min-width: 0; }
-  .stack-6 { gap: 6px; } .stack-8 { gap: 8px; } .stack-12 { gap: 12px; }
-  .stack-16 { gap: 16px; } .stack-20 { gap: 20px; } .stack-24 { gap: 24px; } .stack-32 { gap: 32px; }
+  .stack-6 { gap: var(--space-1); } .stack-8 { gap: var(--space-2); } .stack-12 { gap: var(--space-3); }
+  .stack-16 { gap: var(--space-4); } .stack-20 { gap: var(--space-5); } .stack-24 { gap: var(--space-6); } .stack-32 { gap: var(--space-8); }
   .small { font-size: var(--type-support); }
   .page-heading { display: flex; flex-direction: column; gap: .5rem; }
   .muted { color: var(--muted); }
@@ -94,7 +112,7 @@
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     min-width: 0; min-height: 48px; padding: 10px 16px;
     border: 1px solid var(--ink); border-radius: var(--control-radius);
-    font-size: 14px; font-weight: 600; line-height: 1.45; text-align: center;
+    font-size: var(--type-label); font-weight: 600; line-height: 1.45; text-align: center;
     cursor: pointer; overflow-wrap: anywhere;
   }
   .action-primary { color: var(--ink); background: var(--accent); }
@@ -132,7 +150,7 @@
   .participants hr { border-color: var(--border); }
   .participant { padding: 12px 0; border-top: 1px solid var(--border); }
   .participant:first-of-type { border-top: 0; }
-  .participant-name { font-size: 18px; font-weight: 600; line-height: 1.3; }
+  .participant-name { font-size: var(--type-name); font-weight: 600; line-height: 1.3; }
   .code-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .code-row .action { min-width: 112px; }
   .preview-tools { display: flex; gap: 24px; align-items: center; justify-content: space-between; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
@@ -149,7 +167,7 @@
     .preview-selector { max-width: none; }
   }
   @media (max-width: 359px) {
-    .brand { font-size: 18px; }
+    .brand { font-size: var(--type-name); }
     .account-link { width: auto; }
     .audio-actions { flex-direction: column; }
   }
