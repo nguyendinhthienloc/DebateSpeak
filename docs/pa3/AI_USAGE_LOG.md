@@ -13,7 +13,7 @@ The whole team uses AI for the same three kinds of work. Per-member entries belo
 
 | Date | Member | Tool | Task | What AI did | What was changed by human | Notes |
 |---|---|---|---|---|---|---|
-| 2026-11-14 | Nguyễn Đình Thiên Lộc | Claude Code | Code review; Jira automation; document creation | Reviewed PRs, drafted checklist and PA3 document text, helped script Jira and PDF steps | Lộc set scope, reviewed changes and merged PRs | Member to confirm the list of tools and prompts |
+| 2026-11-14 | Nguyễn Đình Thiên Lộc | Claude Code | Code review; Jira automation; document creation | Helped with code review, Jira automation and document drafting (member to detail) | Lộc set scope and reviewed changes | Member to confirm the list of tools and prompts |
 | 2026-11-14 | Nguyễn Bảo Minh Triết | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
 | 2026-11-14 | Nguyễn Hồng Tấn Tài | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
 | 2026-11-14 | Nguyễn Anh Khoa | To confirm | Code review; Jira automation; document creation | To confirm | To confirm | Member to fill in tools, tasks and prompts |
