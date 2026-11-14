@@ -104,6 +104,29 @@ def main() -> None:
 \DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
 \DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
 \DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2500}{-}
+\DeclareUnicodeCharacter{2502}{|}
+\DeclareUnicodeCharacter{250C}{+}
+\DeclareUnicodeCharacter{2510}{+}
+\DeclareUnicodeCharacter{2514}{+}
+\DeclareUnicodeCharacter{2518}{+}
+\DeclareUnicodeCharacter{251C}{|-}
+\DeclareUnicodeCharacter{2524}{-|}
+\DeclareUnicodeCharacter{252C}{+}
+\DeclareUnicodeCharacter{2534}{+}
+\DeclareUnicodeCharacter{253C}{+}
+\DeclareUnicodeCharacter{26A0}{(!)}
+\DeclareUnicodeCharacter{2713}{[x]}
+\DeclareUnicodeCharacter{2717}{[ ]}
+\DeclareUnicodeCharacter{2705}{[x]}
+\DeclareUnicodeCharacter{274C}{[ ]}
+\DeclareUnicodeCharacter{2714}{[x]}
+\DeclareUnicodeCharacter{25B6}{>}
+\DeclareUnicodeCharacter{25BA}{>}
+\DeclareUnicodeCharacter{25B8}{>}
+\DeclareUnicodeCharacter{FE0F}{}
+\DeclareUnicodeCharacter{FE0E}{}
+\DeclareUnicodeCharacter{1F3AF}{(target)}
 """,
         encoding="utf-8",
     )
