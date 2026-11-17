@@ -108,6 +108,7 @@
 
 .register-form { overflow-x: clip; overflow-clip-margin: .5rem; }
 .step-indicator { display: flex; flex-direction: column; gap: .5rem; }
+.account-page .step-indicator h2 { font-size: 1.125rem; line-height: 1.35; }
 .step-indicator h2:focus { outline: none; }
 .step-indicator h2:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 .step-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .375rem; }

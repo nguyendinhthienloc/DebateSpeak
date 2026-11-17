@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { ActionLink } from '../components/ui';
 
 const motion = 'Should universities offer a four-day week?';
@@ -11,8 +11,8 @@ export function LobbyPage({ ready = false }: { ready?: boolean }) {
   }
   const participants = <section className="participants" aria-labelledby="participants-heading">
     <h2 id="participants-heading" className="label">Participants and stances</h2>
-    <div className="participant"><h3 className="participant-name">Learner A · You</h3><p className="small muted">A · {ready ? 'In favor (PRO)' : 'Stance assigned when your partner joins'}</p></div>
-    <div className="participant"><h3 className="participant-name">{ready ? 'Learner B' : 'Your partner has not joined yet'}</h3><p className="small muted">B · {ready ? 'Against (CON)' : 'Open seat'}</p></div>
+    <div className="participant" style={{ '--i': 0 } as CSSProperties}><h3 className="participant-name">Learner A · You</h3><p className="small muted">A · {ready ? 'In favor (PRO)' : 'Stance assigned when your partner joins'}</p></div>
+    <div className="participant" style={{ '--i': 1 } as CSSProperties}><h3 className="participant-name">{ready ? 'Learner B' : 'Your partner has not joined yet'}</h3><p className="small muted">B · {ready ? 'Against (CON)' : 'Open seat'}</p></div>
   </section>;
   const invitation = <section className="invitation stack-12" aria-labelledby="code-heading">
     <h2 id="code-heading" className="label">Room code</h2>

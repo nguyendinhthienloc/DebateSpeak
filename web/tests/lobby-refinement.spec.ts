@@ -77,3 +77,13 @@ test('reduced motion keeps the lobby readable and copy feedback visible', async 
   await page.getByRole('button', { name: 'Copy code', exact: true }).click();
   await expect(page.getByRole('status')).toBeVisible();
 });
+
+test('lobby participants stagger in and the code reads at display size', async ({ page }) => {
+  await page.goto(ready);
+  const rows = page.locator('.participant');
+  expect(await rows.nth(0).evaluate(element => getComputedStyle(element).animationName)).toBe('enter');
+  expect(await rows.nth(1).evaluate(element => getComputedStyle(element).animationDelay)).toBe('0.06s');
+  const code = page.getByText('ABCD2345', { exact: true });
+  expect(await code.evaluate(element => getComputedStyle(element).fontFamily)).toContain('Archivo');
+  expect(parseFloat(await code.evaluate(element => getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(36);
+});
