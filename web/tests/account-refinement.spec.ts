@@ -6,6 +6,8 @@ test('password visibility stays inside the input group and keeps the value and l
     const input = page.getByLabel('Password', { exact: true });
     const button = page.getByRole('button', { name: 'Show password', exact: true });
     await input.fill('example-only-password');
+    // Measure after the page entrance motion settles.
+    await page.locator('main').evaluate(element => Promise.all(element.getAnimations().map(animation => animation.finished)));
     const field = await input.boundingBox();
     const action = await button.boundingBox();
     expect(field!.x + field!.width).toBeLessThanOrEqual(action!.x + 1);
