@@ -72,6 +72,20 @@ test('Vietnamese font coverage loads locally and blocked fonts keep forms usable
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
+test('display face loads locally for headings with Vietnamese coverage', async ({ page }) => {
+  const fonts: string[] = [];
+  page.on('request', request => { if (request.resourceType() === 'font') fonts.push(request.url()); });
+  await page.goto('/#/profile');
+  const h1 = page.locator('h1');
+  expect(await h1.evaluate(element => getComputedStyle(element).fontFamily)).toContain('Archivo');
+  expect(await h1.evaluate(element => getComputedStyle(element).fontWeight)).toBe('800');
+  await page.evaluate(async () => {
+    await document.fonts.load('800 32px "Archivo Variable"', 'Nguyễn Đình Thiên Lộc');
+  });
+  expect(fonts.some(url => url.includes('archivo-vietnamese'))).toBe(true);
+  expect(fonts.every(url => new URL(url).origin === 'http://127.0.0.1:5173')).toBe(true);
+});
+
 test('reduced motion preserves immediate control state without transitions', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#/register');

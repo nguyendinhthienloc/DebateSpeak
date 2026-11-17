@@ -6,7 +6,12 @@
    --type-body 1rem         body text
    --type-label .875rem     labels, buttons
    --type-support .875rem   .small helper text
-   --space-1..8             .375 .5 .75 1 1.25 1.5 .. 2rem; used by .stack-N */
+   --type-display clamp     page titles, display face
+   --space-1..8             .375 .5 .75 1 1.25 1.5 .. 2rem; used by .stack-N
+   Display face: Archivo Variable (headings, brand, codes). Text: Inter 300/400/600. */
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource/inter/latin-300.css';
+@import '@fontsource/inter/vietnamese-300.css';
 @import '@fontsource/inter/latin-400.css';
 @import '@fontsource/inter/latin-600.css';
 
@@ -52,6 +57,11 @@
     --control-radius: 12px;
     --field-radius: 12px;
     --control-border: var(--border);
+    --font-text: Inter, system-ui, sans-serif;
+    --font-display: 'Archivo Variable', Inter, system-ui, sans-serif;
+    --type-display: clamp(2.25rem, 1.75rem + 2vw, 3rem);
+    --weight-display: 800;
+    --stretch-display: 87.5%;
     --type-headline: 1.75rem;
     --type-page: 2rem;
     --type-section: 1.25rem;
@@ -72,8 +82,10 @@
     scrollbar-color: var(--border) var(--background);
   }
   body { margin: 0; min-width: 0; }
-  h1, .headline { font-size: var(--type-headline); font-weight: 600; line-height: 1.45; }
-  h2 { font-size: var(--type-section); font-weight: 600; line-height: 1.45; }
+  h1, h2, .headline, .brand, .participant-name { font-family: var(--font-display); font-stretch: var(--stretch-display); }
+  h1 { font-size: var(--type-display); font-weight: var(--weight-display); line-height: 1.05; letter-spacing: -.015em; text-wrap: balance; }
+  .headline { font-size: var(--type-headline); font-weight: var(--weight-display); line-height: 1.15; letter-spacing: -.01em; }
+  h2 { font-size: var(--type-section); font-weight: 700; line-height: 1.3; }
   p, h1, h2 { overflow-wrap: anywhere; }
   button, input, select, textarea { font: inherit; }
   button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
@@ -86,7 +98,7 @@
   textarea { resize: vertical; }
   textarea[aria-invalid="true"] { border-color: var(--error); }
   select { padding-right: 32px; }
-  label, legend, .label { font-size: var(--type-label); font-weight: 600; }
+  label, legend, .label { font-family: var(--font-text); font-stretch: normal; font-size: var(--type-label); font-weight: 600; letter-spacing: 0; line-height: 1.45; }
   legend { margin-bottom: 8px; }
   hr { width: 100%; border: 0; border-top: 1px solid var(--ink); }
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
@@ -98,7 +110,7 @@
 @layer components {
   .app-shell { width: 100%; max-width: 1102px; min-height: 100svh; margin: 0 auto; padding: 32px; }
   .app-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .brand { flex: 1; min-width: 0; font-size: var(--type-section); font-weight: 600; overflow-wrap: anywhere; }
+  .brand { flex: 1; min-width: 0; font-size: 1.5rem; font-weight: var(--weight-display); letter-spacing: -.01em; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
   .account-link { width: 104px; flex-shrink: 0; }
   .auth-shell .app-header { min-height: 29px; margin-bottom: 24px; }
   .auth-form { max-width: 368px; margin: 0 auto; }
@@ -107,6 +119,7 @@
   .stack-6 { gap: var(--space-1); } .stack-8 { gap: var(--space-2); } .stack-12 { gap: var(--space-3); }
   .stack-16 { gap: var(--space-4); } .stack-20 { gap: var(--space-5); } .stack-24 { gap: var(--space-6); } .stack-32 { gap: var(--space-8); }
   .small { font-size: var(--type-support); }
+  .lead { font-size: 1.125rem; font-weight: 300; line-height: 1.5; color: var(--ink); }
   .page-heading { display: flex; flex-direction: column; gap: .5rem; }
   .muted { color: var(--muted); }
   .accent { color: var(--accent); }
@@ -149,7 +162,8 @@
   .participants hr { border-color: var(--border); }
   .participant { padding: 12px 0; border-top: 1px solid var(--border); }
   .participant:first-of-type { border-top: 0; }
-  .participant-name { font-size: var(--type-name); font-weight: 600; line-height: 1.3; }
+  .participant-name { font-size: var(--type-name); font-weight: 700; line-height: 1.3; }
+  .code-row .headline { font-variant-numeric: tabular-nums; letter-spacing: .04em; }
   .code-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .code-row .action { min-width: 112px; }
   .preview-tools { display: flex; gap: 24px; align-items: center; justify-content: space-between; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }

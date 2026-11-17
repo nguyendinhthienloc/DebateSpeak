@@ -1,5 +1,5 @@
 .account-page {
-  --account-page-title: var(--type-page);
+  --account-page-title: var(--type-display);
   width: 100%;
   max-width: 27rem;
   margin: 1rem auto 0;
@@ -16,7 +16,7 @@
 .account-page.auth-form { max-width: 27rem; }
 .account-fields { gap: 1.25rem; }
 .account-page .page-heading { gap: .75rem; margin-bottom: .25rem; }
-.account-page h1 { font-size: var(--account-page-title); line-height: var(--leading-title); text-wrap: balance; }
+.account-page h1 { font-size: var(--account-page-title); }
 .account-page h2 { font-size: var(--type-section); line-height: 1.35; }
 .account-page .page-heading > p { max-width: 40ch; line-height: var(--leading-body); }
 .account-page .field { gap: .5rem; }
@@ -99,7 +99,7 @@
 .account-page .field-error { font-weight: 600; }
 
 @media (max-width: 760px) {
-  .account-page { --account-page-title: 1.75rem; margin-top: .5rem; }
+  .account-page { margin-top: .5rem; }
 }
 
 @media (max-width: 359px) {
