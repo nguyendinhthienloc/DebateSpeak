@@ -92,3 +92,12 @@ test('reduced motion disables every animation and leaves content visible', async
   const button = page.getByRole('button', { name: 'Continue', exact: true });
   expect(await button.evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
 });
+
+test('page descriptions are short light leads', async ({ page }) => {
+  await page.goto('/#/rooms/new');
+  const lead = page.getByText('Defaults below. Change them if you like.', { exact: true });
+  await expect(lead).toBeVisible();
+  expect(await lead.evaluate(element => getComputedStyle(element).fontWeight)).toBe('300');
+  await page.goto('/#/rooms');
+  await expect(page.locator('.page-heading p')).toHaveCount(0);
+});

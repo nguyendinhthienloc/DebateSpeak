@@ -49,7 +49,7 @@ export function SignInPage({ registeredEmail, expired = false, notice, onSignedI
   }
 
   return <form ref={form} className="account-page auth-form account-form" noValidate onSubmit={submit} aria-busy={pending}>
-    <PageHeading title="Sign in">Create a room or join your partner.</PageHeading>
+    <PageHeading title="Sign in" />
     {registeredEmail && <div role="status"><Note title="Account created" tone="success">Sign in with your email and password.</Note></div>}
     {expired && <p role="status" className="small">Your session expired. Sign in again.</p>}
     {notice && <p role="status" className="small">{notice}</p>}
@@ -135,12 +135,12 @@ export function ProfilePage({ onSignOut }: { onSignOut: () => void }) {
 function SampleProfile() {
   const [level, setLevel] = useState('B1');
   return <div className="account-page profile-page account-form">
-    <PageHeading title="Your profile">Keep your display name and English level up to date.</PageHeading>
+    <PageHeading title="Your profile" />
     <div className="account-profile-notice"><span className="account-status">Sample profile</span><p className="small muted">Try the fields below. Your changes stay on this screen and are not saved.</p></div>
     <div className="account-fields">
       <Field label="Display name" defaultValue="Learner A" />
       <Choices label="English level" options={levels} value={level} onChange={setLevel} describe />
-      <p className="small muted">Your level is a self-assessment, not a certification. Your email and account role cannot be changed here.</p>
+      <p className="small muted">Level is self-assessed. Email and role can't be changed here.</p>
     </div>
     <div className="account-save">
       <button type="button" className="action action-primary" disabled aria-describedby="profile-limit">Save changes</button>
@@ -202,7 +202,7 @@ function SignedInProfile({ onSignOut }: { onSignOut: () => void }) {
 
   const isAdmin = session?.user.role === 'ADMIN';
   return <form ref={form} className="account-page profile-page account-form" noValidate onSubmit={submit} aria-busy={pending || !profile}>
-    <PageHeading title="Your profile">Keep your display name and English level up to date.</PageHeading>
+    <PageHeading title="Your profile" />
     {loadError && <div className="note note-error" role="alert"><p className="small field-error">{loadError}</p>
       <button type="button" className="action action-text" onClick={() => setReload(reload + 1)}>Try again</button></div>}
     {!profile && !loadError && <p role="status" className="small muted">Loading your profile…</p>}
@@ -224,7 +224,7 @@ function SignedInProfile({ onSignOut }: { onSignOut: () => void }) {
           <p id="profile-goals-hint" className="small muted">One goal per line, up to 5.</p>
           {errors.goals && <p id="profile-goals-error" className="small field-error">{errors.goals}</p>}
         </div>
-        <p className="small muted">Your level is a self-assessment, not a certification. Your email and account role cannot be changed here.</p>
+        <p className="small muted">Level is self-assessed. Email and role can't be changed here.</p>
       </div>
       <div className="account-save">
         <button type="submit" className="action action-primary" disabled={pending}>{pending ? 'Saving…' : 'Save changes'}</button>

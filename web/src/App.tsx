@@ -119,7 +119,7 @@ export default function App() {
       {page()}
     </main>
     <footer className="preview-tools">
-      <div className="stack-6"><p className="label">{isAuth ? 'Account access' : 'Room design preview'}</p><p className="small muted">{isAuth ? 'Account forms use the configured API. Rooms and audio remain previews.' : 'Room and audio screens use sample data. No room is created or joined.'}</p></div>
+      <div className="stack-6"><p className="label">{isAuth ? 'Account access' : 'Room design preview'}</p><p className="small muted">{isAuth ? 'Rooms and audio are previews.' : 'Room and audio screens use sample data. No room is created or joined.'}</p></div>
       <div className="field preview-selector"><label htmlFor="preview-screen">Preview screen</label><select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
         {!route && <option value="" disabled>Page not found</option>}
         {routes.map(item => <option key={item.path} value={item.path}>{item.label}</option>)}

@@ -53,7 +53,7 @@ export function CreateRoomPage({ editing, settings, onChange }: { editing: boole
     onChange({ ...settings, [key]: value });
   }
   return <div className="stack-20 room-controls">
-    <PageHeading title="Set up your room">{editing ? 'Choose the topic and a few simple rules before inviting your partner.' : 'Start with these defaults, or change the room settings.'}</PageHeading>
+    <PageHeading title="Set up your room">{editing ? 'Pick a topic and rules.' : 'Defaults below. Change them if you like.'}</PageHeading>
     <div className="setup-columns">
       <div className="stack-20">
         <p className="label">Topic</p>

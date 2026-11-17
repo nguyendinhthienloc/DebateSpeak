@@ -2,7 +2,7 @@ import { ActionLink, Field, Note, PageHeading } from '../components/ui';
 
 export function RoomsPage({ full = false }: { full?: boolean }) {
   return <div className="stack-20 room-controls">
-    <PageHeading title="Find your practice room">Join your partner with an invite code, or set up a room for the two of you.</PageHeading>
+    <PageHeading title="Find your practice room" />
     <div className="form-column stack-24">
       <div className="stack-16">
         <Field label="Invite code" placeholder="Enter the 8-character code" defaultValue={full ? 'ABCD2345' : ''} maxLength={8} autoComplete="off" spellCheck={false} hint="Sample only. Codes are not checked or submitted." />
@@ -18,7 +18,7 @@ export function RoomsPage({ full = false }: { full?: boolean }) {
 
 export function InvitationPage() {
   return <div className="stack-20 room-controls">
-    <PageHeading title="Join your partner">Preview the invitation before joining a room.</PageHeading>
+    <PageHeading title="Join your partner" />
     <div className="form-column stack-20">
       <Field label="Invite code" value="ABCD2345" readOnly hint="Example code · no real invitation" />
       <ActionLink to="/rooms/ready">Preview ready lobby</ActionLink>

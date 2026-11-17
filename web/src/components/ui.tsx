@@ -48,7 +48,7 @@ export function Note({ title, children, tone = 'neutral' }: {
 }
 
 export function PageHeading({ title, children }: { title: string; children?: ReactNode }) {
-  return <div className="page-heading"><h1>{title}</h1>{children && <p className="muted">{children}</p>}</div>;
+  return <div className="page-heading"><h1>{title}</h1>{children && <p className="lead">{children}</p>}</div>;
 }
 
 export function BackToRooms() {
