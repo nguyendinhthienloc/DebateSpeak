@@ -7,7 +7,7 @@
 }
 .home-door-create { background: var(--accent); }
 .home-door-join { background: var(--surface); }
-.home-door h1, .home-door h2 { font-size: clamp(1.75rem, 1rem + 3.5vw, 4rem); font-weight: var(--weight-display); line-height: .95; letter-spacing: -.015em; }
+.home-door h1, .home-door h2 { font-size: clamp(1.75rem, 1rem + 6vw, 4rem); font-weight: var(--weight-display); line-height: .95; letter-spacing: -.015em; }
 .home-door > p { max-width: 34ch; text-wrap: pretty; }
 .home-door-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: auto; }
 .home-create.action-primary { padding-inline: 28px; color: var(--surface); background: var(--ink); }
@@ -44,6 +44,7 @@
   .home-topics { grid-template-columns: minmax(0, 1fr); }
   .home-door { padding: 20px; }
   .home-topic { min-height: 0; }
+  .home-section-head h2 { font-size: 1.5rem; }
   /* History rows stack: motion on its own line, then date, partner and report. */
   .home-table table { min-width: 0; }
   .home-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
