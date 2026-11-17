@@ -62,7 +62,6 @@ export function SignInPage({ registeredEmail, expired = false, notice, onSignedI
     <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Signing in…' : 'Sign in'}</button>
     <div className="account-switch"><span className="muted">New to DebateSpeak?</span><ActionLink to="/register" variant="text">Create account</ActionLink></div>
     <div className="account-limit">
-      <p className="small muted">Rooms and audio remain previews.</p>
       <ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>
     </div>
   </form>;
@@ -114,7 +113,6 @@ export function RegisterPage({ onRegistered }: { onRegistered: (email: string) =
         hint="Leave blank to appear as Learner." />
         <Choices label="Your English level" options={levels} value={level} onChange={value => setLevel(value as CefrLevel)} error={errors.cefr_level} describe />
         <p className="small muted">Self-assessed, not a certification. Change it anytime.</p>
-        <p className="small muted">Your microphone stays off. You choose what to share before each debate.</p>
       </>}
     </div></div>
     {step === 1

@@ -77,6 +77,11 @@ export default function App() {
     window.location.hash = '/sign-in';
   }
 
+  function pickTopic(motion: string) {
+    setSettings(current => ({ ...current, motion }));
+    window.location.hash = '/rooms/new';
+  }
+
   function registered(email: string) {
     setRegisteredEmail(email);
     window.location.hash = '/account-created';
@@ -90,7 +95,7 @@ export default function App() {
       case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/verify-email': return <RecoveryPage mode="verify" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
-      case '/home': return <RequireSession title="Home"><HomePage /></RequireSession>;
+      case '/home': return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':
       case '/rooms/new/settings': return <CreateRoomPage editing={path.endsWith('/settings')} settings={settings} onChange={setSettings} />;
@@ -99,8 +104,8 @@ export default function App() {
       case '/account/delete': return <RequireSession title="Delete account"><DeleteAccountPage onDeleted={accountDeleted} /></RequireSession>;
       case '/admin/users': return <RequireSession title="Manage accounts"><AdminUsersPage /></RequireSession>;
       case '/invite': return <InvitationPage />;
-      case '/rooms/waiting': return <LobbyPage />;
-      case '/rooms/ready': return <LobbyPage ready />;
+      case '/rooms/waiting': return <LobbyPage settings={settings} />;
+      case '/rooms/ready': return <LobbyPage settings={settings} ready />;
       case '/rooms/full': return <RoomsPage full />;
       case '/rooms/expired': return <ExpiredRoomPage />;
       default: return <div className="stack-20"><PageHeading title="Page not found">This preview link does not match a screen.</PageHeading><ActionLink to="/rooms" className="short-action">Back to rooms</ActionLink></div>;
@@ -110,23 +115,40 @@ export default function App() {
   return <div className={`app-shell ${isAuth ? 'auth-shell' : ''}`}>
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
     <header className="app-header">
-      <a className="brand" href={session ? '#/home' : '#/rooms'}>DebateSpeak AI</a>
-      {!isAuth && <div className="header-actions">
-        {session && <p className="small muted header-user" role="status">Signed in as {session.user.display_name}</p>}
-        {session && <ActionLink to="/home" variant="text" current={path === '/home'}>Home</ActionLink>}
-        <ActionLink to="/profile" variant="text" className="account-link" current={path === '/profile'}>Account</ActionLink>
-        {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
-      </div>}
+      <div className="shell-inner header-bar">
+        <div className="header-brand">
+          <a className="brand" href={session ? '#/home' : '#/rooms'}>DebateSpeak AI</a>
+          <span className="preview-badge">Preview<span className="preview-badge-more"> · sample rooms</span></span>
+        </div>
+        {!isAuth && <div className="header-actions">
+          {session && <p className="small muted header-user" role="status">Signed in as {session.user.display_name}</p>}
+          {session && <ActionLink to="/home" variant="text" current={path === '/home'}>Home</ActionLink>}
+          <ActionLink to="/profile" variant="text" className="account-link" current={path === '/profile'}>Account</ActionLink>
+          {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
+        </div>}
+      </div>
     </header>
-    <main id="main" ref={main} tabIndex={-1} key={path}>
-      {page()}
+    <main id="main" className="shell-inner" ref={main} tabIndex={-1} key={path}>
+      {isAuth ? <div className="auth-layout">{page()}<AuthAside /></div> : page()}
     </main>
-    <footer className="preview-tools">
-      <div className="stack-6"><p className="label">{isAuth ? 'Account access' : 'Room design preview'}</p><p className="small muted">{isAuth ? 'Rooms and audio are previews.' : 'Room and audio screens use sample data. No room is created or joined.'}</p></div>
-      <div className="field preview-selector"><label htmlFor="preview-screen">Preview screen</label><select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
+    <footer className="shell-inner dev-bar">
+      <label htmlFor="preview-screen">Preview screen</label>
+      <select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
         {!route && <option value="" disabled>Page not found</option>}
         {routes.map(item => <option key={item.path} value={item.path}>{item.label}</option>)}
-      </select></div>
+      </select>
     </footer>
   </div>;
+}
+
+/** Wide screens only: an example motion that shows what "motion" and "stance" mean. */
+function AuthAside() {
+  return <aside className="auth-aside" aria-label="How a debate works">
+    <p className="label">Example motion</p>
+    <p className="auth-motion">Cities should ban private cars from the centre</p>
+    <div className="auth-sides">
+      <p><span className="side-tag">PRO</span>One of you argues for it</p>
+      <p><span className="side-tag side-tag-con">CON</span>The other argues against</p>
+    </div>
+  </aside>;
 }

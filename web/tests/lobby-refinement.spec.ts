@@ -19,12 +19,13 @@ test('a rejected clipboard write shows a recovery message', async ({ page }) => 
   await expect(page.getByRole('status')).toHaveText('Copy is unavailable. Select the example code above to copy it.');
 });
 
-test('ready lobby keeps the microphone button disabled with its explanation linked', async ({ page }) => {
+test('ready lobby keeps start and microphone disabled with their explanation linked', async ({ page }) => {
   await page.goto(ready);
+  await expect(page.getByRole('button', { name: 'Start debate', exact: true })).toBeDisabled();
   const mic = page.getByRole('button', { name: 'Test microphone', exact: true });
   await expect(mic).toBeDisabled();
   await expect(mic).toHaveAttribute('aria-describedby', 'lobby-media-limit');
-  await expect(page.locator('#lobby-media-limit')).toHaveText('Audio and debate start are not available in this build.');
+  await expect(page.locator('#lobby-media-limit')).toHaveText("Audio won't start until you both agree. Debate start isn't available yet.");
 });
 
 test('waiting lobby puts the room code before participants; ready lobby reverses it', async ({ page }) => {

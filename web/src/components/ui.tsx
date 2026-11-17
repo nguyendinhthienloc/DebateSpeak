@@ -36,7 +36,7 @@ export function Choices({ label, options, value, onChange, describe = false, err
         <span>{value === option && <Check className="choice-check" size={16} aria-hidden="true" />}{option}</span>
       </label>)}
     </div>
-    {describe && <p className="small">Selected: {value}</p>}
+    {describe && <p className="sr-only">Selected: {value}</p>}
     {error && <p id={`${name}-error`} className="small field-error">{error}</p>}
   </fieldset>;
 }

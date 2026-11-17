@@ -95,3 +95,38 @@ Integrity 3); detector: 0 findings. Not already covered by this plan:
   actions do not share one alignment. Fixed in Task 8 polish.
 - Invite codes read as one 8-letter run (`ABCD2345`). Partners read them aloud;
   grouping 4 + 4 would help (follow-up; changes copy-code behaviour).
+
+## Wide-screen and density pass (confirmed by the user, 2026-11-17)
+
+Critique 22/40: the page stopped at 1102px (54% of a 1920px screen, forms 23%),
+setup and lobby carried 7–11 supporting lines each, and screens felt stiff.
+References adapted, not copied: Google Meet (full-width bar, actions beside
+an agenda, pre-join "who is here"), Zoom (short action tiles), Material
+layouts (70/30 main and supporting pane), Apple (spring motion), Samsung One UI
+(actions within thumb reach on phones).
+
+1. **Width.** The header bar spans the screen. Content grows to 1440px with a
+   `clamp(24px, 4vw, 64px)` gutter. Text lines stay at 70 characters or less;
+   wide screens get a second column, not longer lines.
+2. **One preview signal.** A "Preview" badge in the header replaces the
+   per-screen sample, scaffold and audio notes. The only consent line sits in
+   the lobby: "Audio won't start until you both agree. Debate start isn't
+   available yet." The screen switcher becomes a one-line bar. "Selected: X"
+   stays for screen readers only. Error, validation and status messages are
+   unchanged.
+3. **Layouts.** Home: action panels with a topic column beside them; a topic
+   opens setup with that motion. Sign-in and register: form beside an example
+   motion that explains motion and stance. Rooms and invite: two panels.
+   Setup: main column and a supporting preview pane. Profile: form with an
+   account-links pane.
+4. **Lobby stage.** The two seats sit side by side (A/PRO left, B/CON right)
+   with the code beside them. An open seat shows a slow waiting pulse. READY
+   shows a disabled "Start debate" with the consent line. Phones get a bottom
+   action bar.
+5. **Less stiff.** One radius family (8px controls, 16px surfaces, pill
+   badges), spring easing on press, hover and selection, hover lift on topic
+   cards, a 17px/600 middle text size, 400-weight lead text, tighter groups
+   with wider section gaps.
+
+Recovery links stay off sign-in (UC-01-05 is not enabled). Join still opens
+the fixed invitation preview; the typed code is never stored or put in the URL.

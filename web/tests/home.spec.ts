@@ -26,6 +26,13 @@ test('sign-in lands on the main menu', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'page');
 });
 
+test('a topic opens room setup with that motion', async ({ page }) => {
+  await signIn(page);
+  await page.getByRole('button', { name: /Cities should ban private cars/ }).click();
+  await expect(page).toHaveURL(/#\/rooms\/new$/);
+  await expect(page.getByRole('heading', { name: 'Cities should ban private cars from the centre', exact: true })).toBeVisible();
+});
+
 test('create door opens room setup', async ({ page }) => {
   await signIn(page);
   await page.getByRole('link', { name: 'Set up room', exact: true }).click();
@@ -52,10 +59,9 @@ test('valid code opens the invitation preview', async ({ page }) => {
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
 
-test('samples are labelled and carry no scores', async ({ page }) => {
+test('the header marks the preview and samples carry no scores', async ({ page }) => {
   await signIn(page);
-  await expect(page.getByText('Sample', { exact: true })).toHaveCount(2);
-  await expect(page.getByText('Topics and history show sample content. No real debate is listed.', { exact: true })).toBeVisible();
+  await expect(page.locator('header .preview-badge')).toContainText('Preview');
   expect(await page.locator('main').innerText()).not.toMatch(/\d+\s*\/\s*\d+|score/i);
 });
 

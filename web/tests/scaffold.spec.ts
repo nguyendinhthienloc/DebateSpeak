@@ -33,8 +33,8 @@ test('room previews never create a session, request media, or call a service', a
   await page.goto('/#/rooms/new');
   await expect(page.getByRole('button', { name: 'Test microphone' })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Test speaker' })).toBeDisabled();
-  await page.getByRole('link', { name: 'Preview waiting lobby' }).click();
-  await expect(page.getByText('Sample room · no seat is reserved.')).toBeVisible();
+  await page.getByRole('link', { name: 'Create room', exact: true }).click();
+  await expect(page.locator('#lobby-media-limit')).toBeVisible();
   await page.getByLabel('Preview screen').selectOption('/rooms/ready');
   await expect(page.getByText('Room setup complete · 2 of 2 joined')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Test microphone' })).toBeDisabled();
@@ -93,11 +93,11 @@ test('reduced motion disables every animation and leaves content visible', async
   expect(await button.evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
 });
 
-test('page descriptions are short light leads', async ({ page }) => {
+test('page descriptions are short regular-weight leads', async ({ page }) => {
   await page.goto('/#/rooms/new');
   const lead = page.getByText('Defaults below. Change them if you like.', { exact: true });
   await expect(lead).toBeVisible();
-  expect(await lead.evaluate(element => getComputedStyle(element).fontWeight)).toBe('300');
+  expect(await lead.evaluate(element => getComputedStyle(element).fontWeight)).toBe('400');
   await page.goto('/#/rooms');
   await expect(page.locator('.page-heading p')).toHaveCount(0);
 });

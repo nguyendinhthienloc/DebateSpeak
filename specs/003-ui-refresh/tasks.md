@@ -11,3 +11,4 @@ Branch `feature/SCRUM-53-ui-refresh`. Details and tests: [plan.md](plan.md).
 - [x] T6 Bolder room headings and lobby motion
 - [x] T7 Main menu at `#/home`
 - [ ] T8 Polish, verification, PR
+- [x] T9 Wide-screen and density pass (spec.md, last section)

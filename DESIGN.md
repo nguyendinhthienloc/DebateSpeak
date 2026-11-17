@@ -28,7 +28,7 @@ typography:
   lead:
     fontFamily: "Inter"
     fontSize: "1.125rem"
-    fontWeight: 300
+    fontWeight: 400
     lineHeight: 1.5
   account-page-title:
     fontFamily: "Archivo Variable"
@@ -72,10 +72,9 @@ motion:
   duration-slow: "320ms"
   reduced-motion: "no animation or transition"
 rounded:
-  control: "12px"
-  room-control: "6px"
-  room-field: "4px"
-  room-surface: "0px"
+  control: "8px"
+  surface: "16px"
+  pill: "999px"
 spacing:
   tight: "4px"
   related: "8px"
@@ -83,8 +82,9 @@ spacing:
   standard: "16px"
   group: "20px"
   mobile-gutter: "24px"
-  desktop-gutter: "32px"
-  section: "40px"
+  gutter: "clamp(24px, 4vw, 64px)"
+  section: "48px"
+  content-max: "1440px"
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
@@ -124,13 +124,13 @@ components:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.ink}"
     typography: "{typography.label}"
-    rounded: "{rounded.room-control}"
+    rounded: "{rounded.control}"
     height: "48px"
   room-input:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
     typography: "{typography.body}"
-    rounded: "{rounded.room-field}"
+    rounded: "{rounded.control}"
     height: "48px"
 ---
 
@@ -148,6 +148,16 @@ implementation instructions. For account APIs use `web/API_CONTRACT.md`.
 Recovery pages reuse account geometry and expose Change password after email
 verification and from Profile. That action requests a separate password-reset
 code; verification alone never grants password-change authorization.
+
+## SCRUM-53 wide-screen and density pass — November 17, 2026
+
+Supersedes older width, radius and motion notes below where they conflict. The
+header bar spans the window; content grows to 1440px inside a
+`clamp(24px, 4vw, 64px)` gutter, and wide screens gain a second column rather
+than longer lines (70 characters at most). Corners: 8px controls and fields,
+16px surfaces, pill badges. One "Preview" badge in the header replaces
+per-screen sample notes; the lobby carries the only consent line. Supporting
+text: two lines per screen at most. Details: `specs/003-ui-refresh/spec.md`.
 
 ## SCRUM-49 local account refinement — November 14, 2026
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).
@@ -195,7 +205,7 @@ The selected opaque-pair checks record Ink on Cream 15.10:1, supporting text on 
 
 ## Typography
 
-**SCRUM-53 (2026-11-17):** headings, the brand, room motions and invite codes use Archivo Variable at 800 (700 for section titles), semi-condensed (`font-stretch: 87.5%`), tight leading and slight negative tracking. Inter carries body (400), labels and buttons (600), and large lead text only (300 at 1.125rem or larger; never light at small sizes). Both faces are self-hosted with Latin and Vietnamese subsets. Supporting text stays 14px Inter 400. No display serif, decorative uppercase or monospace identity is established.
+**SCRUM-53 (2026-11-17):** headings, the brand, room motions and invite codes use Archivo Variable at 800 (700 for section titles), semi-condensed (`font-stretch: 87.5%`), tight leading and slight negative tracking. Inter carries body (400), labels and buttons (600), and lead text (400 at 1.125rem, Muted; the earlier 300 weight read washed out on cream). Both faces are self-hosted with Latin and Vietnamese subsets. Supporting text stays 14px Inter 400. No display serif, decorative uppercase or monospace identity is established.
 
 Headings explain the task. Page titles, room motions and invite codes use the display role; participant names and section headings use Archivo 700, with 16px Inter stance text. Participant labels and stances remain readable data, not display ornaments. Long names, email addresses and debate motions wrap rather than losing essential meaning. Use a neutral system-sans fallback only when Archivo or Inter is unavailable; a fallback is not evidence of a font match.
 
@@ -215,7 +225,7 @@ Visitor mode and screen-specific routes, sequence and prototype assumptions belo
 
 ## Motion
 
-Motion confirms what changed; it never decorates. Pages fade and rise 8px on entry (320ms), register steps slide in the direction of travel, selected-choice checks pop in, status notes reveal downward, and list rows stagger 60ms apart. Nothing loops, nothing shakes, and nothing exceeds 320ms. Every animation starts from a visible end state, so content is readable if animation fails. Under `prefers-reduced-motion: reduce`, all animation and transition is off.
+Motion confirms what changed; it never decorates. Pages fade and rise 8px on entry (320ms), register steps slide in the direction of travel, selected-choice checks pop in, status notes reveal downward, and list rows stagger 60ms apart. Press, hover lift and selection use a gentle spring (`--ease-spring`, slight overshoot, no bounce back). Nothing shakes and nothing exceeds 320ms. The one loop is the open-seat waiting pulse in the lobby: a slow opacity change on a small dot, removed under reduced motion. Every animation starts from a visible end state, so content is readable if animation fails. Under `prefers-reduced-motion: reduce`, all animation and transition is off.
 
 ## Elevation & Depth
 
@@ -223,7 +233,7 @@ Flat by default. Cream/white surface separation and thin borders establish struc
 
 ## Shapes
 
-Unchanged auth/profile controls retain their 12px corners. Room-specific actions use 6px corners, room fields 4px, and content surfaces 0px. Open sections use spacing and thin rules instead of enclosing cards. Participant rows keep 16px vertical padding and an 8px name-to-stance gap. The Ink preview and local-check overlay are square functional surfaces; avoid nested decorative containers. Text actions retain 44px-high targets even when their visible label is small. Primary and secondary controls are 48px high. Fields use a 1px boundary; keyboard focus uses a 3px outside Ink outline.
+One radius family: 8px for buttons, fields and choices; 16px for panels, cards and seats; pill for badges. Open sections use spacing and thin rules instead of enclosing cards. Participant rows keep 16px vertical padding and an 8px name-to-stance gap. The Ink preview and local-check overlay are square functional surfaces; avoid nested decorative containers. Text actions retain 44px-high targets even when their visible label is small. Primary and secondary controls are 48px high. Fields use a 1px boundary; keyboard focus uses a 3px outside Ink outline.
 
 ## Components
 
