@@ -83,3 +83,15 @@ backend or API changes, Figma.
 - Jira ticket number for the branch `feature/SCRUM-<nn>-ui-refresh`.
 - DESIGN.md has a named owner per section and AGENTS.md says one person
   edits one file: who edits DESIGN.md and PRODUCT.md for the font change.
+
+## Baseline findings (Task 1, 2026-11-17)
+
+Impeccable audit: 16/20 (Accessibility 3, Performance 4, Theming 3, Responsive 3,
+Integrity 3); detector: 0 findings. Not already covered by this plan:
+
+- Every page ends with the "Preview screen" selector, which is a team review tool;
+  hide it in production builds (follow-up, see route-gaps.md).
+- Room setup: "Change settings" is centred while "Back to rooms" is indented; text
+  actions do not share one alignment. Fixed in Task 8 polish.
+- Invite codes read as one 8-letter run (`ABCD2345`). Partners read them aloud;
+  grouping 4 + 4 would help (follow-up; changes copy-code behaviour).
