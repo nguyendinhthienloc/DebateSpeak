@@ -5,6 +5,7 @@ import { isEmail, type FieldErrors } from '../auth/contracts';
 import { useAuthForm } from '../auth/useAuthForm';
 import { PasswordField } from './AccountPages';
 import { clearSession } from '../auth/session';
+import { Podium } from '../components/AuthStage';
 
 export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
   mode: 'request' | 'verify' | 'reset'; initialEmail?: string; onEmailAccepted: (email: string) => void;
@@ -55,7 +56,9 @@ export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
     void run(signal => recoverAccount('resend-verification', { email: email.trim() }, signal), () => setResent(true));
   }
 
-  if (done) return <div ref={result} tabIndex={-1} className="account-page auth-form account-form">
+  const backToSignIn = <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>;
+
+  if (done) return <Podium name="Account recovery" foot={requesting && backToSignIn}><div ref={result} tabIndex={-1} className="auth-plate account-page account-form">
     <PageHeading title={requesting ? 'Check your email' : verifying ? 'Email verified' : 'Password updated'}>
       {requesting ? 'If an account matches that email, we’ll send a code to reset your password.'
         : verifying ? 'Your email is verified. You can return to sign in.'
@@ -65,7 +68,6 @@ export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
       <p className="small muted">Check your spam folder too. Use the most recent code you receive.</p>
       <ActionLink to="/reset-password">Enter reset code</ActionLink>
       <button className="action action-secondary" type="button" onClick={() => setDone(false)}>Try another email or resend</button>
-      <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
     </> : <>
       <ActionLink to="/sign-in">Back to sign in</ActionLink>
       {verifying && <>
@@ -73,9 +75,9 @@ export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
         <ActionLink to="/forgot-password" variant="secondary">Change password</ActionLink>
       </>}
     </>}
-  </div>;
+  </div></Podium>;
 
-  return <form ref={form} className="account-page auth-form account-form" noValidate onSubmit={submit} aria-busy={pending}>
+  return <Podium name="Account recovery" foot={backToSignIn}><form ref={form} className="auth-plate account-page account-form" noValidate onSubmit={submit} aria-busy={pending}>
     <PageHeading title={requesting ? 'Forgot password?' : verifying ? 'Verify your email' : 'Reset password'}>
       {requesting ? 'Enter your email and we’ll help you get back to your account.'
         : verifying ? 'Enter your email and the code from your inbox to confirm it’s you.'
@@ -95,8 +97,7 @@ export function RecoveryForm({ mode, initialEmail = '', onEmailAccepted }: {
     {verifying && <button className="action action-secondary" type="button" disabled={pending} onClick={resend}>Send a new code</button>}
     {requesting && <ActionLink to="/reset-password" variant="text">Already have a reset code?</ActionLink>}
     {mode === 'reset' && <ActionLink to="/forgot-password" variant="text">Request a new code</ActionLink>}
-    <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
-  </form>;
+  </form></Podium>;
 }
 
 // UC-01-05 is not implemented or enabled in this build, so recovery stays inert.
@@ -104,8 +105,10 @@ const RECOVERY_ENABLED = false;
 
 export function RecoveryPage(props: Parameters<typeof RecoveryForm>[0]) {
   if (RECOVERY_ENABLED) return <RecoveryForm {...props} />;
-  return <div className="auth-form stack-16">
-    <PageHeading title="Account recovery is not available in this build" />
-    <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
-  </div>;
+  return <Podium name="Account recovery">
+    <div className="auth-plate account-page account-form">
+      <PageHeading title="Account recovery is not available in this build" />
+      <ActionLink to="/sign-in">Back to sign in</ActionLink>
+    </div>
+  </Podium>;
 }

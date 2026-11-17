@@ -210,6 +210,20 @@ Recovery pages reuse account geometry and expose Change password after email
 verification and from Profile. That action requests a separate password-reset
 code; verification alone never grants password-change authorization.
 
+## SCRUM-53 auth stage — November 17, 2026
+
+Supersedes the sign-in layout and account-note notes below where they conflict.
+Sign in, register, account created and recovery now stand on a full-screen Ink
+stage with no app header or dev bar: one White form plate on a Yellow lectern
+that carries the live name and level, over a floor band. Register runs in three
+steps whose headings ask the step's question; the optional level adds an
+"I'm not sure" quick guide. The Ink motion aside beside sign-in is removed.
+Account notes use a full 1px Success/Error edge (8px radius) instead of a 3px
+inline-start rule. Palette, type and radius tokens are unchanged. Details:
+`specs/005-auth-stage/spec.md`; direction:
+`.impeccable/surfaces/web-src-pages-accountpages-tsx.md`. Performer and peer
+review are to be recorded by the branch owner; no approval is claimed here.
+
 ## SCRUM-53 contrast pass and welcome page — November 17, 2026
 
 Supersedes the flat, one-accent and grey-disabled rules in older notes below
@@ -272,17 +286,17 @@ One brand hue (Signal Yellow), one structural dark (Ink) and a warm Cream ground
 
 - **Cream** (`background`): the page canvas and the welcome's Cream act fields.
 - **White** (`surface`): fields, cards, panels, seats and name plates. On Cream, White alone is 1.09:1, so a White surface always carries the 1.5px Ink edge.
-- **Ink** (`ink`, alias `contrast-surface`): text, edges, focus outlines, and committed regions: the app header bar, Home's topics pane, the Create button inside the Yellow door, the welcome stage.
+- **Ink** (`ink`, alias `contrast-surface`): text, edges, focus outlines, and committed regions: the app header bar, Home's topics pane, the Create button inside the Yellow door, the welcome stage and the auth stage.
 - **On-Ink White** (`on-ink`): text on Ink regions. Softened supporting text on Ink uses White at 84% (11.9:1) or 70% (8.6:1).
 - **Muted Slate** (`muted`): supporting text; 8.2:1 on Cream, 8.9:1 on White, 6.1:1 on Yellow. Not for text on Ink.
 - **Border Grey** (`border`): field and secondary-control outlines outside room controls (3.7:1 on Cream, 4.0:1 on White), and the dashed disabled boundary.
 - **Divider** (`line`, Ink at 28%): separators between rows and groups (1.8:1 on Cream). A divider separates content; it never stands in for a feature surface's boundary.
 - **Stone** (`disabled`): the unfilled step-bar track only. Controls no longer use a grey disabled fill.
-- **Stage Floor / Stage Edge** (`stage-floor`, `stage-edge`) and **Cream Floor** (`floor-cream`): the welcome page's floor bands only; see Components.
+- **Stage Floor / Stage Edge** (`stage-floor`, `stage-edge`) and **Cream Floor** (`floor-cream`): floor bands only: the welcome page's, and `stage-floor`/`stage-edge` under the auth stage; see Components.
 
 ### Semantic roles
 
-Success, Warning and Error are text/status roles with explicit wording; account notes add a 3px coloured inline-start rule. Informational secondary actions use Ochre (`link`). A learner must be able to distinguish states without identifying a hue.
+Success, Warning and Error are text/status roles with explicit wording; account notes carry a full 1px Success or Error edge with an 8px radius. Informational secondary actions use Ochre (`link`). A learner must be able to distinguish states without identifying a hue.
 
 ### Named Rules
 
@@ -318,9 +332,11 @@ Headings explain the task. Long names, email addresses and motions wrap rather t
 
 ## Layout
 
-The header bar spans the window; content grows to 1440px (`content-max`) inside the `gutter`. Wide screens gain a second column rather than longer lines: Home places the two doors and history on the left with the Ink topics pane on the right (one column under 1200px, doors stack under 900px); Profile places the form beside a raised links pane above 960px; Create Room uses a flexible setup column beside a 20–28rem preview. Sign-in pairs a 27rem form with an Ink motion aside that drops out under 960px. Under 760px, action bars stick to the bottom of the viewport above a Divider rule.
+The header bar spans the window; content grows to 1440px (`content-max`) inside the `gutter`. Wide screens gain a second column rather than longer lines: Home places the two doors and history on the left with the Ink topics pane on the right (one column under 1200px, doors stack under 900px); Profile places the form beside a raised links pane above 960px; Create Room uses a flexible setup column beside a 20–28rem preview. Under 760px, action bars stick to the bottom of the viewport above a Divider rule.
 
 The welcome page (`#/welcome`) is the exception to the content column: six full-height acts (`min-height: 100svh`) with content held to `content-max` by padding, and the act rail fixed at the right edge (hidden under 760px).
+
+The auth stage (sign in, register, account created, recovery) also leaves the content column: a full-height (`100svh`) Ink stage with its own top bar, one centred plate up to 36rem wide, and spare height split between the space above the plate and the floor so the podium sits low on tall screens. See Components.
 
 Historical Figma geometry (510px/488px Create Room columns, 1102px and 390px reference frames, 32px desktop gutters, 368px sign-in column) is superseded by the values above and kept only as research context. Mobile references used a 390 × 844 viewport with one page scroll area; reflow at 320px remains a required check.
 
@@ -341,11 +357,13 @@ A hybrid: edges carry structure, one raised shadow marks what you can act on. Th
 - **Raised** (`--raised`: `0 1px 2px rgb(28 32 30 / .14), 0 18px 36px -18px rgb(28 32 30 / .42)`): panels, seats, topic cards, doors, session rows, the preview card, the Profile links pane, welcome cards and name plates.
 - **Raised hover** (`--raised-hover`: `0 2px 4px rgb(28 32 30 / .16), 0 26px 44px -18px rgb(28 32 30 / .5)`): hover on raised surfaces that are themselves the action (topic cards).
 
+- **Dark-stage drop** (deep, black, negative spread; on the auth plate `0 2px 4px rgb(0 0 0 / .3), 0 40px 80px -30px rgb(0 0 0 / .8)`): surfaces that stand on an Ink stage or over the dimmed quick-guide backdrop (the welcome banner and track, the auth plate, the quick guide dialog), where the Ink-tinted Raised shadow would not read. Stage-only; never on Cream.
+
 Open or placeholder states (open seat, the other side's empty note) drop the shadow and switch the edge to dashed.
 
 ### Named Rules
 
-**The One Lift Rule.** One raised elevation and its hover. A surface either sits on the page or is raised; there is no third level, no glow and no hard offset shadow.
+**The One Lift Rule.** One raised elevation and its hover. A surface either sits on the page or is raised; there is no third level, no glow and no hard offset shadow. The dark-stage drop is the sanctioned exception for surfaces on the welcome and auth stages; it is still soft and downward, never a glow or offset block.
 
 ## Shapes
 
@@ -396,6 +414,18 @@ A sanctioned exception for this one page, recorded so it is not mistaken for app
 - **Act rail:** fixed dots (Ink with a White ring; current act Yellow, scaled 1.3, with its name in an Ink pill). Hidden under 760px.
 - **Snap:** mandatory vertical snap; proximity under 760px wide or 640px tall; none under reduced motion.
 
+### Auth stage (sign in, register, account created, recovery)
+
+A second sanctioned exception, built from the welcome stage's materials, for these routes only.
+
+- **Stage:** full-screen Ink, no app header and no dev bar. A Yellow podium light (radial) sits behind the plate.
+- **Top bar:** brand in On-Ink display type linking to `#/welcome`; the Sign in / Create account switch as Yellow text actions after an On-Ink 84% prompt (prompt hidden under 560px). Focus on the stage is Yellow.
+- **Plate:** the form is one White plate (up to 36rem, 2px Yellow edge, 16px radius, dark-stage drop). It enters with the page; the plate itself takes no focus outline.
+- **Lectern:** a tapered Yellow body under the plate reaching the floor, carrying the live name in display type (two lines at most) and a Label detail: "Welcome back" on sign-in, `Welcome, <name>` with the level after registering, the typed name and chosen level while registering, "Account recovery" on recovery. Decorative and `aria-hidden`; it rises 1.5rem on entry, 80ms after the plate.
+- **Floor band:** `stage-floor` with a 2px `stage-edge` top; ground, not a surface. Secondary routes (Preview rooms, Back to sign in) sit on it as a Yellow foot line.
+- **Register:** three steps (Account, Your name, English level) whose headings are the step's question; the step bar and directional slide follow the account steps. The optional level keeps the four CEFR choices on one row inside the plate from 360px, then a dashed Ink "I'm not sure" entry (8px radius, solid on hover) to the quick guide.
+- **Quick guide:** a modal dialog (White, 2px Ink edge, 16px radius, 40rem wide, dark-stage drop over an Ink 72% backdrop; full-screen without edge or radius under 560px). One statement per screen in display type, then Yes / Sometimes / Not yet answer cards (1.5px Border edge, Ink on hover, Yellow with Ink edge when selected), a progress bar and count, Back and Continue. The result shows the level as a Yellow display-type chip (Ink edge, Raised) with `Use <level>` (primary) and "Choose myself" (secondary).
+
 ### State patterns
 
 Pair pending, success, unavailable and error states with concise wording. Keep valid non-sensitive input while explaining how to recover. Do not announce unchanged background refreshes. Missing consent, room capacity and service failures cannot be hidden by optimistic visual transitions.
@@ -420,9 +450,9 @@ The user selected a proposed local microphone/speaker check in Figma. Start/Play
 
 - **Don't** place a White or Yellow surface on Cream without the Ink edge; a fill-only card on Cream is 1.09:1 or 1.35:1.
 - **Don't** use a Divider rule as the only boundary of a feature surface.
-- **Don't** bring back rejected companion accents, pastel panels or decorative metrics; gradients are limited to the welcome podium light.
+- **Don't** bring back rejected companion accents, pastel panels or decorative metrics; gradients are limited to the podium light on the welcome and auth stages.
 - **Don't** add a second elevation, a glow or a hard offset shadow.
 - **Don't** grey out disabled controls with a fill.
 - **Don't** use white text on yellow, clipped focus rings or colour-only status communication.
-- **Don't** carry the welcome stage's alternating fields, floor bands or lecterns into app screens.
+- **Don't** carry the welcome stage's alternating fields, floor bands or lecterns into app screens; the auth stage (sign in, register, account created, recovery) is the one exception.
 - **Don't** present a Figma prototype or the welcome's example screens as evidence of working authentication, audio, transcript or feedback.

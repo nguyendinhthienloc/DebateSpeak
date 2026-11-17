@@ -22,11 +22,11 @@ async function fillStepOne(page: Page) {
 test('step 1 continues without calling the API', async ({ page }) => {
   const calls = await countRegisterPosts(page);
   await page.goto('/#/register');
-  await expect(page.getByText('Step 1 of 2 · Account', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 1 of 3 · Account', { exact: true })).toBeVisible();
   await fillStepOne(page);
   await page.getByLabel('Password', { exact: true }).press('Enter');
-  await expect(page.getByText('Step 2 of 2 · Learning profile', { exact: true })).toBeVisible();
-  await expect(page.getByText('Step 2 of 2 · Learning profile', { exact: true })).toBeFocused();
+  await expect(page.getByText('Step 2 of 3 · Your name', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 2 of 3 · Your name', { exact: true })).toBeFocused();
   expect(await page.locator('.register-step').evaluate(element => getComputedStyle(element).animationName)).toBe('step-forward');
   expect(calls.count).toBe(0);
 });
@@ -36,7 +36,7 @@ test('step 1 blocks invalid credentials', async ({ page }) => {
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page.getByLabel('Email', { exact: true })).toBeFocused();
   await expect(page.getByText('Enter your email address.', { exact: true })).toBeVisible();
-  await expect(page.getByText('Step 1 of 2 · Account', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 1 of 3 · Account', { exact: true })).toBeVisible();
 });
 
 test('back keeps values', async ({ page }) => {
@@ -54,22 +54,24 @@ test('409 returns to step 1 with email focused', async ({ page }) => {
   await page.goto('/#/register');
   await fillStepOne(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByText('An account already uses this email.', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Email', { exact: true })).toBeFocused();
   await expect(page.getByLabel('Password', { exact: true })).toHaveValue(password);
-  await expect(page.getByText('Step 1 of 2 · Account', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 1 of 3 · Account', { exact: true })).toBeVisible();
 });
 
-test('422 cefr error stays on step 2', async ({ page }) => {
+test('422 cefr error stays on step 3', async ({ page }) => {
   await page.route('**/auth/register', route => route.fulfill({ status: 422,
     json: { code: 'VALIDATION_ERROR', errors: [{ field: 'cefr_level', message: 'Invalid choice' }] } }));
   await page.goto('/#/register');
   await fillStepOne(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByRole('group', { name: 'Your English level' })).toBeFocused();
-  await expect(page.getByText('Step 2 of 2 · Learning profile', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 3 of 3 · English level', { exact: true })).toBeVisible();
 });
 
 test('step change is instant under reduced motion', async ({ page }) => {
@@ -84,18 +86,19 @@ test('no step data in URL or storage', async ({ page }) => {
   await page.goto('/#/register');
   await fillStepOne(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
-  await expect(page.getByText('Step 2 of 2 · Learning profile', { exact: true })).toBeVisible();
+  await expect(page.getByText('Step 2 of 3 · Your name', { exact: true })).toBeVisible();
   expect(page.url()).toMatch(/#\/register$/);
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
 
-test('registers through both steps', async ({ page }) => {
+test('registers through all three steps', async ({ page }) => {
   let body: unknown;
   await page.route('**/auth/register', async route => { body = route.request().postDataJSON(); await route.fulfill({ status: 201, json: user }); });
   await page.goto('/#/register');
   await fillStepOne(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByLabel('Display name (optional)').fill('Linh');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByRole('radio', { name: 'B2', exact: true }).check();
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByText('Account created', { exact: true })).toBeVisible();
@@ -126,9 +129,10 @@ test('back from step 2 with an error keeps focus and clears the stale alert', as
   await fillStepOne(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByLabel('Display name (optional)').fill('界'.repeat(81));
-  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await expect(page.getByLabel('Display name (optional)')).toBeFocused();
   await expect(page.getByRole('alert')).toBeVisible();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
-  await expect(page.getByText('Step 1 of 2 · Account', { exact: true })).toBeFocused();
+  await expect(page.getByText('Step 1 of 3 · Account', { exact: true })).toBeFocused();
   await expect(page.getByRole('alert')).toHaveCount(0);
 });

@@ -2,7 +2,7 @@
 import { ActionLink, PageHeading } from './components/ui';
 import { clearSession, finishRestoring, hasSession, setExpiryHandler, setSession, useSession } from './auth/session';
 import { logout, refresh } from './auth/api';
-import type { TokenResponse } from './auth/contracts';
+import type { TokenResponse, UserResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
 import { DeleteAccountPage, RequireSession, SessionsPage } from './pages/AccountSettingsPages';
 import { AdminUsersPage } from './pages/AdminPage';
@@ -12,6 +12,7 @@ import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomEntryPag
 import { LobbyPage } from './pages/LobbyPage';
 import { HomePage } from './pages/HomePage';
 import { WelcomePage } from './pages/WelcomePage';
+import { AuthStage } from './components/AuthStage';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';
 
@@ -29,7 +30,7 @@ export default function App() {
   const route = routes.find(item => item.path === path);
   const main = useRef<HTMLElement>(null);
   const [settings, setSettings] = useState(defaultSettings);
-  const [registeredEmail, setRegisteredEmail] = useState<string>();
+  const [registeredUser, setRegisteredUser] = useState<UserResponse>();
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [notice, setNotice] = useState<string>();
   const { session, expired } = useSession();
@@ -43,7 +44,7 @@ export default function App() {
   }, [path, route]);
 
   useEffect(() => {
-    if (!['/sign-in', '/account-created'].includes(path)) setRegisteredEmail(undefined);
+    if (!['/sign-in', '/account-created'].includes(path)) setRegisteredUser(undefined);
     if (path !== '/sign-in') setNotice(undefined);
   }, [path]);
 
@@ -60,7 +61,7 @@ export default function App() {
 
   function signedIn(response: TokenResponse) {
     setSession(response);
-    setRegisteredEmail(undefined);
+    setRegisteredUser(undefined);
     window.location.hash = '/home';
   }
 
@@ -84,19 +85,19 @@ export default function App() {
     window.location.hash = '/rooms/new';
   }
 
-  function registered(email: string) {
-    setRegisteredEmail(email);
+  function registered(user: UserResponse) {
+    setRegisteredUser(user);
     window.location.hash = '/account-created';
   }
 
   function page() {
     switch (path) {
-      case '/sign-in': return <SignInPage registeredEmail={registeredEmail} expired={expired} notice={notice} onSignedIn={signedIn} />;
+      case '/sign-in': return <SignInPage registered={registeredUser} expired={expired} notice={notice} onSignedIn={signedIn} />;
       case '/register': return <RegisterPage onRegistered={registered} />;
       case '/forgot-password': return <RecoveryPage mode="request" initialEmail={recoveryEmail || session?.user.email} onEmailAccepted={setRecoveryEmail} />;
       case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/verify-email': return <RecoveryPage mode="verify" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
-      case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
+      case '/account-created': return <SignInPage registered={registeredUser} expired={expired} onSignedIn={signedIn} />;
       case '/welcome': return <WelcomePage />;
       case '/home': return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
       case '/rooms': return <RoomsPage />;
@@ -115,26 +116,29 @@ export default function App() {
     }
   }
 
-  return <div className={`app-shell ${isAuth ? 'auth-shell' : ''}`}>
+  const content = <main id="main" className={isWelcome ? 'welcome-main' : isAuth ? 'auth-main' : 'shell-inner'} ref={main} tabIndex={-1} key={path}>
+    {page()}
+  </main>;
+  const bare = isWelcome || isAuth;
+
+  return <div className="app-shell">
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
-    {!isWelcome && <header className="app-header">
+    {!bare && <header className="app-header">
       <div className="shell-inner header-bar">
         <div className="header-brand">
           <a className="brand" href={session ? '#/home' : '#/welcome'}>DebateSpeak AI</a>
           <span className="preview-badge">Preview<span className="preview-badge-more"> · sample rooms</span></span>
         </div>
-        {!isAuth && <div className="header-actions">
+        <div className="header-actions">
           {session && <p className="small muted header-user" role="status">Signed in as {session.user.display_name}</p>}
           {session && <ActionLink to="/home" variant="text" current={path === '/home'}>Home</ActionLink>}
           <ActionLink to="/profile" variant="text" className="account-link" current={path === '/profile'}>Account</ActionLink>
           {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
-        </div>}
+        </div>
       </div>
     </header>}
-    <main id="main" className={isWelcome ? 'welcome-main' : 'shell-inner'} ref={main} tabIndex={-1} key={path}>
-      {isAuth ? <div className="auth-layout">{page()}<AuthAside /></div> : page()}
-    </main>
-    {!isWelcome && <footer className="shell-inner dev-bar">
+    {isAuth ? <AuthStage path={path}>{content}</AuthStage> : content}
+    {!bare && <footer className="shell-inner dev-bar">
       <label htmlFor="preview-screen">Preview screen</label>
       <select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
         {!route && <option value="" disabled>Page not found</option>}
@@ -142,16 +146,4 @@ export default function App() {
       </select>
     </footer>}
   </div>;
-}
-
-/** Wide screens only: an example motion that shows what "motion" and "stance" mean. */
-function AuthAside() {
-  return <aside className="auth-aside" aria-label="How a debate works">
-    <p className="label">Example motion</p>
-    <p className="auth-motion">Cities should ban private cars from the centre</p>
-    <div className="auth-sides">
-      <p><span className="side-tag">PRO</span>One of you argues for it</p>
-      <p><span className="side-tag side-tag-con">CON</span>The other argues against</p>
-    </div>
-  </aside>;
 }

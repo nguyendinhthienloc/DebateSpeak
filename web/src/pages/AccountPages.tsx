@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { ActionLink, BackToRooms, Choices, Field, Note, PageHeading, StepIndicator } from '../components/ui';
 import type { FormEvent } from 'react';
 import { AuthApiError, getProfile, login, register, updateProfile } from '../auth/api';
-import { cefrLevels, type CefrLevel, type ProfileResponse, type TokenResponse } from '../auth/contracts';
+import { cefrLevels, type CefrLevel, type ProfileResponse, type TokenResponse, type UserResponse } from '../auth/contracts';
 import { updateSessionUser, useSession } from '../auth/session';
 import { useAuthForm } from '../auth/useAuthForm';
 import { validateCredentials, validateProfile, validateRegistration } from '../auth/validation';
+import { Podium } from '../components/AuthStage';
+import { LevelGuide } from './LevelGuide';
 import './account.css';
 
 const levels = cefrLevels;
-const registerSteps = ['Account', 'Learning profile'] as const;
+const registerSteps = ['Account', 'Your name', 'English level'] as const;
+// Each step's heading is the step's own question.
+const registerTitles = ['Create your account', 'What should we call you?', 'How do you speak English today?'] as const;
+// The API requires a level; registering without one starts at B1, and the step says so.
+const defaultLevel: CefrLevel = 'B1';
 
 export function PasswordField({ value, onChange, error, creating = false }: {
   value: string; onChange: (value: string) => void; error?: string; creating?: boolean;
@@ -34,10 +40,10 @@ export function FormError({ message }: { message: string }) {
   return message ? <div className="note note-error" role="alert"><p className="small field-error">{message}</p></div> : null;
 }
 
-export function SignInPage({ registeredEmail, expired = false, notice, onSignedIn }: {
-  registeredEmail?: string; expired?: boolean; notice?: string; onSignedIn: (response: TokenResponse) => void;
+export function SignInPage({ registered, expired = false, notice, onSignedIn }: {
+  registered?: UserResponse; expired?: boolean; notice?: string; onSignedIn: (response: TokenResponse) => void;
 }) {
-  const [email, setEmail] = useState(registeredEmail ?? '');
+  const [email, setEmail] = useState(registered?.email ?? '');
   const [password, setPassword] = useState('');
   const { form, pending, errors, message, validate, run } = useAuthForm();
 
@@ -48,81 +54,98 @@ export function SignInPage({ registeredEmail, expired = false, notice, onSignedI
     if (validate(validateCredentials(input))) void run(signal => login(input, signal), onSignedIn);
   }
 
-  return <form ref={form} className="account-page auth-form account-form" noValidate onSubmit={submit} aria-busy={pending}>
-    <PageHeading title="Sign in" />
-    {registeredEmail && <div role="status"><Note title="Account created" tone="success">Sign in with your email and password.</Note></div>}
-    {expired && <p role="status" className="small">Your session expired. Sign in again.</p>}
-    {notice && <p role="status" className="small">{notice}</p>}
-    <FormError message={message} />
-    <div className="account-fields">
-      <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
-      value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="learner@example.com" />
-      <PasswordField value={password} onChange={setPassword} error={errors.password} />
-    </div>
-    <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Signing in…' : 'Sign in'}</button>
-    <div className="account-switch"><span className="muted">New to DebateSpeak?</span><ActionLink to="/register" variant="text">Create account</ActionLink></div>
-    <div className="account-limit">
-      <ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>
-    </div>
-  </form>;
+  // A new account's lectern keeps the name and level the visitor just watched fill in.
+  return <Podium name={registered ? `Welcome, ${registered.display_name}` : 'Welcome back'}
+    detail={registered && `English level ${registered.cefr_level}`} foot={<ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>}>
+    <form ref={form} className="auth-plate account-page account-form" noValidate onSubmit={submit} aria-busy={pending}>
+      <PageHeading title="Sign in" />
+      {registered && <div role="status"><Note title="Account created" tone="success">Sign in with your email and password.</Note></div>}
+      {expired && <p role="status" className="small">Your session expired. Sign in again.</p>}
+      {notice && <p role="status" className="small">{notice}</p>}
+      <FormError message={message} />
+      <div className="account-fields">
+        <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
+        value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="learner@example.com" />
+        <PasswordField value={password} onChange={setPassword} error={errors.password} />
+      </div>
+      <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Signing in…' : 'Sign in'}</button>
+    </form>
+  </Podium>;
 }
 
-export function RegisterPage({ onRegistered }: { onRegistered: (email: string) => void }) {
+export function RegisterPage({ onRegistered }: { onRegistered: (user: UserResponse) => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [level, setLevel] = useState<CefrLevel>('B1');
-  const [chosen, setChosen] = useState<1 | 2>(1);
-  const [moved, setMoved] = useState(false);
+  const [level, setLevel] = useState<CefrLevel>();
+  const [guide, setGuide] = useState(false);
+  const [chosen, setChosen] = useState<1 | 2 | 3>(1);
+  const [direction, setDirection] = useState<'forward' | 'back'>();
   const { form, pending, errors, message, validate, run } = useAuthForm();
-  // Errors on step-1 fields (local or from the server) always show step 1, in the same render,
+  // A field error (local or from the server) always shows that field's step, in the same render,
   // so useAuthForm can focus the invalid input.
-  const step = errors.email || errors.password ? 1 : chosen;
+  const step = errors.email || errors.password ? 1 : errors.display_name ? 2 : chosen;
 
-  function go(next: 1 | 2) {
+  function go(next: 1 | 2 | 3) {
+    setDirection(next > step ? 'forward' : 'back');
     setChosen(next);
-    setMoved(true);
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const name = displayName.trim();
-    const input = { email: email.trim(), password, ...(name ? { display_name: name } : {}), cefr_level: level };
+    const input = { email: email.trim(), password, ...(name ? { display_name: name } : {}), cefr_level: level ?? defaultLevel };
     setEmail(input.email);
     if (step === 1) {
       if (validate(validateCredentials({ email: input.email, password }))) go(2);
       return;
     }
+    if (step === 2) {
+      const { display_name } = validateRegistration(input);
+      if (validate(display_name ? { display_name } : {})) go(3);
+      return;
+    }
     if (validate(validateRegistration(input))) {
-      void run(signal => register(input, signal), response => onRegistered(response.email));
+      void run(signal => register(input, signal), onRegistered);
     }
   }
 
-  return <form ref={form} className="account-page auth-form account-form register-form" noValidate onSubmit={submit} aria-busy={pending}>
-    <PageHeading title="Create your account" />
-    <StepIndicator current={step} labels={registerSteps} focus={Object.keys(errors).length === 0} />
-    <FormError message={message} />
-    <div className="register-viewport"><div key={step} className="register-step account-fields" data-direction={moved ? (step === 1 ? 'back' : 'forward') : undefined}>
-      {step === 1 ? <>
-        <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
-        value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="name@example.com" />
-        <PasswordField creating value={password} onChange={setPassword} error={errors.password} />
-      </> : <>
-        <Field name="display_name" label="Display name (optional)" autoComplete="nickname" placeholder="Your display name"
-        value={displayName} onChange={event => setDisplayName(event.target.value)} error={errors.display_name}
-        hint="Leave blank to appear as Learner." />
-        <Choices label="Your English level" options={levels} value={level} onChange={value => setLevel(value as CefrLevel)} error={errors.cefr_level} describe />
-        <p className="small muted">Self-assessed, not a certification. Change it anytime.</p>
-      </>}
-    </div></div>
-    {step === 1
-      ? <button className="action action-primary" type="submit" disabled={pending}>Continue</button>
-      : <div className="register-actions">
-        <button className="action action-secondary" type="button" onClick={() => { validate({}); go(1); }} disabled={pending}>Back</button>
-        <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Creating account…' : 'Create account'}</button>
-      </div>}
-    <div className="account-switch"><span className="muted">Already have an account?</span><ActionLink to="/sign-in" variant="text">Sign in</ActionLink></div>
-  </form>;
+  function back() {
+    validate({});
+    go(step === 3 ? 2 : 1);
+  }
+
+  return <Podium name={displayName.trim() || 'Your name'} detail={level ? `English level ${level}` : 'English level not set'}>
+    <form ref={form} className="auth-plate account-page account-form register-form" noValidate onSubmit={submit} aria-busy={pending}>
+      <PageHeading title={registerTitles[step - 1]} />
+      <StepIndicator current={step} labels={registerSteps} focus={Object.keys(errors).length === 0} />
+      <FormError message={message} />
+      <div className="register-viewport"><div key={step} className="register-step account-fields" data-direction={direction}>
+        {step === 1 && <>
+          <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
+          value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="name@example.com" />
+          <PasswordField creating value={password} onChange={setPassword} error={errors.password} />
+        </>}
+        {step === 2 && <Field name="display_name" label="Display name (optional)" autoComplete="nickname" placeholder="Your display name"
+          value={displayName} onChange={event => setDisplayName(event.target.value)} error={errors.display_name}
+          hint="Leave blank to appear as Learner." />}
+        {step === 3 && <>
+          <Choices label="Your English level (optional)" options={levels} value={level ?? ''} onChange={value => setLevel(value as CefrLevel)} error={errors.cefr_level} describe />
+          <button type="button" className="level-unsure" onClick={() => setGuide(true)}>
+            <span>I'm not sure <small>· up to 4 quick questions</small></span><ArrowRight size={20} aria-hidden="true" />
+          </button>
+          <p className="small muted">{level ? 'Self-assessed, not a certification. Change it anytime.' : `No level chosen? You'll start at ${defaultLevel}. Change it in Profile anytime.`}</p>
+        </>}
+      </div></div>
+      {step === 1
+        ? <button className="action action-primary" type="submit" disabled={pending}>Continue</button>
+        : <div className="register-actions">
+          <button className="action action-secondary" type="button" onClick={back} disabled={pending}>Back</button>
+          <button className="action action-primary" type="submit" disabled={pending}>{step === 2 ? 'Continue' : pending ? 'Creating account…' : 'Create account'}</button>
+        </div>}
+    </form>
+    {guide && <LevelGuide onDone={chosenLevel => { setGuide(false); if (chosenLevel) setLevel(chosenLevel); }} />}
+  </Podium>;
 }
 
 export function ProfilePage({ onSignOut }: { onSignOut: () => void }) {

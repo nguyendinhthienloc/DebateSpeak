@@ -32,6 +32,7 @@ test('account CEFR selection has keyboard and non-color feedback', async ({ page
       await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
       await page.getByLabel('Password', { exact: true }).fill('a valid password');
       await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      await page.getByRole('button', { name: 'Continue', exact: true }).click();
     }
     await page.getByRole('radio', { name: 'B1', exact: true }).focus();
     await page.keyboard.press('ArrowRight');

@@ -9,6 +9,8 @@ API and PostgreSQL half (PA3 Part E). Start with its
 registration, shorter copy and a main menu (SCRUM-53).
 [004 — Welcome page and contrast system](004-welcome-contrast/spec.md) adds the
 signed-out landing page and replaces the low-contrast surface rules.
+[005 — Sign-in and sign-up on the stage](005-auth-stage/spec.md) remakes the
+auth flow in the welcome page's stage and adds a three-step registration.
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain

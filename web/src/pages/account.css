@@ -13,7 +13,6 @@
 }
 
 .account-form { gap: 1.5rem; }
-.account-page.auth-form { max-width: 27rem; }
 .account-fields { gap: 1.25rem; }
 .account-page .page-heading { gap: .75rem; margin-bottom: .25rem; }
 .account-page h1 { font-size: var(--account-page-title); }
@@ -67,7 +66,7 @@
 .password-toggle:focus-visible { outline-offset: -3px; }
 .password-toggle svg { flex-shrink: 0; }
 
-.account-switch, .account-secondary {
+.account-secondary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,17 +74,7 @@
   column-gap: .25rem;
   row-gap: 0;
 }
-.account-switch > span { font-size: var(--type-support); }
-.account-switch .action, .account-secondary .action { width: auto; padding-inline: .5rem; }
-.account-limit {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: .375rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
-.account-limit .action { padding-inline: 0; }
+.account-secondary .action { width: auto; padding-inline: .5rem; }
 .account-profile-notice { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
 .account-status { border: 1px solid var(--border); border-radius: 999px; padding: .25rem .625rem; font-size: var(--type-label); font-weight: 600; }
 .account-save { display: flex; flex-direction: column; gap: .625rem; }
@@ -102,11 +91,10 @@
   .profile-page > .account-secondary .action { justify-content: flex-start; padding-inline: .75rem; border-radius: var(--control-radius); }
   .profile-page > .account-secondary .action:hover { text-decoration: none; background: var(--background); }
 }
-.account-page .note-success { border-inline-start: 3px solid var(--success); border-radius: 0; padding: 1rem; }
-.account-page .note-error { border-inline-start: 3px solid var(--error); border-radius: 0; }
+.account-page .note-success { padding: 1rem; border: 1px solid var(--success); border-radius: var(--control-radius); }
+.account-page .note-error { border: 1px solid var(--error); border-radius: var(--control-radius); }
 .account-page .field-error { font-weight: 600; }
 
-.auth-layout > .account-page { margin: 0; }
 
 @media (max-width: 359px) {
   .account-page .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }

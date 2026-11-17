@@ -48,7 +48,8 @@ test('room previews never create a session, request media, or call a service', a
 test('all screens reflow at narrow and desktop widths', async ({ page }) => {
   for (const width of [320, 390, 1102, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('/#/sign-in');
+    // Auth and welcome screens have no dev bar; read the route list from an app screen.
+    await page.goto('/#/rooms');
     const routes = await page.getByLabel('Preview screen').locator('option').evaluateAll(options =>
       options.map(option => (option as HTMLOptionElement).value));
     for (const route of routes) {
