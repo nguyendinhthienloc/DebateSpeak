@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 
 test('preview routes survive reload, back/forward and unknown URLs', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Cities should ban private cars from the centre' })).toBeVisible();
+  await page.getByRole('link', { name: 'Sign in', exact: true }).first().click();
   await expect(page.getByRole('heading', { name: 'Sign in', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Preview rooms', exact: true }).click();
   await page.getByRole('link', { name: 'Create a room', exact: true }).click();
@@ -46,11 +48,11 @@ test('room previews never create a session, request media, or call a service', a
 test('all screens reflow at narrow and desktop widths', async ({ page }) => {
   for (const width of [320, 390, 1102, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('/');
+    await page.goto('/#/sign-in');
     const routes = await page.getByLabel('Preview screen').locator('option').evaluateAll(options =>
       options.map(option => (option as HTMLOptionElement).value));
     for (const route of routes) {
-      await page.getByLabel('Preview screen').selectOption(route);
+      await page.goto(`/#${route}`);
       await expect(page.locator('h1')).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${route} at ${width}px`).toBe(true);
     }

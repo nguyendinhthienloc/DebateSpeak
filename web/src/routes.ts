@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
 export const routes = [
+  { path: '/welcome', label: 'Welcome' },
   { path: '/home', label: 'Home' },
   { path: '/sign-in', label: 'Sign in' },
   { path: '/register', label: 'Create account' },
@@ -30,7 +31,7 @@ function subscribe(onChange: () => void) {
 }
 
 function currentPath() {
-  return window.location.hash.slice(1).replace(/\/+$/, '') || '/sign-in';
+  return window.location.hash.slice(1).replace(/\/+$/, '') || '/welcome';
 }
 
 export function useRoute() {

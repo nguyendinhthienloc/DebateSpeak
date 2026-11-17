@@ -11,6 +11,7 @@ import { CreateRoomPage } from './pages/RoomSetupPage';
 import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomEntryPages';
 import { LobbyPage } from './pages/LobbyPage';
 import { HomePage } from './pages/HomePage';
+import { WelcomePage } from './pages/WelcomePage';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';
 
@@ -32,6 +33,7 @@ export default function App() {
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [notice, setNotice] = useState<string>();
   const { session, expired } = useSession();
+  const isWelcome = path === '/welcome';
   const isAuth = ['/sign-in', '/register', '/account-created', '/forgot-password', '/reset-password', '/verify-email'].includes(path);
 
   useEffect(() => {
@@ -95,6 +97,7 @@ export default function App() {
       case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/verify-email': return <RecoveryPage mode="verify" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
+      case '/welcome': return <WelcomePage />;
       case '/home': return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':
@@ -114,10 +117,10 @@ export default function App() {
 
   return <div className={`app-shell ${isAuth ? 'auth-shell' : ''}`}>
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
-    <header className="app-header">
+    {!isWelcome && <header className="app-header">
       <div className="shell-inner header-bar">
         <div className="header-brand">
-          <a className="brand" href={session ? '#/home' : '#/rooms'}>DebateSpeak AI</a>
+          <a className="brand" href={session ? '#/home' : '#/welcome'}>DebateSpeak AI</a>
           <span className="preview-badge">Preview<span className="preview-badge-more"> · sample rooms</span></span>
         </div>
         {!isAuth && <div className="header-actions">
@@ -127,17 +130,17 @@ export default function App() {
           {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
         </div>}
       </div>
-    </header>
-    <main id="main" className="shell-inner" ref={main} tabIndex={-1} key={path}>
+    </header>}
+    <main id="main" className={isWelcome ? 'welcome-main' : 'shell-inner'} ref={main} tabIndex={-1} key={path}>
       {isAuth ? <div className="auth-layout">{page()}<AuthAside /></div> : page()}
     </main>
-    <footer className="shell-inner dev-bar">
+    {!isWelcome && <footer className="shell-inner dev-bar">
       <label htmlFor="preview-screen">Preview screen</label>
       <select id="preview-screen" value={route?.path ?? ''} onChange={event => { window.location.hash = event.target.value; }}>
         {!route && <option value="" disabled>Page not found</option>}
         {routes.map(item => <option key={item.path} value={item.path}>{item.label}</option>)}
       </select>
-    </footer>
+    </footer>}
   </div>;
 }
 

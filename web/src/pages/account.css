@@ -97,7 +97,7 @@
   .profile-page > * { grid-column: 1; }
   .profile-page > .account-secondary {
     grid-column: 2; grid-row: 1 / span 12; align-self: start; flex-direction: column; align-items: stretch;
-    padding: .5rem; border: 1px solid var(--line); border-radius: var(--surface-radius); background: var(--surface);
+    padding: .5rem; border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
   }
   .profile-page > .account-secondary .action { justify-content: flex-start; padding-inline: .75rem; border-radius: var(--control-radius); }
   .profile-page > .account-secondary .action:hover { text-decoration: none; background: var(--background); }
@@ -131,7 +131,7 @@
 .session-list { display: flex; flex-direction: column; gap: .75rem; margin: 0; padding: 0; list-style: none; }
 .session-item, .admin-user {
   display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;
-  padding: 1rem; border: 1px solid var(--line); border-radius: var(--surface-radius); background: var(--surface);
+  padding: 1rem; border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
 }
 .session-item .label { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
 .session-item .action, .admin-user .action { width: auto; }
@@ -142,7 +142,9 @@
 .admin-user .account-fields { width: 100%; }
 .header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; margin-inline: -12px; }
 /* Current page: ink text and a yellow bar under the text only (inset by the 12px link padding). */
-.header-actions [aria-current="page"] { position: relative; color: var(--ink); }
+.header-actions .action-text { color: var(--on-ink); }
+.header-actions [aria-current="page"] { position: relative; color: var(--accent); }
 .header-actions [aria-current="page"]::after { content: ''; position: absolute; inset-inline: 12px; bottom: 0; height: 4px; background: var(--accent); }
 .header-user { padding-inline: 12px; margin-inline-end: .5rem; }
+.app-header .header-user { color: rgb(255 255 255 / .78); }
 
