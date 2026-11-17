@@ -77,3 +77,18 @@ test('keyboard controls and settings remain local and usable', async ({ page }) 
   await page.keyboard.press('Space');
   await expect(page.getByRole('radio', { name: 'B2', exact: true })).toBeChecked();
 });
+
+test('pages animate in', async ({ page }) => {
+  await page.goto('/#/rooms');
+  expect(await page.locator('main').evaluate(element => getComputedStyle(element).animationName)).toBe('enter');
+});
+
+test('reduced motion disables every animation and leaves content visible', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#/register');
+  const main = page.locator('main');
+  expect(await main.evaluate(element => getComputedStyle(element).animationName)).toBe('none');
+  expect(await main.evaluate(element => getComputedStyle(element).opacity)).toBe('1');
+  const button = page.getByRole('button', { name: 'Create account', exact: true });
+  expect(await button.evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
+});
