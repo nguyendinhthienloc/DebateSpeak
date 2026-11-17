@@ -113,8 +113,8 @@
 
 @layer components {
   .app-shell { width: 100%; max-width: 1102px; min-height: 100svh; margin: 0 auto; padding: 32px; }
-  .app-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .brand { flex: 1; min-width: 0; font-size: 1.5rem; font-weight: var(--weight-display); letter-spacing: -.01em; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+  .app-header { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-bottom: 24px; }
+  .brand { flex: 1 0 auto; max-width: 100%; font-size: 1.5rem; font-weight: var(--weight-display); letter-spacing: -.01em; color: var(--ink); text-decoration: none; overflow-wrap: break-word; }
   .account-link { width: 104px; flex-shrink: 0; }
   .auth-shell .app-header { min-height: 29px; margin-bottom: 24px; }
   .auth-form { max-width: 368px; margin: 0 auto; }
@@ -142,6 +142,7 @@
   .action-text:hover { text-decoration: underline; }
   .action:disabled { color: var(--muted); background: var(--disabled); cursor: not-allowed; }
   .short-action { align-self: flex-start; width: 180px; max-width: 100%; }
+  .room-controls .action-text { align-self: flex-start; width: auto; padding-inline: 0; }
   .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; width: 100%; }
   .field-error { color: var(--error); }
   input[aria-invalid="true"] { border-color: var(--error); }

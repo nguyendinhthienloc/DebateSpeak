@@ -21,7 +21,8 @@ test('sign-in lands on the main menu', async ({ page }) => {
   await signIn(page);
   await expect(page.getByRole('heading', { name: 'Create a room', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Join with code', exact: true })).toBeVisible();
-  await expect(page.locator('.home-greeting')).toContainText('Linh');
+  await expect(page.locator('.home-greeting')).toHaveText(/^Good (morning|afternoon|evening)\.$/);
+  await expect(page.getByText('Signed in as Linh', { exact: true })).toBeVisible();
 });
 
 test('create door opens room setup', async ({ page }) => {
@@ -69,4 +70,14 @@ test('home reflows at 320px with enlarged text', async ({ page }) => {
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await expect(page.locator('h1')).toHaveCount(1);
+});
+
+test('phone header keeps the brand on one line and history fits without scrolling', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await signIn(page);
+  const brand = page.getByRole('link', { name: 'DebateSpeak AI', exact: true });
+  const lineHeight = await brand.evaluate(element => parseFloat(getComputedStyle(element).fontSize) * 1.6);
+  expect((await brand.boundingBox())!.height).toBeLessThan(lineHeight);
+  expect(await page.locator('.home-table').evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await expect(page.getByText('12 Nov', { exact: true })).toBeVisible();
 });

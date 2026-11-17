@@ -8,7 +8,7 @@
 .home-door-create { background: var(--accent); }
 .home-door-join { background: var(--surface); }
 .home-door h1, .home-door h2 { font-size: clamp(2.5rem, 1.5rem + 3vw, 4rem); font-weight: var(--weight-display); line-height: .95; letter-spacing: -.015em; }
-.home-door > p { max-width: 34ch; }
+.home-door > p { max-width: 34ch; text-wrap: pretty; }
 .home-door-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: auto; }
 .home-create.action-primary { padding-inline: 1.75rem; color: var(--surface); background: var(--ink); }
 .home-create.action-primary:hover { color: var(--accent); background: var(--ink); }
@@ -40,6 +40,12 @@
 }
 @media (max-width: 560px) {
   .home-topics { grid-template-columns: minmax(0, 1fr); }
+  /* History rows stack: motion on its own line, then date, partner and report. */
+  .home-table table { min-width: 0; }
+  .home-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .home-table tr { display: flex; flex-wrap: wrap; column-gap: .75rem; padding: .75rem 0; border-bottom: 1px solid var(--border); }
+  .home-table td { padding: 0; border: 0; color: var(--muted); font-size: .875rem; }
+  .home-table td:first-child { flex-basis: 100%; color: var(--ink); font-size: .9375rem; }
   .home-join { grid-template-columns: minmax(0, 1fr); }
   .home-join > .action { margin-top: 0; }
 }

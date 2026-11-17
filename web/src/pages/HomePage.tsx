@@ -1,6 +1,5 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { ActionLink, Field } from '../components/ui';
-import { useSession } from '../auth/session';
 import { normalizeInviteCode } from '../inviteCode';
 import './home.css';
 
@@ -24,7 +23,6 @@ function greeting(hour = new Date().getHours()) {
 }
 
 export function HomePage() {
-  const { session } = useSession();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string>();
 
@@ -41,7 +39,7 @@ export function HomePage() {
   }
 
   return <div className="home">
-    <p className="lead home-greeting">{greeting()}, {session?.user.display_name ?? 'Learner'}.</p>
+    <p className="lead home-greeting">{greeting()}.</p>
     <div className="home-doors">
       <section className="home-door home-door-create" aria-labelledby="create-heading" style={order(0)}>
         <h1 id="create-heading">Create a room</h1>
@@ -53,7 +51,7 @@ export function HomePage() {
       </section>
       <section className="home-door home-door-join" aria-labelledby="join-heading" style={order(1)}>
         <h2 id="join-heading">Join with code</h2>
-        <p>Your partner sends an 8-character code.</p>
+        <p>Your partner sends an 8‑character code.</p>
         <form className="home-join" noValidate onSubmit={join}>
           <Field id="invite-code" name="code" label="Invite code" autoComplete="off" autoCapitalize="characters"
             spellCheck={false} maxLength={11} placeholder="K7Q2 M9XA" value={code} error={error}
