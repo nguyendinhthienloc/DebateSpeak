@@ -112,13 +112,13 @@ export default function App() {
     <header className="app-header">
       <a className="brand" href={session ? '#/home' : '#/rooms'}>DebateSpeak AI</a>
       {!isAuth && <div className="header-actions">
-        {session && <ActionLink to="/home" variant="text">Home</ActionLink>}
-        <ActionLink to="/profile" variant="text" className="account-link">Account</ActionLink>
+        {session && <p className="small muted header-user" role="status">Signed in as {session.user.display_name}</p>}
+        {session && <ActionLink to="/home" variant="text" current={path === '/home'}>Home</ActionLink>}
+        <ActionLink to="/profile" variant="text" className="account-link" current={path === '/profile'}>Account</ActionLink>
         {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
       </div>}
     </header>
     <main id="main" ref={main} tabIndex={-1} key={path}>
-      {session && <p className="small mb-4" role="status">Signed in as {session.user.display_name}</p>}
       {page()}
     </main>
     <footer className="preview-tools">

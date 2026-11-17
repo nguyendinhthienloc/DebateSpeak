@@ -21,8 +21,9 @@ test('sign-in lands on the main menu', async ({ page }) => {
   await signIn(page);
   await expect(page.getByRole('heading', { name: 'Create a room', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Join with code', exact: true })).toBeVisible();
-  await expect(page.locator('.home-greeting')).toHaveText(/^Good (morning|afternoon|evening)\.$/);
-  await expect(page.getByText('Signed in as Linh', { exact: true })).toBeVisible();
+  await expect(page.locator('.home-greeting')).toHaveText(/^Good (morning|afternoon|evening), Linh\.$/);
+  await expect(page.locator('header').getByText('Signed in as Linh', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'page');
 });
 
 test('create door opens room setup', async ({ page }) => {
@@ -80,4 +81,32 @@ test('phone header keeps the brand on one line and history fits without scrollin
   expect((await brand.boundingBox())!.height).toBeLessThan(lineHeight);
   expect(await page.locator('.home-table').evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
   await expect(page.getByText('12 Nov', { exact: true })).toBeVisible();
+});
+
+test('door headings and the create button never break mid-word at 320px with 200% text', async ({ page }) => {
+  await signIn(page);
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+  const split = await page.evaluate(() => {
+    const broken: string[] = [];
+    for (const element of document.querySelectorAll('.home-door h1, .home-door h2, .home-create')) {
+      const text = element.firstChild;
+      if (!text || text.nodeType !== Node.TEXT_NODE) continue;
+      const value = text.textContent ?? '';
+      for (const match of value.matchAll(/\S+/g)) {
+        const range = document.createRange();
+        range.setStart(text, match.index!);
+        range.setEnd(text, match.index! + match[0].length);
+        if (range.getClientRects().length > 1) broken.push(match[0]);
+      }
+    }
+    return broken;
+  });
+  expect(split).toEqual([]);
+});
+
+test('only the page, doors and topic cards animate in', async ({ page }) => {
+  await signIn(page);
+  expect(await page.locator('.home-section').first().evaluate(element => getComputedStyle(element).animationName)).toBe('none');
+  expect(await page.locator('.home-topic').nth(1).evaluate(element => getComputedStyle(element).animationName)).toBe('enter');
 });

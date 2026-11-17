@@ -1,6 +1,6 @@
 # 003 — UI refresh: type, motion, register steps, shorter copy
 
-Status: draft for review, 2026-11-17. No code changed yet.
+Status: built on `feature/SCRUM-53-ui-refresh`, 2026-11-17; awaiting PR review.
 
 ## Job and audience
 

@@ -1,7 +1,16 @@
-# Main menu (`#/home`) — draft brief
+# Main menu (`#/home`) — brief
 
-Status: draft, 2026-11-17. Not built. Visual mock (private):
+Status: built on `feature/SCRUM-53-ui-refresh` (plan Task 7), 2026-11-17. Visual mock (private):
 <https://claude.ai/artifact/P7z2oy5LazEijDnxuqAY5N> (desktop, phone, states).
+
+## Direction contract
+
+THESIS: start or join is the whole first screen; two equal doors replace the usual dashboard of cards.
+OWN-WORLD: Cream & Yellow (DESIGN.md): cream ground, a full yellow Create door with an ink button, a white Join door, ink 1px borders, Archivo 800 semi-condensed headings, Inter text.
+STORY: the learner sees two clear ways in, learns that neither starts audio, then sees labelled samples of what topics and history will hold.
+FIRST VIEWPORT: header (brand, signed-in line, Home marked current, Account, Sign out); greeting; the two doors side by side at 64px headings, Create on the left; the audio note under them.
+FORM: "Twin doors", position 1 of 7 on the grounded list, dealt in the surface roll; seed:58f673b3f5224554
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Job and audience
 
@@ -23,7 +32,7 @@ must do one of two things in seconds: create a room or join a partner's.
    (current page marked with a 4px yellow underline), "Signed in as …",
    Sign out. Until Topics and History have routes, the nav is Home,
    Account and Sign out.
-2. Greeting in Inter 300, 22px ("Good evening, Linh.").
+2. Greeting in Inter 300, 22px ("Good evening, Linh."); "Signed in as …" sits in the header.
 3. Two equal doors, side by side on desktop, stacked under 900px:
    - **Create a room** in yellow with ink border, 64px display heading,
      one line, ink "Set up room" button (white text), default settings line.
@@ -53,16 +62,15 @@ must do one of two things in seconds: create a room or join a partner's.
 
 ## Motion
 
-Page enter (fade and 8px rise, 320ms), doors stagger 60ms apart, topic
-cards stagger after them. Doors lift 2px on hover. All off with reduced
-motion. Uses the tokens in [plan.md](plan.md) Task 3.
+One entrance: the page fades and rises 8px (320ms), the doors stagger 60ms
+apart, then the topic cards. Doors do not lift on hover: they are regions,
+not links, and a panel that moves under the pointer flickers. All off with
+reduced motion. Uses the tokens in [plan.md](plan.md) Task 3.
 
 ## Open issues
 
-- **Yellow door vs. the One Accent Rule.** DESIGN.md keeps yellow for actions
-  and selections. A full yellow panel is the create action itself, so it is
-  arguably in bounds, but the doc should say so when it is updated (plan
-  Task 0), or the door becomes white with a yellow button.
+- Resolved: DESIGN.md (Do's and Don'ts) allows a fully yellow panel only when
+  the panel is itself the action, as the Create door is.
 - Join accepts the code with or without the space; the API contract for
   join-by-code (FR-11) needs checking before build.
 - Sample topics are written by us, not from a catalogue; FG-02 replaces them.

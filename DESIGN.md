@@ -197,7 +197,7 @@ The selected opaque-pair checks record Ink on Cream 15.10:1, supporting text on 
 
 **SCRUM-53 (2026-11-17):** headings, the brand, room motions and invite codes use Archivo Variable at 800 (700 for section titles), semi-condensed (`font-stretch: 87.5%`), tight leading and slight negative tracking. Inter carries body (400), labels and buttons (600), and large lead text only (300 at 1.125rem or larger; never light at small sizes). Both faces are self-hosted with Latin and Vietnamese subsets. Supporting text stays 14px Inter 400. No display serif, decorative uppercase or monospace identity is established.
 
-Headings explain the task. Room motions and invite codes use the existing 28px semibold headline style; participant names and section headings use 20px semibold, with 16px stance text. Participant labels and stances remain readable data, not display ornaments. Long names, email addresses and debate motions wrap rather than losing essential meaning. Use a neutral system-sans fallback only when Inter is unavailable; a fallback is not evidence of a font match.
+Headings explain the task. Page titles, room motions and invite codes use the display role; participant names and section headings use Archivo 700, with 16px Inter stance text. Participant labels and stances remain readable data, not display ornaments. Long names, email addresses and debate motions wrap rather than losing essential meaning. Use a neutral system-sans fallback only when Archivo or Inter is unavailable; a fallback is not evidence of a font match.
 
 ## Layout
 

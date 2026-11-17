@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-.account-form, .account-fields, .account-learning {
+.account-form, .account-fields {
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -87,8 +87,6 @@
   border-top: 1px solid var(--border);
 }
 .account-limit .action { padding-inline: 0; }
-.account-learning { gap: 1.25rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-.account-learning h2 { margin-bottom: -.25rem; }
 .account-profile-notice { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
 .account-status { border: 1px solid var(--border); border-radius: .375rem; padding: .25rem .625rem; font-size: var(--type-label); font-weight: 600; }
 .account-save { display: flex; flex-direction: column; gap: .625rem; }
@@ -106,7 +104,6 @@
   .account-page .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.register-form { overflow-x: clip; overflow-clip-margin: .5rem; }
 .step-indicator { display: flex; flex-direction: column; gap: .5rem; }
 .account-page .step-indicator h2 { font-size: 1.125rem; line-height: 1.35; }
 .step-indicator h2:focus { outline: none; }
@@ -115,6 +112,8 @@
 .step-bar span { position: relative; height: .375rem; border-radius: 999px; background: var(--disabled); overflow: hidden; }
 .step-bar span::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-3) var(--ease-out); }
 .step-bar span.done::after { transform: scaleX(1); }
+/* A still frame clips the sliding step; its inline padding leaves room for 3px focus rings at 4px offset. */
+.register-viewport { overflow-x: clip; margin-inline: -.5rem; padding-inline: .5rem; }
 .register-step[data-direction="forward"] { animation: step-forward var(--dur-3) var(--ease-out) both; }
 .register-step[data-direction="back"] { animation: step-back var(--dur-3) var(--ease-out) both; }
 .register-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; }
@@ -133,4 +132,6 @@
 .delete-confirm { display: flex; align-items: flex-start; gap: .75rem; font-weight: 400; cursor: pointer; }
 .delete-confirm input { width: 1.25rem; min-width: 1.25rem; height: 1.25rem; min-height: 1.25rem; margin-top: .125rem; padding: 0; }
 .admin-user .account-fields { width: 100%; }
-.header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
+.header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; margin-inline: -12px; }
+.header-actions [aria-current="page"] { color: var(--ink); box-shadow: inset 0 -4px var(--accent); }
+.header-user { padding-inline: 12px; margin-inline-end: .5rem; }

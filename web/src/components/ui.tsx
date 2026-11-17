@@ -2,10 +2,10 @@ import { useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode } fr
 import { Check } from 'lucide-react';
 import type { RoutePath } from '../routes';
 
-export function ActionLink({ to, children, variant = 'primary', className = '' }: {
-  to: RoutePath; children: ReactNode; variant?: 'primary' | 'secondary' | 'text'; className?: string;
+export function ActionLink({ to, children, variant = 'primary', className = '', current = false }: {
+  to: RoutePath; children: ReactNode; variant?: 'primary' | 'secondary' | 'text'; className?: string; current?: boolean;
 }) {
-  return <a href={`#${to}`} className={`action action-${variant} ${className}`}>{children}</a>;
+  return <a href={`#${to}`} className={`action action-${variant} ${className}`} aria-current={current ? 'page' : undefined}>{children}</a>;
 }
 
 export function Field({ label, hint, error, trailingAction, id: explicitId, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string; trailingAction?: ReactNode }) {

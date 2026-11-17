@@ -103,7 +103,7 @@ export function RegisterPage({ onRegistered }: { onRegistered: (email: string) =
     <PageHeading title="Create your account" />
     <StepIndicator current={step} labels={registerSteps} focus={Object.keys(errors).length === 0} />
     <FormError message={message} />
-    <div key={step} className="register-step account-fields" data-direction={moved ? (step === 1 ? 'back' : 'forward') : undefined}>
+    <div className="register-viewport"><div key={step} className="register-step account-fields" data-direction={moved ? (step === 1 ? 'back' : 'forward') : undefined}>
       {step === 1 ? <>
         <Field name="email" label="Email" type="email" required autoComplete="username" autoCapitalize="none" spellCheck={false}
         value={email} onChange={event => setEmail(event.target.value)} error={errors.email} placeholder="name@example.com" />
@@ -116,11 +116,11 @@ export function RegisterPage({ onRegistered }: { onRegistered: (email: string) =
         <p className="small muted">Self-assessed, not a certification. Change it anytime.</p>
         <p className="small muted">Your microphone stays off. You choose what to share before each debate.</p>
       </>}
-    </div>
+    </div></div>
     {step === 1
       ? <button className="action action-primary" type="submit" disabled={pending}>Continue</button>
       : <div className="register-actions">
-        <button className="action action-secondary" type="button" onClick={() => go(1)} disabled={pending}>Back</button>
+        <button className="action action-secondary" type="button" onClick={() => { validate({}); go(1); }} disabled={pending}>Back</button>
         <button className="action action-primary" type="submit" disabled={pending}>{pending ? 'Creating account…' : 'Create account'}</button>
       </div>}
     <div className="account-switch"><span className="muted">Already have an account?</span><ActionLink to="/sign-in" variant="text">Sign in</ActionLink></div>

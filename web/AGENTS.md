@@ -4,7 +4,7 @@ Follow the repository root `AGENTS.md`. Before frontend code changes, update
 the matching Spec Kit feature and architecture/proposal requirements.
 
 - Implement in Vite + React + TypeScript + Tailwind. Use the existing shared
-  controls, Cream & Yellow tokens and Inter typography.
+  controls, Cream & Yellow tokens and Archivo (display) + Inter (text) typography.
 - Frontend code and browser evidence are the current UI authority. Neither
   historical Figma link is an implementation dependency. Read, update or sync
   Figma only when the user explicitly asks.

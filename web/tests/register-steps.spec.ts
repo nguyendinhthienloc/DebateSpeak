@@ -101,3 +101,34 @@ test('registers through both steps', async ({ page }) => {
   await expect(page.getByText('Account created', { exact: true })).toBeVisible();
   expect(body).toEqual({ email: 'learner@example.com', password, display_name: 'Linh', cefr_level: 'B2' });
 });
+
+test('focus rings on register fields are not clipped by the form', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto('/#/register');
+  const email = page.getByLabel('Email', { exact: true });
+  await email.focus();
+  // Every clipping ancestor must leave room for the 3px ring at 4px offset on both sides.
+  const room = await email.evaluate(element => {
+    const box = element.getBoundingClientRect();
+    let least = Infinity;
+    for (let node = element.parentElement; node && node !== document.body; node = node.parentElement) {
+      if (getComputedStyle(node).overflowX === 'visible') continue;
+      const clip = node.getBoundingClientRect();
+      least = Math.min(least, box.left - clip.left, clip.right - box.right);
+    }
+    return least;
+  });
+  expect(room).toBeGreaterThanOrEqual(7);
+});
+
+test('back from step 2 with an error keeps focus and clears the stale alert', async ({ page }) => {
+  await page.goto('/#/register');
+  await fillStepOne(page);
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByLabel('Display name (optional)').fill('界'.repeat(81));
+  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await expect(page.getByRole('alert')).toBeVisible();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await expect(page.getByText('Step 1 of 2 · Account', { exact: true })).toBeFocused();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});

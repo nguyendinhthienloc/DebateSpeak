@@ -43,7 +43,7 @@ video, chat, solo AI, audience and the teacher dashboard are left out.
 
 ## Smaller issues found
 
-- After sign-in the app sends you to `#/rooms`; it should go to the main menu.
+- Done in SCRUM-53: sign-in now lands on the main menu (`#/home`).
 - There is no admin landing page. With 5 admin areas planned, `#/admin`
   should list them; the Profile page link is enough only while there is one.
 - The header has only Account and Sign out; it needs main navigation
