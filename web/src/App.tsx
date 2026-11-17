@@ -10,6 +10,7 @@ import { RecoveryPage } from './pages/RecoveryPage';
 import { CreateRoomPage } from './pages/RoomSetupPage';
 import { ExpiredRoomPage, InvitationPage, RoomsPage } from './pages/RoomEntryPages';
 import { LobbyPage } from './pages/LobbyPage';
+import { HomePage } from './pages/HomePage';
 import { defaultSettings } from './roomSettings';
 import { routes, useRoute } from './routes';
 
@@ -58,7 +59,7 @@ export default function App() {
   function signedIn(response: TokenResponse) {
     setSession(response);
     setRegisteredEmail(undefined);
-    window.location.hash = '/rooms';
+    window.location.hash = '/home';
   }
 
   function signOut() {
@@ -89,6 +90,7 @@ export default function App() {
       case '/reset-password': return <RecoveryPage mode="reset" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/verify-email': return <RecoveryPage mode="verify" initialEmail={recoveryEmail} onEmailAccepted={setRecoveryEmail} />;
       case '/account-created': return <SignInPage registeredEmail={registeredEmail} expired={expired} onSignedIn={signedIn} />;
+      case '/home': return <RequireSession title="Home"><HomePage /></RequireSession>;
       case '/rooms': return <RoomsPage />;
       case '/rooms/new':
       case '/rooms/new/settings': return <CreateRoomPage editing={path.endsWith('/settings')} settings={settings} onChange={setSettings} />;
@@ -108,8 +110,9 @@ export default function App() {
   return <div className={`app-shell ${isAuth ? 'auth-shell' : ''}`}>
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
     <header className="app-header">
-      <a className="brand" href="#/rooms">DebateSpeak AI</a>
+      <a className="brand" href={session ? '#/home' : '#/rooms'}>DebateSpeak AI</a>
       {!isAuth && <div className="header-actions">
+        {session && <ActionLink to="/home" variant="text">Home</ActionLink>}
         <ActionLink to="/profile" variant="text" className="account-link">Account</ActionLink>
         {session && <button type="button" className="action action-text" onClick={signOut}>Sign out</button>}
       </div>}

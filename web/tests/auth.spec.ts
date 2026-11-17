@@ -37,7 +37,7 @@ test('registers then signs in through the G1 HTTP contract', async ({ page }) =>
   await expect(page.getByLabel('Password', { exact: true })).toHaveValue('');
   await page.getByLabel('Password', { exact: true }).fill(password);
   await page.getByLabel('Password', { exact: true }).press('Enter');
-  await expect(page).toHaveURL(/#\/rooms$/);
+  await expect(page).toHaveURL(/#\/home$/);
   await expect(page.getByText('Signed in as Linh', { exact: true })).toBeVisible();
   expect(requests).toEqual([
     { path: '/api/v1/auth/register', body: { email: 'learner@example.com', password, display_name: 'Linh', cefr_level: 'B2' }, client: 'web', contentType: 'application/json' },
@@ -134,7 +134,7 @@ test('sends the auth client header and credentialed requests without caching', a
   await page.goto('/#/sign-in');
   await fillCredentials(page);
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
-  await expect(page).toHaveURL(/#\/rooms$/);
+  await expect(page).toHaveURL(/#\/home$/);
   expect(await page.evaluate(() => (window as unknown as { authRequestOptions: unknown }).authRequestOptions)).toEqual({
     credentials: 'include', cache: 'no-store',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-DebateSpeak-Client': 'web' },
