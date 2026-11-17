@@ -28,6 +28,11 @@ test('password visibility stays inside the input group and keeps the value and l
 test('account CEFR selection has keyboard and non-color feedback', async ({ page }) => {
   for (const route of ['/register', '/profile']) {
     await page.goto(`/#${route}`);
+    if (route === '/register') {
+      await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
+      await page.getByLabel('Password', { exact: true }).fill('a valid password');
+      await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    }
     await page.getByRole('radio', { name: 'B1', exact: true }).focus();
     await page.keyboard.press('ArrowRight');
     await expect(page.getByRole('radio', { name: 'B2', exact: true })).toBeChecked();
@@ -45,6 +50,13 @@ test('all account routes reflow with enlarged text and preserve profile limitati
       await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${route} / ${width}px / 200% text`).toBe(true);
       await expect(page.locator('h1')).toHaveCount(1);
+      if (route === '/register') {
+        await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
+        await page.getByLabel('Password', { exact: true }).fill('a valid password');
+        await page.getByRole('button', { name: 'Continue', exact: true }).click();
+        await page.getByLabel('Display name (optional)').fill('Trần Lê Anh Tuấn Nguyễn Đình Thiên Lộc');
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `register step 2 / ${width}px / 200% text`).toBe(true);
+      }
       if (route === '/profile') {
         await page.getByLabel('Display name', { exact: true }).fill('Trần Lê Anh Tuấn Nguyễn Đình Thiên Lộc Nguyễn Bảo Minh Triết');
         await expect(page.getByRole('button', { name: 'Save changes', exact: true })).toBeDisabled();

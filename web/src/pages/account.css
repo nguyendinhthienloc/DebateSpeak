@@ -106,6 +106,20 @@
   .account-page .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+.register-form { overflow-x: clip; overflow-clip-margin: .5rem; }
+.step-indicator { display: flex; flex-direction: column; gap: .5rem; }
+.step-indicator h2:focus { outline: none; }
+.step-indicator h2:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.step-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .375rem; }
+.step-bar span { position: relative; height: .375rem; border-radius: 999px; background: var(--disabled); overflow: hidden; }
+.step-bar span::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-3) var(--ease-out); }
+.step-bar span.done::after { transform: scaleX(1); }
+.register-step[data-direction="forward"] { animation: step-forward var(--dur-3) var(--ease-out) both; }
+.register-step[data-direction="back"] { animation: step-back var(--dur-3) var(--ease-out) both; }
+.register-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; }
+@keyframes step-forward { from { opacity: 0; transform: translateX(1.5rem); } }
+@keyframes step-back { from { opacity: 0; transform: translateX(-1.5rem); } }
+
 .session-list { display: flex; flex-direction: column; gap: .75rem; margin: 0; padding: 0; list-style: none; }
 .session-item, .admin-user {
   display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;

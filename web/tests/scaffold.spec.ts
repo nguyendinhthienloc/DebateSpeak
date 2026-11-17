@@ -89,6 +89,6 @@ test('reduced motion disables every animation and leaves content visible', async
   const main = page.locator('main');
   expect(await main.evaluate(element => getComputedStyle(element).animationName)).toBe('none');
   expect(await main.evaluate(element => getComputedStyle(element).opacity)).toBe('1');
-  const button = page.getByRole('button', { name: 'Create account', exact: true });
+  const button = page.getByRole('button', { name: 'Continue', exact: true });
   expect(await button.evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
 });

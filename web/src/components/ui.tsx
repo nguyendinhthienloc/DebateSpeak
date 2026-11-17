@@ -1,4 +1,4 @@
-import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import type { RoutePath } from '../routes';
 
@@ -53,4 +53,21 @@ export function PageHeading({ title, children }: { title: string; children?: Rea
 
 export function BackToRooms() {
   return <ActionLink to="/rooms" variant="text" className="short-action">Back to rooms</ActionLink>;
+}
+
+/** Step label and progress bar. Moves focus to the label when the step changes and `focus` is true. */
+export function StepIndicator({ current, labels, focus = true }: { current: number; labels: readonly string[]; focus?: boolean }) {
+  const heading = useRef<HTMLHeadingElement>(null);
+  const shown = useRef(current);
+  useEffect(() => {
+    if (shown.current === current) return;
+    shown.current = current;
+    if (focus) heading.current?.focus();
+  }, [current, focus]);
+  return <div className="step-indicator">
+    <h2 ref={heading} tabIndex={-1} className="label">Step {current} of {labels.length} · {labels[current - 1]}</h2>
+    <div className="step-bar" aria-hidden="true">
+      {labels.map((label, index) => <span key={label} className={index < current ? 'done' : undefined} />)}
+    </div>
+  </div>;
 }

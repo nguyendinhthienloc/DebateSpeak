@@ -12,6 +12,8 @@ async function fillCredentials(page: Page, value = password) {
   await page.getByLabel('Password', { exact: true }).fill(value);
 }
 
+const continueStep = (page: Page) => page.getByRole('button', { name: 'Continue', exact: true }).click();
+
 test('registers then signs in through the G1 HTTP contract', async ({ page }) => {
   const requests: { path: string; body: unknown; client: string | undefined; contentType: string | undefined }[] = [];
   await page.route('**/api/v1/auth/*', async route => {
@@ -25,6 +27,7 @@ test('registers then signs in through the G1 HTTP contract', async ({ page }) =>
   });
   await page.goto('/#/register');
   await fillCredentials(page);
+  await continueStep(page);
   await page.getByLabel('Display name (optional)').fill('  Linh  ');
   await page.getByRole('radio', { name: 'B2', exact: true }).check();
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
@@ -54,12 +57,12 @@ test('validates fields locally and focuses the first invalid input', async ({ pa
     if (request.method() === 'POST' && path.startsWith('/api/v1/auth/') && path !== '/api/v1/auth/refresh') calls++;
   });
   await page.goto('/#/register');
-  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await continueStep(page);
   await expect(page.getByLabel('Email', { exact: true })).toBeFocused();
   await expect(page.getByLabel('Email', { exact: true })).toHaveAttribute('aria-invalid', 'true');
   await expect(page.getByText('Enter your email address.', { exact: true })).toBeVisible();
   await fillCredentials(page, 'short');
-  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await continueStep(page);
   await expect(page.getByLabel('Password', { exact: true })).toBeFocused();
   await expect(page.getByText('Use 12–128 characters.', { exact: true })).toBeVisible();
   expect(calls).toBe(0);
@@ -73,10 +76,11 @@ test('uses Unicode character lengths and omits an empty optional name', async ({
   });
   await page.goto('/#/register');
   await fillCredentials(page, '😀'.repeat(11));
-  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await continueStep(page);
   await expect(page.getByText('Use 12–128 characters.', { exact: true })).toBeVisible();
   expect(body).toBeUndefined();
   await page.getByLabel('Password', { exact: true }).fill('😀'.repeat(12));
+  await continueStep(page);
   await page.getByLabel('Display name (optional)').fill('   ');
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByText('Account created', { exact: true })).toBeVisible();
@@ -88,10 +92,11 @@ test('checks length limits without silently truncating passwords or display name
   await page.route('**/auth/register', async route => { calls++; await route.fulfill({ status: 201, json: user }); });
   await page.goto('/#/register');
   await fillCredentials(page, 'x'.repeat(129));
-  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await continueStep(page);
   await expect(page.getByLabel('Password', { exact: true })).toHaveValue('x'.repeat(129));
   await expect(page.getByText('Use 12–128 characters.', { exact: true })).toBeVisible();
   await page.getByLabel('Password', { exact: true }).fill('x'.repeat(128));
+  await continueStep(page);
   await page.getByLabel('Display name (optional)').fill('界'.repeat(81));
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByLabel('Display name (optional)')).toBeFocused();
@@ -107,6 +112,7 @@ test('makes a server CEFR validation error accessible and focuses its group', as
     json: { code: 'VALIDATION_ERROR', errors: [{ field: 'cefr_level', message: 'Invalid choice' }] } }));
   await page.goto('/#/register');
   await fillCredentials(page);
+  await continueStep(page);
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByRole('group', { name: 'Your English level' })).toHaveAttribute('aria-invalid', 'true');
   await expect(page.getByRole('group', { name: 'Your English level' })).toBeFocused();
@@ -159,12 +165,18 @@ for (const scenario of [
       json: { detail: 'SECRET SERVER TRACE and submitted password', code: 'TEST_ERROR' } }));
     await page.goto(scenario.route === 'register' ? '/#/register' : '/#/sign-in');
     await fillCredentials(page);
+    if (scenario.route === 'register') await continueStep(page);
     const submit = page.getByRole('button', { name: scenario.route === 'register' ? 'Create account' : 'Sign in', exact: true });
     await submit.click();
     await expect(page.getByRole('alert')).toContainText(scenario.message);
+    // A rejected registration keeps step 2 unless the server named an account field (409 → email).
+    if (scenario.route === 'register' && scenario.status !== 409) {
+      await expect(submit).toBeEnabled();
+      await page.getByRole('button', { name: 'Back', exact: true }).click();
+    }
     await expect(page.getByLabel('Email', { exact: true })).toHaveValue('learner@example.com');
     await expect(page.getByLabel('Password', { exact: true })).toHaveValue(password);
-    await expect(submit).toBeEnabled();
+    if (scenario.route === 'login') await expect(submit).toBeEnabled();
     await expect(page.getByText(/SECRET SERVER TRACE/)).toHaveCount(0);
     await expect(page.getByText('Signed in as Linh', { exact: true })).toHaveCount(0);
   });
@@ -269,6 +281,7 @@ test('rejects invalid registration success and untrusted confirmation routes', a
   await page.route('**/auth/register', route => route.fulfill({ status: 201, json: {} }));
   await page.goto('/#/register');
   await fillCredentials(page);
+  await continueStep(page);
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByRole('alert')).toContainText('unexpected response');
   await expect(page).toHaveURL(/#\/register$/);
@@ -289,6 +302,7 @@ for (const [description, invalidUser] of [
         json: endpoint === 'register' ? invalidUser : { ...token, user: invalidUser } }));
       await page.goto(endpoint === 'register' ? '/#/register' : '/#/sign-in');
       await fillCredentials(page);
+      if (endpoint === 'register') await continueStep(page);
       await page.getByRole('button', { name: endpoint === 'register' ? 'Create account' : 'Sign in', exact: true }).click();
       await expect(page.getByRole('alert')).toContainText('unexpected response');
       await expect(page.getByText('Account created', { exact: true })).toHaveCount(0);
