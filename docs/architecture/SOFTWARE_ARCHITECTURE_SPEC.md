@@ -1340,6 +1340,13 @@ Implement the existing async `LLMAdapter.complete_json` protocol and a validated
 
 The pure Grounding Guard receives finalized transcript segments and language/argument feedback. Segments carry immutable segment, debate and speaker identities and text. Each feedback item contains the same identities, a nonblank exact quote, a direct explanation and a concrete remediation. Preserve quote bytes/code points; do not lowercase, trim, fuzzy-match, normalize punctuation, or join adjacent segments to make a quote pass. Match only a substring of the identified finalized segment in the same debate owned by the same speaker. Empty/whitespace quotes, absent or ambiguous segment identities, other debates/speakers, partial STT and invented quotes fail closed with explicit rejection reasons. Every feedback item must pass all of its citations. Accepted/rejected results are separate, immutable, and preserve input order. Source and feedback inputs are not mutated. Grounding establishes attribution and quote presence, not correctness of an AI diagnosis. Tests use a documented test double, never real keys or provider calls. No new environment settings are required.
 
+### 20.4 SCRUM-46: STT adapter protocol and local transcription spike
+Performed: Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead. Reviewed: human reviewer pending assignment. Edited: Nguyễn Anh Khoa (24125058).
+
+Implement the async `STTAdapter` and `STTStream` protocols and validated `STTEvent` / `WordTiming` models per architecture section 7.3 without vendor SDK or network calls. `WordTiming` strictly validates non-blank words, non-negative timestamps, monotonic duration (`end_ms >= start_ms`), and normalized confidence in [0.0, 1.0]. `STTEvent` validates streaming events for both interim hypotheses (`is_final=False`) and finalized segments (`is_final=True`) with word timing lists.
+
+The local spike provides `read_wav_pcm16`, `LocalMockSTTStream`, `LocalMockSTTAdapter`, and `transcribe_wav_file` to verify end-to-end PCM16 audio streaming using Python's standard `wave` library. The sample WAV fixture (`tests/fixtures/sample_debate.wav`) streams 100ms PCM16 chunks through the adapter, verifies partial and final event emission, clean stream termination, and accurate word-level attribution without external API keys or cloud dependencies.
+
 ---
 ## 21. SCRUM-49 — account UI refinement (2026-11-14)
 Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Trần Lê Anh Tuấn (24125107).

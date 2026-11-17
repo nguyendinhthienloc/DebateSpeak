@@ -9,7 +9,7 @@ Team deadline: **Fri 2026-11-13**. Scope and rules: [../README.md](../README.md)
 | Part B: revised Vision Document + changes listed in `Changes.md` | SCRUM-35 | `feature/SCRUM-35-revised-plan-vision` | 11-11 | Open |
 | Sprint 3 AI usage + weekly report (Part F), Jira screenshots, standup and Sprint minutes | SCRUM-40 | `feature/SCRUM-40-weekly-report` | 11-12 | Open |
 | PDFs for Project Plan, Vision Document, use-case model and specs | SCRUM-36, 37 | `feature/SCRUM-36-use-case-model` | 11-12 | Open |
-| *Extra:* `STTAdapter` protocol + local transcription of a sample WAV | SCRUM-46 | `feature/SCRUM-46-stt-adapter-spike` | 11-12 | Stretch |
+| *Extra:* `STTAdapter` protocol + local transcription of a sample WAV | SCRUM-46 | `feature/SCRUM-46-stt-adapter-spike` | 11-12 | Done |
 
 Blocked by: Build 1 merged for the E2E test; Tài's revised plan for the PDFs.
 
