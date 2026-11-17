@@ -5,6 +5,8 @@ account forms and room/profile previews.
 [002 — FG-01 accounts end to end](002-fg01-accounts/spec.md) adds the Spring Boot
 API and PostgreSQL half (PA3 Part E). Start with its
 [short backend handoff](../web/API_CONTRACT.md) to connect auth.
+[003 — UI refresh](003-ui-refresh/spec.md) adds display type, motion, two-step
+registration, shorter copy and a main menu (SCRUM-53).
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain

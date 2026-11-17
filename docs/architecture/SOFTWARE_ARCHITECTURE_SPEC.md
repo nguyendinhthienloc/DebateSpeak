@@ -56,7 +56,7 @@ The user authorized page routes and a responsive layout scaffold from the select
 [Cream & Yellow Build 1 Figma flow](../design/BUILD1_FIGMA_FLOW.md). This is a UI
 preview on `feature/UI-scaffold`, not a completed Build 1 vertical increment.
 Use the existing Vite/React/TypeScript/Tailwind SPA with shared controls, semantic
-design tokens, local Inter fonts, and hash routes so refresh and direct links work
+design tokens, local Archivo (display) and Inter (text) fonts, and hash routes so refresh and direct links work
 on static hosting without server rewrites. Routes cover sign-in, registration,
 rooms, setup/settings, profile, invitation, waiting/ready lobby and room recovery
 examples; unknown routes provide a recovery link. Navigation updates document
@@ -1346,7 +1346,7 @@ Performed: Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead. Re
 
 Refine the existing Cream & Yellow account pages in place: sign-in, registration, the confirmed-registration sign-in state, and the sample profile. The user requested a local working preview and a visible before/after explanation. Preserve all routes, validated auth request/response behavior, memory-only sessions, password-manager support and the explicit sample/profile/media limits. Direct navigation to account-created must not invent registration success. No auth, database, media or persistence behavior is added.
 
-Shared presentation contracts: semantic rem typography/leading; persistent labels and errors; a named Show/Hide password control adjacent to its input, with a 44px target; native CEFR radios with visible selected state and self-assessment guidance; form groups separated by meaning; clear success/error/disabled treatment. Keep the existing palette, local Inter weights 400/600, 48px primary controls and visible keyboard focus. Add only the Vietnamese font subset with its Unicode range so Latin text keeps using the Latin subset. No font or image is fetched from a remote provider.
+Shared presentation contracts: semantic rem typography/leading; persistent labels and errors; a named Show/Hide password control adjacent to its input, with a 44px target; native CEFR radios with visible selected state and self-assessment guidance; form groups separated by meaning; clear success/error/disabled treatment. Keep the existing palette, local Archivo display headings (800, semi-condensed) with Inter 300/400/600 text, 48px primary controls and visible keyboard focus. Add only the Vietnamese font subset with its Unicode range so Latin text keeps using the Latin subset. No font or image is fetched from a remote provider.
 
 Use the selected Figma direction recorded in DESIGN.md and the supplied live screenshot as the baseline. Implement the user's requested local refinement for review; this does not claim new Figma frames were edited or that teammate approval was obtained. Shared Field, Choices, ActionLink and PageHeading interfaces remain compatible. Restrict account-specific geometry to account CSS rather than taking over the other members' room/navigation packages.
 

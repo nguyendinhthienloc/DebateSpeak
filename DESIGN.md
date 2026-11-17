@@ -18,21 +18,33 @@ colors:
   on-contrast: "#FFFFFF"
   focus-on-contrast: "#FFD000"
 typography:
+  display:
+    fontFamily: "Archivo Variable"
+    fontSize: "clamp(2.25rem, 1.75rem + 2vw, 3rem)"
+    fontWeight: 800
+    fontStretch: "87.5%"
+    lineHeight: 1.05
+    letterSpacing: "-0.015em"
+  lead:
+    fontFamily: "Inter"
+    fontSize: "1.125rem"
+    fontWeight: 300
+    lineHeight: 1.5
   account-page-title:
-    fontFamily: "Inter"
-    fontSize: "2rem desktop / 1.75rem narrow"
-    fontWeight: 600
-    lineHeight: 1.25
+    fontFamily: "Archivo Variable"
+    fontSize: "{typography.display.fontSize}"
+    fontWeight: 800
+    lineHeight: 1.05
   headline:
-    fontFamily: "Inter"
+    fontFamily: "Archivo Variable"
     fontSize: "28px"
-    fontWeight: 600
+    fontWeight: 800
     lineHeight: 1.45
     letterSpacing: "0em"
   title:
-    fontFamily: "Inter"
+    fontFamily: "Archivo Variable"
     fontSize: "20px"
-    fontWeight: 600
+    fontWeight: 700
     lineHeight: 1.45
     letterSpacing: "0em"
   body:
@@ -53,6 +65,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.45
     letterSpacing: "0em"
+motion:
+  ease-out: "cubic-bezier(.22, 1, .36, 1)"
+  duration-fast: "120ms"
+  duration-base: "200ms"
+  duration-slow: "320ms"
+  reduced-motion: "no animation or transition"
 rounded:
   control: "12px"
   room-control: "6px"
@@ -177,7 +195,7 @@ The selected opaque-pair checks record Ink on Cream 15.10:1, supporting text on 
 
 ## Typography
 
-Use Inter throughout, with regular 400 and semibold 600 weights. The actual Figma hierarchy is 28px headlines, 20px section titles, 16px body and 14px labels/supporting text. Line height is 1.45 with ordinary tracking. No display serif, decorative uppercase or monospace identity is established.
+**SCRUM-53 (2026-11-17):** headings, the brand, room motions and invite codes use Archivo Variable at 800 (700 for section titles), semi-condensed (`font-stretch: 87.5%`), tight leading and slight negative tracking. Inter carries body (400), labels and buttons (600), and large lead text only (300 at 1.125rem or larger; never light at small sizes). Both faces are self-hosted with Latin and Vietnamese subsets. Supporting text stays 14px Inter 400. No display serif, decorative uppercase or monospace identity is established.
 
 Headings explain the task. Room motions and invite codes use the existing 28px semibold headline style; participant names and section headings use 20px semibold, with 16px stance text. Participant labels and stances remain readable data, not display ornaments. Long names, email addresses and debate motions wrap rather than losing essential meaning. Use a neutral system-sans fallback only when Inter is unavailable; a fallback is not evidence of a font match.
 
@@ -194,6 +212,10 @@ Internal containers should fill available width and text should grow vertically.
 **The Topic First Rule.** In room views, the motion is the main heading. A compact membership status supports it; do not repeat the same state in a giant heading and a banner.
 
 Visitor mode and screen-specific routes, sequence and prototype assumptions belong in the surface brief, not in global design tokens.
+
+## Motion
+
+Motion confirms what changed; it never decorates. Pages fade and rise 8px on entry (320ms), register steps slide in the direction of travel, selected-choice checks pop in, status notes reveal downward, and list rows stagger 60ms apart. Nothing loops, nothing shakes, and nothing exceeds 320ms. Every animation starts from a visible end state, so content is readable if animation fails. Under `prefers-reduced-motion: reduce`, all animation and transition is off.
 
 ## Elevation & Depth
 
@@ -237,7 +259,7 @@ The user selected a proposed local microphone/speaker check in Figma. Start/Play
 
 ## Do's and Don'ts
 
-- **Do** preserve the cream canvas and single yellow action family.
+- **Do** preserve the cream canvas and single yellow action family. A whole panel may be yellow only when the panel is itself the action (the main menu's Create a room door).
 - **Do** use plain English, persistent labels and explicit recovery actions.
 - **Do** keep focus visible, targets comfortable and reading order stable across widths.
 - **Do** retain the exact product boundaries around room membership and consent.

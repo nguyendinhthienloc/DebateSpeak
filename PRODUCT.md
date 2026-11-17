@@ -69,7 +69,7 @@ Reports combine speaker-linked quotes, language metrics, argument findings, sele
 - Deferred in the Vision Document: video, audience rooms, tournaments, public rankings/ELO, automatic partner matching, payments, separate teacher dashboards, advanced phoneme-level scoring, multi-provider judge panels, sophisticated proficiency progression, and multi-region infrastructure. The proposal also identifies audience participation as post-MVP.
 - Build 1 UI is English only, confirmed by the user on 2026-10-29. Behavior, layout, states and accessibility are planned in [the Build 1 UX brief](docs/pa2/BUILD1_UX_BRIEF.md); the selected Cream & Yellow visual system is recorded in [DESIGN.md](DESIGN.md). The [complete Build 1 Figma flow](docs/design/BUILD1_FIGMA_FLOW.md) is built as editable desktop/mobile screens with fixed-sample prototype navigation; frontend account forms and room/profile previews now exist; backend integration remains unfinished.
 - Open: primary audience priority, human Evaluator scope, localization beyond Build 1, provider retention and shared-debate deletion behavior, a numeric AI processing budget, and provider integration details.
-- At init, no visual system or logo asset was confirmed. The user subsequently selected Cream & Yellow; preserve that colour direction and the current Inter typography. A binding logo asset remains undecided.
+- At init, no visual system or logo asset was confirmed. The user subsequently selected Cream & Yellow; preserve that colour direction. Typography (SCRUM-53, 2026-11-17): Archivo display headings with Inter for text and controls. A binding logo asset remains undecided.
 
 ## Brand Commitments
 
