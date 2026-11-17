@@ -32,8 +32,8 @@ Deadline was Fri 2026-11-13. Submission buffer 11-14 to 11-15.
 | # | Item | Owner | Reviewer | Status | Evidence |
 |---|---|---|---|---|---|
 | D1 | 54 specifications, 201 alternative outcomes | Triết, Tuấn | Triết | Done | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `.pdf` |
-| D2 | Prototype screenshots (116) | Triết | Triết | Done | `docs/pa3/ui-prototypes/screenshots/` |
-| D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Done: reviewed by Triết, 2026-11-14. Lộc's assigned review of the specifications is still pending | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/ui-prototypes/README.md` |
+| D2 | Prototype screenshots (116) | Triết | Triết | Done | `docs/pa3/screenshots/` |
+| D3 | Reviewer sign-off on specifications and prototypes | Triết, Tuấn | Triết | Done: reviewed by Triết, 2026-11-14. Lộc's assigned review of the specifications is still pending | `docs/pa3/USE_CASE_SPECIFICATIONS.md`, `docs/pa3/screenshots/` |
 
 ## Part E: FG-01 End to End with Spec Kit (20 pts)
 
