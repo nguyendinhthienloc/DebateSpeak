@@ -50,18 +50,17 @@ test('join validates the code locally', async ({ page }) => {
   await expect(page).toHaveURL(/#\/home$/);
 });
 
-test('valid code opens the invitation preview', async ({ page }) => {
+test('a valid code opens its invite link', async ({ page }) => {
   await signIn(page);
   await page.getByLabel('Invite code', { exact: true }).fill(' k7q2-m9xa ');
   await page.getByRole('button', { name: 'Join', exact: true }).click();
-  await expect(page).toHaveURL(/#\/invite$/);
-  expect(page.url().toUpperCase()).not.toContain('K7Q2');
+  await expect(page).toHaveURL(/#\/join\/K7Q2M9XA$/);
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
 
-test('the header marks the preview and samples carry no scores', async ({ page }) => {
+test('the header has no preview badge and samples carry no scores', async ({ page }) => {
   await signIn(page);
-  await expect(page.locator('header .preview-badge')).toContainText('Preview');
+  await expect(page.locator('.preview-badge')).toHaveCount(0);
   expect(await page.locator('main').innerText()).not.toMatch(/\d+\s*\/\s*\d+|score/i);
 });
 

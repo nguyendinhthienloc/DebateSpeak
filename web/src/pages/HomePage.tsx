@@ -36,9 +36,8 @@ export function HomePage({ onPickTopic }: { onPickTopic: (motion: string) => voi
       document.getElementById('invite-code')?.focus();
       return;
     }
-    // Build 1 has no join API: open the invitation preview. The code is never put in the URL.
     setError(undefined);
-    window.location.hash = '/invite';
+    window.location.hash = `/join/${normalizeInviteCode(code)}`;
   }
 
   return <div className="home">

@@ -1,5 +1,5 @@
 import { useState, useSyncExternalStore } from 'react';
-import { ActionLink, BackToRooms, Choices, Field, PageHeading } from '../components/ui';
+import { ActionLink, Choices, Field, PageHeading } from '../components/ui';
 import { clampDuration, partnerStance, settingsLine, type RoomSettings } from '../roomSettings';
 import './setup.css';
 
@@ -39,8 +39,9 @@ function PreviewBody({ settings, ticks }: { settings: RoomSettings; ticks: Ticks
   </section>;
 }
 
-export function CreateRoomPage({ editing, settings, onChange }: { editing: boolean; settings: RoomSettings; onChange: (settings: RoomSettings) => void }) {
+export function CreateRoomPage({ settings, onChange }: { settings: RoomSettings; onChange: (settings: RoomSettings) => void }) {
   const narrow = useNarrow();
+  const [editing, setEditing] = useState(false);
   const [ticks, setTicks] = useState<Ticks>({ line: 0, seats: 0 });
   function update(key: keyof RoomSettings, value: string) {
     if (settings[key] === value) return;
@@ -61,11 +62,13 @@ export function CreateRoomPage({ editing, settings, onChange }: { editing: boole
         </> : <div className="stack-8">
           <h2 className="label">Room settings</h2>
           <div><p>{settingsLine(settings)}</p><p>{settings.assignment === 'Random' ? 'Random stances' : `Your stance: ${settings.stance}`}</p></div>
-          <ActionLink to="/rooms/new/settings" variant="text">Change settings</ActionLink>
+          <button type="button" className="action action-text" onClick={() => setEditing(true)}>Change settings</button>
         </div>}
         <div className="action-bar action-bar-sticky">
-          <ActionLink to={editing ? '/rooms/new' : '/rooms/waiting'}>{editing ? 'Use these settings' : 'Create room'}</ActionLink>
-          <BackToRooms />
+          {editing
+            ? <button type="button" className="action action-primary" onClick={() => setEditing(false)}>Use these settings</button>
+            : <button type="button" className="action action-primary" disabled>Create room</button>}
+          <ActionLink to="/home" variant="text" className="short-action">Back to home</ActionLink>
         </div>
       </div>
       {narrow

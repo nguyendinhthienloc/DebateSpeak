@@ -51,10 +51,6 @@ export function PageHeading({ title, children }: { title: string; children?: Rea
   return <div className="page-heading"><h1>{title}</h1>{children && <p className="lead">{children}</p>}</div>;
 }
 
-export function BackToRooms() {
-  return <ActionLink to="/rooms" variant="text" className="short-action">Back to rooms</ActionLink>;
-}
-
 /** Step label and progress bar. Moves focus to the label when the step changes and `focus` is true. */
 export function StepIndicator({ current, labels, focus = true }: { current: number; labels: readonly string[]; focus?: boolean }) {
   const heading = useRef<HTMLHeadingElement>(null);
