@@ -7,13 +7,12 @@ import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
 import { DeleteAccountPage, RequireSession, SessionsPage } from './pages/AccountSettingsPages';
 import { AdminUsersPage } from './pages/AdminPage';
 import { RecoveryPage } from './pages/RecoveryPage';
-import { CreateRoomPage } from './pages/RoomSetupPage';
 import { HomePage } from './pages/HomePage';
+import { CreateRoomPage } from './pages/rooms/CreateRoomPage';
 import { RoomPage } from './pages/rooms/RoomPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { AuthStage } from './components/AuthStage';
 import { AppBar } from './components/Headers';
-import { defaultSettings } from './roomSettings';
 import { matchDynamicRoute, routes, useRoute } from './routes';
 
 // One refresh per page load. Refresh tokens rotate, so a second concurrent call
@@ -31,7 +30,7 @@ export default function App() {
   const dynamic = matchDynamicRoute(path);
   const title = route?.label ?? (dynamic?.kind === 'join' ? 'Join a room' : dynamic?.kind === 'room' ? 'Room' : 'Page not found');
   const main = useRef<HTMLElement>(null);
-  const [settings, setSettings] = useState(defaultSettings);
+  const [topicId, setTopicId] = useState<string>();
   const [registeredUser, setRegisteredUser] = useState<UserResponse>();
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [notice, setNotice] = useState<string>();
@@ -82,8 +81,8 @@ export default function App() {
     window.location.hash = '/sign-in';
   }
 
-  function pickTopic(motion: string) {
-    setSettings(current => ({ ...current, motion }));
+  function pickTopic(id: string) {
+    setTopicId(id);
     window.location.hash = '/rooms/new';
   }
 
@@ -104,7 +103,7 @@ export default function App() {
       case '/account-created': return <SignInPage registered={registeredUser} expired={expired} onSignedIn={signedIn} />;
       case '/welcome': return <WelcomePage />;
       case '/home': return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
-      case '/rooms/new': return <CreateRoomPage settings={settings} onChange={setSettings} />;
+      case '/rooms/new': return <RequireSession title="Create room"><CreateRoomPage initialTopicId={topicId} /></RequireSession>;
       case '/profile': return <ProfilePage onSignOut={signOut} />;
       case '/account/sessions': return <RequireSession title="Active sessions"><SessionsPage onSignOut={signOut} /></RequireSession>;
       case '/account/delete': return <RequireSession title="Delete account"><DeleteAccountPage onDeleted={accountDeleted} /></RequireSession>;

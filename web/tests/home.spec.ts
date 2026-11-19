@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { mockTopics } from './helpers/rooms';
 
 const user = {
   id: 'd817b684-08e9-49c0-806a-a045fb7f060c', email: 'learner@example.com',
@@ -7,6 +8,7 @@ const user = {
 const token = { access_token: 'test-access-token', token_type: 'bearer', expires_in: 900, user };
 
 async function signIn(page: Page) {
+  await mockTopics(page);
   await page.route('**/api/v1/auth/*', route => route.request().url().endsWith('/refresh')
     ? route.fulfill({ status: 401, json: { code: 'no_session' } })
     : route.fulfill({ status: 200, json: token }));
@@ -78,14 +80,13 @@ test('home reflows at 320px with enlarged text', async ({ page }) => {
   await expect(page.locator('h1')).toHaveCount(1);
 });
 
-test('phone header keeps the brand on one line and history fits without scrolling', async ({ page }) => {
+test('phone header keeps the brand on one line and history explains it is coming', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await signIn(page);
   const brand = page.getByRole('link', { name: 'DebateSpeak AI', exact: true });
   const lineHeight = await brand.evaluate(element => parseFloat(getComputedStyle(element).fontSize) * 1.6);
   expect((await brand.boundingBox())!.height).toBeLessThan(lineHeight);
-  expect(await page.locator('.home-table').evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
-  await expect(page.getByText('12 Nov', { exact: true })).toBeVisible();
+  await expect(page.getByText('Your past debates will appear here in a later release.', { exact: true })).toBeVisible();
 });
 
 test('door headings and the create button never break mid-word at 320px with 200% text', async ({ page }) => {

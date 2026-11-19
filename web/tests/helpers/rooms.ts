@@ -37,3 +37,17 @@ export async function mockRoom(page: Page, room: ReturnType<typeof snapshot>) {
   await page.route(`**/api/v1/rooms/${roomId}`, route => route.fulfill({ status: 200, json: current }));
   return { set(next: ReturnType<typeof snapshot>) { current = next; } };
 }
+
+export const topics = [
+  { id: 'topic-1', motion: 'Social media does more harm than good for teenagers', category: 'Society', cefr_level: 'B1' },
+  { id: 'topic-2', motion: 'Cities should ban private cars from the centre', category: 'Environment', cefr_level: 'B1' },
+  { id: 'topic-3', motion: 'Homework should be optional in secondary school', category: 'Education', cefr_level: 'B1' },
+  { id: 'topic-4', motion: 'Online friendships are as real as offline ones', category: 'Society', cefr_level: 'B2' },
+  { id: 'topic-5', motion: 'Video games should count as a sport', category: 'Culture', cefr_level: 'A2' },
+  { id: 'topic-6', motion: 'Governments should fund ocean research before space travel', category: 'Science', cefr_level: 'C1' },
+];
+
+/** Serves `GET /topics` with six seeded motions. */
+export async function mockTopics(page: Page) {
+  await page.route('**/api/v1/topics', route => route.fulfill({ status: 200, json: { topics } }));
+}

@@ -1,5 +1,5 @@
 import { clearSession, getAccessToken } from '../auth/session';
-import { isRoomSnapshot, type RoomSnapshot } from './contracts';
+import { isRoomSnapshot, isTopicList, type CreateRoomInput, type RoomSnapshot, type Topic } from './contracts';
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL?.trim() || '/api/v1').replace(/\/+$/, '');
 
@@ -38,4 +38,12 @@ async function request<T>(path: string, method: string, valid: (value: unknown) 
 
 export function getRoom(id: string, signal: AbortSignal): Promise<RoomSnapshot> {
   return request(`/rooms/${encodeURIComponent(id)}`, 'GET', isRoomSnapshot, signal);
+}
+
+export async function listTopics(signal: AbortSignal): Promise<Topic[]> {
+  return (await request('/topics', 'GET', isTopicList, signal)).topics;
+}
+
+export function createRoom(input: CreateRoomInput, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request('/rooms', 'POST', isRoomSnapshot, signal, input);
 }

@@ -44,3 +44,26 @@ export function isRoomSnapshot(value: unknown): value is RoomSnapshot {
     && roomStatuses.includes(value.status as RoomStatus)
     && Array.isArray(value.participants) && value.participants.every(isParticipant);
 }
+
+export interface Topic {
+  id: string;
+  motion: string;
+  category: string;
+  cefr_level: string;
+}
+
+export interface CreateRoomInput {
+  topic_id: string;
+  format: RoomFormat;
+  duration_minutes: number;
+  side: Side | 'RANDOM';
+}
+
+function isTopic(value: unknown): value is Topic {
+  return isRecord(value) && typeof value.id === 'string' && typeof value.motion === 'string'
+    && typeof value.category === 'string' && typeof value.cefr_level === 'string';
+}
+
+export function isTopicList(value: unknown): value is { topics: Topic[] } {
+  return isRecord(value) && Array.isArray(value.topics) && value.topics.every(isTopic);
+}

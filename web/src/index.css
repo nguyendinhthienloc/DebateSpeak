@@ -162,7 +162,6 @@
   .action-text:hover { text-decoration: underline; }
   .action:disabled { color: var(--muted); background: transparent; border: 1.5px dashed var(--border); cursor: not-allowed; }
   .short-action { align-self: flex-start; width: 180px; max-width: 100%; }
-  .room-controls .action-text { align-self: flex-start; width: auto; padding-inline: 0; }
   .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; width: 100%; }
   .field-error { color: var(--error); }
   input[aria-invalid="true"] { border-color: var(--error); }
@@ -178,12 +177,6 @@
   .note-success > .label { color: var(--success); }
   .note-error > .label { color: var(--error); }
   .note-warning > .label { color: var(--warning); }
-  .room-controls { --control-border: var(--ink); }
-  .setup-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 28rem); gap: clamp(32px, 5vw, 96px); align-items: start; }
-  .audio-checks { border-top: 1px solid var(--ink); padding-top: 12px; }
-  .setup-main > * { max-width: 40rem; }
-  .setup-main > .topic { max-width: none; }
-  .setup-motion { font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); font-weight: var(--weight-display); line-height: 1.05; letter-spacing: -.01em; text-wrap: balance; }
   .room-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 72rem; }
   .room-panel { display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: clamp(24px, 2.5vw, 36px); border: var(--edge); border-radius: var(--surface-radius); box-shadow: var(--raised); background: var(--surface); }
   .room-panel > .action { align-self: flex-start; min-width: min(12rem, 100%); }
@@ -222,7 +215,7 @@
     .lobby-columns.waiting, .lobby-columns.ready { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 760px) {
-    .setup-columns, .room-panels { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .room-panels { grid-template-columns: minmax(0, 1fr); gap: 32px; }
     /* Thumb-reach actions on phones: the bar stays at the bottom while the page scrolls. */
     .action-bar-sticky { position: sticky; bottom: 0; z-index: 1; margin-inline: calc(-1 * var(--gutter)); padding: 12px var(--gutter); border-top: 1px solid var(--line); background: var(--background); }
     .action-bar > .action:not(.action-text) { flex: 1 1 10rem; }
@@ -239,7 +232,6 @@
   @media (max-width: 359px) {
     .brand { font-size: var(--type-name); }
     .account-link { width: auto; }
-    .audio-actions { flex-direction: column; }
   }
 }
 

@@ -43,12 +43,6 @@
 .home-topic-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .home-topic-meta svg { flex-shrink: 0; color: var(--ink); background: var(--accent); border-radius: 50%; padding: 3px; width: 24px; height: 24px; transition: transform var(--dur-2) var(--ease-spring); }
 .home-topic:hover .home-topic-meta svg { transform: translateX(4px); }
-.home-table { overflow-x: auto; }
-.home-table table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: .9375rem; }
-.home-table th { padding: .5rem .75rem .5rem 0; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .8125rem; font-weight: 600; text-align: left; }
-.home-table td { padding: .875rem .75rem .875rem 0; border-bottom: 1px solid var(--line); }
-.home-table td:first-child { font-weight: 600; }
-.home-table td:nth-child(2) { font-variant-numeric: tabular-nums; }
 
 @media (max-width: 1200px) {
   .home-main { grid-template-columns: minmax(0, 1fr); grid-template-areas: "doors" "topics" "history"; gap: 2.5rem; }
@@ -63,13 +57,6 @@
 @media (max-width: 560px) {
   .home-topics { grid-template-columns: minmax(0, 1fr); }
   .home-door { padding: 20px; }
-  /* History rows stack: motion on its own line, then date, partner and report. */
-  .home-table table { min-width: 0; }
-  .home-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .home-table tr { display: flex; flex-wrap: wrap; column-gap: .75rem; padding: .75rem 0; border-bottom: 1px solid var(--line); }
-  .home-table td { padding: 0; border: 0; color: var(--muted); font-size: .875rem; }
-  .home-table td:first-child { flex-basis: 100%; color: var(--ink); font-size: .9375rem; }
-  .home-table td:nth-child(n+3)::before { content: '·'; margin-inline-end: .75rem; }
   .home-join { grid-template-columns: minmax(0, 1fr); }
   .home-join > .action { margin-top: 0; }
 }
