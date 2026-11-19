@@ -1,0 +1,139 @@
+/* Auth stage: the welcome page's Ink stage, with the form as a White plate on a Yellow lectern. */
+.auth-stage {
+  position: relative; isolation: isolate; display: flex; flex: 1; flex-direction: column; min-height: 100svh;
+  overflow: clip; color: var(--on-ink); background: var(--ink);
+}
+/* Podium light: a soft Yellow pool behind the plate (the one sanctioned gradient). */
+.auth-light {
+  position: absolute; top: 3rem; left: 50%; z-index: -1; width: min(70rem, 160vw); height: 85%;
+  translate: -50% 0; pointer-events: none;
+  background: radial-gradient(ellipse 50% 55% at 50% 55%, rgb(255 208 0 / .3), rgb(255 208 0 / 0));
+}
+
+.auth-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; padding: 16px var(--gutter); }
+.auth-brand {
+  color: var(--on-ink); font-family: var(--font-display); font-stretch: var(--stretch-display); font-size: 1.5rem;
+  font-weight: var(--weight-display); letter-spacing: -.01em; text-decoration: none; overflow-wrap: anywhere;
+}
+.auth-switch { display: flex; flex-wrap: wrap; align-items: center; column-gap: .25rem; color: rgb(255 255 255 / .84); font-size: var(--type-support); }
+.auth-stage .auth-switch .action-text { padding-inline: .5rem; color: var(--accent); }
+.auth-stage .auth-bar :focus-visible { outline-color: var(--accent); }
+
+.auth-main { display: flex; flex: 1; flex-direction: column; padding: 0; animation: none; }
+.auth-podium { --podium-pad: 16px; display: flex; flex: 1; flex-direction: column; align-items: center; padding: clamp(8px, 3vh, 40px) var(--podium-pad) 0; }
+/* Spare height splits between the space above the plate and the floor, so the podium sits low on tall screens. */
+.auth-podium::before { content: ''; flex: .5 1 0; }
+/* Floor band under the lectern: ground, not a surface. */
+.auth-floor {
+  flex: 1 1 0; align-self: stretch; display: flex; align-items: flex-start; justify-content: center; min-height: max(6.5rem, 12svh);
+  margin: -2.5rem calc(-1 * var(--podium-pad)) 0; padding: 3.25rem var(--podium-pad) 1rem;
+  background: var(--stage-floor); border-top: 2px solid var(--stage-edge);
+}
+/* Foot line on the floor: secondary routes off the plate, Yellow on the floor. */
+.auth-foot { display: flex; flex-wrap: wrap; justify-content: center; }
+.auth-stage .auth-foot .action-text { color: var(--accent); }
+.auth-stage .auth-foot :focus-visible { outline-color: var(--accent); }
+
+.auth-stage .auth-plate {
+  width: min(100%, 36rem); max-width: none; padding: clamp(24px, 3vw, 40px);
+  color: var(--ink); background: var(--surface); border: 2px solid var(--accent); border-radius: var(--surface-radius);
+  box-shadow: 0 2px 4px rgb(0 0 0 / .3), 0 40px 80px -30px rgb(0 0 0 / .8);
+  animation: enter var(--dur-3) var(--ease-out) both;
+}
+.auth-plate:focus { outline: none; }
+
+/* The lectern: tapered Yellow body under the plate, reaching the floor; its front carries the name plate. */
+.auth-lectern {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .25rem;
+  width: min(100% - 3rem, 26rem); min-height: clamp(6rem, 14svh, 9rem); padding: 1.25rem 3rem 1rem;
+  color: var(--ink); background: var(--accent); text-align: center;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  animation: lectern-rise var(--dur-3) var(--ease-out) both; animation-delay: 80ms;
+}
+.auth-lectern b {
+  display: -webkit-box; max-width: 100%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  font-family: var(--font-display); font-stretch: var(--stretch-display); font-size: clamp(1.5rem, 1rem + 1.4vw, 2rem);
+  font-weight: var(--weight-display); line-height: 1.05; letter-spacing: -.01em; overflow-wrap: anywhere;
+}
+.auth-lectern span { font-size: var(--type-label); font-weight: 600; }
+@keyframes lectern-rise { from { opacity: 0; transform: translateY(1.5rem); } }
+
+/* Optional level: the "not sure" entry to the quick guide. */
+.level-unsure {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%; min-height: 3.25rem;
+  padding: .75rem 1rem; color: var(--ink); text-align: left; background: var(--surface);
+  border: 1.5px dashed var(--ink); border-radius: var(--control-radius); font-weight: 600; cursor: pointer;
+}
+.level-unsure:hover { border-style: solid; background: var(--background); }
+.level-unsure small { color: var(--muted); font-size: var(--type-label); font-weight: 400; }
+.level-unsure svg { flex-shrink: 0; }
+
+/* Quick guide: one statement per screen, big answer cards, Continue at the bottom. */
+.guide {
+  width: min(100% - 32px, 40rem); max-width: none; max-height: min(100% - 32px, 46rem); padding: 0;
+  color: var(--ink); background: var(--surface); border: 2px solid var(--ink); border-radius: var(--surface-radius);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / .8);
+}
+.guide[open] { display: flex; flex-direction: column; animation: enter var(--dur-3) var(--ease-out) both; }
+.guide::backdrop { background: rgb(28 32 30 / .72); }
+.guide-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1rem; padding: 1rem clamp(1.25rem, 4vw, 2.5rem) 0; }
+.guide-close {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  color: var(--ink); background: transparent; border: 0; border-radius: var(--control-radius); cursor: pointer;
+}
+.guide-close { margin-inline-start: -11px; }
+.guide-close:hover { background: var(--background); }
+.guide-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .375rem; }
+.guide-bar span { height: .5rem; border-radius: 999px; background: var(--disabled); }
+.guide-bar span.done { background: var(--ink); }
+.guide-count { color: var(--muted); font-size: var(--type-label); font-weight: 600; white-space: nowrap; }
+.guide-body { display: flex; flex-direction: column; gap: 1.5rem; padding: 1.75rem clamp(1.25rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem); overflow-y: auto; }
+.guide-body[data-step] { animation: step-forward var(--dur-3) var(--ease-out) both; }
+.guide-statement {
+  font-family: var(--font-display); font-stretch: var(--stretch-display); font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.25rem);
+  font-weight: var(--weight-display); line-height: 1.1; letter-spacing: -.01em; text-wrap: balance;
+}
+.guide-answers { display: flex; flex-direction: column; gap: .625rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.guide-answers legend { margin-bottom: .75rem; color: var(--muted); font-size: var(--type-support); }
+.guide-answer { position: relative; display: block; }
+.guide-answer input { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.guide-answer span {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 3.75rem; padding: .875rem 1.125rem;
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--control-radius);
+  font-size: var(--type-medium); font-weight: 600;
+  transition: background-color var(--dur-1) ease, border-color var(--dur-1) ease, transform var(--dur-2) var(--ease-spring);
+}
+.guide-answer:hover span { border-color: var(--ink); }
+.guide-answer input:checked + span { background: var(--accent); border-color: var(--ink); }
+.guide-answer input:active + span { transform: scale(.98); }
+.guide-answer input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 4px; }
+.guide-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; }
+.guide-actions > :only-child { grid-column: 1 / -1; }
+.guide-result { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+.guide-level {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 7rem; padding: .5rem 1.25rem;
+  background: var(--accent); border: 1.5px solid var(--ink); border-radius: var(--surface-radius); box-shadow: var(--raised);
+  font-family: var(--font-display); font-stretch: var(--stretch-display); font-size: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  font-weight: var(--weight-display); line-height: 1;
+}
+.guide-result h2 { font-size: var(--type-section); }
+.guide-result p { max-width: 46ch; color: var(--muted); }
+.guide-result .guide-actions { width: 100%; }
+
+@media (max-width: 560px) {
+  .auth-bar { padding-inline: 16px; }
+  .auth-switch-prompt { display: none; }
+  .auth-stage .auth-plate { padding: 20px; }
+  .auth-lectern { min-height: 5.5rem; padding-top: 1rem; }
+  .guide { width: 100%; height: 100%; max-height: none; border: 0; border-radius: 0; }
+  .guide-body { flex: 1; }
+  .guide-actions { grid-template-columns: minmax(0, 1fr); margin-top: auto; }
+  .guide-actions > .action-secondary { order: 2; }
+}
+/* Four level choices stay on one row inside the plate on phones (two columns below 360px, from account.css). */
+@media (min-width: 360px) {
+  .auth-stage .auth-plate .choices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide-answer input:active + span { transform: none; }
+}

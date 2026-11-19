@@ -1,11 +1,11 @@
-import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import type { RoutePath } from '../routes';
 
-export function ActionLink({ to, children, variant = 'primary', className = '' }: {
-  to: RoutePath; children: ReactNode; variant?: 'primary' | 'secondary' | 'text'; className?: string;
+export function ActionLink({ to, children, variant = 'primary', className = '', current = false }: {
+  to: RoutePath; children: ReactNode; variant?: 'primary' | 'secondary' | 'text'; className?: string; current?: boolean;
 }) {
-  return <a href={`#${to}`} className={`action action-${variant} ${className}`}>{children}</a>;
+  return <a href={`#${to}`} className={`action action-${variant} ${className}`} aria-current={current ? 'page' : undefined}>{children}</a>;
 }
 
 export function Field({ label, hint, error, trailingAction, id: explicitId, ...input }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string; trailingAction?: ReactNode }) {
@@ -36,7 +36,7 @@ export function Choices({ label, options, value, onChange, describe = false, err
         <span>{value === option && <Check className="choice-check" size={16} aria-hidden="true" />}{option}</span>
       </label>)}
     </div>
-    {describe && <p className="small">Selected: {value}</p>}
+    {describe && value && <p className="sr-only">Selected: {value}</p>}
     {error && <p id={`${name}-error`} className="small field-error">{error}</p>}
   </fieldset>;
 }
@@ -48,9 +48,26 @@ export function Note({ title, children, tone = 'neutral' }: {
 }
 
 export function PageHeading({ title, children }: { title: string; children?: ReactNode }) {
-  return <div className="page-heading"><h1>{title}</h1>{children && <p className="muted">{children}</p>}</div>;
+  return <div className="page-heading"><h1>{title}</h1>{children && <p className="lead">{children}</p>}</div>;
 }
 
 export function BackToRooms() {
   return <ActionLink to="/rooms" variant="text" className="short-action">Back to rooms</ActionLink>;
+}
+
+/** Step label and progress bar. Moves focus to the label when the step changes and `focus` is true. */
+export function StepIndicator({ current, labels, focus = true }: { current: number; labels: readonly string[]; focus?: boolean }) {
+  const heading = useRef<HTMLHeadingElement>(null);
+  const shown = useRef(current);
+  useEffect(() => {
+    if (shown.current === current) return;
+    shown.current = current;
+    if (focus) heading.current?.focus();
+  }, [current, focus]);
+  return <div className="step-indicator">
+    <h2 ref={heading} tabIndex={-1} className="label">Step {current} of {labels.length} · {labels[current - 1]}</h2>
+    <div className="step-bar" aria-hidden="true">
+      {labels.map((label, index) => <span key={label} className={index < current ? 'done' : undefined} />)}
+    </div>
+  </div>;
 }

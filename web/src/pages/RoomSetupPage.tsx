@@ -3,8 +3,6 @@ import { ActionLink, BackToRooms, Choices, Field, PageHeading } from '../compone
 import { clampDuration, partnerStance, settingsLine, type RoomSettings } from '../roomSettings';
 import './setup.css';
 
-const motion = 'Should universities offer a four-day week?';
-
 const narrowQuery = '(max-width: 760px)';
 function subscribeNarrow(callback: () => void) {
   const list = window.matchMedia(narrowQuery);
@@ -16,8 +14,7 @@ const useNarrow = () => useSyncExternalStore(subscribeNarrow, () => window.match
 function AudioChecks() {
   return <section className="audio-checks stack-12" aria-labelledby="audio-heading">
     <h2 id="audio-heading">Check your audio</h2>
-    <p className="label">Optional · this device only</p>
-    <p id="audio-limit" className="small">Audio checks are not available in this scaffold. No recording, upload or room connection.</p>
+    <p id="audio-limit" className="small muted">Optional · not available yet</p>
     <div className="flex gap-3 audio-actions">
       <button type="button" className="action action-secondary flex-1" disabled aria-describedby="audio-limit">Test microphone</button>
       <button type="button" className="action action-secondary flex-1" disabled aria-describedby="audio-limit">Test speaker</button>
@@ -32,7 +29,6 @@ function PreviewBody({ settings, ticks }: { settings: RoomSettings; ticks: Ticks
   const random = settings.assignment === 'Random';
   return <section className="preview-card stack-16" aria-labelledby="preview-heading">
     <h2 id="preview-heading">Room preview</h2>
-    <p className="headline">{motion}</p>
     <p key={`line-${ticks.line}`} className={rowClass(ticks.line)}>{settingsLine(settings)}</p>
     <div key={`seats-${ticks.seats}`} className={`${rowClass(ticks.seats)} stack-12`}>
       <div><p className="label">You</p>{!random && <p className="small">{settings.stance}</p>}</div>
@@ -53,25 +49,24 @@ export function CreateRoomPage({ editing, settings, onChange }: { editing: boole
     onChange({ ...settings, [key]: value });
   }
   return <div className="stack-20 room-controls">
-    <PageHeading title="Set up your room">{editing ? 'Choose the topic and a few simple rules before inviting your partner.' : 'Start with these defaults, or change the room settings.'}</PageHeading>
+    <PageHeading title="Set up your room">{editing ? 'Choose the format, length and stances.' : 'Defaults below. Change them if you like.'}</PageHeading>
     <div className="setup-columns">
-      <div className="stack-20">
-        <p className="label">Topic</p>
-        <section className="stack-8 topic" aria-label="Selected topic"><h2>{motion}</h2><p className="small">Available topic</p><hr /></section>
+      <div className="stack-24 setup-main">
+        <section className="stack-8 topic" aria-labelledby="topic-label"><p id="topic-label" className="label">Topic</p><h2 className="setup-motion">{settings.motion}</h2></section>
         {editing ? <>
           <Choices label="Format" options={['Free flow', 'Timed turns']} value={settings.format} onChange={value => update('format', value)} describe />
           <Field label="Duration (minutes)" type="number" min={1} max={30} value={settings.duration} onChange={event => update('duration', event.target.value)} onBlur={() => update('duration', clampDuration(settings.duration))} hint="Choose from 1 to 30 minutes." />
           <Choices label="Stance assignment" options={['Random', 'I choose']} value={settings.assignment} onChange={value => update('assignment', value)} describe />
           {settings.assignment === 'I choose' && <Choices label="Your stance" options={['In favor (PRO)', 'Against (CON)']} value={settings.stance} onChange={value => update('stance', value)} describe />}
-          <p className="small muted">You and your partner receive opposite stances when both have joined.</p>
         </> : <div className="stack-8">
           <h2 className="label">Room settings</h2>
           <div><p>{settingsLine(settings)}</p><p>{settings.assignment === 'Random' ? 'Random stances' : `Your stance: ${settings.stance}`}</p></div>
           <ActionLink to="/rooms/new/settings" variant="text">Change settings</ActionLink>
         </div>}
-        <div className="stack-6 small muted"><p className="label">Room setup only</p><p>Creating a room does not start room audio or transcription.</p></div>
-        <ActionLink to={editing ? '/rooms/new' : '/rooms/waiting'}>{editing ? 'Use these settings' : 'Preview waiting lobby'}</ActionLink>
-        <BackToRooms />
+        <div className="action-bar action-bar-sticky">
+          <ActionLink to={editing ? '/rooms/new' : '/rooms/waiting'}>{editing ? 'Use these settings' : 'Create room'}</ActionLink>
+          <BackToRooms />
+        </div>
       </div>
       {narrow
         ? <div className="stack-16">

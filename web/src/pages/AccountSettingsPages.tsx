@@ -51,7 +51,7 @@ export function SessionsPage({ onSignOut }: { onSignOut: () => void }) {
   }
 
   return <div className="account-page account-form" aria-busy={pending || !sessions}>
-    <PageHeading title="Active sessions">Devices signed in to your account. Sign out any you do not recognise.</PageHeading>
+    <PageHeading title="Active sessions">Sign out any device you don't recognise.</PageHeading>
     {loadError && <div className="note note-error" role="alert"><p className="small field-error">{loadError}</p>
       <button type="button" className="action action-text" onClick={() => setReload(reload + 1)}>Try again</button></div>}
     {!sessions && !loadError && <p role="status" className="small muted">Loading sessions…</p>}

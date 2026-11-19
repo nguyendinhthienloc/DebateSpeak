@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 
 test('preview routes survive reload, back/forward and unknown URLs', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Cities should ban private cars from the centre' })).toBeVisible();
+  await page.getByRole('link', { name: 'Sign in', exact: true }).first().click();
   await expect(page.getByRole('heading', { name: 'Sign in', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Preview rooms', exact: true }).click();
   await page.getByRole('link', { name: 'Create a room', exact: true }).click();
@@ -33,8 +35,8 @@ test('room previews never create a session, request media, or call a service', a
   await page.goto('/#/rooms/new');
   await expect(page.getByRole('button', { name: 'Test microphone' })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Test speaker' })).toBeDisabled();
-  await page.getByRole('link', { name: 'Preview waiting lobby' }).click();
-  await expect(page.getByText('Sample room · no seat is reserved.')).toBeVisible();
+  await page.getByRole('link', { name: 'Create room', exact: true }).click();
+  await expect(page.locator('#lobby-media-limit')).toBeVisible();
   await page.getByLabel('Preview screen').selectOption('/rooms/ready');
   await expect(page.getByText('Room setup complete · 2 of 2 joined')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Test microphone' })).toBeDisabled();
@@ -46,11 +48,12 @@ test('room previews never create a session, request media, or call a service', a
 test('all screens reflow at narrow and desktop widths', async ({ page }) => {
   for (const width of [320, 390, 1102, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('/');
+    // Auth and welcome screens have no dev bar; read the route list from an app screen.
+    await page.goto('/#/rooms');
     const routes = await page.getByLabel('Preview screen').locator('option').evaluateAll(options =>
       options.map(option => (option as HTMLOptionElement).value));
     for (const route of routes) {
-      await page.getByLabel('Preview screen').selectOption(route);
+      await page.goto(`/#${route}`);
       await expect(page.locator('h1')).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${route} at ${width}px`).toBe(true);
     }
@@ -76,4 +79,28 @@ test('keyboard controls and settings remain local and usable', async ({ page }) 
   await page.getByRole('radio', { name: 'B2', exact: true }).focus();
   await page.keyboard.press('Space');
   await expect(page.getByRole('radio', { name: 'B2', exact: true })).toBeChecked();
+});
+
+test('pages animate in', async ({ page }) => {
+  await page.goto('/#/rooms');
+  expect(await page.locator('main').evaluate(element => getComputedStyle(element).animationName)).toBe('enter');
+});
+
+test('reduced motion disables every animation and leaves content visible', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#/register');
+  const main = page.locator('main');
+  expect(await main.evaluate(element => getComputedStyle(element).animationName)).toBe('none');
+  expect(await main.evaluate(element => getComputedStyle(element).opacity)).toBe('1');
+  const button = page.getByRole('button', { name: 'Continue', exact: true });
+  expect(await button.evaluate(element => getComputedStyle(element).transitionDuration)).toBe('0s');
+});
+
+test('page descriptions are short regular-weight leads', async ({ page }) => {
+  await page.goto('/#/rooms/new');
+  const lead = page.getByText('Defaults below. Change them if you like.', { exact: true });
+  await expect(lead).toBeVisible();
+  expect(await lead.evaluate(element => getComputedStyle(element).fontWeight)).toBe('400');
+  await page.goto('/#/rooms');
+  await expect(page.locator('.page-heading p')).toHaveCount(0);
 });

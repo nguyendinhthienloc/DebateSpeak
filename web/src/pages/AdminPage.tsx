@@ -50,7 +50,7 @@ export function AdminUsersPage() {
   }
 
   return <div className="account-page account-form">
-    <PageHeading title="Manage accounts">Find an account by email, then suspend or reactivate it.</PageHeading>
+    <PageHeading title="Manage accounts" />
     <form ref={search.form} className="account-fields" noValidate onSubmit={lookUp} aria-busy={search.pending}>
       <FormError message={search.message} />
       <Field name="email" label="Account email" type="email" autoCapitalize="none" spellCheck={false}

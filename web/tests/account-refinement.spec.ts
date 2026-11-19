@@ -6,6 +6,8 @@ test('password visibility stays inside the input group and keeps the value and l
     const input = page.getByLabel('Password', { exact: true });
     const button = page.getByRole('button', { name: 'Show password', exact: true });
     await input.fill('example-only-password');
+    // Measure after the page entrance motion settles.
+    await page.locator('main').evaluate(element => Promise.all(element.getAnimations().map(animation => animation.finished)));
     const field = await input.boundingBox();
     const action = await button.boundingBox();
     expect(field!.x + field!.width).toBeLessThanOrEqual(action!.x + 1);
@@ -26,6 +28,12 @@ test('password visibility stays inside the input group and keeps the value and l
 test('account CEFR selection has keyboard and non-color feedback', async ({ page }) => {
   for (const route of ['/register', '/profile']) {
     await page.goto(`/#${route}`);
+    if (route === '/register') {
+      await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
+      await page.getByLabel('Password', { exact: true }).fill('a valid password');
+      await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    }
     await page.getByRole('radio', { name: 'B1', exact: true }).focus();
     await page.keyboard.press('ArrowRight');
     await expect(page.getByRole('radio', { name: 'B2', exact: true })).toBeChecked();
@@ -43,6 +51,13 @@ test('all account routes reflow with enlarged text and preserve profile limitati
       await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${route} / ${width}px / 200% text`).toBe(true);
       await expect(page.locator('h1')).toHaveCount(1);
+      if (route === '/register') {
+        await page.getByLabel('Email', { exact: true }).fill('learner@example.com');
+        await page.getByLabel('Password', { exact: true }).fill('a valid password');
+        await page.getByRole('button', { name: 'Continue', exact: true }).click();
+        await page.getByLabel('Display name (optional)').fill('Trần Lê Anh Tuấn Nguyễn Đình Thiên Lộc');
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `register step 2 / ${width}px / 200% text`).toBe(true);
+      }
       if (route === '/profile') {
         await page.getByLabel('Display name', { exact: true }).fill('Trần Lê Anh Tuấn Nguyễn Đình Thiên Lộc Nguyễn Bảo Minh Triết');
         await expect(page.getByRole('button', { name: 'Save changes', exact: true })).toBeDisabled();
@@ -70,6 +85,20 @@ test('Vietnamese font coverage loads locally and blocked fonts keep forms usable
   await expect(page.getByRole('heading', { name: 'Your profile', exact: true })).toBeVisible();
   await page.getByLabel('Display name', { exact: true }).fill('Nguyễn Đình Thiên Lộc');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('display face loads locally for headings with Vietnamese coverage', async ({ page }) => {
+  const fonts: string[] = [];
+  page.on('request', request => { if (request.resourceType() === 'font') fonts.push(request.url()); });
+  await page.goto('/#/profile');
+  const h1 = page.locator('h1');
+  expect(await h1.evaluate(element => getComputedStyle(element).fontFamily)).toContain('Archivo');
+  expect(await h1.evaluate(element => getComputedStyle(element).fontWeight)).toBe('800');
+  await page.evaluate(async () => {
+    await document.fonts.load('800 32px "Archivo Variable"', 'Nguyễn Đình Thiên Lộc');
+  });
+  expect(fonts.some(url => url.includes('archivo-vietnamese'))).toBe(true);
+  expect(fonts.every(url => new URL(url).origin === 'http://127.0.0.1:5173')).toBe(true);
 });
 
 test('reduced motion preserves immediate control state without transitions', async ({ page }) => {

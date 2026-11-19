@@ -1,22 +1,21 @@
 .account-page {
-  --account-page-title: var(--type-page);
+  --account-page-title: var(--type-display);
   width: 100%;
   max-width: 27rem;
-  margin: 1rem auto 0;
+  margin: 0;
   text-align: left;
 }
 
-.account-form, .account-fields, .account-learning {
+.account-form, .account-fields {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
 .account-form { gap: 1.5rem; }
-.account-page.auth-form { max-width: 27rem; }
 .account-fields { gap: 1.25rem; }
 .account-page .page-heading { gap: .75rem; margin-bottom: .25rem; }
-.account-page h1 { font-size: var(--account-page-title); line-height: var(--leading-title); text-wrap: balance; }
+.account-page h1 { font-size: var(--account-page-title); }
 .account-page h2 { font-size: var(--type-section); line-height: 1.35; }
 .account-page .page-heading > p { max-width: 40ch; line-height: var(--leading-body); }
 .account-page .field { gap: .5rem; }
@@ -24,7 +23,6 @@
 .account-page .field > input { min-height: 3.25rem; }
 .account-page .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.5rem), 1fr)); gap: .625rem; }
 .account-page .choice span { min-height: 3.25rem; }
-.account-page .choices + .small { color: var(--ink); }
 
 .field-control {
   display: flex;
@@ -68,7 +66,7 @@
 .password-toggle:focus-visible { outline-offset: -3px; }
 .password-toggle svg { flex-shrink: 0; }
 
-.account-switch, .account-secondary {
+.account-secondary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,46 +74,52 @@
   column-gap: .25rem;
   row-gap: 0;
 }
-.account-switch > span { font-size: var(--type-support); }
-.account-switch .action, .account-secondary .action { width: auto; padding-inline: .5rem; }
-.account-limit {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: .375rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-}
-.account-limit .action { padding-inline: 0; }
-.account-learning { gap: 1.25rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-.account-learning h2 { margin-bottom: -.25rem; }
+.account-secondary .action { width: auto; padding-inline: .5rem; }
 .account-profile-notice { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
-.account-status { border: 1px solid var(--border); border-radius: .375rem; padding: .25rem .625rem; font-size: var(--type-label); font-weight: 600; }
+.account-status { border: 1px solid var(--border); border-radius: 999px; padding: .25rem .625rem; font-size: var(--type-label); font-weight: 600; }
 .account-save { display: flex; flex-direction: column; gap: .625rem; }
 .account-save > p { text-align: center; }
-.account-secondary { justify-content: space-between; padding-top: .5rem; border-top: 1px solid var(--border); }
-.account-page .note-success { border-inline-start: 3px solid var(--success); border-radius: 0; padding: 1rem; }
-.account-page .note-error { border-inline-start: 3px solid var(--error); border-radius: 0; }
+.account-secondary { justify-content: space-between; padding-top: .5rem; border-top: 1px solid var(--line); }
+/* Wide: profile form on the left, account links as a supporting pane on the right. */
+@media (min-width: 961px) {
+  .profile-page { display: grid; grid-template-columns: minmax(0, 34rem) minmax(15rem, 19rem); align-content: start; column-gap: clamp(3rem, 6vw, 6rem); max-width: none; }
+  .profile-page > * { grid-column: 1; }
+  .profile-page > .account-secondary {
+    grid-column: 2; grid-row: 1 / span 12; align-self: start; flex-direction: column; align-items: stretch;
+    padding: .5rem; border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
+  }
+  .profile-page > .account-secondary .action { justify-content: flex-start; padding-inline: .75rem; border-radius: var(--control-radius); }
+  .profile-page > .account-secondary .action:hover { text-decoration: none; background: var(--background); }
+}
+.account-page .note-success { padding: 1rem; border: 1px solid var(--success); border-radius: var(--control-radius); }
+.account-page .note-error { border: 1px solid var(--error); border-radius: var(--control-radius); }
 .account-page .field-error { font-weight: 600; }
 
-@media (max-width: 760px) {
-  .account-page { --account-page-title: 1.75rem; margin-top: .5rem; }
-}
 
 @media (max-width: 359px) {
   .account-page .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .account-page .action, .account-page .choice span, .password-toggle {
-    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
-  }
-}
+.step-indicator { display: flex; flex-direction: column; gap: .5rem; }
+.account-page .step-indicator h2 { font-size: 1.125rem; line-height: 1.35; }
+.step-indicator h2:focus { outline: none; }
+.step-indicator h2:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.step-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: .375rem; }
+.step-bar span { position: relative; height: .375rem; border-radius: 999px; background: var(--disabled); overflow: hidden; }
+.step-bar span::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-3) var(--ease-out); }
+.step-bar span.done::after { transform: scaleX(1); }
+/* A still frame clips the sliding step; its inline padding leaves room for 3px focus rings at 4px offset. */
+.register-viewport { overflow-x: clip; margin-inline: -.5rem; padding-inline: .5rem; }
+.register-step[data-direction="forward"] { animation: step-forward var(--dur-3) var(--ease-out) both; }
+.register-step[data-direction="back"] { animation: step-back var(--dur-3) var(--ease-out) both; }
+.register-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; }
+@keyframes step-forward { from { opacity: 0; transform: translateX(1.5rem); } }
+@keyframes step-back { from { opacity: 0; transform: translateX(-1.5rem); } }
 
 .session-list { display: flex; flex-direction: column; gap: .75rem; margin: 0; padding: 0; list-style: none; }
 .session-item, .admin-user {
   display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;
-  padding: 1rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--surface);
+  padding: 1rem; border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
 }
 .session-item .label { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
 .session-item .action, .admin-user .action { width: auto; }
@@ -124,4 +128,11 @@
 .delete-confirm { display: flex; align-items: flex-start; gap: .75rem; font-weight: 400; cursor: pointer; }
 .delete-confirm input { width: 1.25rem; min-width: 1.25rem; height: 1.25rem; min-height: 1.25rem; margin-top: .125rem; padding: 0; }
 .admin-user .account-fields { width: 100%; }
-.header-actions { display: flex; align-items: center; gap: .25rem; }
+.header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; margin-inline: -12px; }
+/* Current page: ink text and a yellow bar under the text only (inset by the 12px link padding). */
+.header-actions .action-text { color: var(--on-ink); }
+.header-actions [aria-current="page"] { position: relative; color: var(--accent); }
+.header-actions [aria-current="page"]::after { content: ''; position: absolute; inset-inline: 12px; bottom: 0; height: 4px; background: var(--accent); }
+.header-user { padding-inline: 12px; margin-inline-end: .5rem; }
+.app-header .header-user { color: rgb(255 255 255 / .78); }
+
