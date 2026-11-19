@@ -9,6 +9,7 @@ import { AdminUsersPage } from './pages/AdminPage';
 import { RecoveryPage } from './pages/RecoveryPage';
 import { CreateRoomPage } from './pages/RoomSetupPage';
 import { HomePage } from './pages/HomePage';
+import { RoomPage } from './pages/rooms/RoomPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { AuthStage } from './components/AuthStage';
 import { AppBar } from './components/Headers';
@@ -28,7 +29,7 @@ export default function App() {
   const path = useRoute();
   const route = routes.find(item => item.path === path);
   const dynamic = matchDynamicRoute(path);
-  const title = route?.label ?? (dynamic?.kind === 'join' ? 'Join a room' : 'Page not found');
+  const title = route?.label ?? (dynamic?.kind === 'join' ? 'Join a room' : dynamic?.kind === 'room' ? 'Room' : 'Page not found');
   const main = useRef<HTMLElement>(null);
   const [settings, setSettings] = useState(defaultSettings);
   const [registeredUser, setRegisteredUser] = useState<UserResponse>();
@@ -92,6 +93,7 @@ export default function App() {
   }
 
   function page() {
+    if (dynamic?.kind === 'room') return <RequireSession title="Room"><RoomPage roomId={dynamic.roomId} /></RequireSession>;
     if (dynamic?.kind === 'join') return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
     switch (path) {
       case '/sign-in': return <SignInPage registered={registeredUser} expired={expired} notice={notice} onSignedIn={signedIn} />;
