@@ -210,6 +210,38 @@ Recovery pages reuse account geometry and expose Change password after email
 verification and from Profile. That action requests a separate password-reset
 code; verification alone never grants password-change authorization.
 
+## SCRUM-61 room flow — November 19, 2026
+
+Supersedes older room, header and Preview badge notes below where they conflict.
+The sample room routes become one room page at `#/rooms/:id`; the invite link is
+`#/join/:code`. Palette, type, radius and shadow tokens are unchanged. Details:
+`docs/superpowers/specs/2026-11-19-room-flow-design.md`. Performer and peer
+review are to be recorded by the branch owner; no approval is claimed here.
+
+- **Two header styles.** The **App bar** is the Ink bar with brand and navigation
+  for signed-in app pages. The **Stage bar** carries the brand and at most one
+  action, for the welcome page, the auth stage, the live debate and its wrap-up.
+  During a debate the brand is plain text, not a link. The Preview badge is removed.
+- **Room stage exception.** The live debate (`LIVE`) and its wrap-up (`ENDED`) stand
+  on a full-screen Ink stage with a `stage-floor` band, like the auth stage.
+  Create, invite, join and consent stay on Cream.
+- **Invite code.** Display type in two groups of four (`K7Q2 M9XA`) on a Yellow
+  panel with an Ink edge; Copy invite link is the primary action.
+- **Side tags.** Pills that always carry the words "For" (Yellow, Ink text) or
+  "Against" (Ink, White text). Side never depends on colour alone.
+- **Mic meter.** Ink segments on White with an Ink edge, plus a text status such
+  as "We can hear you".
+- **Spotlight.** The current speaker's name in display type at the largest size
+  on the stage, in Yellow, with the side tag and "You" for the learner. The
+  partner keeps a White chip with name, side and state. A typed turn shows the
+  writer's name with the text under it.
+- **Debate clock.** A slim bar across the top of the stage showing time left,
+  with exact digits at its end. It never flashes or changes colour.
+- **Type panel.** Opened by a quiet text action. A side panel from 760px, a bottom
+  sheet below it; White with an Ink edge on the stage.
+- **No pressure.** Consent screens show no countdown and no "your partner is
+  waiting" wording; the partner's progress is one plain line.
+
 ## SCRUM-53 auth stage — November 17, 2026
 
 Supersedes the sign-in layout and account-note notes below where they conflict.
@@ -454,5 +486,5 @@ The user selected a proposed local microphone/speaker check in Figma. Start/Play
 - **Don't** add a second elevation, a glow or a hard offset shadow.
 - **Don't** grey out disabled controls with a fill.
 - **Don't** use white text on yellow, clipped focus rings or colour-only status communication.
-- **Don't** carry the welcome stage's alternating fields, floor bands or lecterns into app screens; the auth stage (sign in, register, account created, recovery) is the one exception.
+- **Don't** carry the welcome stage's alternating fields, floor bands or lecterns into app screens; the auth stage (sign in, register, account created, recovery) and the room stage (live debate and wrap-up) are the exceptions.
 - **Don't** present a Figma prototype or the welcome's example screens as evidence of working authentication, audio, transcript or feedback.
