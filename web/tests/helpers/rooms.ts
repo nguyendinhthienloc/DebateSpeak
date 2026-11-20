@@ -51,3 +51,35 @@ export const topics = [
 export async function mockTopics(page: Page) {
   await page.route('**/api/v1/topics', route => route.fulfill({ status: 200, json: { topics } }));
 }
+
+/** Serves everything Home loads: the topics list. */
+export async function mockHome(page: Page) {
+  await mockTopics(page);
+}
+
+/** Serves `POST /rooms/lookup` with a preview of Linh's 10-minute Free flow room. */
+export async function mockLookup(page: Page, preview: Record<string, unknown> = {}) {
+  await page.route('**/api/v1/rooms/lookup', route => route.fulfill({ status: 200, json: {
+    room_id: null, motion: 'Cities should ban private cars from the centre', creator_name: 'Linh',
+    format: 'FREE_FLOW', duration_seconds: 600, stance_mode: 'RANDOM', ...preview,
+  } }));
+}
+
+/** Serves `POST /rooms/join` with the joined room. */
+export async function mockJoin(page: Page, room: ReturnType<typeof snapshot>) {
+  await page.route('**/api/v1/rooms/join', route => route.fulfill({ status: 200, json: room }));
+}
+
+/** A visitor who starts signed out: refresh fails, sign-in succeeds as `name`. */
+export async function mockSignInFlow(page: Page, name: keyof typeof people) {
+  const user = { ...people[name], display_name: name, cefr_level: 'B1', created_at: '2026-11-12T08:00:00Z' };
+  await page.route('**/api/v1/auth/*', route => route.request().url().endsWith('/refresh')
+    ? route.fulfill({ status: 401, json: { code: 'no_session' } })
+    : route.fulfill({ status: 200, json: { access_token: `token-${name}`, token_type: 'bearer', expires_in: 900, user } }));
+}
+
+export async function submitSignIn(page: Page) {
+  await page.getByLabel('Email', { exact: true }).fill('sam@example.com');
+  await page.getByLabel('Password', { exact: true }).fill('a valid password');
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+}

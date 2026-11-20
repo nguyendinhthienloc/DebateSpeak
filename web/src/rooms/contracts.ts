@@ -67,3 +67,17 @@ function isTopic(value: unknown): value is Topic {
 export function isTopicList(value: unknown): value is { topics: Topic[] } {
   return isRecord(value) && Array.isArray(value.topics) && value.topics.every(isTopic);
 }
+
+/** What an invite code shows before joining. `room_id` is set only when the caller is already seated. */
+export interface RoomPreview {
+  room_id: string | null;
+  motion: string;
+  creator_name: string;
+  format: RoomFormat;
+  duration_seconds: number;
+  stance_mode: 'RANDOM' | 'CREATOR_PICKS';
+}
+
+export function isRoomPreview(value: unknown): value is RoomPreview {
+  return isRecord(value) && typeof value.motion === 'string' && typeof value.creator_name === 'string';
+}

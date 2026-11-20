@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useSession } from '../../auth/session';
 import type { RoomSnapshot } from '../../rooms/contracts';
 import { fatal, useRoom } from '../../rooms/useRoom';
+import { InviteView } from './InviteView';
 import { RoomNotice } from './RoomNotice';
+import './rooms.css';
 
 function Closed({ room, userId }: { room: RoomSnapshot; userId?: string }) {
   if (room.end_reason === 'EXPIRED') {
@@ -15,7 +18,15 @@ function Closed({ room, userId }: { room: RoomSnapshot; userId?: string }) {
 /** One page for a room in every state. Later views replace the placeholder for each status. */
 export function RoomPage({ roomId }: { roomId: string }) {
   const { session } = useSession();
-  const { room, error } = useRoom(roomId);
+  const { room, error, apply } = useRoom(roomId);
+  const [seen, setSeen] = useState(room);
+  const [partnerLeft, setPartnerLeft] = useState<string>();
+  if (room !== seen) {
+    // A guest who leaves before the start sends the room back to LOBBY with one seat.
+    const gone = seen?.participants.find(person => !room?.participants.some(other => other.user_id === person.user_id));
+    setSeen(room);
+    setPartnerLeft(room?.status === 'LOBBY' && gone ? gone.display_name : room && room.participants.length > 1 ? undefined : partnerLeft);
+  }
 
   if (!room) {
     if (fatal(error)) {
@@ -25,6 +36,8 @@ export function RoomPage({ roomId }: { roomId: string }) {
   }
 
   return <div data-testid="room-view" data-status={room.status}>
-    {room.status === 'CANCELLED' ? <Closed room={room} userId={session?.user.id} /> : <h1>{room.motion}</h1>}
+    {room.status === 'CANCELLED' ? <Closed room={room} userId={session?.user.id} />
+      : room.status === 'LOBBY' ? <InviteView room={room} onChange={apply} partnerLeft={partnerLeft} />
+      : <h1>{room.motion}</h1>}
   </div>;
 }

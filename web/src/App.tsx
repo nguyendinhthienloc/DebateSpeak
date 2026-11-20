@@ -9,11 +9,12 @@ import { AdminUsersPage } from './pages/AdminPage';
 import { RecoveryPage } from './pages/RecoveryPage';
 import { HomePage } from './pages/HomePage';
 import { CreateRoomPage } from './pages/rooms/CreateRoomPage';
+import { JoinDialog } from './pages/rooms/JoinDialog';
 import { RoomPage } from './pages/rooms/RoomPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { AuthStage } from './components/AuthStage';
 import { AppBar } from './components/Headers';
-import { matchDynamicRoute, routes, useRoute } from './routes';
+import { matchDynamicRoute, rememberInvite, routes, takeInvite, useRoute } from './routes';
 
 // One refresh per page load. Refresh tokens rotate, so a second concurrent call
 // (e.g. React StrictMode re-running effects) would replay a consumed token.
@@ -34,7 +35,7 @@ export default function App() {
   const [registeredUser, setRegisteredUser] = useState<UserResponse>();
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [notice, setNotice] = useState<string>();
-  const { session, expired } = useSession();
+  const { session, expired, restoring } = useSession();
   const isWelcome = path === '/welcome';
   const isAuth = ['/sign-in', '/register', '/account-created', '/forgot-password', '/reset-password', '/verify-email'].includes(path);
 
@@ -60,10 +61,19 @@ export default function App() {
     if (expired) window.location.hash = '/sign-in';
   }, [expired]);
 
+  // A signed-out visitor with an invite signs in first, then comes back to it.
+  const inviteCode = dynamic?.kind === 'join' ? dynamic.code : undefined;
+  useEffect(() => {
+    if (!inviteCode || session || restoring) return;
+    rememberInvite(inviteCode);
+    window.location.hash = '/sign-in';
+  }, [inviteCode, session, restoring]);
+
   function signedIn(response: TokenResponse) {
     setSession(response);
     setRegisteredUser(undefined);
-    window.location.hash = '/home';
+    const invite = takeInvite();
+    window.location.hash = invite ? `/join/${invite}` : '/home';
   }
 
   function signOut() {
@@ -93,7 +103,7 @@ export default function App() {
 
   function page() {
     if (dynamic?.kind === 'room') return <RequireSession title="Room"><RoomPage roomId={dynamic.roomId} /></RequireSession>;
-    if (dynamic?.kind === 'join') return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /></RequireSession>;
+    if (dynamic?.kind === 'join') return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /><JoinDialog code={dynamic.code} /></RequireSession>;
     switch (path) {
       case '/sign-in': return <SignInPage registered={registeredUser} expired={expired} notice={notice} onSignedIn={signedIn} />;
       case '/register': return <RegisterPage onRegistered={registered} />;

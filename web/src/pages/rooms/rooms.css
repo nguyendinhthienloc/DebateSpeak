@@ -40,3 +40,39 @@
 @media (prefers-reduced-motion: reduce) {
   .motion-option { animation: none; }
 }
+
+/* Invite: the code is the hero, on a Yellow panel with an Ink edge. */
+.invite { display: flex; flex-direction: column; gap: 1.5rem; max-width: 56rem; }
+.invite-panel {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: var(--edge); border-radius: var(--surface-radius); background: var(--accent); box-shadow: var(--raised);
+}
+.invite-code {
+  font-family: var(--font-display); font-stretch: var(--stretch-display); font-weight: var(--weight-display);
+  font-size: clamp(3rem, 1.5rem + 7vw, 7.5rem); line-height: 1; letter-spacing: .04em; font-variant-numeric: tabular-nums;
+  white-space: nowrap; overflow-wrap: normal; user-select: all;
+}
+.invite-panel .action-primary { color: var(--surface); background: var(--ink); }
+.invite-panel .action-primary:hover { color: var(--accent); background: var(--ink); }
+.invite-panel :focus-visible { outline-color: var(--ink); }
+.invite-copied:empty { display: none; }
+.invite-left { padding: 12px 16px; border-left: 4px solid var(--ink); background: var(--surface); }
+.invite-cancel { align-self: flex-start; width: auto; padding-inline: 0; }
+.side-tag { display: inline-flex; align-items: center; padding: 2px 12px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: var(--type-label); font-weight: 700; }
+.side-for { color: var(--ink); background: var(--accent); }
+.side-against { color: var(--surface); background: var(--ink); }
+
+/* Join: a modal over Home. */
+.join-dialog {
+  width: min(32rem, calc(100% - 32px)); max-height: calc(100% - 32px); margin: auto; padding: clamp(1.5rem, 3vw, 2rem);
+  color: var(--ink); border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
+}
+.join-dialog[open] { display: flex; flex-direction: column; gap: 1.25rem; }
+.join-dialog::backdrop { background: rgb(28 32 30 / .55); }
+.join-dialog h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); font-weight: var(--weight-display); line-height: 1.1; }
+.join-motion { font-size: var(--type-medium); font-weight: 600; line-height: 1.3; }
+.join-terms { display: flex; flex-direction: column; gap: .25rem; margin: 0; padding-left: 1.25rem; }
+
+@media (max-width: 420px) {
+  .invite-code { font-size: clamp(2.25rem, 13vw, 3rem); letter-spacing: .02em; }
+}

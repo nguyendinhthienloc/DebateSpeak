@@ -1,5 +1,5 @@
 import { clearSession, getAccessToken } from '../auth/session';
-import { isRoomSnapshot, isTopicList, type CreateRoomInput, type RoomSnapshot, type Topic } from './contracts';
+import { isRoomPreview, isRoomSnapshot, isTopicList, type CreateRoomInput, type RoomPreview, type RoomSnapshot, type Topic } from './contracts';
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL?.trim() || '/api/v1').replace(/\/+$/, '');
 
@@ -46,4 +46,16 @@ export async function listTopics(signal: AbortSignal): Promise<Topic[]> {
 
 export function createRoom(input: CreateRoomInput, signal: AbortSignal): Promise<RoomSnapshot> {
   return request('/rooms', 'POST', isRoomSnapshot, signal, input);
+}
+
+export function lookupRoom(code: string, signal: AbortSignal): Promise<RoomPreview> {
+  return request('/rooms/lookup', 'POST', isRoomPreview, signal, { code });
+}
+
+export function joinRoom(code: string, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request('/rooms/join', 'POST', isRoomSnapshot, signal, { code });
+}
+
+export function cancelRoom(id: string, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request(`/rooms/${encodeURIComponent(id)}/cancel`, 'POST', isRoomSnapshot, signal, {});
 }
