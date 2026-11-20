@@ -83,3 +83,65 @@ export async function submitSignIn(page: Page) {
   await page.getByLabel('Password', { exact: true }).fill('a valid password');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 }
+
+declare global {
+  interface Window { __mic: { requests: number; stopped: number } }
+}
+
+/** Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`. */
+export async function fakeMic(page: Page, options: { signal: boolean; denied?: boolean }) {
+  await page.addInitScript(({ signal, denied }) => {
+    window.__mic = { requests: 0, stopped: 0 };
+    const devices = navigator.mediaDevices;
+    devices.enumerateDevices = async () => [{ deviceId: 'fake-mic', groupId: 'fake', kind: 'audioinput', label: 'Built-in microphone', toJSON: () => ({}) }];
+    devices.getUserMedia = async () => {
+      window.__mic.requests += 1;
+      if (denied) throw new DOMException('Permission denied', 'NotAllowedError');
+      const context = new AudioContext();
+      const output = context.createMediaStreamDestination();
+      if (signal) {
+        const tone = context.createOscillator();
+        const gain = context.createGain();
+        gain.gain.value = 0.5;
+        tone.connect(gain).connect(output);
+        tone.start();
+      }
+      for (const track of output.stream.getTracks()) {
+        const stop = track.stop.bind(track);
+        track.stop = () => { window.__mic.stopped += 1; stop(); };
+      }
+      return output.stream;
+    };
+  }, options);
+}
+
+/** Signs in as Linh and opens a READY room with Sam. Reports the last Ready body and how many times Ready was withdrawn. */
+export async function openReadyRoom(page: Page) {
+  await signInAs(page, 'Linh');
+  const waiting = snapshot({ status: 'READY' });
+  const room = await mockRoom(page, waiting);
+  let ready: unknown;
+  let cleared = 0;
+  await page.route(`**/api/v1/rooms/${roomId}/ready`, route => {
+    if (route.request().method() === 'PUT') {
+      ready = route.request().postDataJSON();
+      const next = snapshot({ status: 'READY', participants: [{ ...linhSeat, ready: true, input: 'VOICE' }, samSeat] });
+      room.set(next);
+      return route.fulfill({ status: 200, json: next });
+    }
+    cleared += 1;
+    room.set(waiting);
+    return route.fulfill({ status: 200, json: waiting });
+  });
+  await page.route(`**/api/v1/rooms/${roomId}/leave`, route => route.fulfill({ status: 200,
+    json: snapshot({ status: 'CANCELLED', code: null, end_reason: 'CANCELLED' }) }));
+  await page.goto(`/#/rooms/${roomId}`);
+  return { ready: () => ready, cleared: () => cleared };
+}
+
+/** Ticks the consent box and passes the microphone test. */
+export async function passAgree(page: Page) {
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  await page.getByText('We can hear you', { exact: true }).waitFor();
+}

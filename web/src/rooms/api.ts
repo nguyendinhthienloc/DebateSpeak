@@ -1,5 +1,5 @@
 import { clearSession, getAccessToken } from '../auth/session';
-import { isRoomPreview, isRoomSnapshot, isTopicList, type CreateRoomInput, type RoomPreview, type RoomSnapshot, type Topic } from './contracts';
+import { isRoomPreview, isRoomSnapshot, isTopicList, type CreateRoomInput, type InputMode, type RoomPreview, type RoomSnapshot, type Topic } from './contracts';
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL?.trim() || '/api/v1').replace(/\/+$/, '');
 
@@ -58,4 +58,17 @@ export function joinRoom(code: string, signal: AbortSignal): Promise<RoomSnapsho
 
 export function cancelRoom(id: string, signal: AbortSignal): Promise<RoomSnapshot> {
   return request(`/rooms/${encodeURIComponent(id)}/cancel`, 'POST', isRoomSnapshot, signal, {});
+}
+
+export function leaveRoom(id: string, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request(`/rooms/${encodeURIComponent(id)}/leave`, 'POST', isRoomSnapshot, signal, {});
+}
+
+/** Ready includes consent: the server refuses Ready without it. */
+export function setReady(id: string, input: InputMode, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request(`/rooms/${encodeURIComponent(id)}/ready`, 'PUT', isRoomSnapshot, signal, { consent: true, input });
+}
+
+export function clearReady(id: string, signal: AbortSignal): Promise<RoomSnapshot> {
+  return request(`/rooms/${encodeURIComponent(id)}/ready`, 'DELETE', isRoomSnapshot, signal);
 }

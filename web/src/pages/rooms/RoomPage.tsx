@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSession } from '../../auth/session';
 import type { RoomSnapshot } from '../../rooms/contracts';
 import { fatal, useRoom } from '../../rooms/useRoom';
+import { AgreeView } from './AgreeView';
 import { InviteView } from './InviteView';
 import { RoomNotice } from './RoomNotice';
 import './rooms.css';
@@ -21,6 +22,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
   const { room, error, apply } = useRoom(roomId);
   const [seen, setSeen] = useState(room);
   const [partnerLeft, setPartnerLeft] = useState<string>();
+  const [left, setLeft] = useState(false);
   if (room !== seen) {
     // A guest who leaves before the start sends the room back to LOBBY with one seat.
     const gone = seen?.participants.find(person => !room?.participants.some(other => other.user_id === person.user_id));
@@ -28,6 +30,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     setPartnerLeft(room?.status === 'LOBBY' && gone ? gone.display_name : room && room.participants.length > 1 ? undefined : partnerLeft);
   }
 
+  if (left) return <RoomNotice title="You left the room">No audio was shared.</RoomNotice>;
   if (!room) {
     if (fatal(error)) {
       return <RoomNotice title="This room is not available">You may not be part of it, or it may no longer exist.</RoomNotice>;
@@ -38,6 +41,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
   return <div data-testid="room-view" data-status={room.status}>
     {room.status === 'CANCELLED' ? <Closed room={room} userId={session?.user.id} />
       : room.status === 'LOBBY' ? <InviteView room={room} onChange={apply} partnerLeft={partnerLeft} />
+      : room.status === 'READY' ? <AgreeView room={room} onChange={apply} onLeft={() => setLeft(true)} />
       : <h1>{room.motion}</h1>}
   </div>;
 }
