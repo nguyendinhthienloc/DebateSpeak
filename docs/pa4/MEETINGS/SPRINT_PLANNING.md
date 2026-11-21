@@ -36,23 +36,23 @@ Build 3: Implement Functional Groups FG-03 (Room & Live Session Management) and 
 
 | Jira Key | Summary / Task | Owner | Reviewer | Deliverable / Artifact |
 |---|---|---|---|---|
-| SCRUM-53 | Sprint setup: create `pa4` branch from `pa3`, ensure `pa3` merged to `dev` | Nguyễn Đình Thiên Lộc (24125093) | n/a | `pa4` sprint branch |
+| SCRUM-68 | Sprint setup: create `pa4` branch from `pa3`, ensure `pa3` merged to `dev` | Nguyễn Đình Thiên Lộc (24125093) | n/a | `pa4` sprint branch |
 | SCRUM-54 | Part A: Revised Use-Case Specifications (2nd submission) + `Changes.md` | Trần Lê Anh Tuấn (24125107) | Nguyễn Đình Thiên Lộc (24125093) | `docs/pa4/Changes.md`, `docs/pa4/USE_CASE_SPECIFICATIONS.md` |
-| SCRUM-60 | Part B: C4 Level 1 System Context Diagram + Tech Stack description | Nguyễn Hồng Tấn Tài (24125078) | Trần Lê Anh Tuấn (24125107) | `docs/pa4/ARCHITECTURE_C4_CONTEXT.md` |
-| SCRUM-55 | Part C1: C4 Level 2 Container Diagram + protocol descriptions | Nguyễn Anh Khoa (24125058) | Nguyễn Hồng Tấn Tài (24125078) | `docs/pa4/ARCHITECTURE_C4_CONTAINER.md` |
-| SCRUM-56 | Part C2: C4 Level 3 Backend Component Diagram (Spring Boot + workers) | Nguyễn Anh Khoa (24125058) | Nguyễn Hồng Tấn Tài (24125078) | `docs/pa4/ARCHITECTURE_C4_COMPONENTS_BE.md` |
+| SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack description | Nguyễn Hồng Tấn Tài (24125078) | Trần Lê Anh Tuấn (24125107) | `docs/pa4/ARCHITECTURE_C4_CONTEXT.md` |
+| SCRUM-56 | Part C1: C4 Level 2 Container Diagram + protocol descriptions | Nguyễn Anh Khoa (24125058) | Nguyễn Hồng Tấn Tài (24125078) | `docs/pa4/ARCHITECTURE_C4_CONTAINER.md` |
+| SCRUM-57 | Part C2: C4 Level 3 Backend Component Diagram (Spring Boot + workers) | Nguyễn Anh Khoa (24125058) | Nguyễn Hồng Tấn Tài (24125078) | `docs/pa4/ARCHITECTURE_C4_COMPONENTS_BE.md` |
 | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram (React SPA) | Nguyễn Bảo Minh Triết (24125047) | Nguyễn Anh Khoa (24125058) | `docs/pa4/ARCHITECTURE_C4_COMPONENTS_FE.md` |
-| SCRUM-61 | Part D: Deployment Diagram (Mermaid) + infrastructure description | Nguyễn Đình Thiên Lộc (24125093) | Nguyễn Anh Khoa (24125058) | `docs/pa4/DEPLOYMENT_DIAGRAM.md` |
-| SCRUM-62 | Part E1: FG-03 Backend — Room API, state machine, DB (Spring Boot) | Nguyễn Hồng Tấn Tài (24125078) | Trần Lê Anh Tuấn (24125107) | `api/authify/src/main/java/org/debatespeak/authify/room/` |
-| SCRUM-63 | Part E2: FG-03 Frontend — Room Setup, Join modal, Lobby state sync, Ready | Nguyễn Bảo Minh Triết (24125047) | Nguyễn Đình Thiên Lộc (24125093) | `web/src/pages/rooms/`, `web/src/pages/LobbyPage.tsx` |
-| SCRUM-65 | Part E3: FG-04 Backend — LiveKit token generation API (Spring Boot) | Nguyễn Hồng Tấn Tài (24125078) | Nguyễn Anh Khoa (24125058) | `api/authify/src/main/java/org/debatespeak/authify/livekit/` |
-| SCRUM-64 | Part E4: FG-04 Frontend — LiveKit SDK, audio tracks, dual-consent UI | Nguyễn Bảo Minh Triết (24125047) | Nguyễn Anh Khoa (24125058) | `web/src/components/audio/`, `web/src/hooks/useLiveKit.ts` |
-| SCRUM-57 | Part E5: Spec Kit artifacts for FG-03 (`specs/003-fg03-rooms/`) and FG-04 (`specs/004-fg04-audio/`) | Nguyễn Anh Khoa (24125058) | Trần Lê Anh Tuấn (24125107) | `specs/003-fg03-rooms/`, `specs/004-fg04-audio/` |
-| SCRUM-70 | Part E6 & E7: Narrated YouTube demo video for FG-03 + FG-04 | Nguyễn Bảo Minh Triết (24125047) | All members | `docs/pa4/DEMO_VIDEO.md` (YouTube link) |
-| SCRUM-71 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | Trần Lê Anh Tuấn (24125107) | Nguyễn Đình Thiên Lộc (24125093) | `docs/pa4/AI_USAGE_LOG.md` |
+| SCRUM-59 | Part D: Deployment Diagram (Mermaid) + infrastructure description | Nguyễn Đình Thiên Lộc (24125093) | Nguyễn Anh Khoa (24125058) | `docs/pa4/DEPLOYMENT_DIAGRAM.md` |
+| SCRUM-60 | Part E1: FG-03 Backend — Room API, state machine, DB (Spring Boot) | Nguyễn Hồng Tấn Tài (24125078) | Trần Lê Anh Tuấn (24125107) | `api/authify/src/main/java/org/debatespeak/authify/room/` |
+| SCRUM-61 | Part E2: FG-03 Frontend — Room Setup, Join modal, Lobby state sync, Ready | Nguyễn Bảo Minh Triết (24125047) | Nguyễn Đình Thiên Lộc (24125093) | `web/src/pages/rooms/`, `web/src/pages/LobbyPage.tsx` |
+| SCRUM-62 | Part E3: FG-04 Backend — LiveKit token generation API (Spring Boot) | Nguyễn Hồng Tấn Tài (24125078) | Nguyễn Anh Khoa (24125058) | `api/authify/src/main/java/org/debatespeak/authify/livekit/` |
+| SCRUM-63 | Part E4: FG-04 Frontend — LiveKit SDK, audio tracks, dual-consent UI | Nguyễn Bảo Minh Triết (24125047) | Nguyễn Anh Khoa (24125058) | `web/src/components/audio/`, `web/src/hooks/useLiveKit.ts` |
+| SCRUM-64 | Part E5: Spec Kit artifacts for FG-03 (`specs/003-fg03-rooms/`) and FG-04 (`specs/004-fg04-audio/`) | Nguyễn Anh Khoa (24125058) | Trần Lê Anh Tuấn (24125107) | `specs/003-fg03-rooms/`, `specs/004-fg04-audio/` |
+| SCRUM-65 | Part E6 & E7: Narrated YouTube demo video for FG-03 + FG-04 | Nguyễn Bảo Minh Triết (24125047) | All members | `docs/pa4/DEMO_VIDEO.md` (YouTube link) |
+| SCRUM-66 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | Trần Lê Anh Tuấn (24125107) | Nguyễn Đình Thiên Lộc (24125093) | `docs/pa4/AI_USAGE_LOG.md` |
 | SCRUM-67 | Part F2: Weekly Report — Sprint Planning, Check-ins, Review, Jira board | Nguyễn Đình Thiên Lộc (24125093) | Trần Lê Anh Tuấn (24125107) | `docs/pa4/WEEKLY_REPORT.md`, `docs/pa4/MEETINGS/` |
 | SCRUM-68 | Part S: Compile all PA4 Markdown documents to PDF via `report/pdf/build.py` | Nguyễn Đình Thiên Lộc (24125093) | Nguyễn Anh Khoa (24125058) | `docs/pa4/*.pdf` |
-| SCRUM-69 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `PA4-Group02.zip` | Nguyễn Đình Thiên Lộc (24125093) | All members | `PA4-Group02.zip`, `GIT_LOG.txt` |
+| SCRUM-68 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `PA4-Group02.zip` | Nguyễn Đình Thiên Lộc (24125093) | All members | `PA4-Group02.zip`, `GIT_LOG.txt` |
 
 ---
 

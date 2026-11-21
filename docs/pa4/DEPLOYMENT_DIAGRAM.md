@@ -4,7 +4,7 @@
 |---|---|
 | **Document** | UML Deployment Diagram Specification |
 | **Sprint** | Sprint 4 (PA4) — Increment 2 |
-| **Task** | SCRUM-61 |
+| **Task** | SCRUM-59 |
 | **Owner** | Nguyễn Đình Thiên Lộc (24125093) — DevOps & QA / Fact-Checking Lead |
 | **Reviewer** | Nguyễn Anh Khoa (24125058) — AI Audio & Speech Pipeline Lead |
 | **Date** | November 22, 2026 |

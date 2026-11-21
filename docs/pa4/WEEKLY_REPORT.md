@@ -15,23 +15,23 @@ Status is determined strictly by verified repository evidence (merged pull reque
 
 | Member | Student ID | Team Role | Jira Key | Task Summary | Status | Evidence / Notes |
 |---|---|---|---|---|---|---|
-| **Nguyễn Đình Thiên Lộc** | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-53 | Sprint setup: create `pa4` branch from `pa3`, merge `pa3` to `dev` | **Done** | Branch `pa4` created; PR #67 merged `pa3` into `dev` on 2026-11-14 |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-61 | Part D: Deployment Diagram (Mermaid) + infrastructure prose | To Do | Branch `feature/SCRUM-61-deployment-diagram` exists; deliverable `docs/pa4/DEPLOYMENT_DIAGRAM.md` missing |
+| **Nguyễn Đình Thiên Lộc** | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Sprint setup: create `pa4` branch from `pa3`, merge `pa3` to `dev` | **Done** | Branch `pa4` created; PR #67 merged `pa3` into `dev` on 2026-11-14 |
+| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-59 | Part D: Deployment Diagram (Mermaid) + infrastructure prose | In Progress | Drafted with PDF on `feature/SCRUM-68-graphify`; awaiting review |
 | Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-67 | Part F2: Weekly Report & Scrum meeting documentation | In Progress | Drafted on branch `feature/SCRUM-67-pa4-weekly-report` |
 | Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Part S: Compile all PA4 Markdown documents to PDF | To Do | Deliverables `docs/pa4/*.pdf` missing |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-69 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `.zip` | To Do | Awaiting sprint freeze |
+| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `.zip` | To Do | Awaiting sprint freeze |
 | **Nguyễn Bảo Minh Triết** | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_COMPONENTS_FE.md` missing |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E2: FG-03 Frontend (Room Setup, Join Dialog, Room Page, Lobby sync) | **Done** | PR #70 merged into `pa4` on 2026-11-21 (commit `7676197`) |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-64 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | To Do | Partial mic-check UI merged in PR #70; LiveKit SDK integration pending |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-70 | Part E6: Narrated YouTube demo video for FG-03 + FG-04 | To Do | Deliverable `docs/pa4/DEMO_VIDEO.md` missing |
-| **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTEXT.md` missing |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-62 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Endpoints in `api/authify/src/main/java/.../room/` not yet on `pa4` |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-65 | Part E3: FG-04 Backend (LiveKit token generation API endpoint) | To Do | Deliverable in `api/authify/src/main/java/.../livekit/` missing |
-| **Nguyễn Anh Khoa** | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-55 | Part C1: C4 Level 2 Container Diagram (Mermaid) + protocols | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTAINER.md` missing |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-56 | Part C2: C4 Level 3 Backend Component Diagram | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_COMPONENTS_BE.md` missing |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-57 | Part E5: Spec Kit artifacts for FG-03 & FG-04 (`specs/003-`, `specs/004-`) | To Do | Deliverables in `specs/003-fg03-rooms/` and `specs/004-fg04-audio/` missing |
+| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-61 | Part E2: FG-03 Frontend (Room Setup, Join Dialog, Room Page, Lobby sync) | **Done** | PR #70 merged into `pa4` on 2026-11-21 (commit `7676197`) |
+| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | To Do | Partial mic-check UI merged in PR #70; LiveKit SDK integration pending |
+| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-65 | Part E6: Narrated YouTube demo video for FG-03 + FG-04 | To Do | Deliverable `docs/pa4/DEMO_VIDEO.md` missing |
+| **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTEXT.md` missing |
+| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Endpoints in `api/authify/src/main/java/.../room/` not yet on `pa4` |
+| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-62 | Part E3: FG-04 Backend (LiveKit token generation API endpoint) | To Do | Deliverable in `api/authify/src/main/java/.../livekit/` missing |
+| **Nguyễn Anh Khoa** | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-56 | Part C1: C4 Level 2 Container Diagram (Mermaid) + protocols | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTAINER.md` missing |
+| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-57 | Part C2: C4 Level 3 Backend Component Diagram | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_COMPONENTS_BE.md` missing |
+| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-64 | Part E5: Spec Kit artifacts for FG-03 & FG-04 (`specs/003-`, `specs/004-`) | To Do | Deliverables in `specs/003-fg03-rooms/` and `specs/004-fg04-audio/` missing |
 | **Trần Lê Anh Tuấn** | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-54 | Part A: Revised Use-Case Specifications (2nd submission) + `Changes.md` | To Do | Deliverables `docs/pa4/Changes.md`, `docs/pa4/USE_CASE_SPECIFICATIONS.md` missing |
-| Trần Lê Anh Tuấn | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-71 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | To Do | Deliverable `docs/pa4/AI_USAGE_LOG.md` missing |
+| Trần Lê Anh Tuấn | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-66 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | To Do | Deliverable `docs/pa4/AI_USAGE_LOG.md` missing |
 
 ---
 
@@ -42,18 +42,18 @@ Status is determined strictly by verified repository evidence (merged pull reque
    - Commit `ef607a4` (2026-11-17, Khoa Nguyen): Added SCRUM-46 `STTAdapter` protocol implementation and unit tests (`api/app/adapters/stt.py`, `tests/unit/test_stt_adapter.py`).
 
 2. **Prototype & Specification Refinement:**
-   - **Pull Request #68** (merged 2026-11-17 by Triết, commit `4bd5201`): Removed PA3 Part D clickable prototype per grading scope while retaining prototype UI screenshots (`docs/pa3/`).
-   - **Pull Request #69** (merged 2026-11-19 by Tuấn, commit `3d3c3f8`): Merged UI refresh (`feature/SCRUM-53-ui-refresh`) into `pa4`, establishing typography scales, motion tokens, entrance animations, split-step registration, and page shells.
+   - **Pull Request #68** (merged 2026-11-17, commit `4bd5201`): Removed PA3 Part D clickable prototype per grading scope while retaining prototype UI screenshots (`docs/pa3/`).
+   - **Pull Request #69** (merged 2026-11-19, commit `3d3c3f8`): Merged UI refresh (`feature/SCRUM-53-ui-refresh`) into `pa4`, establishing typography scales, motion tokens, entrance animations, split-step registration, and page shells.
 
 3. **FG-03 Frontend Room Flow:**
-   - **Pull Request #70** (merged 2026-11-21 by Khoa, commit `7676197`): Merged FG-03 frontend implementation (`feature/SCRUM-61-fg03-frontend`) into `pa4`. Deliverables included:
+   - **Pull Request #70** (merged 2026-11-21, commit `7676197`): Merged FG-03 frontend implementation (`feature/SCRUM-61-fg03-frontend`) into `pa4`. Deliverables included:
      - Pages & Views: `CreateRoomPage.tsx`, `InviteView.tsx`, `AgreeView.tsx`, `JoinDialog.tsx`, `RoomPage.tsx`, `RoomNotice.tsx`.
      - State Management & API: `web/src/rooms/api.ts`, `web/src/rooms/contracts.ts`, `web/src/rooms/useRoom.ts`, `web/src/rooms/useMicCheck.ts`.
      - Automated Browser Tests: `room-create.spec.ts`, `room-invite.spec.ts`, `room-agree.spec.ts`, `room-page.spec.ts`, `room-routes.spec.ts`.
 
 4. **Sprint Management & Documentation in Progress:**
-   - Branch `feature/SCRUM-67-pa4-weekly-report` (Lộc): Drafted `docs/pa4/MEETINGS/SPRINT_PLANNING.md` and `docs/pa4/WEEKLY_REPORT.md`.
-   - Branch `feature/SCRUM-61-deployment-diagram` (Lộc): Local branch initialized for Deployment Diagram drafting.
+   - Branch `feature/SCRUM-68-graphify` (Lộc): Drafted `docs/pa4/MEETINGS/SPRINT_PLANNING.md` and `docs/pa4/WEEKLY_REPORT.md`.
+   - Same branch: `docs/pa4/DEPLOYMENT_DIAGRAM.md` and its PDF (SCRUM-59).
 
 ---
 
@@ -66,7 +66,7 @@ Status is determined strictly by verified repository evidence (merged pull reque
 - **LiveKit Cloud Credentials & Audio End-to-End:**
   - FG-04 requires active LiveKit Cloud configuration (`LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`) tested through the Spring Boot token endpoint and React LiveKit Client SDK.
 - **Demo Video Recording Dependency:**
-  - Triết's narrated YouTube demo (SCRUM-70) requires a fully functioning end-to-end flow across two separate browser sessions (Affirmative and Negative debaters), which is blocked until backend endpoints and audio integration are merged.
+  - Triết's narrated YouTube demo (SCRUM-65) requires a fully functioning end-to-end flow across two separate browser sessions (Affirmative and Negative debaters), which is blocked until backend endpoints and audio integration are merged.
 - **Strict PDF Build and Submission Freeze:**
   - Every document must compile cleanly to PDF via `report/pdf/build.py` without layout or table truncation before the freeze checklist can be marked complete.
 
