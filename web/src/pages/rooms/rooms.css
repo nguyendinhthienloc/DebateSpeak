@@ -1,0 +1,99 @@
+/* Create: settings on the left, the motion list as an Ink pane on the right, together filling the screen. */
+.create {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 30rem); gap: clamp(2rem, 4vw, 4rem);
+  min-height: max(32rem, calc(100svh - 13rem));
+}
+.create-form { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+.create-motion { display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }
+.create-motion .action { width: auto; }
+/* Keep each choice on one line; on narrow screens the row wraps instead. */
+.create .choices { flex-wrap: wrap; }
+.create .choice { flex: 1 0 auto; }
+.create .choice span { white-space: nowrap; }
+.create-actions { margin-top: auto; }
+.create-pane {
+  display: flex; flex-direction: column; gap: 1rem; min-width: 0; min-height: 0; padding: clamp(1.25rem, 2vw, 1.75rem);
+  border-radius: var(--surface-radius); color: var(--on-ink); background: var(--ink);
+}
+.create-pane :focus-visible { outline-color: var(--accent); }
+.create-pane h2 { font-size: 1.5rem; font-weight: var(--weight-display); }
+/* The list scrolls inside the pane so it never makes the page taller than the settings. */
+.motion-list { display: flex; flex-direction: column; gap: .625rem; flex: 1 1 0; min-height: 0; margin: 0; padding: 4px; border: 0; overflow-y: auto; }
+.motion-option {
+  position: relative; display: flex; flex-direction: column; gap: .5rem; padding: 1rem 1.125rem; color: var(--ink); cursor: pointer;
+  border: var(--edge); border-radius: var(--surface-radius); background: var(--surface);
+  animation: enter var(--dur-3) var(--ease-out) both; animation-delay: calc(var(--i, 0) * 60ms);
+}
+.motion-option input { position: absolute; opacity: 0; inset: 0; min-height: 0; cursor: pointer; }
+.motion-option:has(input:checked) { background: var(--accent); }
+.motion-option:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 3px; }
+.motion-option-text { font-size: var(--type-medium); font-weight: 600; line-height: 1.3; }
+.motion-option-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.motion-option-meta svg { flex-shrink: 0; }
+
+@media (max-width: 959px) {
+  .create { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .create-pane { padding: 12px; }
+  .motion-list { flex: none; overflow: visible; }
+  .create-actions { position: sticky; bottom: 0; z-index: 1; margin-inline: calc(-1 * var(--gutter)); padding: 12px var(--gutter); border-top: 1px solid var(--line); background: var(--background); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-option { animation: none; }
+}
+
+/* Invite: the code is the hero, on a Yellow panel with an Ink edge. */
+.invite { display: flex; flex-direction: column; gap: 1.5rem; max-width: 56rem; }
+.invite-panel {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: var(--edge); border-radius: var(--surface-radius); background: var(--accent); box-shadow: var(--raised);
+}
+.invite-code {
+  font-family: var(--font-display); font-stretch: var(--stretch-display); font-weight: var(--weight-display);
+  font-size: clamp(3rem, 1.5rem + 7vw, 7.5rem); line-height: 1; letter-spacing: .04em; font-variant-numeric: tabular-nums;
+  white-space: nowrap; overflow-wrap: normal; user-select: all;
+}
+.invite-panel .action-primary { color: var(--surface); background: var(--ink); }
+.invite-panel .action-primary:hover { color: var(--accent); background: var(--ink); }
+.invite-panel :focus-visible { outline-color: var(--ink); }
+.invite-copied:empty { display: none; }
+.invite-left { padding: 12px 16px; border-left: 4px solid var(--ink); background: var(--surface); }
+.invite-cancel { align-self: flex-start; width: auto; padding-inline: 0; }
+.side-tag { display: inline-flex; align-items: center; padding: 2px 12px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: var(--type-label); font-weight: 700; }
+.side-for { color: var(--ink); background: var(--accent); }
+.side-against { color: var(--surface); background: var(--ink); }
+
+/* Join: a modal over Home. */
+.join-dialog {
+  width: min(32rem, calc(100% - 32px)); max-height: calc(100% - 32px); margin: auto; padding: clamp(1.5rem, 3vw, 2rem);
+  color: var(--ink); border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
+}
+.join-dialog[open] { display: flex; flex-direction: column; gap: 1.25rem; }
+.join-dialog::backdrop { background: rgb(28 32 30 / .55); }
+.join-dialog h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); font-weight: var(--weight-display); line-height: 1.1; }
+.join-motion { font-size: var(--type-medium); font-weight: 600; line-height: 1.3; }
+.join-terms { display: flex; flex-direction: column; gap: .25rem; margin: 0; padding-left: 1.25rem; }
+
+@media (max-width: 420px) {
+  .invite-code { font-size: clamp(2.25rem, 13vw, 3rem); letter-spacing: .02em; }
+}
+
+/* Agree: consent and the mic check side by side; neither pressures the partner. */
+.agree { display: flex; flex-direction: column; gap: 1.5rem; max-width: 72rem; }
+.agree-seats { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 0; padding: 0; list-style: none; }
+.agree-seat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-width: 0; }
+.agree-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.agree-card {
+  display: flex; flex-direction: column; gap: 1rem; min-width: 0; padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
+}
+.agree-card h2 { font-size: 1.5rem; font-weight: var(--weight-display); }
+.agree-list { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding-left: 1.25rem; }
+.agree-check { display: flex; align-items: center; gap: 12px; min-height: 48px; margin-top: auto; font-weight: 600; cursor: pointer; }
+.agree-check input { flex-shrink: 0; width: 24px; height: 24px; min-height: 0; padding: 0; accent-color: var(--ink); }
+.mic-meter { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; padding: 6px; border: var(--edge); border-radius: var(--control-radius); background: var(--surface); }
+.mic-meter span { height: 20px; border-radius: 2px; background: var(--line); }
+.mic-meter span.on { background: var(--ink); }
+
+@media (max-width: 760px) {
+  .agree-cards { grid-template-columns: minmax(0, 1fr); }
+}

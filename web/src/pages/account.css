@@ -134,5 +134,5 @@
 .header-actions [aria-current="page"] { position: relative; color: var(--accent); }
 .header-actions [aria-current="page"]::after { content: ''; position: absolute; inset-inline: 12px; bottom: 0; height: 4px; background: var(--accent); }
 .header-user { padding-inline: 12px; margin-inline-end: .5rem; }
-.app-header .header-user { color: rgb(255 255 255 / .78); }
+.app-bar .header-user { color: rgb(255 255 255 / .78); }
 

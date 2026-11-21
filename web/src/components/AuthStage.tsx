@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { ActionLink } from './ui';
+import { StageBar } from './Headers';
 import '../pages/auth.css';
 
 /** Full-screen Ink stage for sign-in, registration and recovery: brand, the switch between flows, a podium light and a floor. */
@@ -7,15 +8,14 @@ export function AuthStage({ path, children }: { path: string; children: ReactNod
   const registering = path === '/register';
   return <div className="auth-stage">
     <span className="auth-light" aria-hidden="true" />
-    <header className="auth-bar">
-      <a className="auth-brand" href="#/welcome">DebateSpeak AI</a>
+    <StageBar brandHref="#/welcome">
       <p className="auth-switch">
         <span className="auth-switch-prompt">{registering ? 'Have an account?' : 'New to DebateSpeak?'}</span>
         {registering
           ? <ActionLink to="/sign-in" variant="text">Sign in</ActionLink>
           : <ActionLink to="/register" variant="text">Create account</ActionLink>}
       </p>
-    </header>
+    </StageBar>
     {children}
   </div>;
 }
