@@ -160,7 +160,7 @@ In accordance with the Brutal Honesty invariant (AGENTS.md Section 8), this sect
 2. **Backend Stack Duality (FastAPI vs. Spring Boot):**
    * AGENTS.md rule 4.2 states the backend is "Java (Spring Boot), chosen by Tài on 2026-11-14".
    * *Fact:* The codebase contains **two concurrent backend implementations**:
-     * A Python FastAPI backend in `api/app/` with LiveKit token generation, room state machine, and database models.
+     * A Python package in `api/app/` (STT and LLM adapters, a room state machine in `domain/rooms.py`). No LiveKit token code exists there yet.
      * A Java 17 Spring Boot application in `api/authify/` with authentication controllers and JPA entities.
      Both configure port 8000. They cannot bind concurrently on the same host interface.
 3. **Database Port Discrepancy in Spring Boot Properties:**
