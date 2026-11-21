@@ -99,3 +99,5 @@ docs/design/two-page-demos.json
 docs/pa2/BUILD1_UX_BRIEF.pdf
 docs/requirements/PROJECT_PROPOSAL.md
 .playwright-mcp/
+# graphify knowledge graph output (local, regenerate with: graphify update .)
+graphify-out/

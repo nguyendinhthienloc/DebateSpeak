@@ -1,0 +1,12 @@
+# Paths graphify skips when building the knowledge graph (gitignore syntax).
+# graphify also honours .gitignore.
+node_modules/
+dist/
+.venv/
+venv/
+build/
+target/
+report_build/
+PA3-Group02*
+.env*
+graphify-out/
