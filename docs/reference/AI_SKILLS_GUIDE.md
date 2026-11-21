@@ -53,6 +53,8 @@ others work in Claude Code the same way. Until then, ask Claude in plain words:
 
 ## graphify
 
+Optional. It helps you find your way around the code, but no task or review needs it.
+
 graphify parses the code locally (no AI, nothing leaves your machine) and writes
 `graphify-out/`: `graph.json`, `GRAPH_REPORT.md` and `graph.html`. That folder is in
 `.gitignore`, so each person builds their own. What it skips is in `.graphifyignore`.
