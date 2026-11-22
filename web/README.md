@@ -3,9 +3,10 @@
 Responsive frontend using the Cream & Yellow design system. Sign-up and
 sign-in are API-ready forms using the existing G1 contract. The Spring Boot API
 (`api/authify`, branch `backend-tai`) implements these endpoints. Profile, sign out, active sessions, account deletion and admin
-suspension are API-ready too. Rooms (create, invite, join, agree) are built against
-the room API but wait for its backend; see [Waiting on the backend](#waiting-on-the-backend).
-Live audio, transcription and AI are not built yet.
+suspension are API-ready too. Rooms (create, invite, join, agree, the live debate
+stage with LiveKit audio, and wrap up) are built against the room API but wait for
+its backend; see [Waiting on the backend](#waiting-on-the-backend). Transcription
+and AI feedback are not built yet.
 
 ## Run
 
@@ -50,7 +51,7 @@ server rewrites. Browser back/forward, page titles and focus follow navigation.
 | `#/welcome` | Welcome |
 | `#/home` | Home: create, join with a code, topics |
 | `#/rooms/new` | Create a room |
-| `#/rooms/:id` | One room in every state: invite, agree, closed |
+| `#/rooms/:id` | One room in every state: invite, agree, live debate, wrap up, closed |
 | `#/join/:code` | Invite dialog over Home |
 | `#/profile` | Profile (real when signed in, sample otherwise) |
 | `#/account/sessions` | Active sessions (signed in) |
@@ -74,7 +75,7 @@ Browser checks intercept only the external HTTP boundary and exercise real forms
 request bodies/options, loading/errors, cancellation, session expiry and absence
 of stored credentials. Existing checks cover history/reload, unknown routes,
 keyboard controls and all routes at 320/390/1102/1440px. Room tests mock the room
-API and the microphone; no microphone is requested before the learner clicks Test.
+API, the microphone and LiveKit; no microphone is requested before the learner clicks Test.
 These tests verify the frontend contract, not database
 persistence, password hashing, JWT security or complete FG-01 acceptance.
 See [the approved auth scope](../docs/superpowers/specs/2026-11-12-auth-frontend-design.md).
@@ -113,8 +114,8 @@ defines them, and its tests mock them. Paths are under `/api/v1`.
 | `POST /rooms/{id}/leave` | Leave room | SCRUM-60 | Built |
 | `PUT /rooms/{id}/ready` | I'm ready, with consent and input | SCRUM-60 | Built |
 | `DELETE /rooms/{id}/ready` | Not ready yet | SCRUM-60 | Built |
-| `POST /rooms/{id}/end` | End debate | SCRUM-60 | Next (Task 14) |
-| `POST /rooms/{id}/token` | LiveKit token for live audio | SCRUM-62 | Next (Task 14) |
+| `POST /rooms/{id}/end` | End debate; ends after a partner is gone 60 s | SCRUM-60 | Built |
+| `POST /rooms/{id}/token` | LiveKit token for live audio, returns `{ token, url }` | SCRUM-62 | Built |
 | `POST /rooms/{id}/turns`, `GET /rooms/{id}/turns?after=` | Typed debate turns | Typed turns issue | Later (Task 16) |
 
 Response shapes to confirm with the backend owner:
