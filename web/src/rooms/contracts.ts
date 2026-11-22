@@ -81,3 +81,9 @@ export interface RoomPreview {
 export function isRoomPreview(value: unknown): value is RoomPreview {
   return isRecord(value) && typeof value.motion === 'string' && typeof value.creator_name === 'string';
 }
+
+export interface MediaToken { token: string; url: string }
+
+export function isMediaToken(value: unknown): value is MediaToken {
+  return isRecord(value) && typeof value.token === 'string' && typeof value.url === 'string';
+}

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from '../../auth/session';
+import { countdownLeft } from '../../rooms/clock';
 import type { RoomSnapshot } from '../../rooms/contracts';
 import { fatal, useRoom } from '../../rooms/useRoom';
 import { AgreeView } from './AgreeView';
 import { InviteView } from './InviteView';
+import { LiveStage } from './LiveStage';
 import { RoomNotice } from './RoomNotice';
 import './rooms.css';
 
@@ -17,9 +19,16 @@ function Closed({ room, userId }: { room: RoomSnapshot; userId?: string }) {
 }
 
 /** One page for a room in every state. Later views replace the placeholder for each status. */
-export function RoomPage({ roomId }: { roomId: string }) {
+export function RoomPage({ roomId, onStage }: { roomId: string; onStage: (on: boolean) => void }) {
   const { session } = useSession();
   const { room, error, apply } = useRoom(roomId);
+  const [firstRoom, setFirstRoom] = useState<RoomSnapshot>();
+  if (room && !firstRoom) setFirstRoom(room);
+  // Opening the page on a debate already under way means a reload or a return: rejoin muted.
+  const rejoined = firstRoom?.status === 'LIVE' && countdownLeft(firstRoom, Date.parse(firstRoom.server_now)) === 0;
+  const staged = room?.status === 'LIVE' || room?.status === 'ENDED';
+  useEffect(() => { onStage(staged); }, [staged, onStage]);
+  useEffect(() => () => onStage(false), [onStage]);
   const [seen, setSeen] = useState(room);
   const [partnerLeft, setPartnerLeft] = useState<string>();
   const [left, setLeft] = useState(false);
@@ -42,6 +51,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     {room.status === 'CANCELLED' ? <Closed room={room} userId={session?.user.id} />
       : room.status === 'LOBBY' ? <InviteView room={room} onChange={apply} partnerLeft={partnerLeft} />
       : room.status === 'READY' ? <AgreeView room={room} onChange={apply} onLeft={() => setLeft(true)} />
+      : room.status === 'LIVE' ? <LiveStage room={room} onChange={apply} rejoined={rejoined} />
       : <h1>{room.motion}</h1>}
   </div>;
 }
