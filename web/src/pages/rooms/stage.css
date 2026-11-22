@@ -1,5 +1,6 @@
 /* The room stage: Ink, full screen, for LIVE and ENDED only (DESIGN.md room stage exception). */
-.stage-main { width: 100%; padding: 0; color: var(--on-ink); background: var(--ink); }
+/* No page-entry animation here: its leftover transform would pin the phone bottom sheet to main instead of the screen. */
+.stage-main { width: 100%; padding: 0; color: var(--on-ink); background: var(--ink); animation: none; }
 .stage {
   display: flex; flex-direction: column; gap: 12px; min-height: 100svh; padding: 0 var(--gutter) 16px;
   color: var(--on-ink); background: var(--ink);
@@ -58,6 +59,36 @@
 .stage .stage-quiet:hover:not(:disabled) { border-color: var(--on-ink); }
 .stage .stage-danger { color: var(--ink); border: 1px solid var(--surface); background: var(--surface); }
 .stage .stage-danger:hover { color: var(--ink); background: var(--accent); border-color: var(--accent); }
+
+/* Typing: quiet by design. A side panel from 760px, a bottom sheet below. */
+.stage-col { display: flex; flex: 1; flex-direction: column; gap: 12px; min-width: 0; }
+.spot-text { max-width: 40rem; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; white-space: pre-wrap; }
+.type-panel {
+  display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 16px; color: var(--ink);
+  border-radius: var(--surface-radius); background: var(--surface);
+}
+.type-panel :focus-visible { outline-color: var(--ink); }
+.type-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.type-head h2 { font-size: 1.125rem; font-weight: 700; }
+.type-close { min-height: 44px; padding: 0 8px; border: 0; color: var(--link); background: none; font-weight: 600; cursor: pointer; }
+.type-log { display: flex; flex: 1; flex-direction: column; gap: 10px; min-height: 0; margin: 0; padding: 0; overflow-y: auto; list-style: none; }
+.type-log li { display: flex; flex-direction: column; gap: 2px; }
+.type-who { font-size: var(--type-label); font-weight: 700; }
+.type-text { overflow-wrap: anywhere; white-space: pre-wrap; }
+.type-form { display: flex; flex-direction: column; gap: 8px; }
+.type-send { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+@media (min-width: 760px) {
+  .stage-with-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem); gap: 24px; align-items: stretch; }
+  .stage-with-panel .type-panel { position: sticky; top: 16px; max-height: calc(100svh - 32px); margin-top: 16px; }
+}
+@media (max-width: 759px) {
+  .stage-with-panel .type-panel {
+    position: fixed; inset: auto 0 0; z-index: 2; max-height: 60svh; border-radius: var(--surface-radius) var(--surface-radius) 0 0;
+    box-shadow: 0 -12px 32px rgb(0 0 0 / .35);
+  }
+  .stage-with-panel .stage-col { padding-bottom: 60svh; }
+}
 
 /* Wrap up: the stage stays, with plain facts and no scores. */
 .wrap-body { display: flex; flex-direction: column; gap: 1.25rem; max-width: 48rem; padding-block: clamp(1rem, 6vh, 4rem); }
