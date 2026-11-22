@@ -116,7 +116,7 @@ defines them, and its tests mock them. Paths are under `/api/v1`.
 | `DELETE /rooms/{id}/ready` | Not ready yet | SCRUM-60 | Built |
 | `POST /rooms/{id}/end` | End debate; ends after a partner is gone 60 s | SCRUM-60 | Built |
 | `POST /rooms/{id}/token` | LiveKit token for live audio, returns `{ token, url }` | SCRUM-62 | Built |
-| `POST /rooms/{id}/turns`, `GET /rooms/{id}/turns?after=` | Typed debate turns | Typed turns issue | Later (Task 16) |
+| `POST /rooms/{id}/turns`, `GET /rooms/{id}/turns?after=` | Typed debate turns (Type instead) | Typed turns issue | Built |
 
 Response shapes to confirm with the backend owner:
 
