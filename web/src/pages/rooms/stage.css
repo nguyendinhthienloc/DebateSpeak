@@ -59,6 +59,14 @@
 .stage .stage-danger { color: var(--ink); border: 1px solid var(--surface); background: var(--surface); }
 .stage .stage-danger:hover { color: var(--ink); background: var(--accent); border-color: var(--accent); }
 
+/* Wrap up: the stage stays, with plain facts and no scores. */
+.wrap-body { display: flex; flex-direction: column; gap: 1.25rem; max-width: 48rem; padding-block: clamp(1rem, 6vh, 4rem); }
+.wrap-title { color: var(--accent); font-size: clamp(2.75rem, 1.5rem + 5vw, 5.5rem); line-height: .95; }
+.wrap-facts { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+.wrap-facts dt { font-size: var(--type-label); font-weight: 600; color: rgb(255 255 255 / .7); }
+.wrap-facts dd { margin: 0; font-size: var(--type-medium); font-weight: 600; }
+.wrap-report { padding: 8px 12px; border-left: 4px solid var(--accent); background: rgb(255 255 255 / .08); }
+
 @media (max-width: 560px) {
   .spotlight-both { grid-template-columns: minmax(0, 1fr); }
   .dock-actions, .dock-actions .action { width: 100%; }

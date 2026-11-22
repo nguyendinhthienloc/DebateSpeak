@@ -7,6 +7,7 @@ import { AgreeView } from './AgreeView';
 import { InviteView } from './InviteView';
 import { LiveStage } from './LiveStage';
 import { RoomNotice } from './RoomNotice';
+import { WrapUp } from './WrapUp';
 import './rooms.css';
 
 function Closed({ room, userId }: { room: RoomSnapshot; userId?: string }) {
@@ -18,7 +19,7 @@ function Closed({ room, userId }: { room: RoomSnapshot; userId?: string }) {
   return <RoomNotice title={`${who} closed this room`}>The debate did not start, and no audio was shared.</RoomNotice>;
 }
 
-/** One page for a room in every state. Later views replace the placeholder for each status. */
+/** One page for a room in every state: invite, agree, the live stage, wrap up, or why it closed. */
 export function RoomPage({ roomId, onStage }: { roomId: string; onStage: (on: boolean) => void }) {
   const { session } = useSession();
   const { room, error, apply } = useRoom(roomId);
@@ -52,6 +53,6 @@ export function RoomPage({ roomId, onStage }: { roomId: string; onStage: (on: bo
       : room.status === 'LOBBY' ? <InviteView room={room} onChange={apply} partnerLeft={partnerLeft} />
       : room.status === 'READY' ? <AgreeView room={room} onChange={apply} onLeft={() => setLeft(true)} />
       : room.status === 'LIVE' ? <LiveStage room={room} onChange={apply} rejoined={rejoined} />
-      : <h1>{room.motion}</h1>}
+      : <WrapUp room={room} userId={session?.user.id} />}
   </div>;
 }
