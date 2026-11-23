@@ -9,7 +9,7 @@ the matching Spec Kit feature and architecture/proposal requirements.
   historical Figma link is an implementation dependency. Read, update or sync
   Figma only when the user explicitly asks.
 - Keep the human backend handoff in `API_CONTRACT.md` short and consistent with
-  `src/auth/`. Routes belong in `src/routes.ts`; support direct links/reload.
+  `src/rooms/`; the built auth contract is in `../docs/api/`. Routes belong in `src/routes.ts`; support direct links/reload.
 - Use relative imports and environment-based API URLs. Never hardcode local
   filesystem paths, credentials or service secrets. Never store passwords,
   codes or access tokens in URLs or browser storage.

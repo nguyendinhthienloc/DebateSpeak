@@ -5,7 +5,7 @@ sign-in are API-ready forms using the existing G1 contract. The Spring Boot API
 (`api/authify`, branch `backend-tai`) implements these endpoints. Profile, sign out, active sessions, account deletion and admin
 suspension are API-ready too. Rooms (create, invite, join, agree, the live debate
 stage with LiveKit audio, and wrap up) are built against the room API but wait for
-its backend; see [Waiting on the backend](#waiting-on-the-backend). Transcription
+its backend; see [the room API contract](API_CONTRACT.md). Transcription
 and AI feedback are not built yet.
 
 ## Run
@@ -25,7 +25,7 @@ need a signed-in account and the room API.
 
 ## Connect the auth API
 
-Use the [short backend handoff](API_CONTRACT.md)
+Use the [auth contract](../docs/api/fg01-auth-contract.md)
 for all six endpoints, request/response examples, validation and errors.
 The [Spec Kit baseline](../specs/001-frontend-baseline/spec.md) records current
 scope; [tasks](../specs/001-frontend-baseline/tasks.md) distinguish completed
@@ -89,7 +89,7 @@ verify in the browser. Update Figma only when explicitly requested.
 Login, registration and recovery are FG-01. FG-03 room screens follow
 [the room flow spec](../docs/superpowers/specs/2026-11-19-room-flow-design.md).
 FG-01 account management is frontend-ready; see "Not yet available" below and
-[the backend integration guide](API_INTEGRATION.md).
+[the accounts guide](../docs/api/fg01-accounts-guide.md).
 
 After email verification, Change password opens the password-reset request.
 Profile has the same entry point. Request a fresh reset code, enter it with the
@@ -98,32 +98,9 @@ code. Real email/password changes require the documented backend endpoints.
 
 ## Waiting on the backend
 
-The backend (`api/authify`) already has every auth and account endpoint above.
-The room endpoints below do not exist yet. The frontend calls them as the
-[room flow spec](../docs/superpowers/specs/2026-11-19-room-flow-design.md)
-defines them, and its tests mock them. Paths are under `/api/v1`.
-
-| Endpoint | Frontend use | Backend ticket | Frontend |
-| --- | --- | --- | --- |
-| `GET /topics` | Home topics, Create motion list | SCRUM-60 | Built |
-| `POST /rooms` | Create room | SCRUM-60 | Built |
-| `GET /rooms/{id}` | Room page, polled every 2 s (5 s live) | SCRUM-60 | Built |
-| `POST /rooms/lookup` | Invite dialog: who invited you, terms, errors | SCRUM-60 | Built |
-| `POST /rooms/join` | Take the open seat | SCRUM-60 | Built |
-| `POST /rooms/{id}/cancel` | Cancel room (creator) | SCRUM-60 | Built |
-| `POST /rooms/{id}/leave` | Leave room | SCRUM-60 | Built |
-| `PUT /rooms/{id}/ready` | I'm ready, with consent and input | SCRUM-60 | Built |
-| `DELETE /rooms/{id}/ready` | Not ready yet | SCRUM-60 | Built |
-| `POST /rooms/{id}/end` | End debate; ends after a partner is gone 60 s | SCRUM-60 | Built |
-| `POST /rooms/{id}/token` | LiveKit token for live audio, returns `{ token, url }` | SCRUM-62 | Built |
-| `POST /rooms/{id}/turns`, `GET /rooms/{id}/turns?after=` | Typed debate turns (Type instead) | Typed turns issue | Built |
-
-Response shapes to confirm with the backend owner:
-
-- `GET /topics` returns `{ "topics": [{ "id", "motion", "category", "cefr_level" }] }`, with `id` a string.
-- `POST /rooms/lookup` returns `room_id` (only when the caller is already seated),
-  `motion`, `creator_name`, `format`, `duration_seconds` and `stance_mode`.
-  Errors: 404 `invite_invalid`, 409 `room_full`.
+The backend has every auth and account endpoint. The room endpoints are not
+built yet; [API_CONTRACT.md](API_CONTRACT.md) lists each one with its request,
+response and rules.
 
 ## Not yet available (FG-01, 2026-11-14)
 
