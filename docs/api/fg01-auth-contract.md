@@ -1,6 +1,6 @@
-# Auth API contract
+# Auth API contract (FG-01)
 
-This is the backend handoff for the existing account screens. The frontend is
+Built and verified. This is the backend handoff for the account screens. The frontend is
 connected to the endpoints below; the Spring Boot service `api/authify`
 (branch `backend-tai`) implements them.
 
@@ -100,9 +100,9 @@ code at `/auth/forgot-password`, then submit it to `/auth/reset-password`.
 Email verification codes are not password-reset credentials. Email is carried
 between these screens in memory; code/password fields start empty on navigation.
 Reload and expiry call `/auth/refresh`; sign out calls `/auth/logout`. Those and
-the profile, session, deletion and admin endpoints are in [API_INTEGRATION.md](API_INTEGRATION.md).
+the profile, session, deletion and admin endpoints are in [fg01-accounts-guide.md](fg01-accounts-guide.md).
 Agree on the unverified-login flow before enforcing verification: the frontend
-has no dedicated redirect for it yet. Rooms, profile and audio remain previews.
+has no dedicated redirect for it yet. Rooms are in [web/API_CONTRACT.md](../../web/API_CONTRACT.md).
 
-Use the [integration checklist](../specs/001-frontend-baseline/quickstart.md)
+Use the [integration checklist](../../specs/001-frontend-baseline/quickstart.md)
 to check these flows against the real backend.
