@@ -150,6 +150,8 @@ export async function passAgree(page: Page) {
 interface LiveOptions {
   startsInSeconds?: number; secondsLeft?: number; format?: 'FREE_FLOW' | 'TIMED_TURNS';
   partnerName?: string; myInput?: 'VOICE' | 'TYPE'; partnerInput?: 'VOICE' | 'TYPE';
+  /** Run the real audio layer against a fake livekit-client module (install it first with installFakeLiveKit). */
+  liveKit?: boolean;
 }
 
 /**
@@ -157,7 +159,7 @@ interface LiveOptions {
  * The start time is fixed when LIVE is first served, and every response carries the current server time.
  */
 export async function openLiveRoom(page: Page, options: LiveOptions = {}) {
-  await installFakeAudio(page);
+  if (!options.liveKit) await installFakeAudio(page);
   await signInAs(page, 'Linh');
   const timed = options.format === 'TIMED_TURNS';
   const duration = timed ? 390 : 600;
@@ -186,7 +188,7 @@ export async function openLiveRoom(page: Page, options: LiveOptions = {}) {
   await expect(page.getByTestId('room-view')).toHaveAttribute('data-status', 'READY');
   current = { ...current, status: 'LIVE', started_at: null };
   await expect(page.getByTestId('room-view')).toHaveAttribute('data-status', 'LIVE', { timeout: 5000 });
-  if (options.startsInSeconds === undefined) {
+  if (options.startsInSeconds === undefined && !options.liveKit) {
     await expect.poll(() => page.evaluate(() => window.__audio.connects.length), { timeout: 5000 }).toBeGreaterThan(0);
   }
   return {

@@ -60,6 +60,8 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
   const endButton = useRef<HTMLButtonElement>(null);
   const confirmButton = useRef<HTMLButtonElement>(null);
   const askedToEnd = useRef(false);
+  const mutedNow = useRef(muted);
+  mutedNow.current = muted;
 
   useEffect(() => { setOffset(serverOffsetMs(room, Date.now())); }, [room]);
   useEffect(() => {
@@ -89,14 +91,16 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       } else if (event.type === 'connection') setConnection(event.quality);
       else if (event.type === 'partner') { setPartnerPresent(event.present); setPartnerMuted(event.muted); }
       else if (event.type === 'playback-blocked') setBlocked(true);
+      else if (event.type === 'dropped') setAudioFailed(true);
     });
     setAudioFailed(false);
+    setConnection('connecting');
     getMediaToken(room.id, controller.signal)
       .then(({ token, url }) => {
         if (controller.signal.aborted) return;
         connected = true;
         audio.current = instance;
-        return instance.connect({ url, token, publishMic, startMuted: rejoined }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
+        return instance.connect({ url, token, publishMic, startMuted: mutedNow.current }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
       })
       .catch(() => { if (!controller.signal.aborted) setAudioFailed(true); });
     return () => {
@@ -105,7 +109,7 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       audio.current = undefined;
       if (connected) void instance.disconnect();
     };
-  }, [started, room.id, publishMic, rejoined, attempt]);
+  }, [started, room.id, publishMic, attempt]);
 
   // A partner who drops gets 60 seconds to come back before the debate ends for both.
   useEffect(() => {
@@ -175,7 +179,7 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       {partnerPresent === false && partner && <p className="stage-alert" role="status">{partner.display_name} lost connection. Waiting up to 60 seconds.</p>}
       {rejoined && muted && <p className="stage-note">You're muted after rejoining.</p>}
       {blocked && <button type="button" className="action action-primary" onClick={() => { void audio.current?.resumePlayback(); setBlocked(false); }}>Turn on sound</button>}
-      {audioFailed && <p className="stage-alert" role="alert">Audio could not connect. <button type="button" className="stage-link" onClick={() => setAttempt(value => value + 1)}>Try again</button></p>}
+      {audioFailed && <p className="stage-alert" role="alert">Audio is not connected. <button type="button" className="stage-link" onClick={() => setAttempt(value => value + 1)}>Try again</button></p>}
       {endFailed && <p className="stage-alert" role="alert">The debate could not be ended. Try again.</p>}
     </div>
 

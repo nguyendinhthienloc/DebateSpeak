@@ -6,7 +6,8 @@ export type AudioEvent =
   | { type: 'connection'; quality: 'good' | 'poor' | 'lost' }
   | { type: 'partner'; present: boolean; muted: boolean }
   | { type: 'playback-blocked' }
-  | { type: 'turn'; seq: number };
+  | { type: 'turn'; seq: number }
+  | { type: 'dropped' };
 
 export interface DebateAudio {
   connect(options: { url: string; token: string; publishMic: boolean; startMuted: boolean; deviceId?: string }): Promise<void>;
@@ -41,6 +42,7 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
     })
     .on(RoomEvent.Reconnecting, () => emit({ type: 'connection', quality: 'poor' }))
     .on(RoomEvent.Reconnected, () => emit({ type: 'connection', quality: 'good' }))
+    .on(RoomEvent.Disconnected, () => emit({ type: 'dropped' }))
     .on(RoomEvent.ParticipantConnected, () => partnerState(true))
     .on(RoomEvent.ParticipantDisconnected, () => partnerState(false))
     .on(RoomEvent.TrackMuted, () => partnerState())
@@ -65,25 +67,30 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
 
 function liveKitAudio(): DebateAudio {
   const listeners = new Set<(event: AudioEvent) => void>();
-  const emit = (event: AudioEvent) => listeners.forEach(listener => listener(event));
   let room: Room | undefined;
   let publishing = false;
+  let muted = false;
   let closed = false;
+  // After our own disconnect, LiveKit's events are not news.
+  const emit = (event: AudioEvent) => { if (!closed) listeners.forEach(listener => listener(event)); };
 
   return {
     async connect({ url, token, publishMic, startMuted, deviceId }) {
+      muted = startMuted;
       const kit = await import('livekit-client');
       if (closed) return;
       room = wire(kit, emit);
       await room.connect(url, token);
       if (closed) { await room.disconnect(true); return; }
       publishing = publishMic;
-      if (publishMic && !startMuted) await room.localParticipant.setMicrophoneEnabled(true, deviceId ? { deviceId } : undefined);
+      // Mute may have been pressed while connecting.
+      if (publishMic && !muted) await room.localParticipant.setMicrophoneEnabled(true, deviceId ? { deviceId } : undefined);
       if (room.remoteParticipants.size > 0) emit({ type: 'partner', present: true, muted: ![...room.remoteParticipants.values()][0].isMicrophoneEnabled });
       if (!room.canPlaybackAudio) emit({ type: 'playback-blocked' });
     },
-    async setMuted(muted) {
-      if (room && publishing) await room.localParticipant.setMicrophoneEnabled(!muted);
+    async setMuted(next) {
+      muted = next;
+      if (room && publishing) await room.localParticipant.setMicrophoneEnabled(!next);
     },
     async resumePlayback() {
       await room?.startAudio();
