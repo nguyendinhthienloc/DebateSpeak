@@ -53,11 +53,11 @@ HEADERS = {
 # Run: python create_pa4_jira_issues.py --list-users  to find them.
 # Or fill these in after running --list-users once.
 ASSIGNEES = {
-    "khoa":  None,   # 24125058 - Nguyễn Anh Khoa
-    "loc":   None,   # 24125093 - Nguyễn Đình Thiên Lộc
-    "triet": None,   # 24125047 - Nguyễn Bảo Minh Triết
-    "tai":   None,   # 24125078 - Nguyễn Hồng Tấn Tài
-    "tuan":  None,   # 24125107 - Trần Lê Anh Tuấn
+    "khoa":  "712020:6a6f9de7-dcf2-4624-bf62-cc7d6df57ad6",   # 24125058 - Nguyễn Anh Khoa
+    "loc":   "712020:cdb370c9-eb05-40cd-bcef-8e3d06e97a33",   # 24125093 - Nguyễn Đình Thiên Lộc
+    "triet": "712020:81a2cf28-73d9-4ba2-a56b-4a49e7182e70",   # 24125047 - Nguyễn Bảo Minh Triết
+    "tai":   "6122b540ec0a83006a162b82",   # 24125078 - Nguyễn Hồng Tấn Tài
+    "tuan":  "712020:ac502ed8-bf45-4dd6-81f2-f72a113b3ebb",   # 24125107 - Trần Lê Anh Tuấn
 }
 
 # --- PA4 Issues to create ---
@@ -319,12 +319,8 @@ def create_issues():
                 },
                 "issuetype": {"name": "Story"},
                 "labels": [label, "pa4"],
-                "priority": {"name": "Major"},
             }
         }
-
-        # Add story points if the field exists
-        issue_data["fields"]["story_points"] = points
 
         # Add assignee if account ID is known
         if assignee_id:
