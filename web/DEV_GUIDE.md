@@ -1,13 +1,26 @@
 # Developer guide: run and test the web app
 
-How to start the frontend, add the mock room API, demo the microphone check and
-typed turns, and what is built today. Sections 1 to 3 work on `pa4`; section 4
-needs the typed-turns branch. Commands are for PowerShell and run from `web/`
-unless a step says otherwise.
+How to start the frontend, run the mock API, demo the microphone check, the live
+stage and typed turns, and what is built today. Commands are for PowerShell and
+run from `web/` unless a step says otherwise.
+
+## What this branch adds to `pa4`
+
+Branch `feature/SCRUM-xx-typed-turns`. It builds on
+`feature/SCRUM-63-fg04-livekit-frontend` (PR #71), so merging it brings both.
+
+| Part | What it adds | Tests |
+| --- | --- | --- |
+| Live debate stage (SCRUM-63) | Shared 3-second countdown; clock as a progress bar with exact digits; timed-turn phases; speaker spotlight; mute; LiveKit audio with **Try again** when it drops; reload rejoins muted; 60-second wait when the partner drops; **End debate** with confirmation | `room-live.spec.ts`, `room-rules.spec.ts`, `room-audio.spec.ts` |
+| Wrap up (SCRUM-63) | **Debate finished** on the stage: how it ended, partner, length; the feedback report is marked "coming in a later release" | `room-wrap.spec.ts` |
+| Typed turns | **Type instead** of the microphone test; a **Typed turns** panel (500 characters, plain text, kept after reload); a voice debater can open it with **Type** | `room-type.spec.ts` |
+| Mock API | `web/mock-local/`: auth, rooms and typed turns in memory, two accounts | Used by sections 2 to 5 |
+| Docs | [API_CONTRACT.md](API_CONTRACT.md) lists every room endpoint the backend must build; auth docs moved to [docs/api/](../docs/api/fg01-auth-contract.md); this guide | |
+
+Nothing here needs a backend change to merge: all room endpoints are still
+missing on the server (SCRUM-60, SCRUM-62), so the stage runs against the mock.
 
 ## 1. Start the frontend
-
-Check out `pa4` (or your feature branch made from it), then:
 
 ```powershell
 git fetch origin
@@ -19,47 +32,37 @@ npm run dev
 Open `http://localhost:5173`. With no API running you can browse the welcome,
 sign-in and register screens, and the **Preview screen** selector at the bottom
 (development only) opens every screen with sample data. Signing in needs an API:
-the mock (section 2) or the real backend (section 6).
+the mock (section 2) or the real backend (section 7).
 
-## 2. Apply the mock room API
+## 2. Run the mock API
 
 The backend has no room endpoints yet, so rooms run only against
-`web/mock-local/`, a Vite plugin that fakes auth and the room API in memory. It
-runs only with the dev server and is never part of `npm run build`.
-
-The folder arrives with the typed-turns branch. On plain `pa4`, once that
-branch is pushed, copy it from there without staging it (from `web/`):
+`web/mock-local/`, a Vite plugin that fakes auth, rooms and typed turns in
+memory. It runs only with the dev server and is never part of `npm run build`.
+`npm run dev` can stay running; the mock uses another port:
 
 ```powershell
-git restore --source origin/feature/SCRUM-xx-typed-turns --worktree -- mock-local
+npm run dev -- --config mock-local/vite.mock.config.ts
 ```
 
-1. **Run it.** `npm run dev` can stay running; the mock uses another port:
-
-   ```powershell
-   npm run dev -- --config mock-local/vite.mock.config.ts
-   ```
-
-2. Open `http://localhost:5174`. Accounts: `linh@example.com` and
-   `sam@example.com`, password `debate-practice`. You can register more.
-
-Notes:
+Open `http://localhost:5174`. Accounts: `linh@example.com` and
+`sam@example.com`, password `debate-practice`. You can register more.
 
 - **Use two browser windows that do not share cookies**, for example a normal
   window and a private one. Two tabs in the same window become the same user
   after a reload.
 - Data lives in memory and resets when the server restarts.
 - Mocked: sign in, register, refresh, sign out, profile, the sessions list,
-  topics, every room endpoint, and typed turns. Not mocked: the LiveKit token
-  (the live stage says "Audio is not connected"), revoking a session, account
-  deletion, admin.
+  topics, every room endpoint and typed turns.
+- Not mocked: the LiveKit token, so the live stage always says
+  "Audio is not connected. Try again". Also revoking a session, account
+  deletion and admin.
 - Rooms waiting for a partner or for Ready expire after 30 minutes.
 
 ## 3. Demo the microphone check
 
-Run the mock (section 2). Use `http://localhost`: browsers allow the microphone
-only on `localhost` or HTTPS, so the Network URL Vite prints (your LAN IP) will
-not work from a phone.
+Use `http://localhost`: browsers allow the microphone only on `localhost` or
+HTTPS, so the Network URL Vite prints (your LAN IP) will not work from a phone.
 
 1. **Window A** (normal): sign in as Linh, **Create a room**, pick a motion,
    format, length and side, then **Create room**. Click **Copy invite link**.
@@ -74,12 +77,9 @@ not work from a phone.
    browser's mic indicator goes off).
 6. **I'm ready** is enabled only after both the tick and the passed test. Click
    it. Click **Not ready yet** to withdraw.
-7. When both are ready, the room goes live. On `pa4` the page then shows only
-   the motion: the live stage is not merged yet (see section 5).
+7. When both are ready, the live stage opens (section 4).
 
-Also try:
-
-| Do this | You should see |
+| Also try | You should see |
 | --- | --- |
 | Stay silent for 6 seconds after **Test microphone** | "We can't hear anything yet. Check that the microphone is on, then test again." |
 | Block the microphone in the browser prompt | "Your browser is blocking the microphone…", and Ready stays locked |
@@ -88,29 +88,42 @@ Also try:
 | Window A clicks **Cancel room** on the invite screen, before B joins | The room closes; the code stops working |
 | Window A (the creator) clicks **Leave room** on the agree screen | The room closes for both |
 
-## 4. Demo typed turns (typed-turns branch)
+## 4. Demo the live stage
 
-Branch `feature/SCRUM-xx-typed-turns`. It builds on the live stage from
-`feature/SCRUM-63-fg04-livekit-frontend`, so it also shows the countdown, clock,
-end and wrap up. Run the mock (section 2) and use two windows as in section 3.
-No microphone is needed.
+Get both windows ready (section 3, or **Type instead** from section 5).
+
+| Do this | You should see |
+| --- | --- |
+| Both click **I'm ready** | A 3-second countdown in both windows, then the stage |
+| Watch the clock | A progress bar and exact digits, the same in both windows |
+| Create the room with **Timed turns** | The phase and who holds the turn: Opening, Rebuttal, Cross-talk, Closing (390 seconds in all) |
+| **End debate**, then **Keep debating** | The question closes; nothing ends |
+| **End debate**, then **End for both of you** | Both see **Debate finished**, "You ended the debate." for the one who ended it |
+| Create a 5-minute room and wait | At zero both see "The debate ended when time ran out." |
+| On **Debate finished** | Partner and length, "Feedback report: coming in a later release", **Back to home** and **Set up another room** |
+
+Needs LiveKit, so only the automated tests cover it for now: hearing the
+partner, **Mute**, the speaking spotlight, connection quality, the 60-second
+partner wait, and **Turn on sound** when the browser blocks playback. Run
+`npx playwright test tests/room-live.spec.ts tests/room-audio.spec.ts`.
+
+## 5. Demo typed turns
+
+No microphone needed.
 
 1. Windows A and B: create and join a room (section 3, steps 1 and 2).
 2. In each window, click **Type instead** under "Check your microphone", tick
-   **I agree for this debate**, then click **I'm ready**. The consent list now
-   says "Anything you type is saved in your transcript and analysed by AI."
-3. After a 3-second countdown both see the live stage with the **Typed turns**
-   panel open and no **Mute** button. The badge reads
+   **I agree for this debate**, then click **I'm ready**. The consent list says
+   "Anything you type is saved in your transcript and analysed by AI."
+3. After the countdown both see the stage with the **Typed turns** panel open
+   and no **Mute** button. The badge reads
    "Live · Typed debate · Saved to transcript".
 4. Window A: write in **Type your turn**, click **Send**. The box clears, the
    turn appears in A's panel and in the spotlight.
 5. Window B: the same turn appears within about 5 seconds (the page asks every
-   5 seconds; with real LiveKit it would arrive at once).
-6. Reload window B: the turns are still there, and B rejoins the debate.
+   5 seconds; with real LiveKit it arrives at once).
+6. Reload window B: the turns are still there.
 7. **End debate**, then **End for both of you**: both see **Debate finished**.
-
-"Audio is not connected. Try again" stays on screen: the mock issues no
-LiveKit token. Typed turns do not need it.
 
 | Also try | You should see |
 | --- | --- |
@@ -120,22 +133,21 @@ LiveKit token. Typed turns do not need it.
 | Type `<b>hi</b>` | Shown as plain text, not bold |
 | Stop the mock server, then **Send** | "Your turn was not sent. Try again." and your words stay in the box |
 
-Automated: `npx playwright test tests/room-type.spec.ts`.
+## 6. What is available now
 
-## 5. What is available now
-
-As of 2026-11-26:
+As of 2026-11-26, once this branch is merged into `pa4`:
 
 | Area | Frontend | Backend | How to test |
 | --- | --- | --- | --- |
-| FG-01 accounts: sign in, register, profile, sessions, sign out, delete, admin suspend | On `pa4` | On `pa4` (`api/authify`) | Real backend (section 6) |
+| FG-01 accounts: sign in, register, profile, sessions, sign out, delete, admin suspend | Built | Built (`api/authify`) | Real backend (section 7) |
 | FG-01 recovery: forgot, verify, reset password | Off: "Account recovery is not available in this build" | Endpoints exist | Not testable in the UI |
-| FG-03 rooms: topics, create, invite code and link, join, full room, leave, cancel, agree, mic check, ready | On `pa4` | None yet (SCRUM-60) | Mock API (sections 2 and 3) |
-| FG-04 live stage: countdown, clock, LiveKit audio, mute, end, wrap up | Branch `feature/SCRUM-63-fg04-livekit-frontend`, not merged | None yet (SCRUM-62) | Mock API without audio; tests for audio |
-| Typed turns ("Type instead") | Branch `feature/SCRUM-xx-typed-turns`, not merged | None yet | Mock API (section 4) |
+| FG-03 rooms: topics, create, invite code and link, join, full room, leave, cancel, agree, mic check, ready | Built | None yet (SCRUM-60) | Mock API (sections 2 and 3) |
+| FG-04 live stage: countdown, clock, end, wrap up | Built | None yet (SCRUM-60) | Mock API (section 4) |
+| FG-04 live audio: LiveKit, mute, spotlight, reconnect | Built | No token endpoint yet (SCRUM-62) | Automated tests only |
+| Typed turns | Built | None yet | Mock API (section 5) |
 | FG-02, FG-05 to FG-10: transcription, feedback, reports and the rest | Not built | Not built | Not available |
 
-Room checks to click through with the mock:
+More room checks with the mock:
 
 | Check | Expected |
 | --- | --- |
@@ -145,7 +157,7 @@ Room checks to click through with the mock:
 | Open `#/rooms/<made-up id>` | "This room is not available" with a way home |
 | **Copy code** / **Copy invite link** | Copied confirmation |
 
-## 6. Real backend for FG-01 (two terminals)
+## 7. Real backend for FG-01 (two terminals)
 
 Run the API from a second worktree, a separate folder on the same repository.
 It keeps running while you switch branches in your main folder.
@@ -188,7 +200,8 @@ VITE_API_BASE_URL=http://localhost:8000/api/v1
 ```
 
 Open exactly `http://localhost:5173`; the API rejects other origins with 403.
-Restart Vite after editing `.env`, and remove the line to go back to the mock.
+Restart Vite after editing `.env`, and remove the line to go back to `/api/v1`.
+The mock ignores this line.
 
 Seeded accounts: `learner@example.com` and `admin@debatespeak.org`; passwords
 are in `api/authify/.../service/AuthService.java`. Registering emails a code, so
@@ -204,7 +217,7 @@ without mail settings expect it to fail; use the seeded accounts.
 | Delete account (needs the password) | Signed out; the account cannot sign in |
 | Sign out | Back to Sign in; reload stays signed out |
 
-## 7. Automated tests
+## 8. Automated tests
 
 ```powershell
 npx playwright install chromium
@@ -213,6 +226,6 @@ npm run lint
 npm run test:e2e
 ```
 
-One file: `npx playwright test tests/room-agree.spec.ts` (add `--headed` to
+One file: `npx playwright test tests/room-type.spec.ts` (add `--headed` to
 watch). Tests mock all HTTP, the microphone and LiveKit, so no API is needed.
 They reuse a dev server already on port 5173.
