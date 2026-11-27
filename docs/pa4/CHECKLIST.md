@@ -43,7 +43,7 @@ One row per file: file path, owner, completeness (missing / draft / complete).
 | E1 | FG-03 backend (Spring Boot Room API + state machine + DB) | Tài | Tuấn | Missing |
 | E2 | FG-03 frontend (Room Setup + Lobby UI + state sync) | Triết | Lộc | Complete |
 | E3 | FG-04 backend (LiveKit token API) | Tài | Khoa | Missing |
-| E4 | FG-04 frontend (LiveKit Client SDK + audio UI) | Triết | Khoa | Draft |
+| E4 | FG-04 frontend (LiveKit Client SDK + audio UI) | Triết | Khoa | Complete |
 | E5 | Spec Kit artifacts (`specs/006-fg03-rooms/`, `specs/007-fg04-audio/`) | Khoa | Tuấn | Draft |
 | E6 | Narrated YouTube demo video (FG-03 + FG-04) | Triết | All | Missing |
 | E7 | `docs/pa4/DEMO_VIDEO.md` with YouTube link | Triết | All | Missing |

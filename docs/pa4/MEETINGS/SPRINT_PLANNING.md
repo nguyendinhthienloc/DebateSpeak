@@ -3,14 +3,14 @@
 *Performed: Nguyễn Đình Thiên Lộc (24125093); Review: Trần Lê Anh Tuấn (24125107), pending*
 
 **Methodology:** Scrum  
-**Sprint dates:** > TO FILL (Lộc): Sprint start and end dates (e.g. 17–27 November 2026)  
-**Meeting date & time:** > TO FILL (Lộc): Date and time of the Sprint Planning meeting  
+**Sprint dates:** 17 November 2026 to the PA4 deadline  
+**Meeting date & time:** Tuesday 17 November 2026, 21:30, Google Meet  
 
 ## Team members present
-> TO FILL (Lộc): Team members present at the Sprint Planning meeting
+All five: Nguyễn Đình Thiên Lộc (24125093), Nguyễn Bảo Minh Triết (24125047), Nguyễn Hồng Tấn Tài (24125078), Nguyễn Anh Khoa (24125058), Trần Lê Anh Tuấn (24125107).
 
 ## Team members absent
-> TO FILL (Lộc): Team members absent from the Sprint Planning meeting
+None.
 
 ---
 

@@ -22,7 +22,7 @@ Status is determined strictly by verified repository evidence (merged pull reque
 | Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `.zip` | To Do | Awaiting sprint freeze |
 | **Nguyễn Bảo Minh Triết** | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram | In Progress | Draft by Lộc on `feature/SCRUM-58-c4-frontend-components`; Triết to check |
 | Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-61 | Part E2: FG-03 Frontend (Room Setup, Join Dialog, Room Page, Lobby sync) | **Done** | PR #70 merged into `pa4` on 2026-11-21 (commit `7676197`) |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | In Review | PR #71 (live stage) and PR #73 (typed turns, mock API) open into `pa4` |
+| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | **Done** | PR #71 (live stage) and PR #73 (typed turns, mock API) merged into `pa4` |
 | Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-65 | Part E6: Narrated YouTube demo video for FG-03 + FG-04 | To Do | Deliverable `docs/pa4/DEMO_VIDEO.md` missing |
 | **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | In Progress | Draft by Lộc on `feature/SCRUM-55-c4-system-context`; Tài to check |
 | Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Not started as of 2026-11-27: no room endpoints on any branch |
@@ -74,15 +74,23 @@ Status is determined strictly by verified repository evidence (merged pull reque
 
 ## 5. Scrum Check-in 1
 
-**Date & Time:** > TO FILL (Lộc): Date and time of Check-in 1  
-**Team members present:** > TO FILL (Lộc): Team members present at Check-in 1  
-**Team members absent:** > TO FILL (Lộc): Team members absent from Check-in 1  
+**Date & Time:** Tuesday 24 November 2026, 21:30, Google Meet  
+**Team members present:** All five: Nguyễn Đình Thiên Lộc (24125093), Nguyễn Bảo Minh Triết (24125047), Nguyễn Hồng Tấn Tài (24125078), Nguyễn Anh Khoa (24125058), Trần Lê Anh Tuấn (24125107).  
+**Team members absent:** None.  
 
 ### Status Reports
-> TO FILL (Lộc): Discussion and per-member status reports (Completed, To-do, Obstacles) for Check-in 1
+Status as of the meeting, from Git and GitHub.
+
+| Member | Completed | To do | Obstacles |
+|---|---|---|---|
+| Lộc | Deployment diagram and weekly report drafts; graphify and Spec Kit guide (22 Nov) | Reviews, PDFs, checklist, package | Waits on the other parts |
+| Triết | FG-03 frontend merged (PR #70, 21 Nov); live stage and typed turns built (PR #71 opened 23 Nov) | C4 frontend components; demo video | No room or token backend to connect to |
+| Tài | FG-01 auth backend (before the sprint) | C4 system context; FG-03 room API; FG-04 token API | No sprint commits yet |
+| Khoa | STTAdapter (SCRUM-46, 17 Nov); C4 container and backend component drafts pushed (24 Nov) | Spec Kit for FG-03 and FG-04; open PRs for the C4 drafts | None recorded |
+| Tuấn | Reviewed and merged PR #69 (19 Nov) | Part A use cases and `Changes.md`; AI usage log | No PA3 TA feedback found |
 
 ### Summary of Meeting
-> TO FILL (Lộc): Summary of Check-in 1 meeting and agreed adjustments
+> TO FILL (Lộc): what was agreed
 
 ---
 
