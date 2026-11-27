@@ -78,7 +78,7 @@ bar stay below the heading.
 
 ## Not changed
 
-API calls and payloads (`web/API_CONTRACT.md`), validation rules and messages,
+API calls and payloads (`docs/api/fg01-auth-contract.md`), validation rules and messages,
 session handling, autocomplete attributes, the password Show/Hide control,
 keyboard focus on errors, and the absence of recovery links on sign-in.
 

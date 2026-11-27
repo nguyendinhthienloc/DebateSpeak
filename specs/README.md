@@ -4,7 +4,7 @@
 account forms and room/profile previews.
 [002 — FG-01 accounts end to end](002-fg01-accounts/spec.md) adds the Spring Boot
 API and PostgreSQL half (PA3 Part E). Start with its
-[short backend handoff](../web/API_CONTRACT.md) to connect auth.
+[short backend handoff](../docs/api/fg01-auth-contract.md) to connect auth.
 [003 — UI refresh](003-ui-refresh/spec.md) adds display type, motion, two-step
 registration, shorter copy and a main menu (SCRUM-53).
 [004 — Welcome page and contrast system](004-welcome-contrast/spec.md) adds the

@@ -149,10 +149,12 @@ export async function passAgree(page: Page) {
 
 interface LiveOptions {
   startsInSeconds?: number; secondsLeft?: number; format?: 'FREE_FLOW' | 'TIMED_TURNS';
-  partnerName?: string; myInput?: 'VOICE' | 'TYPE'; partnerInput?: 'VOICE' | 'TYPE';
+  partnerName?: string; myInput?: 'VOICE' | 'TYPE'; partnerInput?: 'VOICE' | 'TYPE'; turnsFail?: boolean;
   /** Run the real audio layer against a fake livekit-client module (install it first with installFakeLiveKit). */
   liveKit?: boolean;
 }
+
+type Turn = { seq: number; user_id: string; text: string; at_ms: number };
 
 /**
  * Signs in as Linh with fake audio, opens the room in READY, then switches it to LIVE so the page sees the debate begin.
@@ -170,6 +172,20 @@ export async function openLiveRoom(page: Page, options: LiveOptions = {}) {
   let current: Record<string, unknown> = snapshot({ status: 'READY', format: options.format ?? 'FREE_FLOW', duration_seconds: duration, participants: seats });
   let ended = 0;
   let endReason: string | undefined;
+  const sent: unknown[] = [];
+  const turns: Turn[] = [];
+  await page.route(url => url.pathname.endsWith(`/api/v1/rooms/${roomId}/turns`), route => {
+    if (route.request().method() === 'POST') {
+      if (options.turnsFail) return route.fulfill({ status: 500, json: {} });
+      const body = route.request().postDataJSON();
+      sent.push(body);
+      const turn = { seq: turns.length + 1, user_id: linhId, text: body.text, at_ms: 1000 };
+      turns.push(turn);
+      return route.fulfill({ status: 201, json: turn });
+    }
+    const after = Number(new URL(route.request().url()).searchParams.get('after') ?? 0);
+    return route.fulfill({ status: 200, json: { turns: turns.filter(turn => turn.seq > after) } });
+  });
   await page.route(`**/api/v1/rooms/${roomId}`, route => {
     if (current.status === 'LIVE' && current.started_at === null) {
       const startsIn = options.startsInSeconds !== undefined ? options.startsInSeconds : -(duration - (options.secondsLeft ?? duration - 5));
@@ -195,5 +211,7 @@ export async function openLiveRoom(page: Page, options: LiveOptions = {}) {
     set(room: Record<string, unknown>) { current = { ...room }; },
     ended: () => ended,
     endReason: () => endReason,
+    turns: () => sent,
+    addTurn(turn: Turn) { turns.push(turn); },
   };
 }

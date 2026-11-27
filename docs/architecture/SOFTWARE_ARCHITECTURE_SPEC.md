@@ -1386,7 +1386,7 @@ These frontend contracts do not establish server security or email delivery.
 
 The existing frontend is now recorded retrospectively in
 [specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
-plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
+plan, tasks and a [short human-readable API handoff](../api/fg01-auth-contract.md).
 Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
 update these artifacts before code. Backend integration remains unfinished;
 this documentation does not change product behavior or complete FG-01.
@@ -1412,7 +1412,7 @@ The frontend now calls the remaining FG-01 endpoints. The Spring Boot service
 tables `users`, `auth_sessions`, `auth_codes` and `account_suspensions`
 (`specs/002-fg01-accounts`), verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). Deviations: BCrypt instead of Argon2id; schema by
 Hibernate, not migrations.
-Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
+Paths are under the API prefix; the human handoff is `docs/api/fg01-accounts-guide.md`.
 This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
 
 | Method & path | Auth | Request | Success |

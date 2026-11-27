@@ -1,5 +1,5 @@
 import { clearSession, getAccessToken } from '../auth/session';
-import { isMediaToken, isRoomPreview, isRoomSnapshot, isTopicList, type CreateRoomInput, type InputMode, type MediaToken, type RoomPreview, type RoomSnapshot, type Topic } from './contracts';
+import { isMediaToken, isRoomPreview, isRoomSnapshot, isTopicList, isTurnList, isTypedTurn, type CreateRoomInput, type InputMode, type MediaToken, type RoomPreview, type RoomSnapshot, type Topic, type TypedTurn } from './contracts';
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL?.trim() || '/api/v1').replace(/\/+$/, '');
 
@@ -80,4 +80,12 @@ export function getMediaToken(id: string, signal: AbortSignal): Promise<MediaTok
 
 export function endRoom(id: string, reason: 'MANUAL' | 'DISCONNECT', signal: AbortSignal): Promise<RoomSnapshot> {
   return request(`/rooms/${encodeURIComponent(id)}/end`, 'POST', isRoomSnapshot, signal, { reason });
+}
+
+export function sendTurn(id: string, text: string, signal: AbortSignal): Promise<TypedTurn> {
+  return request(`/rooms/${encodeURIComponent(id)}/turns`, 'POST', isTypedTurn, signal, { text });
+}
+
+export async function listTurns(id: string, after: number, signal: AbortSignal): Promise<TypedTurn[]> {
+  return (await request(`/rooms/${encodeURIComponent(id)}/turns?after=${after}`, 'GET', isTurnList, signal)).turns;
 }

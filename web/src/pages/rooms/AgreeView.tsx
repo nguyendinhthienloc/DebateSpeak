@@ -27,6 +27,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
   const { session } = useSession();
   const mic = useMicCheck();
   const [agreed, setAgreed] = useState(false);
+  const [typeInstead, setTypeInstead] = useState(false);
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState(false);
   const controller = useRef<AbortController>();
@@ -36,7 +37,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
   const me = room.participants.find(person => person.user_id === session?.user.id);
   const partner = room.participants.find(person => person !== me);
   const minutes = Math.round(room.duration_seconds / 60);
-  const canBeReady = agreed && mic.status === 'passed';
+  const canBeReady = agreed && (typeInstead || mic.status === 'passed');
 
   function send(action: (signal: AbortSignal) => Promise<RoomSnapshot>, done: (room: RoomSnapshot) => void) {
     if (pending) return;
@@ -49,7 +50,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       () => { if (!request.signal.aborted) { setPending(false); setFailed(true); } });
   }
 
-  const ready = () => send(signal => setReady(room.id, 'VOICE', signal), onChange);
+  const ready = () => send(signal => setReady(room.id, typeInstead ? 'TYPE' : 'VOICE', signal), onChange);
   const notReady = () => send(signal => clearReady(room.id, signal), onChange);
   const leave = () => { mic.stop(); send(signal => leaveRoom(room.id, signal), onLeft); };
 
@@ -70,6 +71,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
           <li>{room.format === 'TIMED_TURNS' ? `You debate ${partner?.display_name ?? 'your partner'} in timed turns, about 7 minutes.` : `You debate ${partner?.display_name ?? 'your partner'} live for ${minutes} minutes.`}</li>
           <li>Your microphone opens only when you both press I'm ready.</li>
           <li>What you say is transcribed as you speak. The audio itself is not saved.</li>
+          <li>Anything you type is saved in your transcript and analysed by AI.</li>
           <li>Either of you can end the debate at any time.</li>
         </ul>
         <label className="agree-check">
@@ -79,22 +81,28 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       </section>
       <section className="agree-card" aria-labelledby="mic-heading">
         <h2 id="mic-heading">Check your microphone</h2>
-        {mic.devices.length > 1 && <div className="field">
-          <label htmlFor={deviceField}>Microphone</label>
-          <select id={deviceField} value={mic.deviceId ?? ''} onChange={event => mic.selectDevice(event.target.value)}>
-            {!mic.deviceId && <option value="">Default</option>}
-            {mic.devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Microphone'}</option>)}
-          </select>
-        </div>}
-        <div className="mic-meter" aria-hidden="true">
-          {Array.from({ length: segments }, (_, index) => <span key={index} className={index < Math.round(Math.min(1, mic.level * 4) * segments) || mic.status === 'passed' ? 'on' : undefined} />)}
-        </div>
-        <p className="small" role="status">{micText[mic.status]}</p>
-        {mic.status === 'blocked' && <p className="small field-error" role="alert">
-          Your browser is blocking the microphone. Allow it from the icon next to the address bar, then test again.
-        </p>}
-        <button type="button" className="action action-secondary short-action" disabled={mic.status === 'requesting' || mic.status === 'listening'}
-          onClick={() => { void mic.start(); }}>Test microphone</button>
+        {typeInstead ? <>
+          <p>You will type your turns in this debate. No microphone is used.</p>
+          <button type="button" className="action action-text agree-switch" onClick={() => setTypeInstead(false)}>Use my microphone</button>
+        </> : <>
+          {mic.devices.length > 1 && <div className="field">
+            <label htmlFor={deviceField}>Microphone</label>
+            <select id={deviceField} value={mic.deviceId ?? ''} onChange={event => mic.selectDevice(event.target.value)}>
+              {!mic.deviceId && <option value="">Default</option>}
+              {mic.devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Microphone'}</option>)}
+            </select>
+          </div>}
+          <div className="mic-meter" aria-hidden="true">
+            {Array.from({ length: segments }, (_, index) => <span key={index} className={index < Math.round(Math.min(1, mic.level * 4) * segments) || mic.status === 'passed' ? 'on' : undefined} />)}
+          </div>
+          <p className="small" role="status">{micText[mic.status]}</p>
+          {mic.status === 'blocked' && <p className="small field-error" role="alert">
+            Your browser is blocking the microphone. Allow it from the icon next to the address bar, then test again.
+          </p>}
+          <button type="button" className="action action-secondary short-action" disabled={mic.status === 'requesting' || mic.status === 'listening'}
+            onClick={() => { void mic.start(); }}>Test microphone</button>
+          <button type="button" className="action action-text agree-switch" onClick={() => { mic.stop(); setTypeInstead(true); }}>Type instead</button>
+        </>}
       </section>
     </div>
     <div className="action-bar action-bar-sticky">
@@ -104,7 +112,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       <button type="button" className="action action-text" onClick={leave}>Leave room</button>
     </div>
     <p id="ready-hint" className="small muted">
-      {me?.ready ? 'You are ready. The debate starts when you both are.' : 'Tick the box and pass the microphone test to continue.'}
+      {me?.ready ? 'You are ready. The debate starts when you both are.' : 'Tick the box and pass the microphone test, or choose Type instead.'}
     </p>
     {failed && <p className="small field-error" role="alert">That did not go through. Try again.</p>}
   </div>;
