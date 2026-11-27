@@ -52,7 +52,7 @@ One row per file: file path, owner, completeness (missing / draft / complete).
 
 | # | File | Owner | Reviewer | Status |
 |---|---|---|---|---|
-| F1 | `docs/pa4/AI_USAGE_LOG.md` | Tuấn | Lộc | Missing |
+| F1 | `docs/pa4/AI_USAGE_LOG.md` | Tuấn | Lộc | Draft |
 | F2 | `docs/pa4/WEEKLY_REPORT.md` | Lộc | Tuấn | Draft |
 | F3 | `docs/pa4/MEETINGS/SPRINT_PLANNING.md` | Lộc | Tuấn | Draft |
 | F4 | `docs/pa4/MEETINGS/SPRINT_REVIEW.md` | Lộc | Tuấn | Missing |

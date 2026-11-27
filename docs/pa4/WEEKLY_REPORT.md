@@ -90,7 +90,7 @@ Status as of the meeting, from Git and GitHub.
 | Tuấn | Reviewed and merged PR #69 (19 Nov) | Part A use cases and `Changes.md`; AI usage log | No PA3 TA feedback found |
 
 ### Summary of Meeting
-> TO FILL (Lộc): what was agreed
+- Khoa is Scrum master for this week.
 
 ---
 

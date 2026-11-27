@@ -85,6 +85,5 @@ As agreed in `docs/pa4/README.md` and repository guidelines:
 ---
 
 ## 6. Planning Discussion & Decisions
-> TO FILL (Lộc): Meeting discussion points and notes from the Sprint Planning meeting
-
-> TO FILL (Lộc): Any additional team decisions agreed upon during planning
+- The team discussed the rules for managing tasks.
+- Lộc, as team leader, wants fewer commit and push conflicts and wants every member to read their own part. The team confirmed the rule he added to `AGENTS.md` §9: no file is edited by two people. Each member keeps their own `TODO.md`, and shared files have one owner.
