@@ -29,6 +29,17 @@ test('Ready sends consent and voice, then can be withdrawn', async ({ page }) =>
   await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeVisible();
 });
 
+test('after Ready, the voice or type choice is locked to what was sent', async ({ page }) => {
+  await fakeMic(page, { signal: true });
+  const calls = await openReadyRoom(page);
+  await passAgree(page);
+  await page.getByRole('button', { name: "I'm ready", exact: true }).click();
+  await expect.poll(() => calls.ready()).toEqual({ consent: true, input: 'VOICE' });
+  await expect(page.getByRole('button', { name: 'Not ready yet', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Type instead', exact: true })).toBeDisabled();
+  await expect(page.getByText('No microphone is used', { exact: false })).toHaveCount(0);
+});
+
 test('the partner sees no pressure wording', async ({ page }) => {
   await fakeMic(page, { signal: true });
   await openReadyRoom(page);

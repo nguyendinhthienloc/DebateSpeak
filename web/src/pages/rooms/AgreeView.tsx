@@ -37,6 +37,9 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
   const me = room.participants.find(person => person.user_id === session?.user.id);
   const partner = room.participants.find(person => person !== me);
   const minutes = Math.round(room.duration_seconds / 60);
+  // Once Ready is sent, the choice is the server's: switching would not reach it, so it is locked.
+  const locked = Boolean(me?.ready);
+  const typing = locked ? me?.input === 'TYPE' : typeInstead;
   const canBeReady = agreed && (typeInstead || mic.status === 'passed');
 
   function send(action: (signal: AbortSignal) => Promise<RoomSnapshot>, done: (room: RoomSnapshot) => void) {
@@ -81,9 +84,9 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       </section>
       <section className="agree-card" aria-labelledby="mic-heading">
         <h2 id="mic-heading">Check your microphone</h2>
-        {typeInstead ? <>
+        {typing ? <>
           <p>You will type your turns in this debate. No microphone is used.</p>
-          <button type="button" className="action action-text agree-switch" onClick={() => setTypeInstead(false)}>Use my microphone</button>
+          <button type="button" className="action action-text agree-switch" disabled={locked} onClick={() => setTypeInstead(false)}>Use my microphone</button>
         </> : <>
           {mic.devices.length > 1 && <div className="field">
             <label htmlFor={deviceField}>Microphone</label>
@@ -101,7 +104,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
           </p>}
           <button type="button" className="action action-secondary short-action" disabled={mic.status === 'requesting' || mic.status === 'listening'}
             onClick={() => { void mic.start(); }}>Test microphone</button>
-          <button type="button" className="action action-text agree-switch" onClick={() => { mic.stop(); setTypeInstead(true); }}>Type instead</button>
+          <button type="button" className="action action-text agree-switch" disabled={locked} onClick={() => { mic.stop(); setTypeInstead(true); }}>Type instead</button>
         </>}
       </section>
     </div>
