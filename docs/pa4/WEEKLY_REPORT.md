@@ -16,21 +16,21 @@ Status is determined strictly by verified repository evidence (merged pull reque
 | Member | Student ID | Team Role | Jira Key | Task Summary | Status | Evidence / Notes |
 |---|---|---|---|---|---|---|
 | **Nguyễn Đình Thiên Lộc** | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Sprint setup: create `pa4` branch from `pa3`, merge `pa3` to `dev` | **Done** | Branch `pa4` created; PR #67 merged `pa3` into `dev` on 2026-11-14 |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-59 | Part D: Deployment Diagram (Mermaid) + infrastructure prose | In Progress | Drafted with PDF on `feature/SCRUM-68-graphify`; awaiting review |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-67 | Part F2: Weekly Report & Scrum meeting documentation | In Progress | Drafted on branch `feature/SCRUM-67-pa4-weekly-report` |
+| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-59 | Part D: Deployment Diagram (Mermaid) + infrastructure prose | In Review | Drafted with PDF on `feature/SCRUM-68-graphify`; review by Khoa |
+| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-67 | Part F2: Weekly Report & Scrum meeting documentation | In Progress | Drafted on `feature/SCRUM-68-graphify`; meeting minutes still to fill |
 | Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Part S: Compile all PA4 Markdown documents to PDF | To Do | Deliverables `docs/pa4/*.pdf` missing |
 | Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `.zip` | To Do | Awaiting sprint freeze |
-| **Nguyễn Bảo Minh Triết** | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_COMPONENTS_FE.md` missing |
+| **Nguyễn Bảo Minh Triết** | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram | In Progress | Draft by Lộc on `feature/SCRUM-58-c4-frontend-components`; Triết to check |
 | Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-61 | Part E2: FG-03 Frontend (Room Setup, Join Dialog, Room Page, Lobby sync) | **Done** | PR #70 merged into `pa4` on 2026-11-21 (commit `7676197`) |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | To Do | Partial mic-check UI merged in PR #70; LiveKit SDK integration pending |
+| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | In Review | PR #71 (live stage) and PR #73 (typed turns, mock API) open into `pa4` |
 | Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-65 | Part E6: Narrated YouTube demo video for FG-03 + FG-04 | To Do | Deliverable `docs/pa4/DEMO_VIDEO.md` missing |
-| **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTEXT.md` missing |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Endpoints in `api/authify/src/main/java/.../room/` not yet on `pa4` |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-62 | Part E3: FG-04 Backend (LiveKit token generation API endpoint) | To Do | Deliverable in `api/authify/src/main/java/.../livekit/` missing |
-| **Nguyễn Anh Khoa** | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-56 | Part C1: C4 Level 2 Container Diagram (Mermaid) + protocols | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_CONTAINER.md` missing |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-57 | Part C2: C4 Level 3 Backend Component Diagram | To Do | Deliverable `docs/pa4/ARCHITECTURE_C4_COMPONENTS_BE.md` missing |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-64 | Part E5: Spec Kit artifacts for FG-03 & FG-04 (`specs/003-`, `specs/004-`) | To Do | Deliverables in `specs/003-fg03-rooms/` and `specs/004-fg04-audio/` missing |
-| **Trần Lê Anh Tuấn** | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-54 | Part A: Revised Use-Case Specifications (2nd submission) + `Changes.md` | To Do | Deliverables `docs/pa4/Changes.md`, `docs/pa4/USE_CASE_SPECIFICATIONS.md` missing |
+| **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | In Progress | Draft by Lộc on `feature/SCRUM-55-c4-system-context`; Tài to check |
+| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Not started as of 2026-11-27: no room endpoints on any branch |
+| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-62 | Part E3: FG-04 Backend (LiveKit token generation API endpoint) | To Do | Not started as of 2026-11-27: no token endpoint on any branch |
+| **Nguyễn Anh Khoa** | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-56 | Part C1: C4 Level 2 Container Diagram (Mermaid) + protocols | In Review | Pushed to `feature/SCRUM-56-c4-container-diagram` (2026-11-24); no PR yet. Jira says Done |
+| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-57 | Part C2: C4 Level 3 Backend Component Diagram | In Review | Pushed to `feature/SCRUM-57-c4-backend-components` (2026-11-24); no PR yet |
+| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-64 | Part E5: Spec Kit artifacts for FG-03 & FG-04 (`specs/006-`, `specs/007-`) | In Progress | Draft by Lộc on `feature/SCRUM-64-speckit-fg03-fg04`; Khoa to check |
+| **Trần Lê Anh Tuấn** | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-54 | Part A: Revised Use-Case Specifications (2nd submission) + `Changes.md` | In Review | PR #72 open into `pa4`; changes requested by Lộc |
 | Trần Lê Anh Tuấn | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-66 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | To Do | Deliverable `docs/pa4/AI_USAGE_LOG.md` missing |
 
 ---
