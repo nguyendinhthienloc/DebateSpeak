@@ -11,6 +11,10 @@ registration, shorter copy and a main menu (SCRUM-53).
 signed-out landing page and replaces the low-contrast surface rules.
 [005 — Sign-in and sign-up on the stage](005-auth-stage/spec.md) remakes the
 auth flow in the welcome page's stage and adds a three-step registration.
+[006 — FG-03 rooms end to end](006-fg03-rooms/spec.md) adds the room API and
+database behind the finished room screens (PA4, SCRUM-64).
+[007 — FG-04 real-time audio](007-fg04-audio/spec.md) adds the LiveKit token
+API, mute and active speaker on top of 006 (PA4, SCRUM-64).
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain
