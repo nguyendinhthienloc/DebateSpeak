@@ -34,7 +34,8 @@ closing it never restarts or stops the mic. Contents, top to bottom:
 1. **Microphone** (voice users only): `<select>` of audio inputs, current one selected.
    Changing it switches the live track. Under it, the mic meter (the existing segment meter,
    Ink on White) driven by the live published track, with a text status: "We can hear you",
-   "No sound yet", or "Microphone stopped".
+   "No sound yet", or "Microphone stopped". Under it, a **Mute microphone** toggle that
+   uses the same state as Mute in the dock (added 2026-11-28 at the user's request).
 2. **Speaker**: `<select>` of audio outputs. Shown only where the browser can route output
    (feature-detect `setSinkId`); hidden on Safari.
 3. **Partner volume**: native `<input type="range">` 0–100, default 100, labelled with the

@@ -269,7 +269,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
           <button ref={endButton} type="button" className="action stage-danger" onClick={() => setConfirming(true)}>End debate</button>
         </div>}
       {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} stopped={micStopped}
-        anchor={gear} onClose={closeAudio}>
+        muted={muted} onToggleMute={toggleMute} anchor={gear} onClose={closeAudio}>
         {partner && <PartnerVolume name={partner.display_name} value={volume}
           onChange={next => { setVolume(next); settingsAudio.setPartnerVolume(next / 100); }} />}
       </AudioPanel>}

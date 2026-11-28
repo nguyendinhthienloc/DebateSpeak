@@ -47,9 +47,9 @@ export function PartnerVolume({ name, value, onChange }: { name: string; value: 
  * Audio settings on the live stage. Opening or closing it never touches the mic; only a pick does.
  * `onClose(true)` asks the stage to put focus back on the gear.
  */
-export function AudioPanel({ audio, publishMic, stopped, anchor, onClose, children }: {
-  audio: DebateAudio; publishMic: boolean; stopped: boolean; anchor: RefObject<HTMLElement>;
-  onClose: (refocus: boolean) => void; children?: ReactNode;
+export function AudioPanel({ audio, publishMic, stopped, muted, onToggleMute, anchor, onClose, children }: {
+  audio: DebateAudio; publishMic: boolean; stopped: boolean; muted: boolean; onToggleMute: () => void;
+  anchor: RefObject<HTMLElement>; onClose: (refocus: boolean) => void; children?: ReactNode;
 }) {
   const heading = useId();
   const panel = useRef<HTMLElement>(null);
@@ -109,6 +109,9 @@ export function AudioPanel({ audio, publishMic, stopped, anchor, onClose, childr
     </div>
     {publishMic && <DevicePicker label="Microphone" kind="audioinput" devices={inputs} value={active.audioinput} onPick={pick} />}
     {publishMic && <LiveMeter track={track} stopped={stopped} />}
+    {/* The same toggle as Mute in the dock, so the two always agree. */}
+    {publishMic && <button type="button" className="action action-secondary short-action" onClick={onToggleMute}>
+      {muted ? 'Unmute microphone' : 'Mute microphone'}</button>}
     {speaker && <DevicePicker label="Speaker" kind="audiooutput" devices={outputs} value={active.audiooutput} onPick={pick} />}
     {children}
     {failed && <p className="small field-error" role="alert">That device could not be used. Pick another one.</p>}

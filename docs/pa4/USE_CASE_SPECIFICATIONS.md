@@ -1261,7 +1261,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 | A2 | At step 3, mute is selected. | Stop transmission of own speech while preserving partner audio and a clear muted state. |
 | E3 | At step 4, media drops. | Invoke UC-04-03; a transient room poll failure alone preserves healthy audio. |
 | A3 | At step 4, optional video/overlays are absent. | Continue the core audio flow; future UC-04-04/UC-08-02 are not enabled by PA4. |
-| A4 | At step 3, the learner opens audio settings (gear). | Switch microphone or speaker, watch a live meter of the published track, and set the partner's volume; opening or closing never restarts or stops the mic, and the clock keeps running. |
+| A4 | At step 3, the learner opens audio settings (gear). | Switch microphone or speaker, watch a live meter of the published track, mute or unmute (the same state as the dock's Mute), and set the partner's volume; opening or closing never restarts or stops the mic, and the clock keeps running. |
 | E4 | At step 3, the microphone stops (device disabled or unplugged) without the learner pressing Mute. | Show "Your microphone stopped" with a link to audio settings and set the control to Unmute; if no microphone is left, offer Type instead. A failed Unmute shows the same alert. |
 
 **Postconditions — success:** Actual consented tracks exchange audio with correct speaker identity and observable own-mute control.

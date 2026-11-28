@@ -165,3 +165,21 @@ test('the partner volume slider sets their volume', async ({ page }) => {
   await gear(page).click();
   await expect(panel(page).getByLabel("Sam's volume", { exact: true })).toHaveValue('40');
 });
+
+test('audio settings can mute and unmute the mic, in step with the dock', async ({ page }) => {
+  await openLiveRoom(page);
+  await gear(page).click();
+  await panel(page).getByRole('button', { name: 'Mute microphone', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.__audio.muted)).toEqual([true]);
+  await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
+  await panel(page).getByRole('button', { name: 'Unmute microphone', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.__audio.muted)).toEqual([true, false]);
+  await expect(page.getByRole('button', { name: 'Mute', exact: true })).toBeVisible();
+  await expect(panel(page)).toBeVisible();
+});
+
+test('typists get no mute in audio settings', async ({ page }) => {
+  await openLiveRoom(page, { myInput: 'TYPE' });
+  await gear(page).click();
+  await expect(panel(page).getByRole('button', { name: /mute microphone/i })).toHaveCount(0);
+});

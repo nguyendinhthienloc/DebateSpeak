@@ -50,7 +50,7 @@ In competitive oral debate, participants require crystal-clear, low-latency audi
 * **Acceptance Criteria (AC-4.1):** Clicking the "Mute" toggle immediately disables the local audio track without dropping the WebRTC session; UI displays "Microphone Muted".
 * **AC-4.2:** Real-time volume level meter reflects microphone input amplitude.
 * **AC-4.3:** If connection drops, the LiveKit client automatically attempts exponential backoff reconnection for up to 15 seconds before reporting a connection error to the user.
-* **AC-4.4:** A gear on the stage opens audio settings: microphone and speaker pickers, the AC-4.2 level meter (read from the published track, no second capture) and the partner's volume. Opening it never restarts the mic.
+* **AC-4.4:** A gear on the stage opens audio settings: microphone and speaker pickers, the AC-4.2 level meter (read from the published track, no second capture), a mute toggle that mirrors the dock's Mute (AC-4.1), and the partner's volume. Opening it never restarts the mic.
 * **AC-4.5:** If the microphone stops without the debater pressing Mute (device disabled or unplugged), the stage says so, the toggle shows Unmute, and audio settings are one click away. With no microphone left, a notice offers Type instead. The clock keeps running.
 
 ---
