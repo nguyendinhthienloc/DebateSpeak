@@ -55,6 +55,51 @@ services:
     networks:
       - debatespeak-network
 
+  api:
+    profiles: ["full"]
+    build:
+      context: ./api/authify
+      dockerfile: Dockerfile
+    container_name: debatespeak-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      livekit:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-debatespeak}
+      DATABASE_USERNAME: ${POSTGRES_USER:-debatespeak}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-debatespeak_dev_password}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      APP_JWT_SECRET: ${APP_JWT_SECRET:-}
+      JWT_SECRET: ${JWT_SECRET:-${APP_JWT_SECRET:-}}
+      LIVEKIT_URL: ${LIVEKIT_URL:-http://localhost:7880}
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-secret}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-}
+    networks:
+      - debatespeak-network
+
+  web:
+    profiles: ["full"]
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
+    container_name: debatespeak-web
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+    networks:
+      - debatespeak-network
+
 volumes:
   postgres_data:
     name: debatespeak_postgres_data
