@@ -1,17 +1,17 @@
 # C4 Architecture Model — Level 2: Container Diagram
-*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Nguyễn Hồng Tấn Tài (24125078) | Edited: Nguyễn Anh Khoa (24125058)*
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Nguyễn Hồng Tấn Tài (24125078) | Edited: Nguyễn Anh Khoa (24125058), Nguyễn Đình Thiên Lộc (24125093)*
 
 > **Context:** Project Assignment 4 (PA4-2026) — Part C: Software Architecture (20 Points)  
 > **Target System:** DebateSpeak AI Platform  
-> **Source Code Basis:** Verified against repository state (`web/`, `api/authify/`, `workers/`, `docker-compose.yml`)
+> **Source Code Basis:** Verified against repository state (`web/`, `api/authify/`, `workers/`, `api/app/`, `docker-compose.yml`)
 
 ---
 
 ## 1. System Overview & Container Scope
 
-The C4 Level 2 Container Diagram zooms into the **DebateSpeak AI System boundary**, decomposing it into its high-level runtime containers: deployable/runnable units executing code or storing data. 
+The C4 Level 2 Container Diagram zooms into the **DebateSpeak AI System boundary**, decomposing it into its high-level runtime containers: deployable/runnable units executing code or storing data.
 
-In strict adherence to the project invariants defined in `AGENTS.md` and the rubric warning (*"The architecture diagrams must accurately reflect your actual implementation at the time of submission"*), this model describes the **concrete operational containers** active in the project rather than speculative future services.
+In strict adherence to the project invariants defined in `AGENTS.md` and the rubric warning (*"The architecture diagrams must accurately reflect your actual implementation at the time of submission"*), this model distinguishes **currently active containers and links** on `pa4` from **`[Planned]`** containers and links not yet present in `docker-compose.yml` or source code.
 
 ---
 
@@ -20,49 +20,50 @@ In strict adherence to the project invariants defined in `AGENTS.md` and the rub
 ```mermaid
 graph TB
     subgraph Users ["Actors / Clients"]
-        Debater["Debater / Student<br/>[Person]<br/>Practices spoken debate, listens to opponent, views live transcript & feedback"]
-        Admin["Administrator / Evaluator<br/>[Person]<br/>Reviews debate sessions, configures topics & system settings"]
+        Debater["Debater / Student<br/>[Person]<br/>Practices spoken debate, listens to opponent, views typed turns & live stage"]
+        Admin["Administrator / Evaluator<br/>[Person]<br/>Configures topics and reviews account moderation"]
     end
 
     subgraph DebateSpeakSystem ["DebateSpeak AI Platform — System Boundary"]
-        ReverseProxy["Reverse Proxy / Web Server<br/>[Container: Caddy / Nginx]<br/>TLS termination, serves static frontend assets, routes API & WebSocket traffic"]
-        
-        WebApp["Single-Page Application (SPA)<br/>[Container: React 18, TypeScript, Tailwind CSS]<br/>Delivers UI for Auth, Lobby, Audio Debate Room, and live transcript view"]
-        
-        BackendAPI["Backend API & Session Server<br/>[Container: Java 17 / Spring Boot 3]<br/>Handles Auth, Room lifecycle state machine, LiveKit token issuance, & session persistence"]
-        
-        Database["Relational Database<br/>[Container: PostgreSQL 16]<br/>Stores user credentials, profiles, debate rooms, sessions, and transcript segments"]
-        
-        CacheQueue["Cache & Message Broker<br/>[Container: Redis 7]<br/>In-memory session state caching and ARQ asynchronous task queue"]
-        
-        MediaSFU["Real-Time Media Server (SFU)<br/>[Container / Cloud: LiveKit SFU]<br/>Ingests, routes, and isolates independent WebRTC audio tracks per debater"]
-        
-        AudioWorker["Audio & STT Pipeline Worker<br/>[Container: Python 3.12, LiveKit Agents, Silero VAD]<br/>Subscribes to raw audio tracks, performs voice activity detection, and streams to STT"]
+        ReverseProxy["Reverse Proxy / Web Server<br/>[Planned Container: Caddy / Nginx]<br/>TLS termination & reverse proxy (not yet in docker-compose.yml)"]
+
+        WebApp["Single-Page Application (SPA)<br/>[Container: React 18, TypeScript, Vite, Tailwind CSS]<br/>Auth, Room Setup, Lobby polling, LiveKit audio stage, and typed turns"]
+
+        BackendAPI["Backend API & Session Server<br/>[Container: Java 17 / Spring Boot 3]<br/>Auth, Room lifecycle (LOBBY -> READY -> LIVE -> ENDED/CANCELLED), LiveKit tokens"]
+
+        Database["Relational Database<br/>[Container: PostgreSQL 16 (docker-compose)]<br/>Stores users, sessions, rooms, participants, debate sessions, and typed turns"]
+
+        CacheQueue["Cache & Message Broker<br/>[Container: Redis 7 (docker-compose)]<br/>Backing store provisioned for future ARQ async job queue & caching"]
+
+        MediaSFU["Real-Time Media Server (SFU)<br/>[Container / Cloud: LiveKit SFU]<br/>Routes independent WebRTC audio tracks and data messages per debater"]
+
+        AudioWorker["Audio & STT Pipeline Worker<br/>[Worker Module: Python 3.12, workers/audio_pipeline.py]<br/>Track isolation & STTAdapter failover; LiveKit SDK & VAD planned"]
     end
 
     subgraph ExternalServices ["External Systems"]
-        CloudSTT["Cloud STT Provider<br/>[External Service: Google Cloud Speech / Deepgram]<br/>Live streaming transcription with local fallback"]
+        CloudSTT["Cloud STT Provider<br/>[External Service, Planned]<br/>Live streaming transcription with LocalMockSTTAdapter fallback"]
         EmailService["SMTP Mail Service<br/>[External Service: Gmail SMTP]<br/>Delivers account verification & recovery emails"]
     end
 
     %% User Interactions
-    Debater -->|"Uses application [HTTPS]"| ReverseProxy
-    Admin -->|"Manages platform [HTTPS]"| ReverseProxy
-    Debater -->|"Publishes / Subscribes audio tracks [WebRTC / DTLS / SRTP]"| MediaSFU
-    ReverseProxy -->|"Serves static files [HTTP]"| WebApp
-    ReverseProxy -->|"Proxies REST & WS requests [HTTP / WS]"| BackendAPI
-    WebApp -->|"Invokes REST APIs & receives room events [JSON/HTTPS, WebSocket]"| BackendAPI
-    WebApp -->|"Sends mic stream & receives peer audio [WebRTC]"| MediaSFU
+    Debater -->|"Uses SPA locally [HTTP :5173]"| WebApp
+    Admin -->|"Uses SPA locally [HTTP :5173]"| WebApp
+    Debater -.->|"Production access [HTTPS, Planned]"| ReverseProxy
+    ReverseProxy -.->|"Serves static files & proxies API [Planned]"| WebApp
+    ReverseProxy -.->|"Proxies REST & WS [Planned]"| BackendAPI
+
+    WebApp -->|"REST API & room polling [JSON/HTTP :8000]"| BackendAPI
+    WebApp -->|"Publishes/subscribes mic audio & data [WebRTC / WSS]"| MediaSFU
 
     %% Internal Container Communication
-    BackendAPI -->|"Reads & writes user/room state [JDBC / TCP 5432]"| Database
-    BackendAPI -->|"Caches session states & dispatches jobs [Jedis / Lettuce / TCP 6379]"| CacheQueue
-    BackendAPI -->|"Generates scoped room join tokens [LiveKit Server SDK / HMAC-SHA256]"| MediaSFU
-    
-    AudioWorker -->|"Consumes audio jobs & synchronization events [TCP 6379]"| CacheQueue
-    AudioWorker -->|"Subscribes to debater audio tracks [LiveKit RTC Engine / TCP]"| MediaSFU
-    AudioWorker -->|"Streams PCM16 audio for transcription [gRPC / HTTPS]"| CloudSTT
-    AudioWorker -->|"Pushes speaker-attributed transcript segments [HTTP / REST / WS]"| BackendAPI
+    BackendAPI -->|"Reads & writes user/room/turn state [JDBC / TCP :5432]"| Database
+    BackendAPI -.->|"Session cache & job dispatch [RESP / TCP :6379, Planned]"| CacheQueue
+    BackendAPI -->|"Mints scoped HS256 room tokens [JWT / Config]"| MediaSFU
+
+    AudioWorker -.->|"Consumes async jobs [ARQ / TCP :6379, Planned]"| CacheQueue
+    AudioWorker -.->|"Subscribes to debater audio tracks [WebRTC, Planned]"| MediaSFU
+    AudioWorker -.->|"Streams PCM16 audio [gRPC / HTTPS, Planned]"| CloudSTT
+    AudioWorker -.->|"Pushes speaker-attributed transcripts [HTTP REST, Planned]"| BackendAPI
 
     %% External Communications
     BackendAPI -->|"Sends verification emails [SMTP / TLS 587]"| EmailService
@@ -74,59 +75,46 @@ graph TB
 
 Each container in the system provides distinct, decoupled responsibilities and communicates across standardized protocols:
 
-| # | Container Name | Technology / Framework | Primary Responsibilities | Data Handled & Storage |
-|---|---|---|---|---|
-| **C1** | **Reverse Proxy** | Caddy / Nginx | Gateway routing, SSL/TLS termination, reverse proxying frontend routes and backend REST/WS endpoints. | Stateless network routing |
-| **C2** | **Frontend Web Application** | React 18, TypeScript, Vite, Tailwind CSS, LiveKit Client SDK | Single-Page Application (SPA) executed in the user's browser. Renders Auth screens, Room Setup, Lobby state synchronizer, and Debate Stage with WebRTC audio controls and active speaker indication. | Local client memory, JWT access tokens in memory |
-| **C3** | **Backend API Server** | Java 17, Spring Boot 3, Spring Security, Spring Data JPA | Central business logic server: JWT token generation/validation, password hashing (Argon2id/BCrypt), Room state machine (`WAITING` $\rightarrow$ `READY` $\rightarrow$ `IN_DEBATE`), LiveKit room token signing. | Session data, Room state, Transactional business logic |
-| **C4** | **Relational Database** | PostgreSQL 16 | Primary durable data store. Enforces relational integrity across users, profiles, debate rooms, and speech transcripts. | Persistent on disk (`debatespeak` database) |
-| **C5** | **Cache & Queue Broker** | Redis 7 | In-memory key-value cache for low-latency session validation and message broker for the asynchronous audio pipeline queue (ARQ). | In-memory with optional RDB snapshots |
-| **C6** | **Real-Time Media Server (SFU)** | LiveKit SFU (Cloud or local container) | Selective Forwarding Unit for low-latency real-time audio routing. Enforces independent audio tracks per participant for deterministic speaker attribution. | Ephemeral WebRTC audio streams (no disk persistence) |
-| **C7** | **Audio & STT Pipeline Worker** | Python 3.12, LiveKit Agents SDK, Silero VAD, `STTAdapter` | Headless worker joining the LiveKit room. Subscribes to debater audio tracks, filters non-speech using Silero VAD, streams chunks to `STTAdapter`, and produces speaker-labeled segments. | In-memory PCM audio frames, structured transcript events |
+| # | Container Name | Status | Technology / Framework | Primary Responsibilities | Data Handled & Storage |
+|---|---|---|---|---|---|
+| **C1** | **Reverse Proxy** | `[Planned]` | Caddy / Nginx | Gateway routing, SSL/TLS termination, reverse proxying frontend routes and backend endpoints. Not yet defined in `docker-compose.yml`. | Stateless network routing |
+| **C2** | **Frontend Web Application** | Active | React 18, TypeScript, Vite, Tailwind CSS, `livekit-client` | Browser SPA (`web/`). Renders Auth screens, Room Setup, Lobby/Ready polling, LiveKit audio stage, and typed-turn panel. | In-memory JWT access tokens, UI state |
+| **C3** | **Backend API Server** | Active | Java 17, Spring Boot 3, Spring Security, Spring Data JPA | Central REST API (`api/authify/`, port `8000`): JWT auth, password hashing, Room state machine (`LOBBY` -> `READY` -> `LIVE` -> `ENDED` / `CANCELLED`), typed turns, and LiveKit HS256 token minting. | Users, auth sessions, rooms, participants, turns |
+| **C4** | **Relational Database** | Active | PostgreSQL 16 (`debatespeak-db`) | Primary durable store in `docker-compose.yml` (port `5432`). Persists `users`, `topics`, `rooms`, `room_participants`, `debate_sessions`, and `transcript_segments`. | Persistent volume (`debatespeak_postgres_data`) |
+| **C5** | **Cache & Queue Broker** | Provisioned | Redis 7 (`debatespeak-redis`) | Running in `docker-compose.yml` (port `6379`) to support future ARQ task queues and session caching; `api/authify/` does not yet connect to Redis. | Persistent volume (`debatespeak_redis_data`) |
+| **C6** | **Real-Time Media Server (SFU)** | Active | LiveKit SFU (`debatespeak-livekit` or LiveKit Cloud) | Routes independent WebRTC audio tracks and LiveKit data messages (`turn` topic) between debaters. | Ephemeral WebRTC media streams |
+| **C7** | **Audio & STT Pipeline Worker** | Partial | Python 3.12 (`workers/`, `STTAdapter`) | Track isolation (`AudioPipelineManager`) and `LocalMockSTTAdapter` failover (unit-tested); LiveKit Agents SDK subscriber, Silero VAD, and Cloud STT transport are `[Planned]`. | In-memory PCM16 frames, transcript segments |
 
 ---
 
 ## 4. Container Communication Protocols & Interfaces
 
-To maintain strict boundaries between containers, communication relies on industry-standard protocols:
-
 ### 4.1. Client to Platform Communication
-1. **Frontend $\leftrightarrow$ Reverse Proxy $\leftrightarrow$ Backend API (`HTTPS / REST`)**:
-   - **Protocol**: HTTP/1.1 and HTTP/2 over TLS.
-   - **Payload**: JSON format.
-   - **Authentication**: `Authorization: Bearer <jwt_access_token>`.
-   - **Endpoints**: `/api/v1/auth/*`, `/api/v1/rooms/*`, `/api/v1/rooms/{id}/token`.
-2. **Frontend $\leftrightarrow$ Backend API (`WebSocket / WSS`)**:
-   - **Protocol**: RFC 6455 WebSocket.
-   - **Purpose**: Real-time room state notifications (e.g. peer joined, peer marked `READY`, debate countdown start) without polling.
-3. **Frontend $\leftrightarrow$ LiveKit SFU (`WebRTC`)**:
-   - **Signalling**: WebSocket over HTTPS (`wss://...`).
-   - **Media Transport**: SRTP over UDP with ICE/STUN/TURN fallback.
-   - **Security**: Ephemeral JWT signed by the Backend API containing explicit room permissions (publish audio = true, publish video = false).
+1. **Frontend `<->` Backend API (`HTTP / HTTPS REST`)**:
+   - **Protocol**: HTTP/1.1 JSON on `:8000` (direct in local dev; behind `[Planned]` Caddy TLS proxy in production).
+   - **Authentication**: `Authorization: Bearer <jwt_access_token>`, `credentials: include` (HttpOnly refresh cookie), and `X-DebateSpeak-Client: web`.
+   - **Endpoints**: `/api/v1/auth/*`, `/api/v1/topics`, `/api/v1/rooms/*`, `/api/v1/rooms/{id}/token`, `/api/v1/rooms/{id}/turns`.
+   - **State Synchronization**: Frontend polls `GET /api/v1/rooms/{id}` every 2 s pre-debate and every 5 s during `LIVE`. Server-pushed `WebSocket / WSS` room events are `[Planned]`.
+2. **Frontend `<->` LiveKit SFU (`WebRTC`)**:
+   - **Signalling**: `ws://localhost:7880` (local Docker `--dev`) or `wss://*.livekit.cloud` (cloud).
+   - **Media & Data Transport**: SRTP over UDP (`7882/udp`) with TCP fallback (`7881/tcp`), plus LiveKit data messages on topic `turn` to trigger immediate partner turn fetches.
+   - **Security**: Ephemeral 5-minute HS256 JWT minted by `RoomService.token()` with `canPublish` enabled only when the participant's `input` is `VOICE`.
 
 ### 4.2. Internal Server-Side Communication
-1. **Backend API $\leftrightarrow$ PostgreSQL Database (`TCP / JDBC`)**:
-   - **Protocol**: PostgreSQL Wire Protocol over TCP port 5432.
-   - **Driver**: HikariCP connection pool with PostgreSQL JDBC Driver.
-2. **Backend API $\leftrightarrow$ Redis 7 (`TCP / RESP`)**:
-   - **Protocol**: REdis Serialization Protocol (RESP3) over TCP port 6379.
-   - **Client**: Spring Data Redis (Lettuce driver).
-3. **Audio Worker $\leftrightarrow$ LiveKit SFU (`WebRTC / RTC Engine`)**:
-   - **Protocol**: Server-side WebRTC track subscription using LiveKit Python Agents SDK.
-   - **Deterministic Attribution**: The worker hooks into track subscriptions by `participant_identity`, guaranteeing that audio frames from debater A are never conflated with debater B.
-4. **Audio Worker $\leftrightarrow$ External Cloud STT / Local Fallback (`gRPC / Local Pipe`)**:
-   - **Protocol**: Bi-directional streaming gRPC (Google Cloud Speech / Deepgram) or local asynchronous mock stream (`LocalMockSTTAdapter`).
-   - **Design**: Strictly abstracted behind the `STTAdapter` protocol defined in `api/app/adapters/stt.py`.
-5. **Audio Worker $\rightarrow$ Backend API (`REST / HTTP`)**:
-   - **Protocol**: `POST /api/v1/rooms/{id}/transcripts` with payload containing `speaker_id`, `text`, `start_time`, `end_time`, `confidence`, and `is_final`.
+1. **Backend API `<->` PostgreSQL Database (`TCP / JDBC`)**:
+   - **Protocol**: PostgreSQL Wire Protocol over TCP port `5432` (HikariCP + Spring Data JPA).
+2. **Backend API / Worker `<->` Redis 7 (`TCP / RESP`, `[Planned]` application wiring)**:
+   - **Protocol**: RESP over TCP port `6379` (Spring Data Redis / Python ARQ).
+3. **Audio Worker `<->` LiveKit SFU & Cloud STT (`[Planned]` live wiring)**:
+   - **Design**: Independent track subscription per `participant_identity` piped into `STTAdapter` (`api/app/adapters/stt.py`) with automatic fallback to `LocalMockSTTAdapter` (`workers/audio_pipeline.py`).
+4. **Backend API `->` SMTP Mail Service (`SMTP / TLS`)**:
+   - **Protocol**: Spring `JavaMailSender` over SMTP port `587` (`STARTTLS`).
 
 ---
 
 ## 5. Architectural Invariant Compliance Check
 
-This container architecture explicitly enforces the core invariants from `AGENTS.md`:
-
-* **Zero Hardcoded Paths**: Containers resolve hostnames and ports dynamically via environment variables (`DATABASE_URL`, `REDIS_URL`, `LIVEKIT_URL`, `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`).
-* **Deterministic Speaker Attribution (Section 4.3)**: Realized through container `C6` (LiveKit SFU) and `C7` (Audio Worker), where independent WebRTC audio tracks eliminate the error-prone clustering of traditional diarization.
-* **Provider-Agnostic STT Adapter (Section 4.4)**: Realized within container `C7`, isolating cloud streaming vendors behind `STTAdapter` with seamless local transcription fallback.
-* **Dual-Consent Enforcement (Section 7.3)**: Audio streams are neither opened by container `C2` nor subscribed to by `C7` until both debaters provide explicit consent in the room lobby.
+* **Zero Hardcoded Paths (`AGENTS.md` §1)**: Containers and workers resolve endpoints and secrets dynamically via environment variables (`DATABASE_URL`, `REDIS_URL`, `APP_JWT_SECRET`, `LIVEKIT_URL`, `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`).
+* **Deterministic Speaker Attribution (`AGENTS.md` §4.3)**: Realized through independent WebRTC tracks per participant in LiveKit SFU (`C6`) and `SpeakerAudioTrack` binding by `speaker_id` / `track_sid` in `workers/audio_pipeline.py` (`C7`).
+* **Provider-Agnostic STT Adapter (`AGENTS.md` §4.4)**: Realized via `STTAdapter` (`api/app/adapters/stt.py`) and failover logic in `SpeakerAudioTrack`.
+* **Dual-Consent Enforcement (`AGENTS.md` §7.3)**: LiveKit tokens are rejected (`409 room_not_live`) until both participants submit `PUT /api/v1/rooms/{id}/ready` with `consent: true`, and `canPublish` is `false` for `TYPE` participants.
