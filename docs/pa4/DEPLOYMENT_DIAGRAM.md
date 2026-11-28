@@ -9,7 +9,7 @@
 | **Owner** | Nguyễn Đình Thiên Lộc (24125093) — DevOps & QA / Fact-Checking Lead |
 | **Reviewer** | Nguyễn Anh Khoa (24125058) — AI Audio & Speech Pipeline Lead |
 | **Date** | November 28, 2026 |
-| **Status** | In Review |
+| **Status** | Complete |
 
 ---
 
@@ -88,7 +88,7 @@ The local development machine hosts both uncontainerized developer runtime proce
 * **Background Worker Process:** Python modules executing audio pipeline and health checks (`workers/audio_pipeline.py`, `workers/health.py`, ARQ job queue).
 
 #### 3.2.2 Docker Compose Engine (`<<executionEnvironment>>`)
-Manages containerized stateful backing infrastructure defined in `docker-compose.yml`. All containers communicate across the custom bridge network `debatespeak-network`.
+Manages containerized services defined in `docker-compose.yml`. All containers communicate across the custom bridge network `debatespeak-network`. Running `docker compose up -d` starts the three default stateful backing containers (`debatespeak-db`, `debatespeak-redis`, `debatespeak-livekit`); running `docker compose --profile full up -d --build` additionally builds and runs containerized `debatespeak-api` (`api/authify/Dockerfile`, port `8000`) and `debatespeak-web` (`web/Dockerfile` + `web/nginx.conf`, port `3000:80`, proxying `/api/` to `http://api:8000`).
 1. **`debatespeak-db`:**
    * Image: `postgres:16-alpine`.
    * Host Port Binding: `5432:5432`.
@@ -143,8 +143,8 @@ The following components are referenced in planning documents (`docs/pa4/loc/TOD
    * *Status:* Planned. Not present in `docker-compose.yml`.
    * *Purpose:* Terminate TLS (HTTPS on 443) and proxy to frontend (5173) and API (8000). Modern browsers enforce `navigator.mediaDevices.getUserMedia` only on `localhost` or secure HTTPS contexts. Caddy with internal TLS is planned for multi-device LAN testing.
 2. **Containerized API & Web Services:**
-   * *Status:* Planned. Neither `api/` nor `web/` contains a production `Dockerfile`.
-   * *Purpose:* Both frontend and backend currently run as uncontainerized host processes during local development.
+   * *Status:* Implemented (opt-in `--profile full`, PR #84).
+   * *Details:* Multi-stage Dockerfiles (`api/authify/Dockerfile`, `web/Dockerfile`) and `web/nginx.conf` enable full-stack containerized runs via `docker compose --profile full up -d --build`, while host-run Vite (`5173`) and Spring Boot (`8000`) remain default for fast local HMR development.
 3. **Dedicated Speech & AI Worker Containers:**
    * *Status:* Prototype only.
    * *Purpose:* Silero VAD, streaming speech-to-text (STT), and multi-agent LLM analysis services currently exist as prototype scripts (`workers/health.py`) rather than dedicated containerized daemons.
@@ -157,16 +157,16 @@ In accordance with the Brutal Honesty invariant (AGENTS.md Section 8), this sect
 
 1. **TODO vs. `docker-compose.yml` Service Scope:**
    * `docs/pa4/loc/TODO.md` describes communication between "browser <-> Caddy reverse proxy <-> Spring Boot" and lists Docker Compose as managing these services.
-   * *Fact:* The actual `docker-compose.yml` contains **strictly three services**: `debatespeak-db` (Postgres), `debatespeak-redis` (Redis), and `debatespeak-livekit` (LiveKit Server). There is no Caddy service, no Spring Boot container, and no web client container.
+   * *Fact:* `docker-compose.yml` defines three default backing services (`db`, `redis`, `livekit`) plus two opt-in `--profile full` application services (`api`, `web`); Caddy TLS reverse proxy is still not present.
 2. **Backend Stack Duality (FastAPI vs. Spring Boot):**
    * AGENTS.md rule 4.2 states the backend is "Java (Spring Boot), chosen by Tài on 2026-11-14".
    * *Fact:* The codebase contains **two concurrent backend implementations**:
      * A Python package in `api/app/` (STT and LLM adapters, a room state machine in `domain/rooms.py`). No LiveKit token code exists there yet.
      * A Java 17 Spring Boot application in `api/authify/` with authentication controllers and JPA entities.
      Both configure port 8000. They cannot bind concurrently on the same host interface.
-3. **Database Port & Credential Defaults in Spring Boot Properties:**
+3. **Database Port, Credential, & LiveKit Property Defaults:**
    * `docker-compose.yml` binds PostgreSQL to host port `5432:5432` with default password `debatespeak_dev_password`.
-   * *Fact:* PR #78 aligned `api/authify/src/main/resources/application.properties` default `spring.datasource.url` to port `5432` (`jdbc:postgresql://localhost:5432/debatespeak`), resolving the earlier `5433` mismatch; default password in `application.properties` remains `debatespeak_pass` unless overridden by `DATABASE_PASSWORD`.
+   * *Fact:* PR #78 and PR #84 aligned `api/authify/src/main/resources/application.properties` to port `5432` (`jdbc:postgresql://localhost:5432/debatespeak`), default password `debatespeak_dev_password`, and non-circular `app.livekit.*` properties (`url`, `api-key`, `api-secret`).
 4. **LiveKit Deployment Ambiguity (Local Container vs. Cloud):**
    * The architecture documents frequently emphasize LiveKit Cloud free tier as an invariant (AGENTS.md Section 4.3), while `docker-compose.yml` provisions a local `livekit/livekit-server:latest` container in `--dev` mode.
    * *Fact:* The active SFU endpoint is determined strictly by the `LIVEKIT_URL` environment variable. In local development without cloud API credentials, the local Docker container is active; in cloud mode, the container is redundant.
