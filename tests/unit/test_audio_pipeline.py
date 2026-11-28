@@ -8,18 +8,17 @@ Validates:
 5. Zero hardcoded absolute paths invariant.
 """
 
-from collections.abc import AsyncIterator
 import re
 from pathlib import Path
-import pytest
 
+import pytest
 from app.adapters.stt import (
     LocalMockSTTAdapter,
     STTAdapter,
-    STTEvent,
     STTStream,
     WordTiming,
 )
+
 from workers.audio_pipeline import (
     AudioPipelineManager,
     SpeakerAudioTrack,
@@ -38,7 +37,9 @@ class FailingSTTAdapter(STTAdapter):
         language: str = "en",
         hints: list[str] | None = None,
     ) -> STTStream:
-        raise ConnectionError("Cloud STT provider unreachable (Simulated Network Error)")
+        raise ConnectionError(
+            "Cloud STT provider unreachable (Simulated Network Error)"
+        )
 
 
 @pytest.fixture
@@ -54,7 +55,9 @@ def mock_wav_pcm() -> bytes:
 @pytest.mark.asyncio
 async def test_single_speaker_track_attribution(mock_wav_pcm: bytes) -> None:
     """Ensure a speaker track emits transcript segments strictly attributed to that speaker."""
-    adapter = LocalMockSTTAdapter(mock_transcript="Universities should offer four-day weeks")
+    adapter = LocalMockSTTAdapter(
+        mock_transcript="Universities should offer four-day weeks"
+    )
     track = SpeakerAudioTrack(
         room_id="room-debate-001",
         speaker_id="user-alex-123",
@@ -92,10 +95,14 @@ async def test_single_speaker_track_attribution(mock_wav_pcm: bytes) -> None:
 
 
 @pytest.mark.asyncio
-async def test_deterministic_speaker_isolation_two_speakers(mock_wav_pcm: bytes) -> None:
+async def test_deterministic_speaker_isolation_two_speakers(
+    mock_wav_pcm: bytes,
+) -> None:
     """Ensure parallel tracks for Affirmative and Negative maintain 100% deterministic isolation."""
     adapter_aff = LocalMockSTTAdapter(mock_transcript="Affirmative opening statement")
-    adapter_neg = LocalMockSTTAdapter(mock_transcript="Negative cross-examination rebuttal")
+    adapter_neg = LocalMockSTTAdapter(
+        mock_transcript="Negative cross-examination rebuttal"
+    )
 
     track_aff = SpeakerAudioTrack(
         room_id="room-championship-finals",
@@ -147,7 +154,9 @@ async def test_deterministic_speaker_isolation_two_speakers(mock_wav_pcm: bytes)
 async def test_automatic_fallback_when_primary_fails(mock_wav_pcm: bytes) -> None:
     """Ensure pipeline automatically failovers to local mock fallback without throwing error."""
     failing_adapter = FailingSTTAdapter()
-    fallback_adapter = LocalMockSTTAdapter(mock_transcript="Offline fallback debate speech")
+    fallback_adapter = LocalMockSTTAdapter(
+        mock_transcript="Offline fallback debate speech"
+    )
 
     track = SpeakerAudioTrack(
         room_id="room-network-chaos",
@@ -256,7 +265,9 @@ def test_speaker_transcript_segment_validation() -> None:
 
 def test_zero_hardcoded_paths_in_worker_code() -> None:
     """AGENTS.md Section 1 invariant check: ensure no absolute paths exist in worker."""
-    worker_file = Path(__file__).resolve().parent.parent.parent / "workers" / "audio_pipeline.py"
+    worker_file = (
+        Path(__file__).resolve().parent.parent.parent / "workers" / "audio_pipeline.py"
+    )
     content = worker_file.read_text(encoding="utf-8")
 
     forbidden_patterns = [
@@ -267,4 +278,6 @@ def test_zero_hardcoded_paths_in_worker_code() -> None:
 
     for pattern in forbidden_patterns:
         match = re.search(pattern, content)
-        assert match is None, f"Found hardcoded absolute path matching '{pattern}': {match}"
+        assert match is None, (
+            f"Found hardcoded absolute path matching '{pattern}': {match}"
+        )
