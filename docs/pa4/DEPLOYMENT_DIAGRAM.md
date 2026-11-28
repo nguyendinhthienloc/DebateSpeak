@@ -82,10 +82,10 @@ The local development machine hosts both uncontainerized developer runtime proce
 
 #### 3.2.1 Host Runtime Processes
 * **Vite Development Server:** Runs directly on the host using Node.js (`npm run dev` / `pnpm run dev` in `web/`). Binds to port `5173` (`host: true` in `web/vite.config.ts`) and serves assets and Hot Module Replacement (HMR). An optional local mock configuration (`web/mock-local/vite.mock.config.ts`, port `5174`) embeds an in-memory mock API (`mockApi.ts`) for two-browser room and audio-stage testing when the backend is offline.
-* **Backend API Process:** Executes on the host binding to port `8000`. Exposes REST endpoints and WebSocket room handlers:
-  * Python FastAPI implementation: `uvicorn app.main:app --port 8000` (dependencies in `api/pyproject.toml`).
-  * Spring Boot implementation: `./mvnw spring-boot:run` in `api/authify/` (configured with `server.port=8000`).
-* **Background Worker Process:** Python process executing asynchronous background tasks (`workers/health.py`, ARQ job queue).
+* **Backend API Process:** Executes on the host binding to port `8000`:
+  * Primary active implementation: Java 17 Spring Boot application in `api/authify/` (`./mvnw spring-boot:run`, `server.port=8000`), implementing Auth (`AuthController`), Room lifecycle (`RoomController` / `RoomService`), typed turns, and LiveKit HS256 token minting (`POST /api/v1/rooms/{id}/token`).
+  * Legacy/shared Python package (`api/app/`): Hosts `STTAdapter` / `LLMAdapter` contracts and FastAPI health/domain modules (`uvicorn app.main:app --port 8000`, `api/pyproject.toml`).
+* **Background Worker Process:** Python modules executing audio pipeline and health checks (`workers/audio_pipeline.py`, `workers/health.py`, ARQ job queue).
 
 #### 3.2.2 Docker Compose Engine (`<<executionEnvironment>>`)
 Manages containerized stateful backing infrastructure defined in `docker-compose.yml`. All containers communicate across the custom bridge network `debatespeak-network`.
@@ -164,10 +164,9 @@ In accordance with the Brutal Honesty invariant (AGENTS.md Section 8), this sect
      * A Python package in `api/app/` (STT and LLM adapters, a room state machine in `domain/rooms.py`). No LiveKit token code exists there yet.
      * A Java 17 Spring Boot application in `api/authify/` with authentication controllers and JPA entities.
      Both configure port 8000. They cannot bind concurrently on the same host interface.
-3. **Database Port Discrepancy in Spring Boot Properties:**
-   * `docker-compose.yml` binds PostgreSQL to host port `5432:5432`.
-   * `.env.example` defines `DATABASE_URL` with port `5432`.
-   * *Fact:* `api/authify/src/main/resources/application.properties` specifies default `spring.datasource.url=jdbc:postgresql://localhost:5433/debatespeak`. A connection attempt using default properties will fail unless the environment variable overrides the port to 5432.
+3. **Database Port & Credential Defaults in Spring Boot Properties:**
+   * `docker-compose.yml` binds PostgreSQL to host port `5432:5432` with default password `debatespeak_dev_password`.
+   * *Fact:* PR #78 aligned `api/authify/src/main/resources/application.properties` default `spring.datasource.url` to port `5432` (`jdbc:postgresql://localhost:5432/debatespeak`), resolving the earlier `5433` mismatch; default password in `application.properties` remains `debatespeak_pass` unless overridden by `DATABASE_PASSWORD`.
 4. **LiveKit Deployment Ambiguity (Local Container vs. Cloud):**
    * The architecture documents frequently emphasize LiveKit Cloud free tier as an invariant (AGENTS.md Section 4.3), while `docker-compose.yml` provisions a local `livekit/livekit-server:latest` container in `--dev` mode.
    * *Fact:* The active SFU endpoint is determined strictly by the `LIVEKIT_URL` environment variable. In local development without cloud API credentials, the local Docker container is active; in cloud mode, the container is redundant.

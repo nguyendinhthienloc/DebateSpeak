@@ -1,12 +1,9 @@
-*Performed: Nguyễn Bảo Minh Triết (24125047) | Reviewed: Nguyễn Anh Khoa (24125058) | Edited: Nguyễn Đình Thiên Lộc (24125093)*
-
-> Draft prepared by Lộc for Triết to check and take over.
-
 # C4 Level 3: Frontend Components
+*Performed: Nguyễn Bảo Minh Triết (24125047) | Reviewed: Nguyễn Anh Khoa (24125058) | Edited: Nguyễn Đình Thiên Lộc (24125093)*
 
 Jira: SCRUM-58. Container: the DebateSpeak web SPA (Vite + React TypeScript + Tailwind), under `web/src/`.
 
-The diagrams are derived from the code on `pa4` (merge of PR #70). Components that exist only in open PRs #71 (LiveKit live stage) and #73 (typed turns) are drawn separately in a dashed "in review" group. Move them into Diagram 1 once those PRs merge.
+The diagrams reflect the merged `pa4` codebase across PR #70 (FG-03 room setup and lobby), PR #71 (FG-04 LiveKit live stage), PR #73 (typed debate turns and local mock API), and PR #82 (demo room-flow fixes). Diagram 1 covers the core FG-01/FG-03 shell and Diagram 2 covers the live-stage audio and typed-turn additions.
 
 ## Diagram 1: components on pa4
 
