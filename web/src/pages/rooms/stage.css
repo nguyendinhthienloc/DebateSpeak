@@ -98,6 +98,8 @@
   background: var(--surface); box-shadow: 0 2px 4px rgb(0 0 0 / .3), 0 40px 80px -30px rgb(0 0 0 / .8); z-index: 3;
 }
 .audio-panel :focus-visible { outline-color: var(--ink); }
+/* On Ink, the no-microphone notice takes the dark-stage drop; the Cream shadow would not read. */
+.stage .no-mic-notice { box-shadow: 0 2px 4px rgb(0 0 0 / .3), 0 40px 80px -30px rgb(0 0 0 / .8); }
 @media (min-width: 760px) {
   .audio-panel { position: absolute; right: 0; bottom: calc(100% + 8px); width: min(22rem, 100%); }
 }

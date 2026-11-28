@@ -10,6 +10,7 @@ import { initialSpotlight, nextSpotlight, type SpotlightState } from '../../room
 import { useTypedTurns } from '../../rooms/useTypedTurns';
 import { AudioPanel } from './AudioPanel';
 import { SideTag } from './InviteView';
+import { NoMicNotice } from './NoMicNotice';
 import { TypePanel } from './TypePanel';
 import './stage.css';
 
@@ -57,6 +58,10 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   const [connection, setConnection] = useState<Connection>('connecting');
   const [audioFailed, setAudioFailed] = useState(false);
   const [micStopped, setMicStopped] = useState(false);
+  // No input device left at all, and whether the debater dismissed the notice for this stop.
+  const [noInputs, setNoInputs] = useState(false);
+  const [noMicDismissed, setNoMicDismissed] = useState(false);
+  const [typeFocus, setTypeFocus] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [partnerPresent, setPartnerPresent] = useState<boolean>();
   const [partnerMuted, setPartnerMuted] = useState(false);
@@ -114,7 +119,11 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
       else if (event.type === 'turn') refreshTurns();
       else if (event.type === 'dropped') setAudioFailed(true);
       // The button shows what is true: a stopped mic reads Unmute, and Unmute retries it.
-      else if (event.type === 'mic') { setMicStopped(event.state === 'stopped'); setMuted(event.state === 'stopped'); }
+      else if (event.type === 'mic') {
+        setMicStopped(event.state === 'stopped');
+        setMuted(event.state === 'stopped');
+        setNoMicDismissed(false);
+      }
     });
     setAudioFailed(false);
     setConnection('connecting');
@@ -148,6 +157,25 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
     if (confirming) { askedToEnd.current = true; confirmButton.current?.focus(); }
     else if (askedToEnd.current) { askedToEnd.current = false; endButton.current?.focus(); }
   }, [confirming]);
+
+  // While the mic is stopped, keep checking whether any microphone is left.
+  useEffect(() => {
+    if (!micStopped || !settingsAudio || !publishMic) { setNoInputs(false); return; }
+    let current = true;
+    const check = () => {
+      settingsAudio.listDevices('audioinput').then(list => { if (current) setNoInputs(list.length === 0); }, () => {});
+    };
+    check();
+    navigator.mediaDevices?.addEventListener?.('devicechange', check);
+    return () => { current = false; navigator.mediaDevices?.removeEventListener?.('devicechange', check); };
+  }, [micStopped, settingsAudio, publishMic]);
+  const noMic = micStopped && noInputs && !noMicDismissed;
+
+  function typeInstead() {
+    setNoMicDismissed(true);
+    setPanelOpen(true);
+    setTypeFocus(true);
+  }
 
   const closeAudio = useCallback((refocus: boolean) => {
     setAudioOpen(false);
@@ -210,7 +238,8 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
       {partnerPresent === false && partner && <p className="stage-alert" role="status">{partner.display_name} lost connection. Waiting up to 60 seconds.</p>}
       {rejoined && muted && publishMic && <p className="stage-note">You're muted after rejoining.</p>}
       {blocked && <button type="button" className="action action-primary" onClick={() => { void audio.current?.resumePlayback(); setBlocked(false); }}>Turn on sound</button>}
-      {micStopped && <p className="stage-alert" role="alert">Your microphone stopped. <button type="button" className="stage-link"
+      {noMic && <NoMicNotice onType={typeInstead} onDismiss={() => setNoMicDismissed(true)} />}
+      {micStopped && !noMic && <p className="stage-alert" role="alert">Your microphone stopped. <button type="button" className="stage-link"
         onClick={() => setAudioOpen(true)}>Open audio settings</button></p>}
       {audioFailed && <p className="stage-alert" role="alert">Audio is not connected. <button type="button" className="stage-link" onClick={() => setAttempt(value => value + 1)}>Try again</button></p>}
       {endFailed && <p className="stage-alert" role="alert">The debate could not be ended. Try again.</p>}
@@ -242,6 +271,6 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
     </div>
    </div>
     {panelOpen && <TypePanel turns={typed.turns} participants={room.participants} meId={me?.user_id} send={typed.send}
-      sending={typed.sending} error={typed.error} onClose={() => setPanelOpen(false)} />}
+      sending={typed.sending} error={typed.error} onClose={() => { setPanelOpen(false); setTypeFocus(false); }} autoFocus={typeFocus} />}
   </div>;
 }

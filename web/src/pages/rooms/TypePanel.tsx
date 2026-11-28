@@ -1,15 +1,17 @@
-import { useId, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import type { Participant, TypedTurn } from '../../rooms/contracts';
 
 const maxLength = 500;
 
 /** Typed turns so far and a box to send one. Turns render as plain text only. */
-export function TypePanel({ turns, participants, meId, send, sending, error, onClose }: {
+export function TypePanel({ turns, participants, meId, send, sending, error, onClose, autoFocus = false }: {
   turns: TypedTurn[]; participants: Participant[]; meId?: string;
-  send: (text: string) => Promise<boolean>; sending: boolean; error?: string; onClose: () => void;
+  send: (text: string) => Promise<boolean>; sending: boolean; error?: string; onClose: () => void; autoFocus?: boolean;
 }) {
   const [text, setText] = useState('');
   const field = useId();
+  const box = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => { if (autoFocus) box.current?.focus(); }, [autoFocus]);
   const nameOf = (id: string) => (id === meId ? 'You' : participants.find(person => person.user_id === id)?.display_name ?? 'Partner');
 
   async function submit(event?: FormEvent) {
@@ -37,7 +39,7 @@ export function TypePanel({ turns, participants, meId, send, sending, error, onC
     {turns.length === 0 && <p className="small muted">No typed turns yet.</p>}
     <form className="type-form" onSubmit={submit}>
       <label htmlFor={field}>Type your turn</label>
-      <textarea id={field} rows={3} maxLength={maxLength} value={text} onChange={event => setText(event.target.value)} onKeyDown={onKeyDown} />
+      <textarea ref={box} id={field} rows={3} maxLength={maxLength} value={text} onChange={event => setText(event.target.value)} onKeyDown={onKeyDown} />
       <div className="type-send">
         <span className="small muted">{maxLength - text.length} characters left</span>
         <button type="submit" className="action action-primary" disabled={sending || !text.trim()}>Send</button>

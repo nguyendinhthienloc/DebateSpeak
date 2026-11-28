@@ -86,3 +86,36 @@ test('a failed unmute shows the alert', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+const noMicNotice = (page: Page) => page.getByRole('alert').filter({ hasText: 'No microphone found' });
+
+test('with no microphone left, the stage offers typing', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => { window.__audio.devices.audioinput = []; window.__audio.emit({ type: 'mic', state: 'stopped' }); });
+  await expect(noMicNotice(page)).toBeVisible();
+  const before = await page.evaluate(() => [window.__audio.muted.length, window.__audio.connects.length]);
+  await noMicNotice(page).getByRole('button', { name: 'Type instead', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Typed turns' })).toBeVisible();
+  await expect(page.getByLabel('Type your turn', { exact: true })).toBeFocused();
+  await expect(noMicNotice(page)).toHaveCount(0);
+  expect(await page.evaluate(() => [window.__audio.muted.length, window.__audio.connects.length])).toEqual(before);
+});
+
+test('the notice gives way when a mic is plugged back in', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => { window.__audio.devices.audioinput = []; window.__audio.emit({ type: 'mic', state: 'stopped' }); });
+  await expect(noMicNotice(page)).toBeVisible();
+  await page.evaluate(() => {
+    window.__audio.devices.audioinput = [{ id: 'mic-3', label: 'Webcam microphone' }];
+    navigator.mediaDevices.dispatchEvent(new Event('devicechange'));
+  });
+  await expect(noMicNotice(page)).toHaveCount(0);
+  await expect(stoppedAlert(page).getByRole('button', { name: 'Open audio settings', exact: true })).toBeVisible();
+});
+
+test('a stopped mic with another mic available shows only the settings alert', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => window.__audio.emit({ type: 'mic', state: 'stopped' }));
+  await expect(stoppedAlert(page)).toBeVisible();
+  await expect(noMicNotice(page)).toHaveCount(0);
+});
