@@ -81,6 +81,8 @@ appear when the clock starts, and a denial there cannot be fixed from the gear.
 - Goals: see a dead mic; switch mic and speaker mid-debate; check the mic; set partner volume;
   carry on by typing when there is no mic.
 - Non-goals: pausing the clock; input gain; remembering choices across debates; backend changes.
+  Also not built: a typist switching to voice mid-debate (needs a backend input change and a
+  publishing token; noted as a follow-up in `docs/pa4/triet/TODO.md`).
 - Anti-goals: a panel that hides Mute, End or the speaker's name; any mic capture for typists;
   a mic restart just from opening the panel.
 

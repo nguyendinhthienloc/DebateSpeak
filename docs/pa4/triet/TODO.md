@@ -58,3 +58,13 @@ Acceptance criteria:
 **Deliverable:** YouTube link added to `docs/pa4/DEMO_VIDEO.md`
 
 Script: open two browser tabs as User A (Affirmative) and User B (Negative); narrate in English the full flow: register → create room → join via code → lobby ready → start debate → live audio conversation → end session.
+
+## Follow-up after the demo: typist switches to voice mid-debate
+
+Not built. A debater who chose Type stays a typist: input is fixed at Ready, and the media token
+publishes only for `VOICE` (`RoomService.java`, `canPublish`). Today only voice can fall back to typing.
+Needs, in order:
+1. Backend (Tài): change the seat to `VOICE` during LIVE (for example `PUT /rooms/{id}/input`) and issue a token that can publish.
+2. Frontend: "Use my microphone" in the audio settings gear for typists: voice consent first, then browser mic permission, then reconnect with the new token (short audio gap).
+3. Specs: UC-04-01/02, architecture spec, room-flow design (typing is one-way today).
+4. Partner sees the switch (chip from "Typing" to "Live").
