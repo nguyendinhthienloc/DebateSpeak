@@ -1,90 +1,100 @@
-# Feature Specification: FG-03 rooms and live sessions end to end
+# Feature Specification: FG-03 Room & Live Session Management (PA4 Part E)
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058)*
 
-*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Đình Thiên Lộc (24125093)*
+Created: 2026-11-24. Feature: `006-fg03-rooms`. Status: In Progress.
+Target Build: Build 2 / Build 3 Integration (PA4 Increment 2).
+Companion Docs: [SOFTWARE_ARCHITECTURE_SPEC.md](../../docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md) (§6), [G1_SPEC_BUILD1.md](../../docs/architecture/G1_SPEC_BUILD1.md).
 
-> Draft prepared by Lộc for Khoa to check and take over.
+---
 
-Created: 2026-11-27. Feature: `006-fg03-rooms`. Jira: SCRUM-64 (this spec),
-SCRUM-60 (backend), SCRUM-61 (frontend). Status: Draft. Frontend done and merged
-(PR #70); room API not started.
+## 1. Executive Summary & Problem Formulation
 
-Covers FR-10 to FR-13 and FR-15 of the
-[architecture spec](../../docs/architecture/SOFTWARE_ARCHITECTURE_SPEC.md).
-Behaviour and wording come from the
-[room flow design](../../docs/superpowers/specs/2026-11-19-room-flow-design.md);
-endpoints and shapes from [web/API_CONTRACT.md](../../web/API_CONTRACT.md).
-This spec was written after the frontend. It does not claim Spec Kit came first.
+In spoken educational debate, unstructured voice rooms or ad-hoc video conferences create chaotic turn-taking, lack role accountability, and fail to enforce competitive debate formats.
 
-## User Scenarios & Testing
+**FG-03 (Room & Live Session Management)** provides the deterministic lifecycle controller for debate matches. It enables authenticated learners to create private debate rooms with an 8-character uppercase invite code, select debate motions and sides (Affirmative vs. Negative), match with an opponent, coordinate mutual readiness in a lobby, and transition cleanly into live debate sessions while strictly rejecting unauthorized third-party interlopers with HTTP 409 Conflict.
 
-### US1 — Create a room (P1)
-A signed-in learner picks a topic, format (`FREE_FLOW` or `TIMED_TURNS`),
-duration (5, 10, 15 or 20 min) and side (`FOR`, `AGAINST`, `RANDOM`). The room
-opens in `LOBBY` with an 8-character invite code valid for 30 minutes.
-Independent check: create, restart the API, `GET /rooms/{id}` returns the same room.
+---
 
-### US2 — Join by invite code (P1)
-A second learner enters the code, sees a preview (motion, creator, format,
-duration, stance mode) and takes the seat. The room moves to `READY` and both
-sides are assigned. A third account is refused.
-Independent check: two browsers join one room; a third browser gets "room full".
+## 2. User Scenarios & Acceptance Criteria
 
-### US3 — Consent and Ready (P1)
-Each debater chooses voice or typing and presses I'm ready, which records
-explicit consent to transcription and analysis. Only when both are ready does
-the room go `LIVE`, with `started_at` = second Ready + 3 s. Either may un-ready.
-Independent check: one Ready keeps `READY`; the second Ready gives `LIVE`.
+### US1 — Create Debate Room as Host (P1)
+**User Story:** As an authenticated debater, I want to create a debate room with a chosen motion and stance so that I can invite an opponent to practice with me.
 
-### US4 — Leave, cancel, expire, end (P2)
-The creator can cancel in `LOBBY`/`READY`. A guest leaving `READY` reopens the
-seat. A `LOBBY` room past its expiry becomes `CANCELLED` (`EXPIRED`). A `LIVE`
-room ends by either debater (`MANUAL`), the timer (`TIMER`) or a 60-second
-partner disconnect (`DISCONNECT`).
-Independent check: each ending shows the right `end_reason` after a reload.
+* **Acceptance Criteria (AC-1.1):** When a user sends `POST /api/v1/rooms` with `{ "topic_id": "...", "stance": "AFFIRMATIVE" }`, the system generates an 8-character uppercase alphanumeric `invite_code` (e.g. `DEB-8A3F`).
+* **AC-1.2:** The room is initialized in the `WAITING` state with host assigned to the selected stance and the opponent slot set to `null`.
+* **AC-1.3:** Response returns `201 Created` with room ID, invite code, host identity, topic metadata, and initial state.
 
-### Edge Cases
-Wrong, expired or closed code (404); room full (409); a seated caller looking
-up their own code gets `room_id` back instead of a second seat; Ready without
-consent (422); any move not allowed in the current state (409); a non-participant
-reading a room (403/404); two simultaneous joins or Readys (row lock, one wins).
+### US2 — Join Debate Room via Invite Code (P1)
+**User Story:** As an invited debater, I want to join an existing room using an 8-character invite code so that I can enter the lobby and take the opposing stance.
 
-## Requirements
+* **Acceptance Criteria (AC-2.1):** When a user sends `POST /api/v1/rooms/join` with `{ "invite_code": "DEB-8A3F" }`, the system validates the code.
+* **AC-2.2:** If the room is in `WAITING` state and has an open slot, the user is assigned the remaining opposite stance (e.g. `NEGATIVE`).
+* **AC-2.3:** Room state remains `WAITING` until both participants explicitly signal ready.
+* **AC-2.4:** Response returns `200 OK` with full room details and participant identities.
 
-- FR-001: Endpoints, bodies, shapes and status codes follow
-  [web/API_CONTRACT.md](../../web/API_CONTRACT.md) exactly. The UI validates
-  shapes with `web/src/rooms/contracts.ts`.
-- FR-002: States are `LOBBY`, `READY`, `LIVE`, `ENDED`, `CANCELLED`. Only the
-  transitions in the contract's Rules section are allowed; all others return 409.
-- FR-003: Invite codes are 8 random characters (at least 40 bits), unique,
-  single-room, and `null` once the room is ended or cancelled.
-- FR-004: A room holds exactly two debaters. No account ever holds two seats.
-- FR-005 (dual consent, AGENTS.md §7): the server refuses
-  Ready without `consent: true`, stores the consent time per participant, and
-  never goes `LIVE`, issues a media token or saves transcript text unless both
-  participants consented. Leaving or un-readying clears consent.
-- FR-006: Rooms, participants, consent and debate sessions persist in
-  PostgreSQL 16. Going `LIVE` creates exactly one `debate_sessions` row.
-- FR-007: Every snapshot carries `server_now`. Expiry and the time limit are
-  applied on every read; no scheduler is required.
-- FR-008: Join and Ready run under a row lock on the room.
-- FR-009: All room endpoints need a valid access token. 401 is used only for a
-  missing or bad token, because the UI signs the user out on 401.
+### US3 — Mutual Readiness & Debate Trigger in Lobby (P1)
+**User Story:** As a debater in the lobby, I want to review the selected motion, see my opponent's status, and toggle my "Ready" status so that the debate starts only when both sides are prepared.
 
-## Key Entities
+* **Acceptance Criteria (AC-3.1):** Each debater can send `POST /api/v1/rooms/{id}/ready` to toggle readiness (`is_ready: true`).
+* **AC-3.2:** When debater 1 is ready and debater 2 is not, the room remains in `WAITING` (1/2 ready).
+* **AC-3.3:** The instant both debaters are `is_ready: true`, the room state deterministically transitions from `WAITING` to `READY` and triggers the debate countdown.
+* **AC-3.4:** When the countdown completes, state transitions to `IN_DEBATE`.
 
-Topic (`debate_topics`), Room (`debate_rooms`), Participant with side, ready,
-input mode and consent time (`debate_participants`), Debate session
-(`debate_sessions`). Columns: [plan](plan.md).
+### US4 — Room Closure & Lifecycle Termination (P2)
+**User Story:** As a debater or system administrator, I want completed or abandoned rooms to terminate cleanly so that system resources are released.
 
-## Success Criteria
+* **Acceptance Criteria (AC-4.1):** When the debate timer elapses or both debaters conclude their speeches, the room transitions from `IN_DEBATE` to `CONCLUDED`.
+* **AC-4.2:** If a debater leaves before debate starts or the room remains idle past the 30-minute timeout, the room transitions to `ABANDONED`.
+* **AC-4.3:** No new media streams or state mutations are accepted for `CONCLUDED` or `ABANDONED` rooms.
 
-- SC-001: One full flow (create, join, both Ready, `LIVE`, end) works in two
-  real browsers against the Spring Boot API, with no mocks.
-- SC-002: Rooms and their final state survive an API restart.
-- SC-003: No room reaches `LIVE` in any test without two recorded consents.
+---
 
-## Out of scope (PA4)
+## 3. Edge Cases & Invariant Constraints
 
-Audio and the media token (see [007](../007-fg04-audio/spec.md)), abuse reports
-and admin force-close (FR-16, FR-17), turn timer per speaker (FR-14 is UI only),
-push updates (polling is enough for two people).
+1. **Third-Party Intruder Rejection (409 Conflict):**
+   - When a 3rd user attempts to join a room that already has 2 participants (`host` and `guest`), the API immediately responds with `409 Conflict` and error code `ROOM_FULL`.
+2. **Invalid / Stale Code (404 Not Found):**
+   - If an invite code does not exist or has expired, respond with `404 Not Found` and message `INVALID_INVITE_CODE`.
+3. **Invalid State Transition (422 / 400 Bad Request):**
+   - Attempting to join a room in `IN_DEBATE` or `CONCLUDED` state returns `409 Conflict` with `ROOM_ALREADY_ACTIVE` or `ROOM_CLOSED`.
+4. **Self-Opponent Guard:**
+   - A user cannot join their own created room as their own opponent. Attempting to join with the host's authentication token returns `400 Bad Request` with `CANNOT_JOIN_OWN_ROOM`.
+5. **Deterministic State Machine Invariant:**
+   - Room state transitions follow a strict directed acyclic graph:
+     `WAITING` $\rightarrow$ `READY` $\rightarrow$ `IN_DEBATE` $\rightarrow$ `CONCLUDED` (or `ABANDONED`). Reverse transitions (e.g. `IN_DEBATE` $\rightarrow$ `WAITING`) are structurally prohibited.
+
+---
+
+## 4. REST API Contract & Data Schema
+
+### 4.1. Endpoints
+
+| Method | Endpoint | Auth | Success | Errors | Description |
+|---|---|---|---|---|---|
+| `POST` | `/api/v1/rooms` | Bearer JWT | `201 Created` | 400, 401 | Create room, generate 8-char invite code |
+| `POST` | `/api/v1/rooms/join` | Bearer JWT | `200 OK` | 400, 401, 404, 409 | Join room with invite code |
+| `POST` | `/api/v1/rooms/{id}/ready` | Bearer JWT | `200 OK` | 401, 403, 404, 409 | Toggle player readiness |
+| `GET` | `/api/v1/rooms/{id}` | Bearer JWT | `200 OK` | 401, 403, 404 | Poll or fetch current room & debater status |
+| `POST` | `/api/v1/rooms/{id}/leave` | Bearer JWT | `200 OK` | 401, 404 | Leave room; triggers abandonment if unstarted |
+
+### 4.2. Database Schema (`rooms` table)
+
+```sql
+CREATE TABLE rooms (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    invite_code VARCHAR(12) UNIQUE NOT NULL,
+    topic_id UUID REFERENCES topics(id),
+    state VARCHAR(20) NOT NULL DEFAULT 'WAITING',
+    affirmative_user_id UUID REFERENCES users(id),
+    negative_user_id UUID REFERENCES users(id),
+    affirmative_ready BOOLEAN NOT NULL DEFAULT FALSE,
+    negative_ready BOOLEAN NOT NULL DEFAULT FALSE,
+    started_at TIMESTAMP WITH TIME ZONE,
+    concluded_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_rooms_invite_code ON rooms(invite_code);
+CREATE INDEX idx_rooms_state ON rooms(state);
+```

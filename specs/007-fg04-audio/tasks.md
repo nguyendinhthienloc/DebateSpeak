@@ -1,41 +1,32 @@
-# Tasks: FG-04 real-time audio
+# Tasks & Work Breakdown: FG-04 Real-Time Audio Communication
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058)*
 
-Checked = done and merged on `pa4`. "In review" = written, PR open, not merged.
-Unchecked = not started. Backend: Tài (SCRUM-62). Frontend: Triết (SCRUM-63).
+Target Feature: `007-fg04-audio`  
+Jira References: `SCRUM-62` (Backend Token - Tài), `SCRUM-63` (Frontend Audio - Triết), `SCRUM-64` (Spec Kit & STT - Khoa)
 
-## Setup
+---
 
-- [x] T001 Token and typed-turn contract in `web/API_CONTRACT.md` (on `pa4`; typed turns in PR #73).
-- [ ] T002 Spec, plan and tasks for FG-04 (this folder, SCRUM-64). Khoa to check, Tuấn to review.
-- [ ] T003 Create the LiveKit Cloud project; share keys out of band, never in git (Tài).
-- [ ] T004 Update architecture spec 6.2 (token only in `LIVE`) and add `source` to `transcript_segments`.
+## 1. Backend Tasks (`api/authify/`) — Owner: Tài (24125078)
 
-## Frontend (Triết)
+- [ ] **T1.1 (LiveKit Dependency):** Add `io.livekit:livekit-server` dependency or JWT claims builder to `pom.xml`.
+- [ ] **T1.2 (Token Service):** Implement `LiveKitTokenService.generateAccessToken(UUID userId, String roomCode, boolean canPublish)`. Read `LIVEKIT_API_KEY` and `LIVEKIT_API_SECRET` from environment.
+- [ ] **T1.3 (Controller Endpoint):** Implement `LiveKitController` with `POST /api/v1/rooms/{id}/token`. Validate requester is an enrolled debater in room `{id}`. Return `200 OK` with token and server URL.
+- [ ] **T1.4 (Security Tests):** Verify token expiration and 403 Forbidden on non-participant access.
 
-- [x] T010 Mic permission, device selection and mic test before Ready (`useMicCheck.ts`, PR #70).
-- [ ] T011 [US1] In review (PR #71): `debateAudio.ts` connects with the token and plays the partner's track.
-- [ ] T012 [US2] In review (PR #71): no mic track for `TYPE`; nothing before `LIVE`.
-- [ ] T013 [US3] In review (PR #71): mute/unmute, partner state, active speaker, muted after reload.
-- [ ] T014 [US4] In review (PR #71): connection quality, Try again, Turn on sound, end after 60 s away.
-- [ ] T015 [US5] In review (PR #73): typed turns panel and `useTypedTurns.ts`.
-- [ ] T016 In review: `web/tests/room-{audio,live,rules,wrap,type}.spec.ts` with fake LiveKit.
+---
 
-## Backend token API (Tài) — not started
+## 2. Frontend Tasks (`web/src/`) — Owner: Triết (24125047)
 
-- [ ] T020 [US1] Add the LiveKit server SDK and read the three `LIVEKIT_*` variables.
-- [ ] T021 [US1] `POST /rooms/{id}/token`: participant of a `LIVE` room only, else 409/403/404.
-- [ ] T022 [US2] Refuse unless both participants have `consent_given_at`.
-- [ ] T023 [US2] Publish-microphone grant only for `input = VOICE`.
-- [ ] T024 Test that decodes the token and checks identity, room and grants.
+- [ ] **T2.1 (LiveKit SDK Install):** Install `livekit-client` and `@livekit/components-react`.
+- [ ] **T2.2 (Dual-Consent Prompt):** Implement `MicConsentModal.tsx` requiring explicit click before accessing `navigator.mediaDevices.getUserMedia()`.
+- [ ] **T2.3 (useLiveKit Hook):** Author `useLiveKitRoom.ts` handling `room.connect()`, track publication, track subscription, and network disconnect events.
+- [ ] **T2.4 (Audio Stage UI):** Build `AudioStage.tsx` with active speaker visual indicator (green border/pulse) and microphone level meter.
+- [ ] **T2.5 (Mute / Unmute Controls):** Implement mute toggle button that calls `localParticipant.setMicrophoneEnabled(false)`.
 
-## Backend typed turns (Tài) — not started
+---
 
-- [ ] T030 [US5] Add `source` to `transcript_segments`; settle the `seq` unique key (see plan).
-- [ ] T031 [US5] `POST /rooms/{id}/turns` (trim, 1–500, 422) and `GET …/turns?after=`.
+## 3. Worker & Speech Ingestion Tasks — Owner: Khoa (24125058)
 
-## Verification
-
-- [ ] T040 Two real browsers on different networks: hear each other, mute shows on both, active speaker moves.
-- [ ] T041 Request a token in `READY` and as a `TYPE` debater; confirm 409 and no audio grant.
-- [ ] T042 Close one tab; the other sees the debate end with `DISCONNECT` after 60 s.
-- [ ] T043 Record the result here with the commit hash.
+- [ ] **T3.1 (Track Listener):** Build Python track subscription consumer hooking into independent audio tracks by `participant_identity`.
+- [ ] **T3.2 (STT Stream Forwarding):** Pipe live PCM16 frames from the debater's track into `STTAdapter` (using `LocalMockSTTAdapter` as offline fallback).
+- [ ] **T3.3 (Attribution Tests):** Author automated pytest verifying that track A frames produce transcripts labeled with Debater A's identity and never Debater B's.

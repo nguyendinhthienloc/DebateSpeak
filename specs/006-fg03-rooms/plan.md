@@ -1,73 +1,51 @@
-# Implementation Plan: FG-03 rooms and live sessions
+# Implementation Plan: FG-03 Room & Live Session Management
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058)*
 
-Date: 2026-11-27. [Specification](spec.md). Backend owner: Tài. Frontend owner: Triết.
+Target Feature: `006-fg03-rooms`  
+Branch: `feature/SCRUM-60-fg03-backend` (Backend) & `feature/SCRUM-61-fg03-frontend` (Frontend)  
+Status: Planned for PA4 Increment 2
 
-## Summary
+---
 
-Add the room API to the existing Spring Boot service `api/authify` (same JWT,
-CORS and error handling as FG-01). The frontend is finished and unchanged:
-it already calls every endpoint below with mocked tests.
+## 1. Architecture & Component Decomposition
 
-## Technical Context
+FG-03 connects Frontend UI to Spring Boot Backend and PostgreSQL persistence across 3 tiers:
 
-| Layer | Choice |
-|---|---|
-| Frontend | Done: `web/src/rooms/`, `web/src/pages/rooms/` (PR #70) |
-| API | Java 17, Spring Boot, in `api/authify` (AGENTS.md §4) |
-| Database | PostgreSQL 16; schema from the architecture spec, adjusted below |
-| Concurrency | `SELECT … FOR UPDATE` (JPA `PESSIMISTIC_WRITE`) on the room for join, ready, leave, end |
-| Time | Expiry and time limit applied on every read; `server_now` on every snapshot |
-| Tests | Spring Boot tests for the state machine; Playwright in `web/tests/room-*.spec.ts` mock HTTP only |
+1. **Backend Service (`api/authify/`)**:
+   - `RoomEntity`: JPA entity mapping to `rooms` table.
+   - `RoomRepository`: Spring Data JPA repository for room lookup by invite code or active player.
+   - `RoomService`: Transactional service containing pure state transitions (`WAITING` $\rightarrow$ `READY` $\rightarrow$ `IN_DEBATE`).
+   - `RoomController`: Exposes `/api/v1/rooms` REST endpoints.
+2. **Frontend UI (`web/src/`)**:
+   - `RoomSetupPage.tsx`: Host configures debate motion and creates room.
+   - `JoinRoomModal.tsx`: Debater enters 8-character invite code.
+   - `LobbyPage.tsx`: Real-time waiting room showing Affirmative/Negative debaters and Ready button.
+3. **Database (`PostgreSQL 16`)**:
+   - Durable persistence ensuring room state survives server restarts.
 
-## Structure
+---
 
-```text
-api/authify/src/main/java/org/debatespeak/authify/
-├── controller/RoomController.java      # /topics, /rooms/**
-├── service/RoomService.java            # transitions, locking, expiry
-├── entity/ TopicEntity, RoomEntity, ParticipantEntity, DebateSessionEntity
-├── repository/ one per entity
-└── dto/ RoomSnapshot, RoomPreview, Topic, CreateRoomRequest, ReadyRequest
-```
+## 2. Technical Decisions & Invariant Preservation
 
-## Data model
+* **Zero Hardcoded Paths**: API endpoints configured via `VITE_API_BASE_URL` in frontend; DB URLs loaded from `DATABASE_URL` in Spring Boot.
+* **Pure State Machine**: Transition logic is executed with immutable checks:
+  ```java
+  public RoomState nextState(RoomEntity room) {
+      if (room.isAffirmativeReady() && room.isNegativeReady()) {
+          return RoomState.READY;
+      }
+      return RoomState.WAITING;
+  }
+  ```
+* **Thread-Safe Joins**: `joinRoom()` uses optimistic locking or database row locking (`SELECT FOR UPDATE`) to eliminate race conditions when multiple users attempt to join the same room simultaneously.
 
-Based on the architecture spec SQL, with the changes the contract needs:
+---
 
-| Table | Columns |
-|---|---|
-| `debate_topics` | id, motion, category, cefr_level (seeded) |
-| `debate_rooms` | id, topic_id, creator_id, invite_code (nullable after close), status, format, duration_seconds, stance_mode, created_at, lobby_expires_at |
-| `debate_participants` | room_id, user_id, side (`FOR`/`AGAINST`), is_creator, ready, input_mode, consent_given_at, joined_at, left_at |
-| `debate_sessions` | id, room_id (unique), started_at, ended_at, end_reason, ended_by |
+## 3. Verification & Testing Strategy
 
-## Contracts
-
-All under `/api/v1`, bearer token required. Full shapes:
-[web/API_CONTRACT.md](../../web/API_CONTRACT.md).
-
-| Endpoint | Result |
-|---|---|
-| `GET /topics` | `{"topics":[Topic]}` |
-| `POST /rooms` | Snapshot, `LOBBY` |
-| `POST /rooms/lookup` `{code}` | Preview; 404, 409 full |
-| `POST /rooms/join` `{code}` | Snapshot, `READY`; 404, 409 |
-| `GET /rooms/{id}` | Snapshot; 403/404 for non-participants |
-| `POST /rooms/{id}/cancel`, `/leave` | Snapshot; 409 |
-| `PUT /rooms/{id}/ready` `{consent,input}` | Snapshot; 422 no consent, 409 |
-| `DELETE /rooms/{id}/ready` | Snapshot; 409 |
-| `POST /rooms/{id}/end` `{reason}` | Snapshot, `ENDED`; 409 |
-
-Add `PUT` to the CORS allowed methods.
-
-## Decisions and gaps
-
-- State names follow the contract (`LOBBY`, `READY`, `LIVE`). Older notes
-  using `WAITING` and `IN_DEBATE` are superseded.
-- The architecture SQL uses `PRO`/`CON` and labels `A`/`B`; the contract uses
-  `FOR`/`AGAINST`. Store the contract values; update the architecture spec.
-- `end_reason` needs `CANCELLED` and `EXPIRED`; `ended_by` is new.
-- `api/app/domain/rooms.py` (Python, SCRUM-28) holds pure transition guards.
-  The Java service must re-implement them; the Python file is not wired to anything.
-- No migrations yet (Hibernate `ddl-auto`), as in FG-01.
-- Polling every 2 s per open room is fine for a class demo, not for scale.
+1. **Unit Tests (Backend)**:
+   - Valid room creation and code uniqueness.
+   - Correct stance assignment (Host = Affirmative, Guest = Negative).
+   - Rejecting 3rd user with HTTP 409 Conflict.
+2. **Integration Tests (Full Stack)**:
+   - End-to-end flow: User A creates room $\rightarrow$ User B joins with invite code $\rightarrow$ User A clicks Ready $\rightarrow$ User B clicks Ready $\rightarrow$ Room transitions to `READY`.

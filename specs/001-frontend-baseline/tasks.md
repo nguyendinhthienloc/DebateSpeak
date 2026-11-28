@@ -31,8 +31,8 @@ Independent check: change room settings, explore sample lobbies, reload to reset
 
 ## Handoff and remaining integration
 
-- [x] T009 Publish the concise backend handoff in `web/API_CONTRACT.md`; link from `web/README.md`.
-- [ ] T010 Confirm verification-required login behavior with the backend developer and record it in `web/API_CONTRACT.md`.
+- [x] T009 Publish the concise backend handoff in `web/API_CONTRACT.md` (now `docs/api/fg01-auth-contract.md`); link from `web/README.md`.
+- [ ] T010 Confirm verification-required login behavior with the backend developer and record it in `docs/api/fg01-auth-contract.md`.
 - [ ] T011 Validate real backend/email integration using `specs/001-frontend-baseline/quickstart.md`; record results there.
 
 ## Order
@@ -49,7 +49,7 @@ Independent check: each US4 endpoint with controlled success and failure respons
 - [x] T016 [US4] Add active sessions and account deletion in `web/src/pages/AccountSettingsPages.tsx`.
 - [x] T017 [US4] Add admin suspend/reactivate in `web/src/pages/AdminPage.tsx`.
 - [x] T018 [US4] Cover US4 flows in `web/tests/account-management.spec.ts`.
-- [x] T019 Publish the backend handoff for US4 in `web/API_INTEGRATION.md`.
+- [x] T019 Publish the backend handoff for US4 in `web/API_INTEGRATION.md` (now `docs/api/fg01-accounts-guide.md`).
 - [x] T021 Keep the signed-in role after a profile save; block self-suspension (FR-009).
 - [x] T020 Run these screens against the Spring Boot API (`specs/002-fg01-accounts` verification record).
 

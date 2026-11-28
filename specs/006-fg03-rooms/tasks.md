@@ -1,49 +1,36 @@
-# Tasks: FG-03 rooms and live sessions
+# Tasks & Work Breakdown: FG-03 Room & Live Session Management
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058)*
 
-Checked = done and visible in the repository on `pa4`. Unchecked = not started
-unless noted. Backend: Tài (SCRUM-60). Frontend: Triết (SCRUM-61).
+Target Feature: `006-fg03-rooms`  
+Jira References: `SCRUM-60` (Backend - Tài), `SCRUM-61` (Frontend - Triết), `SCRUM-64` (Spec Kit - Khoa)
 
-## Setup
+---
 
-- [x] T001 Room flow design and API contract (`docs/superpowers/specs/2026-11-19-room-flow-design.md`, `web/API_CONTRACT.md`).
-- [ ] T002 Spec, plan and tasks for FG-03 (this folder, SCRUM-64). Khoa to check, Tuấn to review.
-- [ ] T003 Update the architecture spec SQL: `FOR`/`AGAINST`, `ready`, `input_mode`, `is_creator`, `ended_by`, extra end reasons (Lộc or Tài, before backend code).
+## 1. Backend Tasks (`api/authify/`) — Owner: Tài (24125078)
 
-## Frontend (Triết) — done, PR #70 merged 2026-11-21
+- [ ] **T1.1 (Model & Migration):** Define `RoomEntity` and `RoomState` enum (`WAITING`, `READY`, `IN_DEBATE`, `CONCLUDED`, `ABANDONED`). Create Flyway/JPA schema migration for `rooms` table.
+- [ ] **T1.2 (Invite Code Generator):** Implement secure random 8-character uppercase alphanumeric code generator (e.g., `DEB-XXXX`) with uniqueness retry guard.
+- [ ] **T1.3 (Repository Layer):** Implement `RoomRepository` with `findByInviteCode(String code)` and `findActiveRoomsByUserId(UUID userId)`.
+- [ ] **T1.4 (RoomService Core):**
+  - Implement `createRoom(UUID userId, UUID topicId, Stance stance)`.
+  - Implement `joinRoom(UUID userId, String inviteCode)` with 409 Conflict check when room is full.
+  - Implement `toggleReady(UUID roomId, UUID userId)`.
+- [ ] **T1.5 (REST Controller):** Expose endpoints in `RoomController` (`POST /api/v1/rooms`, `POST /api/v1/rooms/join`, `POST /api/v1/rooms/{id}/ready`, `GET /api/v1/rooms/{id}`).
+- [ ] **T1.6 (Unit Tests):** Author JUnit tests covering room creation, 409 full room rejection, and mutual readiness transitions.
 
-- [x] T010 Room client and page shell (`web/src/rooms/api.ts`, `contracts.ts`, `RoomPage.tsx`).
-- [x] T011 [US1] Create room screen (topic, format, duration, side).
-- [x] T012 [US2] Invite and join: preview, room full, wrong code, seated caller.
-- [x] T013 [US3] Consent and mic check before Ready (`AgreeView.tsx`).
-- [x] T014 [US4] Cancel, leave and expiry messages.
-- [x] T015 Playwright tests `web/tests/room-{create,invite,agree,page,routes}.spec.ts` (HTTP mocked).
+---
 
-## Backend data (Tài) — not started
+## 2. Frontend Tasks (`web/src/`) — Owner: Triết (24125047)
 
-- [ ] T020 Entities and repositories: topics, rooms, participants, sessions.
-- [ ] T021 Seed at least 10 topics across CEFR A2–C1.
+- [ ] **T2.1 (API Client Contract):** Extend `web/src/api/` with typed room functions (`createRoom()`, `joinRoom()`, `toggleReady()`, `getRoom()`).
+- [ ] **T2.2 (Room Setup Page):** Enhance `RoomSetupPage.tsx` to call `POST /api/v1/rooms` and display the generated 8-character code with one-click copy.
+- [ ] **T2.3 (Join Room Modal):** Build code-entry modal with uppercase formatting and error feedback for invalid/full rooms.
+- [ ] **T2.4 (Lobby State Synchronization):** Update `LobbyPage.tsx` to poll room status, show Affirmative vs. Negative cards, and activate the "Ready" button.
+- [ ] **T2.5 (Ready Countdown):** Trigger debate countdown when both players are ready.
 
-## Backend US1–US2 (Tài) — not started
+---
 
-- [ ] T030 [US1] `GET /topics`, `POST /rooms` with a unique 8-character code.
-- [ ] T031 [US2] `POST /rooms/lookup`, `POST /rooms/join` under a row lock; side assignment.
-- [ ] T032 [US2] `GET /rooms/{id}` with expiry and time limit applied on read; 403/404 for outsiders.
+## 3. QA & Verification Tasks — Owner: Lộc (24125093) & Khoa (24125058)
 
-## Backend US3 (Tài) — not started
-
-- [ ] T040 [US3] `PUT /rooms/{id}/ready` refuses without `consent: true` (422) and stores `consent_given_at`.
-- [ ] T041 [US3] Second Ready → `LIVE`, `started_at` = now + 3 s, exactly one `debate_sessions` row.
-- [ ] T042 [US3] `DELETE /rooms/{id}/ready` clears ready and consent.
-
-## Backend US4 (Tài) — not started
-
-- [ ] T050 [US4] Cancel, leave (seat reopens, expiry restarts), creator leave cancels.
-- [ ] T051 [US4] `POST /rooms/{id}/end` with `MANUAL`/`DISCONNECT`; `TIMER` on read.
-- [ ] T052 Add `PUT` to CORS methods in `SecurityConfig.java`.
-
-## Verification
-
-- [ ] T060 Spring Boot tests for every transition, including 409 for invalid moves and 422 without consent.
-- [ ] T061 Concurrency test: two joins and two Readys at once; one room, one session.
-- [ ] T062 Two real browsers against the API: create, join, both Ready, `LIVE`, end; restart the API and reload.
-- [ ] T063 Record the result here with the commit hash, as in [002 tasks](../002-fg01-accounts/tasks.md).
+- [ ] **T3.1 (E2E Test):** Playwright automated test simulating two browser contexts (Host and Guest) joining the same room and reaching `READY`.
+- [ ] **T3.2 (Negative Edge Cases):** Test third browser attempting to join with the same code receives HTTP 409 and UI displays "Room is full".

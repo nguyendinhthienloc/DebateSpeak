@@ -3,12 +3,12 @@
 For the backend engineer working on accounts. The frontend calls every endpoint
 below. The Spring Boot service `api/authify` (branch `backend-tai`) implements
 all of them with PostgreSQL, verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser)
-([verification record](../specs/002-fg01-accounts/tasks.md)).
+([verification record](../../specs/002-fg01-accounts/tasks.md)).
 
-[API_CONTRACT.md](API_CONTRACT.md) covers the first six endpoints (register,
+[fg01-auth-contract.md](fg01-auth-contract.md) covers the first six endpoints (register,
 login, verification and reset) and the shared field rules. This guide adds
 the rest of FG-01 and the rules that tie them together. The source of truth for
-what the frontend accepts is `src/auth/contracts.ts` and `src/auth/api.ts`.
+what the frontend accepts is `web/src/auth/contracts.ts` and `web/src/auth/api.ts`.
 
 ## 1. Connection
 
@@ -110,7 +110,7 @@ All paths are under the prefix. "Bearer" means a valid access token is required.
 
 | Method & path | Auth | Request body | Success | Errors the UI handles |
 | --- | --- | --- | --- | --- |
-| `POST /auth/register` | none | see API_CONTRACT | 201 User | 409, 422, 429 |
+| `POST /auth/register` | none | see fg01-auth-contract | 201 User | 409, 422, 429 |
 | `POST /auth/login` | none | `email`, `password` | 200 Login | 401, 403 suspended, 422, 429 |
 | `POST /auth/forgot-password` | none | `email` | 202 `{"status":"accepted"}` | 422, 429 |
 | `POST /auth/resend-verification` | none | `email` | 202 `{"status":"accepted"}` | 422, 429 |
@@ -190,7 +190,7 @@ The User object plus:
 
 ### Errors
 
-Use the shapes in API_CONTRACT.md: `422` with
+Use the shapes in fg01-auth-contract.md: `422` with
 `{"code":"validation_error","errors":[{"field":"goals","message":"..."}]}` (or
 a `detail[].loc` list). Field names the UI maps: `email`, `password`,
 `display_name`, `cefr_level`, `code`, `native_language`, `goals`, `reason`.
@@ -250,7 +250,7 @@ api/authify/src/main/java/org/debatespeak/authify/
 ```
 
 Run it with `.\mvnw spring-boot:run` from `api/authify` (JDK 17 or newer); see
-[specs/002 quickstart](../specs/002-fg01-accounts/quickstart.md).
+[specs/002 quickstart](../../specs/002-fg01-accounts/quickstart.md).
 
 ## 8. Checking your backend against the frontend
 
@@ -264,8 +264,8 @@ Run it with `.\mvnw spring-boot:run` from `api/authify` (JDK 17 or newer); see
 4. Browser DevTools: no tokens in `localStorage`, `sessionStorage`, URLs or
    readable cookies; the refresh cookie is `HttpOnly`.
 5. The exact request bodies and responses the UI expects are in
-   `tests/auth.spec.ts`, `tests/recovery.spec.ts` and
-   `tests/account-management.spec.ts`. These tests mock the API, so a green run
+   `web/tests/auth.spec.ts`, `web/tests/recovery.spec.ts` and
+   `web/tests/account-management.spec.ts`. These tests mock the API, so a green run
    does not prove your backend works; step 2 does.
 
-Record results in [quickstart.md](../specs/001-frontend-baseline/quickstart.md).
+Record results in [quickstart.md](../../specs/001-frontend-baseline/quickstart.md).
