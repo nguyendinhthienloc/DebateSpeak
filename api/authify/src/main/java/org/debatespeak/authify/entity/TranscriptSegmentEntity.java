@@ -1,0 +1,5 @@
+package org.debatespeak.authify.entity;
+import jakarta.persistence.*;
+import java.util.UUID;
+@Entity @Table(name="transcript_segments", uniqueConstraints=@UniqueConstraint(columnNames={"room_id","seq"}))
+public class TranscriptSegmentEntity { @Id private UUID id; @Column(name="room_id", nullable=false) private UUID roomId; @Column(name="user_id", nullable=false) private UUID userId; @Column(nullable=false) private long seq; @Column(nullable=false, length=500) private String text; @Column(nullable=false, length=16) private String source; @Column(name="at_ms", nullable=false) private long atMs; public TranscriptSegmentEntity(){} public UUID getId(){return id;} public void setId(UUID v){id=v;} public UUID getRoomId(){return roomId;} public void setRoomId(UUID v){roomId=v;} public UUID getUserId(){return userId;} public void setUserId(UUID v){userId=v;} public long getSeq(){return seq;} public void setSeq(long v){seq=v;} public String getText(){return text;} public void setText(String v){text=v;} public String getSource(){return source;} public void setSource(String v){source=v;} public long getAtMs(){return atMs;} public void setAtMs(long v){atMs=v;} }
