@@ -47,6 +47,9 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
     .on(RoomEvent.ParticipantDisconnected, () => partnerState(false))
     .on(RoomEvent.TrackMuted, () => partnerState())
     .on(RoomEvent.TrackUnmuted, () => partnerState())
+    // A partner who joins before publishing their mic only becomes unmuted here; mute events need a published track.
+    .on(RoomEvent.TrackPublished, () => partnerState())
+    .on(RoomEvent.TrackUnpublished, () => partnerState())
     .on(RoomEvent.AudioPlaybackStatusChanged, () => { if (!room.canPlaybackAudio) emit({ type: 'playback-blocked' }); })
     .on(RoomEvent.DataReceived, (payload, _participant, _kind, topic) => {
       if (topic !== 'turn') return;

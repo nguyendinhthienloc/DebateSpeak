@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { ActionLink, PageHeading } from './components/ui';
-import { clearSession, finishRestoring, hasSession, setExpiryHandler, setSession, useSession } from './auth/session';
+import { clearSession, finishRestoring, hasSession, setRefresher, setSession, useSession } from './auth/session';
 import { logout, refresh } from './auth/api';
 import type { TokenResponse, UserResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
@@ -53,9 +53,9 @@ export default function App() {
 
   // Restore a session from the HttpOnly refresh cookie on load, and refresh on expiry.
   useEffect(() => {
-    setExpiryHandler(() => { refresh(new AbortController().signal).then(setSession, () => clearSession(true)); });
+    setRefresher(() => refresh(new AbortController().signal));
     restoreOnce();
-    return () => setExpiryHandler(undefined);
+    return () => setRefresher(undefined);
   }, []);
 
   useEffect(() => {

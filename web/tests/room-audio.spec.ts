@@ -35,6 +35,36 @@ test('Mute pressed while the token is on its way keeps the mic off', async ({ pa
   expect(await page.evaluate(() => window.__audio.connects[0].startMuted)).toBe(true);
 });
 
+test('the partner chip follows their mic when it is published after they join', async ({ page }) => {
+  type Room = { remoteParticipants: Map<string, { identity: string; isMicrophoneEnabled: boolean }>; emit(event: string, ...args: unknown[]): void };
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  const chip = page.getByTestId('partner-chip');
+  // Both debaters connect at countdown zero, so Sam often arrives before his mic is published.
+  await page.evaluate(() => {
+    const room = window.__lk.rooms[0] as unknown as Room;
+    const sam = { identity: 'sam', isMicrophoneEnabled: false };
+    room.remoteParticipants.set('sam', sam);
+    room.emit('ParticipantConnected', sam);
+  });
+  await expect(chip).toContainText('Muted');
+  await page.evaluate(() => {
+    const room = window.__lk.rooms[0] as unknown as Room;
+    const sam = room.remoteParticipants.get('sam')!;
+    sam.isMicrophoneEnabled = true;
+    room.emit('TrackPublished', { source: 'microphone' }, sam);
+  });
+  await expect(chip).toContainText('Live');
+  await page.evaluate(() => {
+    const room = window.__lk.rooms[0] as unknown as Room;
+    const sam = room.remoteParticipants.get('sam')!;
+    sam.isMicrophoneEnabled = false;
+    room.emit('TrackUnpublished', { source: 'microphone' }, sam);
+  });
+  await expect(chip).toContainText('Muted');
+});
+
 test('when LiveKit drops the call, Try again reconnects', async ({ page }) => {
   await installFakeLiveKit(page);
   await openLiveRoom(page, { liveKit: true });

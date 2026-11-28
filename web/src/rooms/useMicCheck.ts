@@ -2,7 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type MicStatus = 'idle' | 'requesting' | 'listening' | 'passed' | 'blocked' | 'silent';
 
-const threshold = 0.05;
+/** RMS a normal speaking voice clears and background noise does not. */
+const threshold = 0.08;
+/** The same processing the debate uses (debateAudio.ts), so the test hears what the partner will. */
+const processing = { echoCancellation: true, noiseSuppression: true, autoGainControl: true };
 const needed = 1000;
 const giveUpAfter = 6000;
 
@@ -39,7 +42,7 @@ export function useMicCheck() {
     setLevel(0);
     let stream: MediaStream;
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: deviceId ? { deviceId: { exact: deviceId } } : true });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: deviceId ? { ...processing, deviceId: { exact: deviceId } } : processing });
     } catch {
       if (attempt.current === mine) setStatus('blocked');
       return;

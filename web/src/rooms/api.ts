@@ -12,7 +12,7 @@ export class RoomApiError extends Error {
 }
 
 async function request<T>(path: string, method: string, valid: (value: unknown) => value is T, signal: AbortSignal, body?: object): Promise<T> {
-  const token = getAccessToken();
+  const token = await getAccessToken();
   if (!token) throw new RoomApiError(401);
   let response: Response;
   try {

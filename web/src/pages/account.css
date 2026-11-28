@@ -82,7 +82,7 @@
 .account-secondary { justify-content: space-between; padding-top: .5rem; border-top: 1px solid var(--line); }
 /* Wide: profile form on the left, account links as a supporting pane on the right. */
 @media (min-width: 961px) {
-  .profile-page { display: grid; grid-template-columns: minmax(0, 34rem) minmax(15rem, 19rem); align-content: start; column-gap: clamp(3rem, 6vw, 6rem); max-width: none; }
+  .profile-page { display: grid; grid-template-columns: minmax(0, 34rem) minmax(15rem, 19rem); justify-content: center; align-content: start; column-gap: clamp(3rem, 6vw, 6rem); max-width: none; }
   .profile-page > * { grid-column: 1; }
   .profile-page > .account-secondary {
     grid-column: 2; grid-row: 1 / span 12; align-self: start; flex-direction: column; align-items: stretch;
