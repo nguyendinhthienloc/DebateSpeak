@@ -11,6 +11,10 @@ registration, shorter copy and a main menu (SCRUM-53).
 signed-out landing page and replaces the low-contrast surface rules.
 [005 — Sign-in and sign-up on the stage](005-auth-stage/spec.md) remakes the
 auth flow in the welcome page's stage and adds a three-step registration.
+[006 — FG-03 Room & Live Session Management](006-fg03-rooms/spec.md) adds the
+Spring Boot Room lifecycle state machine, 8-character invite code, and mutual readiness lobby (PA4 Increment 2).
+[007 — FG-04 Real-Time Audio Communication](007-fg04-audio/spec.md) adds the
+LiveKit WebRTC audio integration, token provisioning, dual-consent safety, and deterministic track attribution (PA4 Increment 2).
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain
