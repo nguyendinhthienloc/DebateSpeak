@@ -1443,3 +1443,14 @@ Frontend rules: access tokens stay in memory and travel only in `Authorization`;
 reload calls `/auth/refresh` once; a 401 on any Bearer call ends the session.
 Destructive actions require explicit confirmation. Admin links are hidden for
 non-admins, but the server is the only authority on role.
+
+## FG-03/FG-04 room service implementation boundary (2026-11-28)
+
+`api/authify` persists seeded topics, rooms, participants, debate sessions, and
+typed transcript segments in PostgreSQL. Room transitions are authenticated and
+validated server-side; join and ready use a row lock to preserve two-person
+capacity and create one session. Expiry and time limits are applied on reads and
+mutations. LiveKit tokens are short-lived, room-scoped, issued only for LIVE
+participants, and use environment-only credentials. Typed turns are plain text,
+trimmed, limited to 500 characters, sequenced per room, and retained as `TYPED`
+transcript content. This backend does not capture audio or implement STT/AI.

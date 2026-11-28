@@ -290,3 +290,11 @@ and admin suspend/reactivate (FR-05). The Spring Boot backend on `backend-tai`
 implements the endpoints listed in SOFTWARE_ARCHITECTURE_SPEC.md and
 `web/API_INTEGRATION.md` with PostgreSQL. FG-01 is the PA3 Part E slice
 (`specs/002-fg01-accounts`); it was verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser).
+
+## FG-03/FG-04 backend delivery scope (2026-11-28)
+
+This increment adds the authenticated two-person room state machine, seeded
+topics, dual consent, server-authoritative time limit, typed turns, and
+conditional LiveKit token issuance. It persists room state in PostgreSQL but
+does not claim browser audio capture, working media connectivity, transcription,
+feedback, or reports without their separately configured services.
