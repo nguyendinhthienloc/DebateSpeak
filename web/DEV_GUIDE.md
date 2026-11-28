@@ -13,6 +13,7 @@ Branch `feature/SCRUM-xx-typed-turns`. It builds on
 | --- | --- | --- |
 | Live debate stage (SCRUM-63) | Shared 3-second countdown; clock as a progress bar with exact digits; timed-turn phases; speaker spotlight; mute; LiveKit audio with **Try again** when it drops; reload rejoins muted; 60-second wait when the partner drops; **End debate** with confirmation | `room-live.spec.ts`, `room-rules.spec.ts`, `room-audio.spec.ts` |
 | Wrap up (SCRUM-63) | **Debate finished** on the stage: how it ended, partner, length; the feedback report is marked "coming in a later release" | `room-wrap.spec.ts` |
+| Live audio settings (SCRUM-63) | Gear in the dock: microphone and speaker pickers, live mic meter, partner volume; "Your microphone stopped" alert with a truthful Mute button; a **No microphone found** notice offering **Type instead** (lobby and stage); the lobby test only needs the mic allowed, and the mic picked there is used in the debate | `room-audio-settings.spec.ts`, `room-audio.spec.ts`, `room-agree.spec.ts` |
 | Typed turns | **Type instead** of the microphone test; a **Typed turns** panel (500 characters, plain text, kept after reload); a voice debater can open it with **Type** | `room-type.spec.ts` |
 | Mock API | `web/mock-local/`: auth, rooms and typed turns in memory, two accounts | Used by sections 2 to 5 |
 | Docs | [API_CONTRACT.md](API_CONTRACT.md) lists every room endpoint the backend must build; auth docs moved to [docs/api/](../docs/api/fg01-auth-contract.md); this guide | |
@@ -127,8 +128,8 @@ No microphone needed.
 
 | Also try | You should see |
 | --- | --- |
-| Choose **Type instead**, then **Use my microphone** | Back to the microphone test; Ready locked until it passes |
-| One window types, the other passes the mic test | The typist has the panel open; the speaker opens it with **Type** |
+| Choose **Type instead**, then **Use my microphone** | Back to the microphone test; Ready locked until the mic is allowed |
+| One window types, the other tests the mic | The typist has the panel open; the speaker opens it with **Type** |
 | Paste more than 500 characters | The box stops at 500; the counter shows what is left |
 | Type `<b>hi</b>` | Shown as plain text, not bold |
 | Stop the mock server, then **Send** | "Your turn was not sent. Try again." and your words stay in the box |

@@ -1,7 +1,7 @@
 # Live audio settings (gear) — design
 
 Date: 2026-11-28. Ticket: SCRUM-63 (FG-04 frontend). Branch: `feature/SCRUM-63-audio-settings` from `pa4`.
-Status: draft for approval. Size: small change.
+Status: built on `feature/SCRUM-63-audio-settings`. Size: small change.
 
 ## Why
 
