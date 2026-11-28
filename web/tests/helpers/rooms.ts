@@ -92,14 +92,19 @@ declare global {
 /**
  * Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`.
  * `signal: true` is a loud tone; a number sets the tone's peak volume (its level is about 0.7 times that).
+ * `missing` means no microphone is connected; `devices` lists microphone labels (ids `mic-1`, `mic-2`, …).
  */
-export async function fakeMic(page: Page, options: { signal: boolean | number; denied?: boolean }) {
-  await page.addInitScript(({ signal, denied }) => {
+export async function fakeMic(page: Page, options: { signal: boolean | number; denied?: boolean; missing?: boolean; devices?: string[] }) {
+  await page.addInitScript(({ signal, denied, missing, devices: labels }) => {
     window.__mic = { requests: 0, stopped: 0 };
     const devices = navigator.mediaDevices;
-    devices.enumerateDevices = async () => [{ deviceId: 'fake-mic', groupId: 'fake', kind: 'audioinput', label: 'Built-in microphone', toJSON: () => ({}) }];
+    const inputs = labels
+      ? labels.map((label, index) => ({ deviceId: `mic-${index + 1}`, groupId: 'fake', kind: 'audioinput', label, toJSON: () => ({}) }))
+      : [{ deviceId: 'fake-mic', groupId: 'fake', kind: 'audioinput', label: 'Built-in microphone', toJSON: () => ({}) }];
+    devices.enumerateDevices = async () => (missing ? [] : inputs) as MediaDeviceInfo[];
     devices.getUserMedia = async () => {
       window.__mic.requests += 1;
+      if (missing) throw new DOMException('Requested device not found', 'NotFoundError');
       if (denied) throw new DOMException('Permission denied', 'NotAllowedError');
       const context = new AudioContext();
       const output = context.createMediaStreamDestination();
@@ -119,7 +124,7 @@ export async function fakeMic(page: Page, options: { signal: boolean | number; d
   }, options);
 }
 
-/** Signs in as Linh and opens a READY room with Sam. Reports the last Ready body and how many times Ready was withdrawn. */
+/** Signs in as Linh and opens a READY room with Sam. Reports the last Ready body and how many times Ready was withdrawn; `set` replaces the room. */
 export async function openReadyRoom(page: Page) {
   await signInAs(page, 'Linh');
   const waiting = snapshot({ status: 'READY' });
@@ -140,7 +145,7 @@ export async function openReadyRoom(page: Page) {
   await page.route(`**/api/v1/rooms/${roomId}/leave`, route => route.fulfill({ status: 200,
     json: snapshot({ status: 'CANCELLED', code: null, end_reason: 'CANCELLED' }) }));
   await page.goto(`/#/rooms/${roomId}`);
-  return { ready: () => ready, cleared: () => cleared };
+  return { ready: () => ready, cleared: () => cleared, set: room.set };
 }
 
 /** Ticks the consent box and passes the microphone test. */

@@ -127,9 +127,12 @@ Both seats show names and sides. Two cards sit side by side:
    It uses the same noise suppression as the debate, and passes after about one second of
    sound at a normal speaking level (RMS above 0.08); background noise alone does not pass.
    A quiet **Type instead** action skips the mic request and the test for this debate.
+   If no microphone is found, a notice says so and offers Type instead.
 
-**I'm ready** unlocks when the box is ticked and either the mic test has passed or
-Type instead is on. After pressing it, the button becomes **Not ready yet**, which withdraws consent. The
+**I'm ready** unlocks when the box is ticked and either the browser has allowed the mic
+(Test pressed; hearing speech is not required) or Type instead is on. A blocked mic still
+keeps it locked. In the debate, the live audio settings
+([2026-11-28 design](2026-11-28-live-audio-settings-design.md)) are the fallback. After pressing it, the button becomes **Not ready yet**, which withdraws consent. The
 partner sees only "Sam hasn't finished yet". **Leave room** is always available.
 
 When the second person presses Ready, both screens count down from 3 and the mics
@@ -247,6 +250,7 @@ Rules:
 | Start endpoint | Spec has `POST .../start` | Replaced by `PUT .../ready` |
 | Room route | `route-gaps.md` plans `#/rooms/:code` | `#/rooms/:id` and `#/join/:code` |
 | Start guard | Spec requires a passed mic test from both | Required only for voice |
+| Mic test | Must pass before I'm ready | Mic must be allowed; live audio settings are the fallback (2026-11-28) |
 | Typed turns | FR-58 covers only a side chat kept out of analysis | New requirement: typed turns are debate content, with a `source` column on `transcript_segments` |
 | Spec folders | PA4 plan: 003 and 004 | `specs/006-fg03-rooms`, `specs/007-fg04-audio` |
 

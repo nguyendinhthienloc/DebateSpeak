@@ -1,5 +1,5 @@
 # PA4 — Revised Use-Case Specifications (Second Submission)
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Bảo Minh Triết (24125047)*
 
 Ticket: **SCRUM-54**, PA4 Part A. Revision date: **2026-11-23**. Owner: **Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead**. Assigned reviewer: **Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead**. This is a specification ready for peer review, not a claim that the live product or peer review is complete.
 
@@ -61,12 +61,12 @@ Each learner sees an unchecked personal agreement explaining audio routing, tran
 
 | Personal input | Condition for pressing I'm ready | Media grant after authorized LIVE |
 |---|---|---|
-| `VOICE` | Current explicit consent and a passed local test for the selected microphone. | Publish own audio and subscribe to the partner's permitted audio. |
+| `VOICE` | Current explicit consent and a local Test in which the browser allowed the microphone; hearing speech is not required. A blocked or missing microphone keeps it disabled. | Publish own audio and subscribe to the partner's permitted audio. |
 | `TYPE` | Current explicit consent and deliberate Type instead selection; no microphone test required. | Subscribe only; never request or publish microphone audio. |
 
 Ready sends `consent: true` and the chosen input mode; Not ready yet deletes that personal readiness while the room is READY. The current body has no mic-test attestation field: the browser must enforce its local-test gate, while the server verifies membership, state, expiry, current personal consent/input and the atomic start decision. A local test is not a server-verifiable measurement and no new field is claimed as implemented. Failed or unconfirmed consent saves cannot authorize start.
 
-A mic test starts only after an explicit Test click. It is local: no upload, recording, STT or LiveKit publication. Release all test tracks and the audio context on pass, failure, cancel, mode/device change or route exit. Browser denial offers retry instructions, Type instead or Leave without a repeated permission loop. The voice test must be repeated for a changed device. Type mode may listen to a voice partner without granting capture permission.
+A mic test starts only after an explicit Test click. It is local: no upload, recording, STT or LiveKit publication. Release all test tracks and the audio context on pass, failure, cancel, mode/device change or route exit. Browser denial offers retry instructions, Type instead or Leave without a repeated permission loop. A changed device keeps the permission and is used when the debate connects; the live audio settings (UC-04-02) let the learner switch and check a device during the debate. Type mode may listen to a voice partner without granting capture permission.
 
 Consent withdrawal during LIVE stops local capture immediately and requests the shared End action; it does not merely mute audio and leave processing active. A READY withdrawal racing the second Ready must reconcile authoritative state: if LIVE already won, stop local capture and end instead of retrying DELETE indefinitely. Ending/disconnection cleanup must stop capture and subscriptions for both participants. Closing a browser or losing connectivity never authorizes background capture.
 
@@ -830,7 +830,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 | Scope / kind | Revised PA4, FG-03; user-goal; target behavior. |
 | Requirements | FR-12, FR-13, FR-19; PA4-TYPED-01 for type-mode start. |
 | Trigger | Second participant presses I'm ready; there is no separate Start endpoint. |
-| Preconditions | Two distinct authenticated participants occupy unexpired READY; each has made their own current consent/input choice; VOICE users have passed their local check. |
+| Preconditions | Two distinct authenticated participants occupy unexpired READY; each has made their own current consent/input choice; VOICE users have had their microphone allowed in a local check. |
 
 **Basic flow — main success scenario**
 
@@ -1193,7 +1193,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 *Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-04-01 — Select and test microphone
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Bảo Minh Triết (24125047)*
 
 **Description / goal:** Deliberately test the selected input locally and retain an accessible alternative when voice is unavailable.
 
@@ -1209,28 +1209,29 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 
 1. System explains the local-only test. Only the explicit click requests microphone permission.
 2. Learner selects an available input and speaks; system shows a local level meter.
-3. System detects a usable signal and reports the check passed for that device.
-4. System releases the test stream/audio context. With personal consent checked, the VOICE readiness control may now be enabled.
+3. Once the browser allows the microphone, with personal consent checked, the VOICE readiness control is enabled. The meter reports "We can hear you" when it detects speech, but speech is not required.
+4. System releases the test stream/audio context on pass, timeout or Ready, and carries the chosen device into the debate.
 
 **Alternative and exception flows**
 
 | Branch | Condition / extension point | Outcome and recovery |
 |---|---|---|
 | E1 | At step 1, permission/context/API is unavailable or blocked. | Show browser guidance, deliberate retry, Type instead or Leave; keep VOICE Ready disabled. |
-| E2 | At step 2, device is missing/busy/unplugged or signal stays silent. | Release resources and show recovery; passing is not inferred from permission alone. |
+| E2 | At step 1 or 2, no microphone is found. | A notice (not a dialog) says "No microphone found" and offers Type instead or Dismiss; VOICE Ready stays disabled. It never switches mode by itself. |
+| E3 | At step 2, the signal stays silent. | Release resources and show recovery text; readiness is not blocked, because the live audio settings in UC-04-02 are the in-debate fallback. |
 | A1 | At step 2 or 3, learner cancels, leaves or switches to TYPE. | Release tracks/context and invalidate pending test callbacks; make no server/media request from the test. |
-| A2 | After step 3, learner selects a different device. | Invalidate the old pass and test the new input before VOICE readiness. |
+| A2 | After step 3, learner selects a different device. | Keep the permission; the new device is the one used when the debate connects. |
 
-**Postconditions — success:** Selected device has a current local pass and test capture is released.
+**Postconditions — success:** The browser has allowed a microphone, the chosen device is carried into the debate, and test capture is released.
 
-**Postconditions — minimum guarantee:** No test audio is uploaded, recorded, transcribed or published; failure never satisfies VOICE readiness.
+**Postconditions — minimum guarantee:** No test audio is uploaded, recorded, transcribed or published; a blocked or missing microphone never satisfies VOICE readiness.
 
 **Special requirements:** READY still means both seats are occupied. Browser permission does not grant processing consent. Current local implementation: [useMicCheck](../../web/src/rooms/useMicCheck.ts); exact signal thresholds are implementation details, not a proficiency measure.
 
 **Acceptance scenarios:** AC-10, AC-11, AC-12.
 
 ### UC-04-02 — Exchange audio and control mute
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Bảo Minh Triết (24125047)*
 
 **Description / goal:** Exchange two-way audio on isolated tracks and control only one's own microphone after dual consent and the shared start.
 
@@ -1260,6 +1261,8 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 | A2 | At step 3, mute is selected. | Stop transmission of own speech while preserving partner audio and a clear muted state. |
 | E3 | At step 4, media drops. | Invoke UC-04-03; a transient room poll failure alone preserves healthy audio. |
 | A3 | At step 4, optional video/overlays are absent. | Continue the core audio flow; future UC-04-04/UC-08-02 are not enabled by PA4. |
+| A4 | At step 3, the learner opens audio settings (gear). | Switch microphone or speaker, watch a live meter of the published track, mute or unmute (the same state as the dock's Mute), and set the partner's volume; opening or closing never restarts or stops the mic, and the clock keeps running. |
+| E4 | At step 3, the microphone stops (device disabled or unplugged) without the learner pressing Mute. | Show "Your microphone stopped" with a link to audio settings and set the control to Unmute; if no microphone is left, offer Type instead. A failed Unmute shows the same alert. |
 
 **Postconditions — success:** Actual consented tracks exchange audio with correct speaker identity and observable own-mute control.
 
@@ -1267,7 +1270,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 
 **Special requirements:** NFR-01's median one-way latency target is at most 500 ms under the defined network test, not a measurement from this documentation task. Raw audio is not persisted by default. Show Transcribing only when a real authorized worker is running; a static design status chip is not proof of STT.
 
-**Acceptance scenarios:** AC-13, AC-15, AC-20, AC-21, AC-22.
+**Acceptance scenarios:** AC-13, AC-15, AC-20, AC-21, AC-22, AC-27.
 
 ### UC-04-03 — Recover a dropped connection
 *Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
@@ -2489,8 +2492,8 @@ These are executable acceptance criteria for feature owners to verify against th
 | AC-07 | Code is wrong, expired, cancelled, or room became LIVE after preview. | No new membership; safe explanation and another-code/Home/create recovery. |
 | AC-08 | Guest leaves READY or creator leaves/cancels before LIVE. | Guest: LOBBY, both ready flags cleared, fresh 30-minute expiry. Creator: CANCELLED, invite invalid. |
 | AC-09 | Participant poll fails temporarily or nonmember reads a room. | Temporary failure is marked stale; unauthorized read reveals no room/participant data. |
-| AC-10 | READY screen mounts or consent checkbox is checked without Test. | Zero microphone requests/publications; VOICE Ready stays disabled until the selected-device test passes. |
-| AC-11 | Test passes, is denied/silent, device changes, or learner leaves during permission resolution. | Resources always release; only a current pass unlocks VOICE; denial/silence offer recovery without loops. |
+| AC-10 | READY screen mounts or consent checkbox is checked without Test. | Zero microphone requests/publications; VOICE Ready stays disabled until a Test in which the browser allows the microphone. |
+| AC-11 | Test passes, is denied/silent, finds no microphone, device changes, or learner leaves during permission resolution. | Resources always release; an allowed microphone unlocks VOICE; denial or no microphone keeps it locked, and no microphone shows a notice offering Type instead; recovery never loops. |
 | AC-12 | Learner selects Type instead and gives consent; one/both choose TYPE. | No mic request/test required for TYPE; readiness uses TYPE; any media token is subscribe-only. |
 | AC-13 | Participant is missing consent or both Ready calls race. | Missing consent cannot start. Otherwise one session and one shared start three seconds ahead; no early publication. |
 | AC-14 | Browser reloads LIVE or its clock differs. | Same room/time; no new countdown/session; voice rejoin is muted with a visible notice. |
@@ -2506,6 +2509,7 @@ These are executable acceptance criteria for feature owners to verify against th
 | AC-24 | Participant sends 1–500 characters during LIVE and partner reloads. | One ordered, attributed TYPED record persists and is recovered without duplicate display. |
 | AC-25 | Empty/oversize text, forged speaker/nonmember write, or terminal write is attempted. | Reject with no appended record or history leakage; typed text is rendered as text. |
 | AC-26 | Typed-send response is lost or service is unavailable. | Mark pending/unconfirmed; reconcile saved content before resend, never claim unsaved text persisted. |
+| AC-27 | During LIVE, a voice learner's microphone stops or is removed, or they open audio settings. | The stage says the microphone stopped and shows Unmute; audio settings switch mic/speaker without a second capture; with no microphone left, Type instead opens the typed panel; the clock is unchanged. |
 
 Accessibility checks apply to all scenarios: keyboard/focus and dialog recovery, 320px reflow, reduced motion, neutral consent wording and accessible safe exit. Audio latency must be measured separately under NFR-01; a functional exchange alone does not establish the latency target.
 
@@ -2555,4 +2559,4 @@ The following cross-owner items require contract/implementation confirmation out
 | Spec Kit paths and ticket references | New plan uses `specs/006-fg03-rooms/` and `specs/007-fg04-audio/`; older TODO files still say 003/004. Those directories are not yet present at the base; implementation owners reconcile their own ticket/spec references. |
 | TA comments and peer review | Incorporate any actual later PA3 TA feedback with source in Changes.md. Lộc reviews this revision; assigned reviewer attribution never means review already occurred. |
 
-These items do not change another owner's code or mark feature acceptance complete. Document checks and PDF-build results belong to Changes.md; product acceptance remains AC-01–AC-26 pending real implementation/integration evidence.
+These items do not change another owner's code or mark feature acceptance complete. Document checks and PDF-build results belong to Changes.md; product acceptance remains AC-01–AC-27 pending real implementation/integration evidence.

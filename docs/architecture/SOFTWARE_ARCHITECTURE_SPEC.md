@@ -234,7 +234,7 @@ Priority key: **M** = Must (MVP), **S** = Should (target for the MVP if time all
 | ID | Requirement | Priority | Sprint |
 |---|---|---|---|
 | FR-18 | Two participants exchange two-way real-time audio through the browser using WebRTC (via LiveKit). | M | 2 |
-| FR-19 | The app requests microphone permission, supports device selection and a pre-debate mic test; a denied permission shows a clear recovery path. | M | 2 |
+| FR-19 | The app requests microphone permission, supports device selection and a pre-debate mic test; a denied permission shows a clear recovery path. During the debate, audio settings let the learner switch microphone or speaker and see when the microphone stops. | M | 2 |
 | FR-20 | Participants can mute/unmute, and each participant's mic and speaking status is visible to both. | M | 2 |
 | FR-21 | The UI shows connection quality and automatically attempts reconnection. | S | 2 |
 | FR-22 | Live video between participants. | C | — |
@@ -441,7 +441,7 @@ Deterministic checks wrap the AI: schema validation, quote grounding, score rang
 | Transition | Guard | Side effects |
 |---|---|---|
 | `LOBBY → READY` | Two distinct authenticated participants present | Assign stances (random or creator's choice) |
-| `READY → LIVE` | Both participants have `consent_given = true` and passed mic test | Start timer; transcription worker joins the LiveKit room |
+| `READY → LIVE` | Both participants have `consent_given = true`; VOICE participants have their microphone allowed in a local test (TYPE needs none) | Start timer; transcription worker joins the LiveKit room |
 | `LIVE → ENDED` | Either participant ends, timer expires, or reconnection grace expires | Close transcription; enqueue analysis jobs; set `ended_at` |
 | `LOBBY → CANCELLED` | Creator cancels, or 30-minute lobby timeout | Release invite code |
 
@@ -466,7 +466,7 @@ Learner A                API                  LiveKit               Learner B
    |                        |--- LiveKit JWT ---------------------------> |
    |                        |                     |<--- connect(JWT) -----|
    |<============ WebRTC audio (via SFU) ===========================>|
-   | consent + mic test --> API (both) -> state READY -> LIVE
+   | consent + mic allowed --> API (both) -> state READY -> LIVE
 ```
 
 ### 6.3 Token and Room Security
@@ -1322,7 +1322,7 @@ Performed: Trần Lê Anh Tuấn (24125107). Reviewed: Tài (24125078), pending.
 
 Implement `app.domain.rooms` independently of FastAPI, SQLAlchemy and media providers. `RoomStatus` retains LOBBY, READY, LIVE, ENDED and CANCELLED. `transition(current, target)` accepts enum members, returns the target for one of the six G1 edges, and raises `InvalidTransition` otherwise. Invalid input types fail explicitly. Self-transitions are invalid. ENDED and CANCELLED are terminal. Allowed edges: LOBBY→READY, LOBBY→CANCELLED, READY→LOBBY, READY→LIVE, READY→CANCELLED, LIVE→ENDED.
 
-Expose a separate pure lifecycle guard with an immutable context (caller identity/authority, distinct participant identities, consent and microphone-ready identities, expiry, actual media availability, Build 1 live feature availability, and explicit end/expiry reason). The caller supplies time-derived expiry and authorization facts; the module never reads a clock or database. Start requires exactly two distinct members, both current consents, both microphone tests, actual media availability and an enabled live capability. Build 1 defaults to disabled LIVE. Creator cancellation and expiry work before LIVE; either participant can end LIVE, while timer/reconnection expiry is a trusted service action. A pending lobby that expires cannot become READY or LIVE. Declining consent causes no capture or transcription. Guard errors have stable domain codes. A graph edge is never sufficient authorization.
+Expose a separate pure lifecycle guard with an immutable context (caller identity/authority, distinct participant identities, consent and microphone-ready identities, expiry, actual media availability, Build 1 live feature availability, and explicit end/expiry reason). The caller supplies time-derived expiry and authorization facts; the module never reads a clock or database. Start requires exactly two distinct members, both current consents, an allowed microphone for each VOICE member, actual media availability and an enabled live capability. Build 1 defaults to disabled LIVE. Creator cancellation and expiry work before LIVE; either participant can end LIVE, while timer/reconnection expiry is a trusted service action. A pending lobby that expires cannot become READY or LIVE. Declining consent causes no capture or transcription. Guard errors have stable domain codes. A graph edge is never sufficient authorization.
 
 The room service must lock/reload the room, derive context from authenticated server state, apply guards, persist status plus membership/consent changes atomically, then notify clients. An existing member's join retry returns its snapshot without invoking a self-transition. Map invalid edges/guards to 409 at an existing service/API boundary, authorization failures to 403, and hide nonmember room resources as 404 in accordance with G1. Do not add an arbitrary status endpoint. This ticket supplies the reusable domain component and exhaustive tests; SCRUM-26/38 own persistence/API/UI integration. No mock room backend is introduced.
 

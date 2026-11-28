@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type MicStatus = 'idle' | 'requesting' | 'listening' | 'passed' | 'blocked' | 'silent';
+export type MicStatus = 'idle' | 'requesting' | 'listening' | 'passed' | 'blocked' | 'silent' | 'missing';
 
 /** RMS a normal speaking voice clears and background noise does not. */
-const threshold = 0.08;
+export const speechThreshold = 0.08;
 /** The same processing the debate uses (debateAudio.ts), so the test hears what the partner will. */
 const processing = { echoCancellation: true, noiseSuppression: true, autoGainControl: true };
 const needed = 1000;
@@ -20,6 +20,8 @@ export function useMicCheck() {
   const [level, setLevel] = useState(0);
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [deviceId, setDeviceId] = useState<string>();
+  // The browser let us open the mic at least once here. Enough for Ready: the debate has audio settings as a fallback.
+  const [allowed, setAllowed] = useState(false);
   const live = useRef<Check>();
   const attempt = useRef(0);
 
@@ -43,11 +45,15 @@ export function useMicCheck() {
     let stream: MediaStream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: deviceId ? { ...processing, deviceId: { exact: deviceId } } : processing });
-    } catch {
-      if (attempt.current === mine) setStatus('blocked');
+    } catch (error) {
+      if (attempt.current !== mine) return;
+      const name = error instanceof DOMException ? error.name : '';
+      setAllowed(false);
+      setStatus(name === 'NotFoundError' || name === 'OverconstrainedError' ? 'missing' : 'blocked');
       return;
     }
     if (attempt.current !== mine) { stream.getTracks().forEach(track => track.stop()); return; }
+    setAllowed(true);
 
     const context = new AudioContext();
     void context.resume();
@@ -68,7 +74,7 @@ export function useMicCheck() {
       analyser.getFloatTimeDomainData(samples);
       const rms = Math.sqrt(samples.reduce((sum, value) => sum + value * value, 0) / samples.length);
       const value = Math.min(1, rms);
-      if (value > threshold) heard += now - last;
+      if (value > speechThreshold) heard += now - last;
       last = now;
       setLevel(value);
       if (heard >= needed) { release(); setLevel(0); setStatus('passed'); return; }
@@ -96,5 +102,5 @@ export function useMicCheck() {
     setStatus('idle');
   }, [stop]);
 
-  return { status, level, devices, deviceId, selectDevice, start, stop };
+  return { status, level, devices, deviceId, allowed, selectDevice, start, stop };
 }

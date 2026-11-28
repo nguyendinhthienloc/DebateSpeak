@@ -74,3 +74,57 @@ test('when LiveKit drops the call, Try again reconnects', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.__lk.connected)).toBe(2);
   await expect(page.getByText('Connected', { exact: true })).toBeVisible();
 });
+
+test('the real audio layer switches the mic through LiveKit', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Audio settings', exact: true }).click();
+  await page.getByLabel('Microphone', { exact: true }).selectOption({ label: 'USB headset' });
+  await expect.poll(() => page.evaluate(() => window.__lk.switched)).toContainEqual(['audioinput', 'mic-2']);
+});
+
+test('LiveKit muting the mic on its own raises the alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.evaluate(() => window.__lk.rooms[0].emit('TrackMuted', { source: 'microphone' }, { isLocal: true }));
+  await expect(page.getByRole('alert').filter({ hasText: 'Your microphone stopped.' })).toBeVisible();
+});
+
+test('pressing Mute does not raise the alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Mute', exact: true }).click();
+  await page.evaluate(() => window.__lk.rooms[0].emit('TrackMuted', { source: 'microphone' }, { isLocal: true }));
+  await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
+  await expect(page.getByText('Your microphone stopped.', { exact: false })).toHaveCount(0);
+});
+
+test('the partner comes back at the chosen volume', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Audio settings', exact: true }).click();
+  await page.getByLabel("Sam's volume", { exact: true }).fill('40');
+  await page.evaluate(() => {
+    const sam = { identity: 'sam', isLocal: false, setVolume: (volume: number) => window.__lk.volumes.push(['sam', volume]) };
+    const track = { kind: 'audio', attach: () => document.createElement('audio'), detach: () => [] };
+    window.__lk.rooms[0].emit('TrackSubscribed', track, { source: 'microphone' }, sam);
+  });
+  await expect.poll(() => page.evaluate(() => window.__lk.volumes)).toContainEqual(['sam', 0.4]);
+});
+
+test('a mic brought back by Unmute clears the stopped alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.evaluate(() => window.__lk.rooms[0].emit('MediaDevicesError', new Error('device lost'), 'audioinput'));
+  const alert = page.getByRole('alert').filter({ hasText: 'Your microphone stopped.' });
+  await expect(alert).toBeVisible();
+  await page.getByRole('button', { name: 'Unmute', exact: true }).click();
+  await expect(alert).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Mute', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => window.__lk.mic)).toBe(true);
+});

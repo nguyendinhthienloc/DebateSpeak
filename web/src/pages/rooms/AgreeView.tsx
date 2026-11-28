@@ -4,6 +4,7 @@ import { clearReady, leaveRoom, setReady } from '../../rooms/api';
 import type { Participant, RoomSnapshot } from '../../rooms/contracts';
 import { useMicCheck, type MicStatus } from '../../rooms/useMicCheck';
 import { SideTag } from './InviteView';
+import { NoMicNotice } from './NoMicNotice';
 
 const micText: Record<MicStatus, string> = {
   idle: 'Not tested yet. The test stays in this browser.',
@@ -12,6 +13,7 @@ const micText: Record<MicStatus, string> = {
   passed: 'We can hear you',
   blocked: '',
   silent: "We can't hear anything yet. Check that the microphone is on, then test again.",
+  missing: 'No microphone found. Connect one, then test again.',
 };
 const segments = 10;
 
@@ -23,16 +25,20 @@ function Seat({ person, you }: { person: Participant; you: boolean }) {
 }
 
 /** Both debaters agree and check their microphone before either can start. Nothing here pressures the partner. */
-export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; onLeft: () => void }) {
+export function AgreeView({ room, onChange, onLeft, onMicChoice }: {
+  room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; onLeft: () => void; onMicChoice: (deviceId?: string) => void;
+}) {
   const { session } = useSession();
   const mic = useMicCheck();
   const [agreed, setAgreed] = useState(false);
   const [typeInstead, setTypeInstead] = useState(false);
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [noMic, setNoMic] = useState(false);
   const controller = useRef<AbortController>();
   const deviceField = useId();
   useEffect(() => () => controller.current?.abort(), []);
+  useEffect(() => { if (mic.status === 'missing') setNoMic(true); }, [mic.status]);
 
   const me = room.participants.find(person => person.user_id === session?.user.id);
   const partner = room.participants.find(person => person !== me);
@@ -40,7 +46,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
   // Once Ready is sent, the choice is the server's: switching would not reach it, so it is locked.
   const locked = Boolean(me?.ready);
   const typing = locked ? me?.input === 'TYPE' : typeInstead;
-  const canBeReady = agreed && (typeInstead || mic.status === 'passed');
+  const canBeReady = agreed && (typeInstead || mic.allowed);
 
   function send(action: (signal: AbortSignal) => Promise<RoomSnapshot>, done: (room: RoomSnapshot) => void) {
     if (pending) return;
@@ -53,7 +59,14 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       () => { if (!request.signal.aborted) { setPending(false); setFailed(true); } });
   }
 
-  const ready = () => send(signal => setReady(room.id, typeInstead ? 'TYPE' : 'VOICE', signal), onChange);
+  const ready = () => {
+    mic.stop();
+    send(signal => setReady(room.id, typeInstead ? 'TYPE' : 'VOICE', signal), next => {
+      onMicChoice(typeInstead ? undefined : mic.deviceId);
+      onChange(next);
+    });
+  };
+  const typeNow = () => { mic.stop(); setTypeInstead(true); setNoMic(false); };
   const notReady = () => send(signal => clearReady(room.id, signal), onChange);
   const leave = () => { mic.stop(); send(signal => leaveRoom(room.id, signal), onLeft); };
 
@@ -104,7 +117,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
           </p>}
           <button type="button" className="action action-secondary short-action" disabled={mic.status === 'requesting' || mic.status === 'listening'}
             onClick={() => { void mic.start(); }}>Test microphone</button>
-          <button type="button" className="action action-text agree-switch" disabled={locked} onClick={() => { mic.stop(); setTypeInstead(true); }}>Type instead</button>
+          <button type="button" className="action action-text agree-switch" disabled={locked} onClick={typeNow}>Type instead</button>
         </>}
       </section>
     </div>
@@ -115,8 +128,9 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
       <button type="button" className="action action-text" onClick={leave}>Leave room</button>
     </div>
     <p id="ready-hint" className="small muted">
-      {me?.ready ? 'You are ready. The debate starts when you both are.' : 'Tick the box and pass the microphone test, or choose Type instead.'}
+      {me?.ready ? 'You are ready. The debate starts when you both are.' : 'Tick the box and test your microphone, or choose Type instead.'}
     </p>
     {failed && <p className="small field-error" role="alert">That did not go through. Try again.</p>}
+    {noMic && !typing && <NoMicNotice onType={typeNow} onDismiss={() => setNoMic(false)} />}
   </div>;
 }

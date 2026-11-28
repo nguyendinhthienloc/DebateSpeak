@@ -99,3 +99,13 @@
 }
 
 .agree-card .agree-switch { align-self: flex-start; width: auto; padding-inline: 0; }
+
+/* No microphone: a notice, not a dialog, so the room carries on behind it. */
+.no-mic-notice {
+  position: fixed; top: 16px; left: 50%; z-index: 3; display: flex; flex-direction: column; gap: 8px;
+  width: min(28rem, 100% - 32px); padding: 16px; transform: translateX(-50%); color: var(--ink);
+  border: var(--edge); border-radius: var(--surface-radius); background: var(--surface); box-shadow: var(--raised);
+}
+.no-mic-notice :focus-visible { outline-color: var(--ink); }
+.no-mic-title { font-weight: 700; }
+.no-mic-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }

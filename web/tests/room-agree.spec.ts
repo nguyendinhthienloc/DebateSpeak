@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { fakeMic, openReadyRoom, passAgree } from './helpers/rooms';
+import { installFakeAudio } from './helpers/fakeAudio';
+import { fakeMic, linhSeat, openReadyRoom, passAgree, roomId, samSeat, snapshot } from './helpers/rooms';
 
 test('no microphone is requested until the learner clicks Test', async ({ page }) => {
   await fakeMic(page, { signal: true });
@@ -71,7 +72,8 @@ test('background noise alone does not pass the mic test', async ({ page }) => {
   await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
   await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
   await expect(page.getByText("We can't hear anything yet.", { exact: false })).toBeVisible({ timeout: 12000 });
-  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeDisabled();
+  // The test is a light check now: an allowed mic is enough, and audio settings are the fallback in the debate.
+  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeEnabled();
 });
 
 test('a normal speaking voice still passes the mic test', async ({ page }) => {
@@ -91,4 +93,56 @@ test('a silent microphone says so and can be tested again', async ({ page }) => 
   await expect(page.getByText("We can't hear anything yet.", { exact: false })).toBeVisible({ timeout: 12000 });
   expect(await page.evaluate(() => window.__mic.stopped)).toBeGreaterThan(0);
   await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeDisabled();
+});
+
+test('Ready unlocks once the mic is allowed, before it hears speech', async ({ page }) => {
+  await fakeMic(page, { signal: false });
+  await openReadyRoom(page);
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  await expect(page.getByText('Say a few words…', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeEnabled();
+});
+
+test('no microphone pops up a notice that offers typing', async ({ page }) => {
+  await fakeMic(page, { signal: false, missing: true });
+  await openReadyRoom(page);
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  const notice = page.getByRole('alert').filter({ hasText: 'No microphone found' });
+  await expect(notice).toBeVisible();
+  await expect(notice).toContainText('Connect a microphone, or keep going by typing.');
+  await expect(page.getByText('Your browser is blocking the microphone', { exact: false })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeDisabled();
+  await notice.getByRole('button', { name: 'Type instead', exact: true }).click();
+  await expect(notice).toHaveCount(0);
+  await expect(page.getByText('You will type your turns in this debate.', { exact: false })).toBeVisible();
+});
+
+test('dismissing the no-microphone notice keeps voice', async ({ page }) => {
+  await fakeMic(page, { signal: false, missing: true });
+  await openReadyRoom(page);
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  const notice = page.getByRole('alert').filter({ hasText: 'No microphone found' });
+  await notice.getByRole('button', { name: 'Dismiss', exact: true }).click();
+  await expect(notice).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Test microphone', exact: true })).toBeVisible();
+});
+
+test('the mic chosen in the lobby is used in the debate', async ({ page }) => {
+  await installFakeAudio(page);
+  await fakeMic(page, { signal: true, devices: ['Built-in microphone', 'USB headset'] });
+  const calls = await openReadyRoom(page);
+  await page.route(`**/api/v1/rooms/${roomId}/token`, route => route.fulfill({ status: 200, json: { token: 'media-token', url: 'wss://livekit.test' } }));
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  await page.getByLabel('Microphone', { exact: true }).selectOption({ label: 'USB headset' });
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: "I'm ready", exact: true }).click();
+  await expect.poll(() => calls.ready()).toEqual({ consent: true, input: 'VOICE' });
+  calls.set(snapshot({
+    status: 'LIVE', started_at: new Date(Date.now() - 1000).toISOString(), server_now: new Date().toISOString(),
+    participants: [{ ...linhSeat, ready: true, input: 'VOICE' }, { ...samSeat, ready: true, input: 'VOICE' }],
+  }));
+  await expect.poll(() => page.evaluate(() => window.__audio.connects.length), { timeout: 8000 }).toBe(1);
+  expect(await page.evaluate(() => window.__audio.connects[0].deviceId)).toBe('mic-2');
 });

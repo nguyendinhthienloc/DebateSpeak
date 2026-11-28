@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { Settings } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from '../../auth/session';
 import { StageBar } from '../../components/Headers';
 import { endRoom, getMediaToken } from '../../rooms/api';
@@ -7,7 +8,9 @@ import type { Participant, RoomSnapshot } from '../../rooms/contracts';
 import { createDebateAudio, type DebateAudio } from '../../rooms/debateAudio';
 import { initialSpotlight, nextSpotlight, type SpotlightState } from '../../rooms/spotlight';
 import { useTypedTurns } from '../../rooms/useTypedTurns';
+import { AudioPanel, PartnerVolume } from './AudioPanel';
 import { SideTag } from './InviteView';
+import { NoMicNotice } from './NoMicNotice';
 import { TypePanel } from './TypePanel';
 import './stage.css';
 
@@ -40,7 +43,9 @@ function Spotlight({ spot, room, me }: { spot: SpotlightState; room: RoomSnapsho
  * The live debate on the Ink stage. Audio connects once the shared countdown reaches zero and
  * disconnects when the stage unmounts (Back, the debate ending, or leaving the page).
  */
-export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; rejoined: boolean }) {
+export function LiveStage({ room, onChange, rejoined, deviceId }: {
+  room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; rejoined: boolean; deviceId?: string;
+}) {
   const { session } = useSession();
   const me = room.participants.find(person => person.user_id === session?.user.id);
   const partner = room.participants.find(person => person !== me);
@@ -52,6 +57,11 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
   const [muted, setMuted] = useState(rejoined);
   const [connection, setConnection] = useState<Connection>('connecting');
   const [audioFailed, setAudioFailed] = useState(false);
+  const [micStopped, setMicStopped] = useState(false);
+  // No input device left at all, and whether the debater dismissed the notice for this stop.
+  const [noInputs, setNoInputs] = useState(false);
+  const [noMicDismissed, setNoMicDismissed] = useState(false);
+  const [typeFocus, setTypeFocus] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [partnerPresent, setPartnerPresent] = useState<boolean>();
   const [partnerMuted, setPartnerMuted] = useState(false);
@@ -61,6 +71,11 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
   const [endFailed, setEndFailed] = useState(false);
   const [panelOpen, setPanelOpen] = useState(!publishMic);
   const audio = useRef<DebateAudio>();
+  // The same instance as `audio`, from creation, so audio settings can list devices before the token arrives.
+  const [settingsAudio, setSettingsAudio] = useState<DebateAudio>();
+  const [audioOpen, setAudioOpen] = useState(false);
+  const [volume, setVolume] = useState(100);
+  const gear = useRef<HTMLButtonElement>(null);
   const speakers = useRef<string[]>([]);
   const endButton = useRef<HTMLButtonElement>(null);
   const confirmButton = useRef<HTMLButtonElement>(null);
@@ -92,6 +107,7 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
   useEffect(() => {
     if (!started) return;
     const instance = createDebateAudio();
+    setSettingsAudio(instance);
     const controller = new AbortController();
     let connected = false;
     const unsubscribe = instance.subscribe(event => {
@@ -103,6 +119,12 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       else if (event.type === 'playback-blocked') setBlocked(true);
       else if (event.type === 'turn') refreshTurns();
       else if (event.type === 'dropped') setAudioFailed(true);
+      // The button shows what is true: a stopped mic reads Unmute, and Unmute retries it.
+      else if (event.type === 'mic') {
+        setMicStopped(event.state === 'stopped');
+        setMuted(event.state === 'stopped');
+        setNoMicDismissed(false);
+      }
     });
     setAudioFailed(false);
     setConnection('connecting');
@@ -111,16 +133,17 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
         if (controller.signal.aborted) return;
         connected = true;
         audio.current = instance;
-        return instance.connect({ url, token, publishMic, startMuted: mutedNow.current }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
+        return instance.connect({ url, token, publishMic, startMuted: mutedNow.current, deviceId }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
       })
       .catch(() => { if (!controller.signal.aborted) setAudioFailed(true); });
     return () => {
       controller.abort();
       unsubscribe();
       audio.current = undefined;
+      setSettingsAudio(undefined);
       if (connected) void instance.disconnect();
     };
-  }, [started, room.id, publishMic, attempt, refreshTurns]);
+  }, [started, room.id, publishMic, attempt, refreshTurns, deviceId]);
 
   // A partner who drops gets 60 seconds to come back before the debate ends for both.
   useEffect(() => {
@@ -136,10 +159,34 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
     else if (askedToEnd.current) { askedToEnd.current = false; endButton.current?.focus(); }
   }, [confirming]);
 
+  // While the mic is stopped, keep checking whether any microphone is left.
+  useEffect(() => {
+    if (!micStopped || !settingsAudio || !publishMic) { setNoInputs(false); return; }
+    let current = true;
+    const check = () => {
+      settingsAudio.listDevices('audioinput').then(list => { if (current) setNoInputs(list.length === 0); }, () => {});
+    };
+    check();
+    navigator.mediaDevices?.addEventListener?.('devicechange', check);
+    return () => { current = false; navigator.mediaDevices?.removeEventListener?.('devicechange', check); };
+  }, [micStopped, settingsAudio, publishMic]);
+  const noMic = micStopped && noInputs && !noMicDismissed;
+
+  function typeInstead() {
+    setNoMicDismissed(true);
+    setPanelOpen(true);
+    setTypeFocus(true);
+  }
+
+  const closeAudio = useCallback((refocus: boolean) => {
+    setAudioOpen(false);
+    if (refocus) gear.current?.focus();
+  }, []);
+
   function toggleMute() {
     const next = !muted;
     setMuted(next);
-    void audio.current?.setMuted(next);
+    audio.current?.setMuted(next).catch(() => { setMicStopped(true); setMuted(true); });
   }
 
   function end() {
@@ -192,6 +239,9 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       {partnerPresent === false && partner && <p className="stage-alert" role="status">{partner.display_name} lost connection. Waiting up to 60 seconds.</p>}
       {rejoined && muted && publishMic && <p className="stage-note">You're muted after rejoining.</p>}
       {blocked && <button type="button" className="action action-primary" onClick={() => { void audio.current?.resumePlayback(); setBlocked(false); }}>Turn on sound</button>}
+      {noMic && <NoMicNotice onType={typeInstead} onDismiss={() => setNoMicDismissed(true)} />}
+      {micStopped && !noMic && <p className="stage-alert" role="alert">Your microphone stopped. <button type="button" className="stage-link"
+        onClick={() => setAudioOpen(true)}>Open audio settings</button></p>}
       {audioFailed && <p className="stage-alert" role="alert">Audio is not connected. <button type="button" className="stage-link" onClick={() => setAttempt(value => value + 1)}>Try again</button></p>}
       {endFailed && <p className="stage-alert" role="alert">The debate could not be ended. Try again.</p>}
     </div>
@@ -214,11 +264,18 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
           <button type="button" className="action stage-quiet stage-type" aria-expanded={panelOpen} aria-controls="type-panel"
             onClick={() => setPanelOpen(open => !open)}>Type</button>
           {publishMic && <button type="button" className="action stage-quiet" disabled={!started} onClick={toggleMute}>{muted ? 'Unmute' : 'Mute'}</button>}
+          <button ref={gear} type="button" className="action stage-quiet stage-gear" aria-label="Audio settings" aria-expanded={audioOpen}
+            aria-controls="audio-panel" disabled={!started} onClick={() => setAudioOpen(open => !open)}><Settings size={20} aria-hidden="true" /></button>
           <button ref={endButton} type="button" className="action stage-danger" onClick={() => setConfirming(true)}>End debate</button>
         </div>}
+      {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} stopped={micStopped}
+        muted={muted} onToggleMute={toggleMute} anchor={gear} onClose={closeAudio}>
+        {partner && <PartnerVolume name={partner.display_name} value={volume}
+          onChange={next => { setVolume(next); settingsAudio.setPartnerVolume(next / 100); }} />}
+      </AudioPanel>}
     </div>
    </div>
     {panelOpen && <TypePanel turns={typed.turns} participants={room.participants} meId={me?.user_id} send={typed.send}
-      sending={typed.sending} error={typed.error} onClose={() => setPanelOpen(false)} />}
+      sending={typed.sending} error={typed.error} onClose={() => { setPanelOpen(false); setTypeFocus(false); }} autoFocus={typeFocus} />}
   </div>;
 }

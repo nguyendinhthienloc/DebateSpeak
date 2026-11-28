@@ -239,6 +239,13 @@ review are to be recorded by the branch owner; no approval is claimed here.
   with exact digits at its end. It never flashes or changes colour.
 - **Type panel.** Opened by a quiet text action. A side panel from 760px, a bottom
   sheet below it; White with an Ink edge on the stage.
+- **Audio settings.** A 44px gear in the dock opens a White panel: a pop-up above the
+  dock from 760px, a bottom sheet below it, with the dark-stage drop. It holds the
+  microphone and speaker pickers, the mic meter, a Mute microphone toggle that mirrors
+  the dock's Mute, and the partner's volume slider: Ink
+  fill on an Ink 18% track, a Yellow thumb with a 2px Ink edge, Ink focus ring.
+- **No-microphone notice.** A White notice with an Ink edge, fixed near the top, not a
+  dialog: "No microphone found", with Type instead (primary) and Dismiss.
 - **No pressure.** Consent screens show no countdown and no "your partner is
   waiting" wording; the partner's progress is one plain line.
 

@@ -1,5 +1,5 @@
 # PA4 — Changes from the PA3 Submission
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Bảo Minh Triết (24125047)*
 
 Ticket: **SCRUM-54**, PA4 Part A. Revision date: **2026-11-23** (finalized **2026-11-28**). Owner: **Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead**. Assigned reviewer: **Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead**.
 
@@ -30,7 +30,7 @@ Document: [USE_CASE_MODEL.md](USE_CASE_MODEL.md). Compared with the [PA3 model](
 | M-09 | Model §§3–4 | Restore PA3 System Overview diagram and all 8 retained FG Mermaid diagrams (`FG-01`, `FG-02`, `FG-05`–`FG-10`); remove raw `\clearpage` text; restore PA3 credits. | Ensure the second submission retains full model coverage without shrinking diagrams or dropping co-author attribution. | Done |
 
 ## 3. Revised document: Use-Case Specifications
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Bảo Minh Triết (24125047)*
 
 Document: [USE_CASE_SPECIFICATIONS.md](USE_CASE_SPECIFICATIONS.md). Compared with the [PA3 specifications](../pa3/USE_CASE_SPECIFICATIONS.md). All 55 detailed entries are included; 43 retain PA3 functional content and priority, eleven are revised and one is new.
 
@@ -53,8 +53,9 @@ Document: [USE_CASE_SPECIFICATIONS.md](USE_CASE_SPECIFICATIONS.md). Compared wit
 | S-15 | Specs §4 | Add AC-01–AC-26 covering normal flows, races, invalid states, consent, cleanup, recovery and typing. | Provide observable acceptance scenarios across FG-03 and FG-04. | Done |
 | S-16 | Specs §§5–7 | Record source inspection, README state-name mapping (`WAITING/READY/IN_DEBATE` to `LOBBY/READY/LIVE`), and cross-owner contract confirmations. | Distinguish specified behavior, source inspection and runtime evidence. | Done |
 | S-17 | Specs §§2.2, 7; UC-03-07 | Align `TIMED_TURNS` duration (`390 s`), `Token expiry` wording, and `active speaker` terminology with PR #73 and PR #78. | Resolve PR #72 review comments cleanly before merging into `pa4`. | Done |
+| S-18 | Specs §2.3; UC-04-01, UC-04-02; AC-10, AC-11, AC-27 | VOICE Ready needs the microphone allowed in a local Test, not a passed speech check; no microphone shows a notice offering Type instead; during LIVE, audio settings switch microphone/speaker, show a live meter and set the partner's volume, and a stopped microphone is announced with Unmute. Matching edits in the architecture spec (FR-19, READY→LIVE guard), FG-04 spec (AC-4.4, AC-4.5) and DESIGN.md. Built in `feature/SCRUM-63-audio-settings`. | Device failures mid-debate were silent and a strict pre-test added friction; the in-debate settings are the fallback. | Done |
 
 ## 4. Validation & Build Handoff
 *Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107), Nguyễn Đình Thiên Lộc (24125093)*
 
-All 55 use-case IDs, FR-01–60 traceability, 11+ Mermaid diagrams, and 26 acceptance criteria (AC-01–AC-26) compile cleanly to PDF via `report/pdf/build.py`: [USE_CASE_MODEL.pdf](USE_CASE_MODEL.pdf), [USE_CASE_SPECIFICATIONS.pdf](USE_CASE_SPECIFICATIONS.pdf), and [Changes.pdf](Changes.pdf).
+All 55 use-case IDs, FR-01–60 traceability, 11+ Mermaid diagrams, and 27 acceptance criteria (AC-01–AC-27) compile cleanly to PDF via `report/pdf/build.py`: [USE_CASE_MODEL.pdf](USE_CASE_MODEL.pdf), [USE_CASE_SPECIFICATIONS.pdf](USE_CASE_SPECIFICATIONS.pdf), and [Changes.pdf](Changes.pdf).

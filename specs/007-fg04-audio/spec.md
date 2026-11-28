@@ -1,5 +1,5 @@
 # Feature Specification: FG-04 Real-Time Audio Communication (PA4 Part E)
-*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058)*
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Trần Lê Anh Tuấn (24125107) | Edited: Nguyễn Anh Khoa (24125058), Nguyễn Bảo Minh Triết (24125047)*
 
 Created: 2026-11-24. Feature: `007-fg04-audio`. Status: In Progress.
 Target Build: Build 3 (PA4 Increment 2 — Media & Speech Core).
@@ -50,6 +50,8 @@ In competitive oral debate, participants require crystal-clear, low-latency audi
 * **Acceptance Criteria (AC-4.1):** Clicking the "Mute" toggle immediately disables the local audio track without dropping the WebRTC session; UI displays "Microphone Muted".
 * **AC-4.2:** Real-time volume level meter reflects microphone input amplitude.
 * **AC-4.3:** If connection drops, the LiveKit client automatically attempts exponential backoff reconnection for up to 15 seconds before reporting a connection error to the user.
+* **AC-4.4:** A gear on the stage opens audio settings: microphone and speaker pickers, the AC-4.2 level meter (read from the published track, no second capture), a mute toggle that mirrors the dock's Mute (AC-4.1), and the partner's volume. Opening it never restarts the mic.
+* **AC-4.5:** If the microphone stops without the debater pressing Mute (device disabled or unplugged), the stage says so, the toggle shows Unmute, and audio settings are one click away. With no microphone left, a notice offers Type instead. The clock keeps running.
 
 ---
 

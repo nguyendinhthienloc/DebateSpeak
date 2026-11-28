@@ -7,7 +7,17 @@ export type AudioEvent =
   | { type: 'partner'; present: boolean; muted: boolean }
   | { type: 'playback-blocked' }
   | { type: 'turn'; seq: number }
-  | { type: 'dropped' };
+  | { type: 'dropped' }
+  /** Our own mic: `stopped` when LiveKit or the device stopped it without the debater pressing Mute. */
+  | { type: 'mic'; state: 'live' | 'stopped' };
+
+export type DeviceKind = 'audioinput' | 'audiooutput';
+export interface AudioDevice { id: string; label: string }
+
+/** Whether this browser can send the partner's voice to a chosen speaker (not Safari). */
+export function canChooseSpeaker(): boolean {
+  return typeof HTMLMediaElement !== 'undefined' && 'setSinkId' in HTMLMediaElement.prototype;
+}
 
 export interface DebateAudio {
   connect(options: { url: string; token: string; publishMic: boolean; startMuted: boolean; deviceId?: string }): Promise<void>;
@@ -15,13 +25,22 @@ export interface DebateAudio {
   resumePlayback(): Promise<void>;
   announceTurn(seq: number): Promise<void>;
   disconnect(): Promise<void>;
+  /** Devices of one kind, without asking for permission. */
+  listDevices(kind: DeviceKind): Promise<AudioDevice[]>;
+  activeDevice(kind: DeviceKind): string | undefined;
+  /** Rejects when the device cannot be used. */
+  switchDevice(kind: DeviceKind, id: string): Promise<void>;
+  /** The published microphone track, for a level meter. Never stop it. */
+  micTrack(): MediaStreamTrack | undefined;
+  /** The partner's loudness, 0 to 1. Kept for this debate and applied again when they rejoin. */
+  setPartnerVolume(volume: number): void;
   subscribe(listener: (event: AudioEvent) => void): () => void;
 }
 
 type LiveKit = typeof import('livekit-client');
 
 /** Wires a LiveKit room to the stage's events. Loaded on demand so LiveKit stays out of the main bundle. */
-function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
+function wire(kit: LiveKit, emit: (event: AudioEvent) => void, userMuted: () => boolean, volume: () => number): Room {
   const { ConnectionQuality, Room: LiveKitRoom, RoomEvent, Track } = kit;
   const qualities: Partial<Record<string, 'good' | 'poor' | 'lost'>> = {
     [ConnectionQuality.Excellent]: 'good',
@@ -45,8 +64,16 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
     .on(RoomEvent.Disconnected, () => emit({ type: 'dropped' }))
     .on(RoomEvent.ParticipantConnected, () => partnerState(true))
     .on(RoomEvent.ParticipantDisconnected, () => partnerState(false))
-    .on(RoomEvent.TrackMuted, () => partnerState())
-    .on(RoomEvent.TrackUnmuted, () => partnerState())
+    // LiveKit reports our own mic here too, including when it mutes a track whose device went away.
+    .on(RoomEvent.TrackMuted, (publication, participant) => {
+      if (!participant.isLocal) partnerState();
+      else if (publication.source === Track.Source.Microphone && !userMuted()) emit({ type: 'mic', state: 'stopped' });
+    })
+    .on(RoomEvent.TrackUnmuted, (publication, participant) => {
+      if (!participant.isLocal) partnerState();
+      else if (publication.source === Track.Source.Microphone) emit({ type: 'mic', state: 'live' });
+    })
+    .on(RoomEvent.MediaDevicesError, (_error, kind) => { if (kind === 'audioinput') emit({ type: 'mic', state: 'stopped' }); })
     // A partner who joins before publishing their mic only becomes unmuted here; mute events need a published track.
     .on(RoomEvent.TrackPublished, () => partnerState())
     .on(RoomEvent.TrackUnpublished, () => partnerState())
@@ -58,11 +85,12 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
         if (Number.isInteger(seq)) emit({ type: 'turn', seq });
       } catch { /* not a turn message */ }
     })
-    .on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
+    .on(RoomEvent.TrackSubscribed, (track: RemoteTrack, _publication, participant) => {
       if (track.kind !== Track.Kind.Audio) return;
       const element = track.attach();
       element.dataset.remote = '';
       document.body.append(element);
+      participant.setVolume(volume());
     })
     .on(RoomEvent.TrackUnsubscribed, (track: RemoteTrack) => track.detach().forEach(element => element.remove()));
   return room;
@@ -71,18 +99,21 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
 function liveKitAudio(): DebateAudio {
   const listeners = new Set<(event: AudioEvent) => void>();
   let room: Room | undefined;
+  let kit: LiveKit | undefined;
   let publishing = false;
   let muted = false;
+  let volume = 1;
   let closed = false;
   // After our own disconnect, LiveKit's events are not news.
   const emit = (event: AudioEvent) => { if (!closed) listeners.forEach(listener => listener(event)); };
+  const micTrack = () => (kit ? room?.localParticipant.getTrackPublication(kit.Track.Source.Microphone)?.track?.mediaStreamTrack : undefined);
 
   return {
     async connect({ url, token, publishMic, startMuted, deviceId }) {
       muted = startMuted;
-      const kit = await import('livekit-client');
+      kit = await import('livekit-client');
       if (closed) return;
-      room = wire(kit, emit);
+      room = wire(kit, emit, () => muted, () => volume);
       await room.connect(url, token);
       if (closed) { await room.disconnect(true); return; }
       publishing = publishMic;
@@ -93,7 +124,10 @@ function liveKitAudio(): DebateAudio {
     },
     async setMuted(next) {
       muted = next;
-      if (room && publishing) await room.localParticipant.setMicrophoneEnabled(!next);
+      if (!room || !publishing) return;
+      await room.localParticipant.setMicrophoneEnabled(!next);
+      // A fresh track is published, not unmuted, so LiveKit sends no TrackUnmuted for it: say it ourselves.
+      if (!next) emit({ type: 'mic', state: 'live' });
     },
     async resumePlayback() {
       await room?.startAudio();
@@ -105,6 +139,29 @@ function liveKitAudio(): DebateAudio {
       closed = true;
       await room?.disconnect(true);
       document.querySelectorAll('audio[data-remote]').forEach(element => element.remove());
+    },
+    async listDevices(kind) {
+      const { Room: LiveKitRoom } = kit ?? await import('livekit-client');
+      const devices = await LiveKitRoom.getLocalDevices(kind, false);
+      return devices.filter(device => device.deviceId).map(device => ({ id: device.deviceId, label: device.label }));
+    },
+    micTrack,
+    setPartnerVolume(next) {
+      volume = next;
+      room?.remoteParticipants.forEach(participant => participant.setVolume(next));
+    },
+    activeDevice(kind) {
+      // The live track knows the real input, even after LiveKit fell back to another one.
+      const track = kind === 'audioinput' ? micTrack() : undefined;
+      return track?.getSettings().deviceId ?? room?.getActiveDevice(kind);
+    },
+    async switchDevice(kind, id) {
+      if (!room || !(await room.switchActiveDevice(kind, id))) throw new Error(`Could not use ${kind} ${id}`);
+      // A mic LiveKit had to stop comes back on the new device, unless the debater muted it.
+      if (kind === 'audioinput' && publishing && !muted) {
+        await room.localParticipant.setMicrophoneEnabled(true, { deviceId: id });
+        emit({ type: 'mic', state: 'live' });
+      }
     },
     subscribe(listener) {
       listeners.add(listener);
