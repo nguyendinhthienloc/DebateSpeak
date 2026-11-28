@@ -1,9 +1,9 @@
 # C4 Architecture Model — Level 3: Backend Component Diagram
-*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Nguyễn Hồng Tấn Tài (24125078) | Edited: Nguyễn Anh Khoa (24125058)*
+*Performed: Nguyễn Anh Khoa (24125058) | Reviewed: Nguyễn Hồng Tấn Tài (24125078) | Edited: Nguyễn Anh Khoa (24125058), Nguyễn Đình Thiên Lộc (24125093)*
 
 > **Context:** Project Assignment 4 (PA4-2026) — Part C: Software Architecture: Container & Component Diagrams (20 Points)  
 > **Target Container:** Backend API Server (`api/authify/`) & Audio Processing Pipeline Worker (`api/app/`, `workers/`)  
-> **Source Code Basis:** Verified against repository state (`api/authify/src/main/java/...`, `api/app/adapters/stt.py`, `docker-compose.yml`)
+> **Source Code Basis:** Verified against repository state (`api/authify/src/main/java/...`, `api/app/adapters/stt.py`, `workers/audio_pipeline.py`, `docker-compose.yml`)
 
 ---
 
@@ -11,9 +11,9 @@
 
 The C4 Level 3 Component Diagram zooms directly into the **Backend System Containers** of DebateSpeak AI, detailing their internal structural components, service boundaries, data flows, and interactions.
 
-In strict compliance with the PA4 grading criteria (*"The architecture diagrams must accurately reflect your actual implementation at the time of submission. Any inconsistency between the documented architecture and the source code will result in a grade penalty"*), this specification details the two backend execution units:
-1. **Spring Boot API Server Container (`api/authify/`)**: The core transactional service handling identity, JWT security, Room & Debate Session state machines (FG-01, FG-03), and LiveKit access-token provisioning (FG-04).
-2. **Audio & STT Pipeline Worker Container (`api/app/adapters/`, `workers/`)**: The asynchronous Python 3.12 service handling WebRTC track audio consumption, Silero VAD segmentation, and streaming Speech-to-Text through the `STTAdapter` protocol (FG-05).
+In strict compliance with the PA4 grading criteria (*"The architecture diagrams must accurately reflect your actual implementation at the time of submission"*), this specification distinguishes **currently implemented components** on `pa4` from **`[Planned]`** components not yet wired in runtime code:
+1. **Spring Boot API Server Container (`api/authify/`)**: Handles identity & JWT auth (FG-01), Room & Debate Session state machine (FG-03), typed debate turns, and LiveKit HS256 token minting (FG-04).
+2. **Audio & STT Pipeline Worker (`api/app/adapters/`, `workers/`)**: Python 3.12 modules implementing per-speaker track isolation (`AudioPipelineManager`, `SpeakerAudioTrack`) and provider-agnostic `STTAdapter` streaming with deterministic `LocalMockSTTAdapter` failover. Live LiveKit track subscription, Silero VAD, and Cloud STT streaming are marked `[Planned]`.
 
 ---
 
@@ -21,182 +21,132 @@ In strict compliance with the PA4 grading criteria (*"The architecture diagrams 
 
 ```mermaid
 graph TB
-    subgraph ClientAndSFU ["Upstream Callers & Infrastructure"]
-        FrontendSPA["Frontend Web Application<br/>[React 18 / LiveKit SDK]"]
+    subgraph ClientAndInfra ["Upstream Callers & Infrastructure"]
+        FrontendSPA["Frontend Web Application<br/>[React 18 / LiveKit Client SDK]"]
         LiveKitSFU["LiveKit SFU<br/>[Real-Time Media Server]"]
         PostgresDB[("PostgreSQL 16 Database<br/>[Relational Storage]")]
-        RedisCache[("Redis 7<br/>[Session Cache & Job Queue]")]
-        ExternalSTT["External Cloud STT<br/>[Google Cloud Speech / Deepgram]"]
+        RedisCache[("Redis 7<br/>[Provisioned Queue/Cache, Planned wiring]")]
+        ExternalSTT["External Cloud STT<br/>[Planned: Google Cloud / Deepgram]"]
         SMTPRelay["External SMTP Server<br/>[Gmail SMTP Service]"]
     end
 
-    subgraph SpringBootContainer ["Backend API Container (Java 17 / Spring Boot 3) — api/authify/"]
-        subgraph SecurityLayer ["Security & Routing Layer"]
-            SecConfig["SecurityConfig<br/>[Spring Configuration]<br/>Configures CORS, disables CSRF, enforces stateless sessions & role-based route filters"]
-            JwtFilter["JwtAuthenticationFilter<br/>[OncePerRequestFilter]<br/>Extracts Bearer tokens, validates JWT claims, populates SecurityContext"]
-            GlobalExHandler["GlobalExceptionHandler<br/>[@RestControllerAdvice]<br/>Transforms ApiException & ValidationException into uniform JSON error payloads"]
+    subgraph SpringBootContainer ["Backend API Container (Java 17 / Spring Boot 4) — api/authify/"]
+        subgraph SecurityLayer ["Security & Exception Handling"]
+            SecConfig["SecurityConfig<br/>[config.SecurityConfig]<br/>CORS (GET/POST/PUT/PATCH/DELETE), stateless sessions, BCrypt PasswordEncoder"]
+            GlobalExHandler["GlobalExceptionHandler<br/>[exception.GlobalExceptionHandler]<br/>Maps ApiException & ValidationException to uniform JSON errors"]
         end
 
-        subgraph ControllerLayer ["REST Controller Layer"]
-            AuthController["AuthController<br/>[@RestController: /api/v1/auth/*]<br/>Exposes endpoints for register, login, profile, verify email, reset password, delete account"]
-            RoomController["RoomController<br/>[@RestController: /api/v1/rooms/*]<br/>Exposes endpoints for create room, join by invite code, player ready, and room status"]
-            LiveKitController["LiveKitController<br/>[@RestController: /api/v1/rooms/{id}/token]<br/>Issues cryptographically signed LiveKit room tokens with granular audio permissions"]
+        subgraph ControllerLayer ["REST Controller Layer (controller/)"]
+            AuthController["AuthController<br/>[@RestController: /api/v1/auth/*]<br/>Register, login, refresh, profile, verify email, reset password, delete account"]
+            RoomController["RoomController<br/>[@RestController: /api/v1/topics, /rooms/*]<br/>Topics, create, lookup, join, get, cancel, leave, ready/unready, end, token, turns"]
         end
 
-        subgraph ServiceLayer ["Domain & Business Service Layer"]
-            AuthService["AuthService<br/>[@Service]<br/>Implements authentication flows, Argon2id/BCrypt hashing, account locking & suspension enforcement"]
-            JwtService["JwtService<br/>[@Service]<br/>Generates, signs, and parses HMAC-SHA256 access and refresh tokens"]
-            EmailService["EmailService<br/>[@Service]<br/>Formats and dispatches verification and recovery emails via JavaMailSender"]
-            RoomService["RoomService<br/>[@Service]<br/>Manages room lifecycle state machine (WAITING → READY → IN_DEBATE), room codes, & debater matching"]
-            LiveKitTokenService["LiveKitTokenService<br/>[@Service]<br/>Constructs LiveKit AccessTokens, binds participant identity, room name & audio publish grants"]
+        subgraph ServiceLayer ["Domain & Business Service Layer (service/)"]
+            AuthService["AuthService<br/>[@Service]<br/>User auth, requireCurrentUser Bearer check, session rotation, lockouts"]
+            JwtService["JwtService<br/>[@Service]<br/>HMAC-SHA256 JWT signing & parsing (15-min default ACCESS_TOKEN_EXPIRE_SECONDS)"]
+            EmailService["EmailService<br/>[@Service]<br/>Sends verification & recovery codes via JavaMailSender"]
+            RoomService["RoomService<br/>[@Service]<br/>Room lifecycle (LOBBY -> READY -> LIVE -> ENDED/CANCELLED), turns, LiveKit HS256 tokens"]
         end
 
-        subgraph RepositoryLayer ["Data Persistence Layer (Spring Data JPA)"]
-            UserRepo["UserRepository<br/>[JpaRepository]<br/>CRUD operations on UserEntity, queries by email/username"]
-            SessionRepo["AuthSessionRepository<br/>[JpaRepository]<br/>Persists active refresh token sessions & revocation status"]
-            VerifyRepo["VerificationCodeRepository<br/>[JpaRepository]<br/>Persists time-bounded OTP verification codes"]
-            SuspendRepo["AccountSuspensionRepository<br/>[JpaRepository]<br/>Tracks administrative suspensions & security actions"]
-            RoomRepo["RoomRepository<br/>[JpaRepository]<br/>Persists RoomEntity, invite_codes, player assignments & state"]
+        subgraph RepositoryLayer ["Data Persistence Layer (Spring Data JPA — repository/)"]
+            AuthRepos["Auth Repositories<br/>UserRepository, AuthSessionRepository,<br/>VerificationCodeRepository, AccountSuspensionRepository"]
+            RoomRepos["Room Repositories<br/>RoomRepository, RoomParticipantRepository, TopicRepository,<br/>DebateSessionRepository, TranscriptSegmentRepository"]
         end
     end
 
     subgraph PythonWorkerContainer ["Audio & Speech Pipeline Worker (Python 3.12) — api/app/, workers/"]
-        TrackSubscriber["LiveKitTrackSubscriber<br/>[LiveKit Agents SDK]<br/>Connects as participant, listens to per-speaker audio tracks by participant_identity"]
-        VADProcessor["SileroVADProcessor<br/>[PyTorch / ONNX Runtime]<br/>Detects voice activity chunks, isolates pauses, segments raw PCM16 audio"]
-        STTProtocol["STTAdapter Protocol<br/>[Protocol Interface: api/app/adapters/stt.py]<br/>Standardized async streaming contract for speech transcription"]
-        LocalMockSTT["LocalMockSTTAdapter<br/>[Deterministic Local Fallback]<br/>Replays topic-grounded transcripts with realistic timing for tests and offline fallback"]
-        CloudStreamingSTT["CloudStreamingSTTAdapter<br/>[Streaming Cloud Driver]<br/>Bi-directional streaming transcription via external cloud speech API"]
-        TranscriptBroadcaster["TranscriptBroadcaster<br/>[HTTP / REST Client]<br/>Transmits final speaker-attributed segments back to Backend API"]
+        PipelineMgr["AudioPipelineManager & SpeakerAudioTrack<br/>[workers/audio_pipeline.py]<br/>Isolated per-track sessions keyed by track_sid & speaker_id, automatic fallback"]
+        STTProtocol["STTAdapter Protocol<br/>[api/app/adapters/stt.py]<br/>Async streaming contract (open_stream, send_audio, events, close)"]
+        LocalMockSTT["LocalMockSTTAdapter<br/>[api/app/adapters/stt.py]<br/>Deterministic local fallback emitting timed word/segment STTEvents"]
+        PlannedWorker["Planned Live Audio Modules<br/>[Planned: LiveKitTrackSubscriber, SileroVADProcessor,<br/>CloudStreamingSTTAdapter, TranscriptBroadcaster]"]
     end
 
-    %% Client and Gateway Calls
-    FrontendSPA -->|"HTTPS POST /api/v1/auth/* [Bearer JWT]"| SecConfig
-    FrontendSPA -->|"HTTPS POST /api/v1/rooms/* [Bearer JWT]"| SecConfig
-    FrontendSPA -->|"HTTPS GET /api/v1/rooms/{id}/token"| SecConfig
+    %% Client to API
+    FrontendSPA -->|"HTTPS /api/v1/auth/* [Bearer / Cookie]"| SecConfig
+    FrontendSPA -->|"HTTPS /api/v1/rooms/* & /turns [Bearer JWT]"| SecConfig
+    FrontendSPA -->|"HTTPS POST /api/v1/rooms/{id}/token [Bearer JWT]"| SecConfig
 
-    SecConfig --> JwtFilter
-    JwtFilter -->|"Delegates validated requests"| ControllerLayer
+    SecConfig --> ControllerLayer
     ControllerLayer --> GlobalExHandler
 
     %% Controller to Service
-    AuthController -->|"Invokes credentials verification & profile logic"| AuthService
-    AuthController -->|"Requests token creation & validation"| JwtService
-    RoomController -->|"Invokes room state mutations & member joins"| RoomService
-    LiveKitController -->|"Requests signed room media token"| LiveKitTokenService
+    AuthController --> AuthService
+    RoomController -->|"Authenticates caller via requireCurrentUser"| AuthService
+    RoomController -->|"Delegates room, turn & LiveKit token calls"| RoomService
 
-    %% Service to Service
+    %% Service to Service & Repo
     AuthService --> JwtService
     AuthService --> EmailService
-    RoomService --> LiveKitTokenService
-
-    %% Service to Repository
-    AuthService --> UserRepo
-    AuthService --> SessionRepo
-    AuthService --> VerifyRepo
-    AuthService --> SuspendRepo
-    RoomService --> RoomRepo
-    RoomService --> UserRepo
+    AuthService --> AuthRepos
+    RoomService --> RoomRepos
+    RoomService --> AuthRepos
 
     %% Repository to Database
-    UserRepo -->|"SQL Queries [HikariCP / JDBC]"| PostgresDB
-    SessionRepo -->|"SQL Queries [HikariCP / JDBC]"| PostgresDB
-    VerifyRepo -->|"SQL Queries [HikariCP / JDBC]"| PostgresDB
-    SuspendRepo -->|"SQL Queries [HikariCP / JDBC]"| PostgresDB
-    RoomRepo -->|"SQL Queries [HikariCP / JDBC]"| PostgresDB
+    AuthRepos -->|"SQL / JDBC :5432"| PostgresDB
+    RoomRepos -->|"SQL / JDBC :5432"| PostgresDB
 
     %% External Infrastructure
-    EmailService -->|"Sends transactional emails [SMTP / TLS 587]"| SMTPRelay
-    LiveKitTokenService -->|"Reads API Key & Secret [HMAC-SHA256 Signing]"| LiveKitSFU
+    EmailService -->|"SMTP / TLS :587"| SMTPRelay
+    RoomService -->|"Signs 5-min LiveKit JWT with LIVEKIT_API_SECRET"| LiveKitSFU
 
     %% Python Worker Connections
-    TrackSubscriber -->|"Subscribes to audio tracks by identity [WebRTC Engine]"| LiveKitSFU
-    TrackSubscriber -->|"Passes continuous PCM16 chunks"| VADProcessor
-    VADProcessor -->|"Passes vocalized audio segments"| STTProtocol
+    PipelineMgr -->|"Streams PCM16 via STTAdapter"| STTProtocol
     STTProtocol -.->|"Implements"| LocalMockSTT
-    STTProtocol -.->|"Implements"| CloudStreamingSTT
-    CloudStreamingSTT -->|"Bi-directional streaming gRPC"| ExternalSTT
-    STTProtocol -->|"Emits STTEvent(is_final, speaker, text)"| TranscriptBroadcaster
-    TranscriptBroadcaster -->|"POST /api/v1/rooms/{id}/transcripts"| RoomController
+    PlannedWorker -.->|"Subscribes WebRTC tracks [Planned]"| LiveKitSFU
+    PlannedWorker -.->|"Consumes queue [Planned]"| RedisCache
+    PlannedWorker -.->|"Streams cloud STT [Planned]"| ExternalSTT
+    PlannedWorker -.->|"Feeds AudioPipelineManager [Planned]"| PipelineMgr
+    PlannedWorker -.->|"Posts transcripts [Planned]"| RoomController
 ```
 
 ---
 
 ## 3. Spring Boot Backend Component Descriptions
 
-### 3.1. Security & Filter Layer
+### 3.1. Security & Exception Handling
 * **`SecurityConfig`** (`org.debatespeak.authify.config.SecurityConfig`):
-  * **Responsibility**: Central Spring Security 6 declaration. Configures strict CORS origins (allowing requests from `FRONTEND_URL`), disables CSRF (safe for stateless Bearer tokens), configures session management to `SessionCreationPolicy.STATELESS`, and enforces path security rules (`/api/v1/auth/**` permitted, `/api/v1/rooms/**` authenticated).
-  * **Interactions**: Registers `JwtAuthenticationFilter` before `UsernamePasswordAuthenticationFilter`.
-* **`JwtAuthenticationFilter`**:
-  * **Responsibility**: Inspects incoming HTTP requests for the `Authorization: Bearer <token>` header. Extracts the JWT, calls `JwtService` to validate signature and expiration, extracts user claims, and sets an authenticated `UsernamePasswordAuthenticationToken` in Spring's `SecurityContextHolder`.
-  * **Interactions**: Intercepts requests destined for `AuthController`, `RoomController`, and `LiveKitController`.
+  * **Responsibility**: Configures CORS for `FRONTEND_URL` (methods `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `OPTIONS`; headers `Content-Type`, `Authorization`, `X-DebateSpeak-Client`, `Accept`; `allowCredentials = true`), disables CSRF for stateless REST, sets `SessionCreationPolicy.STATELESS`, and exposes `BCryptPasswordEncoder`.
+  * **Request Auth Pattern**: Rather than a separate `OncePerRequestFilter`, controllers pass the `Authorization` header to `AuthService.requireCurrentUser(header)`, which validates the Bearer JWT via `JwtService` (`[Planned]`: extracting a dedicated `JwtAuthenticationFilter`).
 * **`GlobalExceptionHandler`** (`org.debatespeak.authify.exception.GlobalExceptionHandler`):
-  * **Responsibility**: Centralized controller advice (`@RestControllerAdvice`). Catches custom `ApiException`, validation errors (`ValidationException`), and unexpected runtime exceptions, converting them into structured RFC 7807 problem responses with standard HTTP status codes (`400`, `401`, `403`, `404`, `409`, `500`).
-  * **Interactions**: Intercepts exceptions thrown by all REST controllers and services.
+  * **Responsibility**: `@RestControllerAdvice` mapping `ApiException` and `ValidationException` into uniform JSON error payloads (`400`, `401`, `403`, `404`, `409`, `422`, `500`, `503`).
 
-### 3.2. REST Controller Layer
-* **`AuthController`** (`org.debatespeak.authify.controller.AuthController`):
-  * **Responsibility**: Handles user registration, authentication, email verification, password reset, and profile management endpoints (`/api/v1/auth/register`, `/api/v1/auth/login`, `/api/v1/auth/me`, `/api/v1/auth/verify-email`, `/api/v1/auth/reset-password`).
-  * **Interactions**: Calls `AuthService` and `JwtService`. Returns standardized DTO responses (`TokenResponse`, `UserResponse`, `ProfileResponse`).
-* **`RoomController`** (`org.debatespeak.authify.room.RoomController`):
-  * **Responsibility**: Manages room operations: `POST /api/v1/rooms` (create debate room), `POST /api/v1/rooms/join` (join via 8-character invite code), `POST /api/v1/rooms/{id}/ready` (indicate debater readiness), `GET /api/v1/rooms/{id}` (fetch room state).
-  * **Interactions**: Invokes `RoomService` for business validation and room state transitions.
-* **`LiveKitController`** (`org.debatespeak.authify.livekit.LiveKitController`):
-  * **Responsibility**: Exposes `POST /api/v1/rooms/{id}/token` to deliver room-scoped, cryptographically signed WebRTC tokens to authenticated debaters.
-  * **Interactions**: Invokes `RoomService` (to verify user membership and room status) and `LiveKitTokenService` (to issue the JWT token).
+### 3.2. REST Controller Layer (`org.debatespeak.authify.controller`)
+* **`AuthController`**: Handles `/api/v1/auth/*` (register, login, refresh, logout, profile, email verification, password reset, admin moderation, delete account).
+* **`RoomController`**: Exposes all FG-03 and FG-04 REST endpoints under `/api/v1`:
+  * `GET /topics`, `POST /rooms`, `POST /rooms/lookup`, `POST /rooms/join`, `GET /rooms/{id}`
+  * `POST /rooms/{id}/cancel`, `POST /rooms/{id}/leave`, `PUT /rooms/{id}/ready`, `DELETE /rooms/{id}/ready`, `POST /rooms/{id}/end`
+  * `POST /rooms/{id}/token` (LiveKit token endpoint — `LiveKitController` is `[Planned]` if split out later)
+  * `POST /rooms/{id}/turns`, `GET /rooms/{id}/turns?after={seq}` (typed debate turns)
 
-### 3.3. Service Layer
-* **`AuthService`** (`org.debatespeak.authify.service.AuthService`):
-  * **Responsibility**: Implements user creation, password verification using password encoders, account lockout and suspension checks, and token revocation.
-  * **Interactions**: Reads and writes via `UserRepository`, `AuthSessionRepository`, `VerificationCodeRepository`, and triggers `EmailService`.
-* **`JwtService`** (`org.debatespeak.authify.service.JwtService`):
-  * **Responsibility**: Encapsulates all JWT operations. Signs access tokens (30-minute validity) and refresh tokens (7-day validity) using HMAC-SHA256 (`APP_JWT_SECRET`). Parses tokens, extracts `userId` and roles, and validates token expiration.
-  * **Interactions**: Injected into `AuthService` and `JwtAuthenticationFilter`.
-* **`EmailService`** (`org.debatespeak.authify.service.EmailService`):
-  * **Responsibility**: Constructs HTML email templates for OTP verification and password reset links. Sends emails asynchronously via Spring's `JavaMailSender` over SMTP TLS (port 587).
-  * **Interactions**: Called by `AuthService` during registration and recovery workflows.
-* **`RoomService`** (`org.debatespeak.authify.room.RoomService`):
-  * **Responsibility**: Implements the deterministic 5-state room lifecycle (`WAITING` $\rightarrow$ `READY` $\rightarrow$ `IN_DEBATE` $\rightarrow$ `CONCLUDED` / `ABANDONED`). Generates collision-resistant 8-character uppercase alphanumeric invite codes, assigns Affirmative/Negative stances, enforces the 2-participant limit (returning HTTP 409 Conflict if a 3rd user attempts to join), and triggers session start when both participants signal ready.
-  * **Interactions**: Reads and writes `RoomRepository` and coordinates with `LiveKitTokenService`.
-* **`LiveKitTokenService`** (`org.debatespeak.authify.livekit.LiveKitTokenService`):
-  * **Responsibility**: Uses the LiveKit Server SDK / JWT claims builder to construct signed LiveKit Access Tokens. Embeds room name (the room's `invite_code`), debater identity (`userId`), participant display name, and video grants (`canPublish: true`, `canSubscribe: true`, `canPublishData: true`). Signs the token using `LIVEKIT_API_SECRET`.
-  * **Interactions**: Called by `LiveKitController` and `RoomService`.
+### 3.3. Service Layer (`org.debatespeak.authify.service`)
+* **`AuthService`**: Implements user registration, BCrypt verification, account lockout/suspension checks, refresh session rotation, and `requireCurrentUser(header)`.
+* **`JwtService`**: Signs and parses HMAC-SHA256 access tokens (`JWT_SECRET`, default `ACCESS_TOKEN_EXPIRE_SECONDS=900`, i.e., 15 minutes; `application.properties` also defines `app.jwt.expiration-seconds=3600`).
+* **`EmailService`**: Dispatches verification and recovery OTP emails via `JavaMailSender` (SMTP TLS port `587`).
+* **`RoomService`**: Implements the room lifecycle (`LOBBY` -> `READY` -> `LIVE` -> `ENDED` / `CANCELLED`), collision-resistant 8-character invite codes, row-locked `join`/`ready` transitions, `TIMED_TURNS` (390 s) vs. `FREE_FLOW` durations, lazy `EXPIRED`/`TIMER` enforcement, `TYPED` turn persistence, and LiveKit HS256 JWT minting in `token()` / `liveKitToken()` (5-minute TTL, room name = `room.getId()`, `canPublish` enabled only for `VOICE` participants, serialized via Jackson `ObjectMapper`). Dedicated `LiveKitTokenService` extraction is `[Planned]`.
 
-### 3.4. Repository Layer
-* **`UserRepository`**: Performs Spring Data JPA CRUD queries on `UserEntity` (`findByEmail`, `findByUsername`, `existsByEmail`).
-* **`AuthSessionRepository`**: Manages active sessions and refresh tokens in `AuthSessionEntity`.
-* **`VerificationCodeRepository`**: Persists time-bounded OTP verification codes in `VerificationCodeEntity`.
-* **`AccountSuspensionRepository`**: Tracks administrative suspensions in `AccountSuspensionEntity`.
-* **`RoomRepository`**: Manages persistent debate rooms in `RoomEntity` (`findByInviteCode`, `findActiveRoomsByUserId`).
+### 3.4. Repository Layer (`org.debatespeak.authify.repository`)
+* **Auth Repositories**: `UserRepository`, `AuthSessionRepository`, `VerificationCodeRepository`, `AccountSuspensionRepository`.
+* **Room & Debate Repositories**: `RoomRepository` (with pessimistic write locks `findLockedById`, `findLockedByCode`), `RoomParticipantRepository`, `TopicRepository`, `DebateSessionRepository`, `TranscriptSegmentRepository`.
 
 ---
 
 ## 4. Python Audio & STT Worker Component Descriptions
 
-The Python Worker (`api/app/`, `workers/`) operates as a decoupled micro-service that consumes media streams and produces structured text transcripts:
+The Python worker modules (`api/app/adapters/`, `workers/`) are unit-tested and provide deterministic speaker isolation:
 
-### 4.1. `LiveKitTrackSubscriber`
-* **Responsibility**: Connects to the LiveKit Room as an automated participant using the LiveKit Python Agents SDK. Hooks into `on_track_subscribed` events, specifically selecting independent audio tracks.
-* **Deterministic Speaker Attribution Invariant**: Because each audio track is tied directly to a single debater's `participant_identity`, the subscriber maintains separate buffer queues for debater Affirmative and debater Negative. It **never mixes audio channels**, ensuring 100% deterministic speaker attribution without relying on unreliable post-hoc clustering diarization.
+### 4.1. `AudioPipelineManager` & `SpeakerAudioTrack` (`workers/audio_pipeline.py`)
+* **Implemented Responsibility**: Maintains an isolated `SpeakerAudioTrack` per `track_sid` (`AFFIRMATIVE`, `NEGATIVE`, `MODERATOR`) and emits Pydantic-validated `SpeakerTranscriptSegment` events bound strictly to `(room_id, speaker_id, speaker_stance, track_sid)`.
+* **Failover**: Automatically fails over to `LocalMockSTTAdapter` when the primary `STTAdapter` raises an exception in `_ensure_stream()` or `push_audio()`.
 
-### 4.2. `SileroVADProcessor`
-* **Responsibility**: Processes 16 kHz mono 16-bit PCM audio frames from the buffer using the Silero Voice Activity Detector (VAD). Suppresses background noise and isolates non-speech pauses (silence > 400ms), segmenting continuous vocalization into discrete utterance chunks for the transcription pipeline.
+### 4.2. `STTAdapter` Protocol & `LocalMockSTTAdapter` (`api/app/adapters/stt.py`)
+* **Implemented Responsibility**: Provider-agnostic async protocol (`open_stream(language, hints) -> STTStream` with `send_audio(pcm16_bytes)`, `events() -> AsyncIterator[STTEvent]`, and `close()`). `LocalMockSTTAdapter` replays deterministic word-timed transcripts for offline tests and fallback.
 
-### 4.3. `STTAdapter` Protocol & Implementations
-* **Responsibility**: Defined in `api/app/adapters/stt.py`, specifies a provider-agnostic asynchronous streaming protocol:
-  * `STTStream.push_audio(pcm16_bytes)`: Pushes audio frames.
-  * `STTStream.close()`: Concludes the stream.
-  * Returns an `AsyncIterator[STTEvent]`, yielding structured events containing `text`, `speaker`, `start_time`, `end_time`, `confidence`, and `is_final`.
-* **Implementations**:
-  1. **`LocalMockSTTAdapter`**: A lightweight local transcription engine that replays ground-truth topic sentences with realistic timing intervals. Used for unit tests, local offline development, and zero-dependency fallbacks.
-  2. **`CloudStreamingSTTAdapter`**: Cloud production driver using bi-directional streaming gRPC (Google Cloud Speech-to-Text / Deepgram). Emits real-time partial transcript events and finalized segments.
-
-### 4.4. `TranscriptBroadcaster`
-* **Responsibility**: Receives finalized `STTEvent` objects from the adapter and pushes speaker-attributed transcript records via HTTP REST (`POST /api/v1/rooms/{id}/transcripts`) or WebSocket back to the Spring Boot API for persistence and display on the debaters' client UIs.
+### 4.3. Planned Live Wiring (`[Planned]`)
+* **`LiveKitTrackSubscriber`**, **`SileroVADProcessor`**, **`CloudStreamingSTTAdapter`**, and **`TranscriptBroadcaster`**: Planned for live server-side WebRTC audio ingestion and automatic speech transcript posting (`POST /api/v1/rooms/{id}/transcripts`).
 
 ---
 
-## 5. Component Interaction Flow: Room Creation to Live Audio STT
+## 5. Component Interaction Flow: Room Creation to Live Audio
 
 ```mermaid
 sequenceDiagram
@@ -204,49 +154,44 @@ sequenceDiagram
     actor DebaterA as Debater A (Host)
     actor DebaterB as Debater B (Guest)
     participant FE as Frontend SPA (React)
-    participant Sec as Security / JwtFilter
     participant RoomCtrl as RoomController
     participant RoomSvc as RoomService
-    participant LKTokenSvc as LiveKitTokenService
     participant LKServer as LiveKit SFU
-    participant PyWorker as Audio STT Worker
+    participant PyWorker as AudioPipelineManager [Planned live hook]
 
     %% 1. Create Room Flow
     DebaterA->>FE: Click "Create Room"
-    FE->>Sec: POST /api/v1/rooms {topic_id, stance: "AFFIRMATIVE"}
-    Sec->>RoomCtrl: Authorized request
-    RoomCtrl->>RoomSvc: createRoom(userId, topicId, AFFIRMATIVE)
-    RoomSvc-->>RoomCtrl: RoomEntity(invite_code: "DEB-8A3F", state: WAITING)
-    RoomCtrl-->>FE: 201 Created {invite_code: "DEB-8A3F"}
+    FE->>RoomCtrl: POST /api/v1/rooms {topic_id, format, duration_minutes, side}
+    RoomCtrl->>RoomSvc: create(user, request)
+    RoomSvc-->>FE: 201 Created Snapshot (status: LOBBY, 8-char code)
 
-    %% 2. Join Room Flow
-    DebaterB->>FE: Enter code "DEB-8A3F" & Click Join
-    FE->>Sec: POST /api/v1/rooms/join {invite_code: "DEB-8A3F"}
-    Sec->>RoomCtrl: Authorized request
-    RoomCtrl->>RoomSvc: joinRoom(userId, "DEB-8A3F")
-    RoomSvc-->>RoomCtrl: Room joined (state: WAITING, 2/2 players)
-    RoomCtrl-->>FE: 200 OK {room_id: "room-123", stance: "NEGATIVE"}
+    %% 2. Join & Dual-Consent Ready Flow
+    DebaterB->>FE: Enter code & Join
+    FE->>RoomCtrl: POST /api/v1/rooms/join {code}
+    RoomCtrl->>RoomSvc: join(user, code)
+    RoomSvc-->>FE: 200 OK Snapshot (status: READY, sides assigned)
+
+    par Both debaters give consent and press Ready
+        FE->>RoomCtrl: PUT /api/v1/rooms/{id}/ready {consent: true, input: "VOICE"}
+        RoomCtrl->>RoomSvc: ready(user, id, request)
+    end
+    RoomSvc-->>FE: 200 OK Snapshot (status: LIVE, started_at = now + 3s)
 
     %% 3. LiveKit Token Issuance
     par Debater A & B fetch WebRTC tokens
-        FE->>Sec: POST /api/v1/rooms/room-123/token
-        Sec->>RoomCtrl: Authorized request
-        RoomCtrl->>LKTokenSvc: generateToken(userId, "DEB-8A3F", canPublish=true)
-        LKTokenSvc-->>FE: {token: "jwt.livekit.token", url: "wss://livekit.cloud"}
+        FE->>RoomCtrl: POST /api/v1/rooms/{id}/token
+        RoomCtrl->>RoomSvc: token(user, id)
+        RoomSvc-->>FE: 200 OK {token: "<HS256 JWT for room.id>", url}
     end
 
     %% 4. WebRTC Connection & Dual-Consent Audio
     FE->>LKServer: Connect via WebRTC using signed token
-    Note over FE,LKServer: Both Debaters grant microphone consent
-    FE->>LKServer: Publish independent audio tracks (Track A, Track B)
+    FE->>LKServer: Publish independent audio tracks (VOICE) or turn data messages (TYPE)
 
-    %% 5. Worker Audio Ingestion & Transcription
-    PyWorker->>LKServer: TrackSubscriber hooks into Room "DEB-8A3F"
-    LKServer-->>PyWorker: Independent audio frames for Debater A (Track A)
-    PyWorker->>PyWorker: SileroVADProcessor filters silence & speech
-    PyWorker->>PyWorker: STTAdapter transcribes audio chunk
-    PyWorker->>RoomCtrl: POST /api/v1/rooms/room-123/transcripts {speaker: "Debater A", text: "I argue that..."}
-    RoomCtrl-->>FE: Broadcast transcript event to both Debaters
+    %% 5. Worker Audio Ingestion & Transcription (Planned live hook)
+    PyWorker-.->LKServer: [Planned] Subscribe to independent track_sid per speaker
+    PyWorker->>PyWorker: SpeakerAudioTrack -> STTAdapter / LocalMockSTTAdapter
+    PyWorker-.->RoomCtrl: [Planned] Persist SpeakerTranscriptSegment
 ```
 
 ---
@@ -255,8 +200,8 @@ sequenceDiagram
 
 | Invariant | System Component | Enforcement Mechanism |
 |---|---|---|
-| **Zero Hardcoded Paths (AGENTS.md §1)** | All Backend Components | Database credentials, JWT secrets, and LiveKit endpoints are loaded via Spring `@Value("${ENV_VAR}")` and Python `os.getenv()`. |
-| **Clean Architecture & No Stubs (AGENTS.md §5)** | `RoomService`, `STTAdapter` | Pure state machine with deterministic transitions and fully tested `LocalMockSTTAdapter` with zero placeholder stubs. |
-| **Deterministic Speaker Attribution (AGENTS.md §4.3)** | `LiveKitTrackSubscriber` | Transcripts are attributed strictly via WebRTC track metadata (`participant_identity`), never by multi-speaker audio separation. |
-| **Provider-Agnostic STT Adapter (AGENTS.md §4.4)** | `STTProtocol` (`api/app/adapters/stt.py`) | Cloud providers and local mocks share the exact same `STTStream` async generator interface. |
-| **Dual-Consent Safety (AGENTS.md §7.3)** | `RoomController`, `LiveKitController` | Audio tokens and track publications remain inactive until both debaters signal `READY` in the lobby. |
+| **Zero Hardcoded Paths (`AGENTS.md` §1)** | All Backend Components | Secrets and endpoints loaded via Spring `@Value` and Python relative `Path(__file__).resolve()` / env vars. |
+| **Clean Architecture & No Stubs (`AGENTS.md` §5)** | `RoomService`, `STTAdapter` | Transactional Spring services, tested `LocalMockSTTAdapter`, and strict Pydantic models. |
+| **Deterministic Speaker Attribution (`AGENTS.md` §4.3)** | `SpeakerAudioTrack` | Segments bound strictly to `speaker_id` and `track_sid`; tracks are never mixed. |
+| **Provider-Agnostic STT Adapter (`AGENTS.md` §4.4)** | `STTAdapter` (`api/app/adapters/stt.py`) | Cloud and local fallback adapters implement the same `STTStream` async interface. |
+| **Dual-Consent Safety (`AGENTS.md` §7.3)** | `RoomController`, `RoomService` | `PUT /rooms/{id}/ready` requires `consent: true`; `/token` rejects (`409`) until status is `LIVE`; `canPublish` is `false` for `TYPE`. |
