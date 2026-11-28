@@ -152,3 +152,16 @@ test('closing audio settings leaves the live mic running', async ({ page }) => {
   await expect(panel(page)).toHaveCount(0);
   expect(await page.evaluate(() => window.__audio.track?.readyState)).toBe('live');
 });
+
+test('the partner volume slider sets their volume', async ({ page }) => {
+  await openLiveRoom(page);
+  await gear(page).click();
+  const slider = panel(page).getByLabel("Sam's volume", { exact: true });
+  await expect(slider).toHaveValue('100');
+  await slider.fill('40');
+  await expect.poll(() => page.evaluate(() => window.__audio.volumes.at(-1))).toBe(0.4);
+  await expect(panel(page).getByText('40%', { exact: true })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await gear(page).click();
+  await expect(panel(page).getByLabel("Sam's volume", { exact: true })).toHaveValue('40');
+});

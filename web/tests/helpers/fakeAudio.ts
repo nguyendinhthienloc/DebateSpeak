@@ -10,7 +10,7 @@ declare global {
       connects: Connect[]; disconnects: number; resumed: number; announced: number[]; muted: boolean[];
       devices: Record<Kind, Device[]>; active: Record<Kind, string>; switched: [Kind, string][]; failSwitch: boolean; failUnmute: boolean;
       /** Peak volume of the fake live mic (0 is silence); `track` is that mic once the stage asked for it. */
-      micTone: number; track?: MediaStreamTrack;
+      micTone: number; track?: MediaStreamTrack; volumes: number[];
       emit(event: unknown): void;
     };
     __debateAudioFactory?: () => unknown;
@@ -27,7 +27,7 @@ export async function installFakeAudio(page: Page) {
         audioinput: [{ id: 'mic-1', label: 'Built-in microphone' }, { id: 'mic-2', label: 'USB headset' }],
         audiooutput: [{ id: 'spk-1', label: 'Speakers' }, { id: 'spk-2', label: 'Headphones' }],
       },
-      active: { audioinput: 'mic-1', audiooutput: 'spk-1' }, switched: [], failSwitch: false, failUnmute: false, micTone: 0,
+      active: { audioinput: 'mic-1', audiooutput: 'spk-1' }, switched: [], failSwitch: false, failUnmute: false, micTone: 0, volumes: [],
       emit(event) { listeners.forEach(listener => listener(event)); },
     };
     window.__debateAudioFactory = () => ({
@@ -54,6 +54,7 @@ export async function installFakeAudio(page: Page) {
         }
         return window.__audio.track;
       },
+      setPartnerVolume(volume: number) { window.__audio.volumes.push(volume); },
       async listDevices(kind: Kind) { return window.__audio.devices[kind]; },
       activeDevice(kind: Kind) { return window.__audio.active[kind]; },
       async switchDevice(kind: Kind, id: string) {

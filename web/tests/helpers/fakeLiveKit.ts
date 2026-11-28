@@ -7,6 +7,8 @@ declare global {
     __lk: {
       rooms: FakeRoom[]; connected: number; mic: boolean; micEverOn: boolean; open(): void;
       devices: { deviceId: string; label: string; kind: string }[]; switched: [string, string][];
+      /** setVolume calls on remote participants, as [identity, volume]. */
+      volumes: [string, number][];
     };
   }
 }
@@ -53,7 +55,7 @@ export async function installFakeLiveKit(page: Page, { hold = false } = {}) {
       { deviceId: 'mic-1', label: 'Built-in microphone', kind: 'audioinput' }, { deviceId: 'mic-2', label: 'USB headset', kind: 'audioinput' },
       { deviceId: 'spk-1', label: 'Speakers', kind: 'audiooutput' }, { deviceId: 'spk-2', label: 'Headphones', kind: 'audiooutput' },
     ];
-    Object.assign(window, { __lk: { rooms: [], connected: 0, mic: false, micEverOn: false, gate, open: () => release(), devices, switched: [] } });
+    Object.assign(window, { __lk: { rooms: [], connected: 0, mic: false, micEverOn: false, gate, open: () => release(), devices, switched: [], volumes: [] } });
   }, hold);
   await page.route('**/node_modules/.vite/deps/livekit-client.js*', route =>
     route.fulfill({ contentType: 'text/javascript', body: fakeModule }));

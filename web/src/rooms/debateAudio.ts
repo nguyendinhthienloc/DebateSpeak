@@ -32,13 +32,15 @@ export interface DebateAudio {
   switchDevice(kind: DeviceKind, id: string): Promise<void>;
   /** The published microphone track, for a level meter. Never stop it. */
   micTrack(): MediaStreamTrack | undefined;
+  /** The partner's loudness, 0 to 1. Kept for this debate and applied again when they rejoin. */
+  setPartnerVolume(volume: number): void;
   subscribe(listener: (event: AudioEvent) => void): () => void;
 }
 
 type LiveKit = typeof import('livekit-client');
 
 /** Wires a LiveKit room to the stage's events. Loaded on demand so LiveKit stays out of the main bundle. */
-function wire(kit: LiveKit, emit: (event: AudioEvent) => void, userMuted: () => boolean): Room {
+function wire(kit: LiveKit, emit: (event: AudioEvent) => void, userMuted: () => boolean, volume: () => number): Room {
   const { ConnectionQuality, Room: LiveKitRoom, RoomEvent, Track } = kit;
   const qualities: Partial<Record<string, 'good' | 'poor' | 'lost'>> = {
     [ConnectionQuality.Excellent]: 'good',
@@ -83,11 +85,12 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void, userMuted: () => 
         if (Number.isInteger(seq)) emit({ type: 'turn', seq });
       } catch { /* not a turn message */ }
     })
-    .on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
+    .on(RoomEvent.TrackSubscribed, (track: RemoteTrack, _publication, participant) => {
       if (track.kind !== Track.Kind.Audio) return;
       const element = track.attach();
       element.dataset.remote = '';
       document.body.append(element);
+      participant.setVolume(volume());
     })
     .on(RoomEvent.TrackUnsubscribed, (track: RemoteTrack) => track.detach().forEach(element => element.remove()));
   return room;
@@ -99,6 +102,7 @@ function liveKitAudio(): DebateAudio {
   let kit: LiveKit | undefined;
   let publishing = false;
   let muted = false;
+  let volume = 1;
   let closed = false;
   // After our own disconnect, LiveKit's events are not news.
   const emit = (event: AudioEvent) => { if (!closed) listeners.forEach(listener => listener(event)); };
@@ -109,7 +113,7 @@ function liveKitAudio(): DebateAudio {
       muted = startMuted;
       kit = await import('livekit-client');
       if (closed) return;
-      room = wire(kit, emit, () => muted);
+      room = wire(kit, emit, () => muted, () => volume);
       await room.connect(url, token);
       if (closed) { await room.disconnect(true); return; }
       publishing = publishMic;
@@ -139,6 +143,10 @@ function liveKitAudio(): DebateAudio {
       return devices.filter(device => device.deviceId).map(device => ({ id: device.deviceId, label: device.label }));
     },
     micTrack,
+    setPartnerVolume(next) {
+      volume = next;
+      room?.remoteParticipants.forEach(participant => participant.setVolume(next));
+    },
     activeDevice(kind) {
       // The live track knows the real input, even after LiveKit fell back to another one.
       const track = kind === 'audioinput' ? micTrack() : undefined;

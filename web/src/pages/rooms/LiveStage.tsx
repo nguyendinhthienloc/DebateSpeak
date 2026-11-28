@@ -8,7 +8,7 @@ import type { Participant, RoomSnapshot } from '../../rooms/contracts';
 import { createDebateAudio, type DebateAudio } from '../../rooms/debateAudio';
 import { initialSpotlight, nextSpotlight, type SpotlightState } from '../../rooms/spotlight';
 import { useTypedTurns } from '../../rooms/useTypedTurns';
-import { AudioPanel } from './AudioPanel';
+import { AudioPanel, PartnerVolume } from './AudioPanel';
 import { SideTag } from './InviteView';
 import { NoMicNotice } from './NoMicNotice';
 import { TypePanel } from './TypePanel';
@@ -74,6 +74,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   // The same instance as `audio`, from creation, so audio settings can list devices before the token arrives.
   const [settingsAudio, setSettingsAudio] = useState<DebateAudio>();
   const [audioOpen, setAudioOpen] = useState(false);
+  const [volume, setVolume] = useState(100);
   const gear = useRef<HTMLButtonElement>(null);
   const speakers = useRef<string[]>([]);
   const endButton = useRef<HTMLButtonElement>(null);
@@ -268,7 +269,10 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
           <button ref={endButton} type="button" className="action stage-danger" onClick={() => setConfirming(true)}>End debate</button>
         </div>}
       {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} stopped={micStopped}
-        anchor={gear} onClose={closeAudio} />}
+        anchor={gear} onClose={closeAudio}>
+        {partner && <PartnerVolume name={partner.display_name} value={volume}
+          onChange={next => { setVolume(next); settingsAudio.setPartnerVolume(next / 100); }} />}
+      </AudioPanel>}
     </div>
    </div>
     {panelOpen && <TypePanel turns={typed.turns} participants={room.participants} meId={me?.user_id} send={typed.send}

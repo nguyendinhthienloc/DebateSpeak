@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react';
 import { canChooseSpeaker, type AudioDevice, type DebateAudio, type DeviceKind } from '../../rooms/debateAudio';
 import { useTrackLevel } from '../../rooms/useTrackLevel';
 
@@ -27,6 +27,19 @@ function DevicePicker({ label, kind, devices, value, onPick }: {
       {!devices.some(device => device.id === value) && <option value="">Choose…</option>}
       {devices.map(device => <option key={device.id} value={device.id}>{device.label || fallbackLabel[kind]}</option>)}
     </select>
+  </div>;
+}
+
+/** The partner's loudness, 0 to 100 in steps of 5. */
+export function PartnerVolume({ name, value, onChange }: { name: string; value: number; onChange: (value: number) => void }) {
+  const field = useId();
+  return <div className="field">
+    <div className="volume-label">
+      <label htmlFor={field}>{name}&apos;s volume</label>
+      <span className="small">{value}%</span>
+    </div>
+    <input id={field} className="volume-range" type="range" min={0} max={100} step={5} value={value}
+      style={{ '--fill': `${value}%` } as CSSProperties} onChange={event => onChange(Number(event.target.value))} />
   </div>;
 }
 

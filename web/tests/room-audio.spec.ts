@@ -101,3 +101,17 @@ test('pressing Mute does not raise the alert', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
   await expect(page.getByText('Your microphone stopped.', { exact: false })).toHaveCount(0);
 });
+
+test('the partner comes back at the chosen volume', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Audio settings', exact: true }).click();
+  await page.getByLabel("Sam's volume", { exact: true }).fill('40');
+  await page.evaluate(() => {
+    const sam = { identity: 'sam', isLocal: false, setVolume: (volume: number) => window.__lk.volumes.push(['sam', volume]) };
+    const track = { kind: 'audio', attach: () => document.createElement('audio'), detach: () => [] };
+    window.__lk.rooms[0].emit('TrackSubscribed', track, { source: 'microphone' }, sam);
+  });
+  await expect.poll(() => page.evaluate(() => window.__lk.volumes)).toContainEqual(['sam', 0.4]);
+});
