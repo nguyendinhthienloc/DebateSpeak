@@ -1,3 +1,17 @@
-"""DebateSpeak AI - Real-Time Audio & Background Workers Package."""
+"""DebateSpeak AI Background Workers & Media Pipeline."""
 
-__version__ = "0.1.0"
+from workers.audio_pipeline import (
+    AudioPipelineManager,
+    SpeakerAudioTrack,
+    SpeakerTranscriptSegment,
+    Stance,
+)
+from workers.health import get_worker_status
+
+__all__ = [
+    "AudioPipelineManager",
+    "SpeakerAudioTrack",
+    "SpeakerTranscriptSegment",
+    "Stance",
+    "get_worker_status",
+]
