@@ -8,6 +8,7 @@ Deadline **TBD** (see assignment PDF). Jira: Sprint 4 (PA4). Each member's tasks
 3. Open the PR **into `pa4`**, never into `dev` or `main`. One teammate reviews; a merged PR counts as reviewed.
 4. Never commit directly to `pa4` for code. Only Lộc commits planning docs straight to it.
 5. Lộc merges `pa4` into `dev` once, at the end of the sprint.
+6. To call Spec Kit (`/speckit-*`) or graphify, see [AI_SKILLS_GUIDE.md](../reference/AI_SKILLS_GUIDE.md).
 
 ## What PA4 grades (75 pts total)
 
