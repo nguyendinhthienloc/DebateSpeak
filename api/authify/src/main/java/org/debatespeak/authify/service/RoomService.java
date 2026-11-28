@@ -35,13 +35,13 @@ public class RoomService {
     private final ObjectMapper objectMapper;
     private final SecureRandom random = new SecureRandom();
 
-    @Value("${LIVEKIT_URL:}")
+    @Value("${app.livekit.url:}")
     private String liveKitUrl;
 
-    @Value("${LIVEKIT_API_KEY:}")
+    @Value("${app.livekit.api-key:}")
     private String liveKitKey;
 
-    @Value("${LIVEKIT_API_SECRET:}")
+    @Value("${app.livekit.api-secret:}")
     private String liveKitSecret;
 
     public RoomService(
