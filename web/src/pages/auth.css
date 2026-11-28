@@ -123,6 +123,14 @@
   .guide-actions { grid-template-columns: minmax(0, 1fr); margin-top: auto; }
   .guide-actions > .action-secondary { order: 2; }
 }
+/* Short viewports (1920 × 1080 at 125% scaling is about 730px tall): tighten the stage so every register step fits. */
+@media (min-width: 561px) and (max-height: 860px) {
+  .auth-podium { padding-top: 8px; }
+  .auth-stage .auth-plate { padding: 24px clamp(24px, 3vw, 40px); }
+  .auth-stage .auth-plate.account-form { gap: 1.125rem; }
+  .auth-lectern { min-height: 4.5rem; padding: .75rem 3rem .5rem; }
+  .auth-floor { min-height: 0; padding-top: 3rem; padding-bottom: .5rem; }
+}
 /* Four level choices stay on one row inside the plate on phones (two columns below 360px, from account.css). */
 @media (min-width: 360px) {
   .auth-stage .auth-plate .choices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
