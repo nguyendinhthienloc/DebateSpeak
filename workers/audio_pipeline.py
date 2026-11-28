@@ -9,12 +9,12 @@ Invariable Rule (AGENTS.md Section 4.3):
     speaker attribution (>= 98% accuracy without probabilistic diarization clustering).
 """
 
-from collections.abc import AsyncIterator
 import logging
+from collections.abc import AsyncIterator
 from typing import Literal
-from pydantic import BaseModel, ConfigDict, Field
 
-from app.adapters.stt import STTAdapter, STTEvent, STTStream, WordTiming, LocalMockSTTAdapter
+from app.adapters.stt import LocalMockSTTAdapter, STTAdapter, STTStream, WordTiming
+from pydantic import BaseModel, ConfigDict, Field
 
 logger = logging.getLogger(__name__)
 
@@ -26,16 +26,32 @@ class SpeakerTranscriptSegment(BaseModel):
 
     model_config = ConfigDict(strict=True, extra="forbid", allow_inf_nan=False)
 
-    room_id: str = Field(min_length=1, description="Debate room identifier or invite code")
-    speaker_id: str = Field(min_length=1, description="Unique participant UUID or identity")
-    speaker_stance: Stance = Field(description="Debater stance (AFFIRMATIVE or NEGATIVE)")
+    room_id: str = Field(
+        min_length=1, description="Debate room identifier or invite code"
+    )
+    speaker_id: str = Field(
+        min_length=1, description="Unique participant UUID or identity"
+    )
+    speaker_stance: Stance = Field(
+        description="Debater stance (AFFIRMATIVE or NEGATIVE)"
+    )
     track_sid: str = Field(min_length=1, description="LiveKit WebRTC track identifier")
     text: str = Field(description="Transcribed speech text")
-    is_final: bool = Field(description="True if segment is finalized; False for interim hypothesis")
-    start_ms: int = Field(ge=0, description="Start timestamp relative to debate onset in ms")
-    end_ms: int = Field(ge=0, description="End timestamp relative to debate onset in ms")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence score between 0.0 and 1.0")
-    words: list[WordTiming] = Field(default_factory=list, description="Word-level timings")
+    is_final: bool = Field(
+        description="True if segment is finalized; False for interim hypothesis"
+    )
+    start_ms: int = Field(
+        ge=0, description="Start timestamp relative to debate onset in ms"
+    )
+    end_ms: int = Field(
+        ge=0, description="End timestamp relative to debate onset in ms"
+    )
+    confidence: float = Field(
+        ge=0.0, le=1.0, description="Confidence score between 0.0 and 1.0"
+    )
+    words: list[WordTiming] = Field(
+        default_factory=list, description="Word-level timings"
+    )
 
 
 class SpeakerAudioTrack:
@@ -91,7 +107,7 @@ class SpeakerAudioTrack:
             )
             self._is_using_fallback = False
             return self._active_stream
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - fail over from any primary STT error to fallback adapter
             logger.warning(
                 "Primary STT adapter failed for speaker %s (%s). Engaging fallback: %s",
                 self.speaker_id,
@@ -118,8 +134,10 @@ class SpeakerAudioTrack:
 
         try:
             await stream.send_audio(pcm16_chunk)
-        except Exception as exc:
-            logger.warning("Error pushing audio to stream: %s. Failing over to fallback.", exc)
+        except Exception as exc:  # noqa: BLE001 - fail over from any primary STT error to fallback adapter
+            logger.warning(
+                "Error pushing audio to stream: %s. Failing over to fallback.", exc
+            )
             self._active_stream = await self.fallback_adapter.open_stream(
                 language=self.language,
                 hints=self.hints,
