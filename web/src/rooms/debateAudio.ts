@@ -7,7 +7,9 @@ export type AudioEvent =
   | { type: 'partner'; present: boolean; muted: boolean }
   | { type: 'playback-blocked' }
   | { type: 'turn'; seq: number }
-  | { type: 'dropped' };
+  | { type: 'dropped' }
+  /** Our own mic: `stopped` when LiveKit or the device stopped it without the debater pressing Mute. */
+  | { type: 'mic'; state: 'live' | 'stopped' };
 
 export type DeviceKind = 'audioinput' | 'audiooutput';
 export interface AudioDevice { id: string; label: string }
@@ -34,7 +36,7 @@ export interface DebateAudio {
 type LiveKit = typeof import('livekit-client');
 
 /** Wires a LiveKit room to the stage's events. Loaded on demand so LiveKit stays out of the main bundle. */
-function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
+function wire(kit: LiveKit, emit: (event: AudioEvent) => void, userMuted: () => boolean): Room {
   const { ConnectionQuality, Room: LiveKitRoom, RoomEvent, Track } = kit;
   const qualities: Partial<Record<string, 'good' | 'poor' | 'lost'>> = {
     [ConnectionQuality.Excellent]: 'good',
@@ -58,8 +60,16 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
     .on(RoomEvent.Disconnected, () => emit({ type: 'dropped' }))
     .on(RoomEvent.ParticipantConnected, () => partnerState(true))
     .on(RoomEvent.ParticipantDisconnected, () => partnerState(false))
-    .on(RoomEvent.TrackMuted, () => partnerState())
-    .on(RoomEvent.TrackUnmuted, () => partnerState())
+    // LiveKit reports our own mic here too, including when it mutes a track whose device went away.
+    .on(RoomEvent.TrackMuted, (publication, participant) => {
+      if (!participant.isLocal) partnerState();
+      else if (publication.source === Track.Source.Microphone && !userMuted()) emit({ type: 'mic', state: 'stopped' });
+    })
+    .on(RoomEvent.TrackUnmuted, (publication, participant) => {
+      if (!participant.isLocal) partnerState();
+      else if (publication.source === Track.Source.Microphone) emit({ type: 'mic', state: 'live' });
+    })
+    .on(RoomEvent.MediaDevicesError, (_error, kind) => { if (kind === 'audioinput') emit({ type: 'mic', state: 'stopped' }); })
     // A partner who joins before publishing their mic only becomes unmuted here; mute events need a published track.
     .on(RoomEvent.TrackPublished, () => partnerState())
     .on(RoomEvent.TrackUnpublished, () => partnerState())
@@ -96,7 +106,7 @@ function liveKitAudio(): DebateAudio {
       muted = startMuted;
       kit = await import('livekit-client');
       if (closed) return;
-      room = wire(kit, emit);
+      room = wire(kit, emit, () => muted);
       await room.connect(url, token);
       if (closed) { await room.disconnect(true); return; }
       publishing = publishMic;

@@ -83,3 +83,21 @@ test('the real audio layer switches the mic through LiveKit', async ({ page }) =
   await page.getByLabel('Microphone', { exact: true }).selectOption({ label: 'USB headset' });
   await expect.poll(() => page.evaluate(() => window.__lk.switched)).toContainEqual(['audioinput', 'mic-2']);
 });
+
+test('LiveKit muting the mic on its own raises the alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.evaluate(() => window.__lk.rooms[0].emit('TrackMuted', { source: 'microphone' }, { isLocal: true }));
+  await expect(page.getByRole('alert').filter({ hasText: 'Your microphone stopped.' })).toBeVisible();
+});
+
+test('pressing Mute does not raise the alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Mute', exact: true }).click();
+  await page.evaluate(() => window.__lk.rooms[0].emit('TrackMuted', { source: 'microphone' }, { isLocal: true }));
+  await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
+  await expect(page.getByText('Your microphone stopped.', { exact: false })).toHaveCount(0);
+});

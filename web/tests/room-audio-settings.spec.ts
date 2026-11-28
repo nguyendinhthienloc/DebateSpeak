@@ -54,3 +54,35 @@ test('no speaker picker where the browser cannot route sound', async ({ page }) 
   await expect(panel(page).getByLabel('Microphone', { exact: true })).toBeVisible();
   await expect(panel(page).getByLabel('Speaker', { exact: true })).toHaveCount(0);
 });
+
+const stoppedAlert = (page: Page) => page.getByRole('alert').filter({ hasText: 'Your microphone stopped.' });
+
+test('a stopped mic shows an alert and the true mute state', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => window.__audio.emit({ type: 'mic', state: 'stopped' }));
+  await expect(stoppedAlert(page)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
+  await stoppedAlert(page).getByRole('button', { name: 'Open audio settings', exact: true }).click();
+  await expect(panel(page)).toBeVisible();
+});
+
+test('the alert clears when the mic is live again', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => window.__audio.emit({ type: 'mic', state: 'stopped' }));
+  await expect(stoppedAlert(page)).toBeVisible();
+  await page.evaluate(() => window.__audio.emit({ type: 'mic', state: 'live' }));
+  await expect(stoppedAlert(page)).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Mute', exact: true })).toBeVisible();
+});
+
+test('a failed unmute shows the alert', async ({ page }) => {
+  const errors: Error[] = [];
+  page.on('pageerror', error => errors.push(error));
+  await openLiveRoom(page);
+  await page.evaluate(() => { window.__audio.failUnmute = true; });
+  await page.getByRole('button', { name: 'Mute', exact: true }).click();
+  await page.getByRole('button', { name: 'Unmute', exact: true }).click();
+  await expect(stoppedAlert(page)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Unmute', exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});

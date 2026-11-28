@@ -8,7 +8,7 @@ declare global {
   interface Window {
     __audio: {
       connects: Connect[]; disconnects: number; resumed: number; announced: number[]; muted: boolean[];
-      devices: Record<Kind, Device[]>; active: Record<Kind, string>; switched: [Kind, string][]; failSwitch: boolean;
+      devices: Record<Kind, Device[]>; active: Record<Kind, string>; switched: [Kind, string][]; failSwitch: boolean; failUnmute: boolean;
       emit(event: unknown): void;
     };
     __debateAudioFactory?: () => unknown;
@@ -25,12 +25,15 @@ export async function installFakeAudio(page: Page) {
         audioinput: [{ id: 'mic-1', label: 'Built-in microphone' }, { id: 'mic-2', label: 'USB headset' }],
         audiooutput: [{ id: 'spk-1', label: 'Speakers' }, { id: 'spk-2', label: 'Headphones' }],
       },
-      active: { audioinput: 'mic-1', audiooutput: 'spk-1' }, switched: [], failSwitch: false,
+      active: { audioinput: 'mic-1', audiooutput: 'spk-1' }, switched: [], failSwitch: false, failUnmute: false,
       emit(event) { listeners.forEach(listener => listener(event)); },
     };
     window.__debateAudioFactory = () => ({
       async connect(options: Connect) { window.__audio.connects.push(options); },
-      async setMuted(muted: boolean) { window.__audio.muted.push(muted); },
+      async setMuted(muted: boolean) {
+        window.__audio.muted.push(muted);
+        if (!muted && window.__audio.failUnmute) throw new Error('no microphone');
+      },
       async resumePlayback() { window.__audio.resumed += 1; },
       async announceTurn(seq: number) { window.__audio.announced.push(seq); },
       async disconnect() { window.__audio.disconnects += 1; },

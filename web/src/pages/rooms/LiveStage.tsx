@@ -56,6 +56,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   const [muted, setMuted] = useState(rejoined);
   const [connection, setConnection] = useState<Connection>('connecting');
   const [audioFailed, setAudioFailed] = useState(false);
+  const [micStopped, setMicStopped] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [partnerPresent, setPartnerPresent] = useState<boolean>();
   const [partnerMuted, setPartnerMuted] = useState(false);
@@ -112,6 +113,8 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
       else if (event.type === 'playback-blocked') setBlocked(true);
       else if (event.type === 'turn') refreshTurns();
       else if (event.type === 'dropped') setAudioFailed(true);
+      // The button shows what is true: a stopped mic reads Unmute, and Unmute retries it.
+      else if (event.type === 'mic') { setMicStopped(event.state === 'stopped'); setMuted(event.state === 'stopped'); }
     });
     setAudioFailed(false);
     setConnection('connecting');
@@ -154,7 +157,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   function toggleMute() {
     const next = !muted;
     setMuted(next);
-    void audio.current?.setMuted(next);
+    audio.current?.setMuted(next).catch(() => { setMicStopped(true); setMuted(true); });
   }
 
   function end() {
@@ -207,6 +210,8 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
       {partnerPresent === false && partner && <p className="stage-alert" role="status">{partner.display_name} lost connection. Waiting up to 60 seconds.</p>}
       {rejoined && muted && publishMic && <p className="stage-note">You're muted after rejoining.</p>}
       {blocked && <button type="button" className="action action-primary" onClick={() => { void audio.current?.resumePlayback(); setBlocked(false); }}>Turn on sound</button>}
+      {micStopped && <p className="stage-alert" role="alert">Your microphone stopped. <button type="button" className="stage-link"
+        onClick={() => setAudioOpen(true)}>Open audio settings</button></p>}
       {audioFailed && <p className="stage-alert" role="alert">Audio is not connected. <button type="button" className="stage-link" onClick={() => setAttempt(value => value + 1)}>Try again</button></p>}
       {endFailed && <p className="stage-alert" role="alert">The debate could not be ended. Try again.</p>}
     </div>
