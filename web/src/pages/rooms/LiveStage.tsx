@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { Settings } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from '../../auth/session';
 import { StageBar } from '../../components/Headers';
 import { endRoom, getMediaToken } from '../../rooms/api';
@@ -7,6 +8,7 @@ import type { Participant, RoomSnapshot } from '../../rooms/contracts';
 import { createDebateAudio, type DebateAudio } from '../../rooms/debateAudio';
 import { initialSpotlight, nextSpotlight, type SpotlightState } from '../../rooms/spotlight';
 import { useTypedTurns } from '../../rooms/useTypedTurns';
+import { AudioPanel } from './AudioPanel';
 import { SideTag } from './InviteView';
 import { TypePanel } from './TypePanel';
 import './stage.css';
@@ -63,6 +65,10 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   const [endFailed, setEndFailed] = useState(false);
   const [panelOpen, setPanelOpen] = useState(!publishMic);
   const audio = useRef<DebateAudio>();
+  // The same instance as `audio`, from creation, so audio settings can list devices before the token arrives.
+  const [settingsAudio, setSettingsAudio] = useState<DebateAudio>();
+  const [audioOpen, setAudioOpen] = useState(false);
+  const gear = useRef<HTMLButtonElement>(null);
   const speakers = useRef<string[]>([]);
   const endButton = useRef<HTMLButtonElement>(null);
   const confirmButton = useRef<HTMLButtonElement>(null);
@@ -94,6 +100,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
   useEffect(() => {
     if (!started) return;
     const instance = createDebateAudio();
+    setSettingsAudio(instance);
     const controller = new AbortController();
     let connected = false;
     const unsubscribe = instance.subscribe(event => {
@@ -120,6 +127,7 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
       controller.abort();
       unsubscribe();
       audio.current = undefined;
+      setSettingsAudio(undefined);
       if (connected) void instance.disconnect();
     };
   }, [started, room.id, publishMic, attempt, refreshTurns, deviceId]);
@@ -137,6 +145,11 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
     if (confirming) { askedToEnd.current = true; confirmButton.current?.focus(); }
     else if (askedToEnd.current) { askedToEnd.current = false; endButton.current?.focus(); }
   }, [confirming]);
+
+  const closeAudio = useCallback((refocus: boolean) => {
+    setAudioOpen(false);
+    if (refocus) gear.current?.focus();
+  }, []);
 
   function toggleMute() {
     const next = !muted;
@@ -216,8 +229,11 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
           <button type="button" className="action stage-quiet stage-type" aria-expanded={panelOpen} aria-controls="type-panel"
             onClick={() => setPanelOpen(open => !open)}>Type</button>
           {publishMic && <button type="button" className="action stage-quiet" disabled={!started} onClick={toggleMute}>{muted ? 'Unmute' : 'Mute'}</button>}
+          <button ref={gear} type="button" className="action stage-quiet stage-gear" aria-label="Audio settings" aria-expanded={audioOpen}
+            aria-controls="audio-panel" disabled={!started} onClick={() => setAudioOpen(open => !open)}><Settings size={20} aria-hidden="true" /></button>
           <button ref={endButton} type="button" className="action stage-danger" onClick={() => setConfirming(true)}>End debate</button>
         </div>}
+      {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} anchor={gear} onClose={closeAudio} />}
     </div>
    </div>
     {panelOpen && <TypePanel turns={typed.turns} participants={room.participants} meId={me?.user_id} send={typed.send}

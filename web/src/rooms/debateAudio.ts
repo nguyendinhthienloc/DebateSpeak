@@ -9,12 +9,25 @@ export type AudioEvent =
   | { type: 'turn'; seq: number }
   | { type: 'dropped' };
 
+export type DeviceKind = 'audioinput' | 'audiooutput';
+export interface AudioDevice { id: string; label: string }
+
+/** Whether this browser can send the partner's voice to a chosen speaker (not Safari). */
+export function canChooseSpeaker(): boolean {
+  return typeof HTMLMediaElement !== 'undefined' && 'setSinkId' in HTMLMediaElement.prototype;
+}
+
 export interface DebateAudio {
   connect(options: { url: string; token: string; publishMic: boolean; startMuted: boolean; deviceId?: string }): Promise<void>;
   setMuted(muted: boolean): Promise<void>;
   resumePlayback(): Promise<void>;
   announceTurn(seq: number): Promise<void>;
   disconnect(): Promise<void>;
+  /** Devices of one kind, without asking for permission. */
+  listDevices(kind: DeviceKind): Promise<AudioDevice[]>;
+  activeDevice(kind: DeviceKind): string | undefined;
+  /** Rejects when the device cannot be used. */
+  switchDevice(kind: DeviceKind, id: string): Promise<void>;
   subscribe(listener: (event: AudioEvent) => void): () => void;
 }
 
@@ -71,6 +84,7 @@ function wire(kit: LiveKit, emit: (event: AudioEvent) => void): Room {
 function liveKitAudio(): DebateAudio {
   const listeners = new Set<(event: AudioEvent) => void>();
   let room: Room | undefined;
+  let kit: LiveKit | undefined;
   let publishing = false;
   let muted = false;
   let closed = false;
@@ -80,7 +94,7 @@ function liveKitAudio(): DebateAudio {
   return {
     async connect({ url, token, publishMic, startMuted, deviceId }) {
       muted = startMuted;
-      const kit = await import('livekit-client');
+      kit = await import('livekit-client');
       if (closed) return;
       room = wire(kit, emit);
       await room.connect(url, token);
@@ -105,6 +119,22 @@ function liveKitAudio(): DebateAudio {
       closed = true;
       await room?.disconnect(true);
       document.querySelectorAll('audio[data-remote]').forEach(element => element.remove());
+    },
+    async listDevices(kind) {
+      const { Room: LiveKitRoom } = kit ?? await import('livekit-client');
+      const devices = await LiveKitRoom.getLocalDevices(kind, false);
+      return devices.filter(device => device.deviceId).map(device => ({ id: device.deviceId, label: device.label }));
+    },
+    activeDevice(kind) {
+      // The live track knows the real input, even after LiveKit fell back to another one.
+      const track = kit && kind === 'audioinput'
+        ? room?.localParticipant.getTrackPublication(kit.Track.Source.Microphone)?.track?.mediaStreamTrack : undefined;
+      return track?.getSettings().deviceId ?? room?.getActiveDevice(kind);
+    },
+    async switchDevice(kind, id) {
+      if (!room || !(await room.switchActiveDevice(kind, id))) throw new Error(`Could not use ${kind} ${id}`);
+      // A mic LiveKit had to stop comes back on the new device, unless the debater muted it.
+      if (kind === 'audioinput' && publishing && !muted) await room.localParticipant.setMicrophoneEnabled(true, { deviceId: id });
     },
     subscribe(listener) {
       listeners.add(listener);

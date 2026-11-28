@@ -74,3 +74,12 @@ test('when LiveKit drops the call, Try again reconnects', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.__lk.connected)).toBe(2);
   await expect(page.getByText('Connected', { exact: true })).toBeVisible();
 });
+
+test('the real audio layer switches the mic through LiveKit', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Audio settings', exact: true }).click();
+  await page.getByLabel('Microphone', { exact: true }).selectOption({ label: 'USB headset' });
+  await expect.poll(() => page.evaluate(() => window.__lk.switched)).toContainEqual(['audioinput', 'mic-2']);
+});
