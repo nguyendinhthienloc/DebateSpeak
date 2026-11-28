@@ -96,7 +96,7 @@ export function AgreeView({ room, onChange, onLeft }: { room: RoomSnapshot; onCh
             </select>
           </div>}
           <div className="mic-meter" aria-hidden="true">
-            {Array.from({ length: segments }, (_, index) => <span key={index} className={index < Math.round(Math.min(1, mic.level * 4) * segments) || mic.status === 'passed' ? 'on' : undefined} />)}
+            {Array.from({ length: segments }, (_, index) => <span key={index} className={index < Math.round(Math.min(1, mic.level * 3) * segments) || mic.status === 'passed' ? 'on' : undefined} />)}
           </div>
           <p className="small" role="status">{micText[mic.status]}</p>
           {mic.status === 'blocked' && <p className="small field-error" role="alert">

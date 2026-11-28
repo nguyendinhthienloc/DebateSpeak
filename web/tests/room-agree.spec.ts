@@ -64,6 +64,25 @@ test('leaving says no audio was shared', async ({ page }) => {
   await expect(page.getByText('No audio was shared.', { exact: true })).toBeVisible();
 });
 
+test('background noise alone does not pass the mic test', async ({ page }) => {
+  test.setTimeout(20000);
+  await fakeMic(page, { signal: 0.09 });
+  await openReadyRoom(page);
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  await expect(page.getByText("We can't hear anything yet.", { exact: false })).toBeVisible({ timeout: 12000 });
+  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeDisabled();
+});
+
+test('a normal speaking voice still passes the mic test', async ({ page }) => {
+  await fakeMic(page, { signal: 0.16 });
+  await openReadyRoom(page);
+  await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
+  await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
+  await expect(page.getByText('We can hear you', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: "I'm ready", exact: true })).toBeEnabled();
+});
+
 test('a silent microphone says so and can be tested again', async ({ page }) => {
   test.setTimeout(20000);
   await fakeMic(page, { signal: false });
