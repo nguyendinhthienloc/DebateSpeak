@@ -1,7 +1,21 @@
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { canChooseSpeaker, type AudioDevice, type DebateAudio, type DeviceKind } from '../../rooms/debateAudio';
+import { useTrackLevel } from '../../rooms/useTrackLevel';
 
 const fallbackLabel: Record<DeviceKind, string> = { audioinput: 'Microphone', audiooutput: 'Speaker' };
+const segments = 10;
+
+/** The lobby's segment meter, fed by the live mic instead of a test. */
+function LiveMeter({ track, stopped }: { track?: MediaStreamTrack; stopped: boolean }) {
+  const { level, heard } = useTrackLevel(stopped ? undefined : track);
+  const lit = Math.round(Math.min(1, level * 3) * segments);
+  return <>
+    <div className="mic-meter" aria-hidden="true">
+      {Array.from({ length: segments }, (_, index) => <span key={index} className={index < lit ? 'on' : undefined} />)}
+    </div>
+    <p className="small" role="status">{stopped ? 'Microphone stopped' : heard ? 'We can hear you' : 'No sound yet'}</p>
+  </>;
+}
 
 function DevicePicker({ label, kind, devices, value, onPick }: {
   label: string; kind: DeviceKind; devices: AudioDevice[]; value?: string; onPick: (kind: DeviceKind, id: string) => void;
@@ -20,8 +34,9 @@ function DevicePicker({ label, kind, devices, value, onPick }: {
  * Audio settings on the live stage. Opening or closing it never touches the mic; only a pick does.
  * `onClose(true)` asks the stage to put focus back on the gear.
  */
-export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
-  audio: DebateAudio; publishMic: boolean; anchor: RefObject<HTMLElement>; onClose: (refocus: boolean) => void; children?: ReactNode;
+export function AudioPanel({ audio, publishMic, stopped, anchor, onClose, children }: {
+  audio: DebateAudio; publishMic: boolean; stopped: boolean; anchor: RefObject<HTMLElement>;
+  onClose: (refocus: boolean) => void; children?: ReactNode;
 }) {
   const heading = useId();
   const panel = useRef<HTMLElement>(null);
@@ -30,6 +45,7 @@ export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
   const [outputs, setOutputs] = useState<AudioDevice[]>([]);
   const [active, setActive] = useState<Partial<Record<DeviceKind, string>>>({});
   const [failed, setFailed] = useState(false);
+  const [track, setTrack] = useState<MediaStreamTrack>();
 
   const load = useCallback(async () => {
     const [mics, speakers] = await Promise.all([
@@ -39,6 +55,7 @@ export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
     setInputs(mics);
     setOutputs(speakers);
     setActive({ audioinput: audio.activeDevice('audioinput'), audiooutput: audio.activeDevice('audiooutput') });
+    if (publishMic) setTrack(audio.micTrack());
   }, [audio, publishMic, speaker]);
 
   useEffect(() => {
@@ -46,6 +63,8 @@ export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
     navigator.mediaDevices?.addEventListener?.('devicechange', load);
     return () => navigator.mediaDevices?.removeEventListener?.('devicechange', load);
   }, [load]);
+  // A stop, a restart or a new device can replace the live track.
+  useEffect(() => { if (publishMic) setTrack(audio.micTrack()); }, [audio, publishMic, stopped]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(true); };
@@ -62,7 +81,10 @@ export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
     setFailed(false);
     setActive(current => ({ ...current, [kind]: id }));
     audio.switchDevice(kind, id).then(
-      () => setActive(current => ({ ...current, [kind]: audio.activeDevice(kind) ?? id })),
+      () => {
+        setActive(current => ({ ...current, [kind]: audio.activeDevice(kind) ?? id }));
+        if (kind === 'audioinput') setTrack(audio.micTrack());
+      },
       () => { setFailed(true); setActive(current => ({ ...current, [kind]: audio.activeDevice(kind) })); },
     );
   }
@@ -73,6 +95,7 @@ export function AudioPanel({ audio, publishMic, anchor, onClose, children }: {
       <button type="button" className="type-close" onClick={() => onClose(true)}>Close</button>
     </div>
     {publishMic && <DevicePicker label="Microphone" kind="audioinput" devices={inputs} value={active.audioinput} onPick={pick} />}
+    {publishMic && <LiveMeter track={track} stopped={stopped} />}
     {speaker && <DevicePicker label="Speaker" kind="audiooutput" devices={outputs} value={active.audiooutput} onPick={pick} />}
     {children}
     {failed && <p className="small field-error" role="alert">That device could not be used. Pick another one.</p>}

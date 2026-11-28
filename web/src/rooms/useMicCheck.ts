@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 export type MicStatus = 'idle' | 'requesting' | 'listening' | 'passed' | 'blocked' | 'silent' | 'missing';
 
 /** RMS a normal speaking voice clears and background noise does not. */
-const threshold = 0.08;
+export const speechThreshold = 0.08;
 /** The same processing the debate uses (debateAudio.ts), so the test hears what the partner will. */
 const processing = { echoCancellation: true, noiseSuppression: true, autoGainControl: true };
 const needed = 1000;
@@ -74,7 +74,7 @@ export function useMicCheck() {
       analyser.getFloatTimeDomainData(samples);
       const rms = Math.sqrt(samples.reduce((sum, value) => sum + value * value, 0) / samples.length);
       const value = Math.min(1, rms);
-      if (value > threshold) heard += now - last;
+      if (value > speechThreshold) heard += now - last;
       last = now;
       setLevel(value);
       if (heard >= needed) { release(); setLevel(0); setStatus('passed'); return; }

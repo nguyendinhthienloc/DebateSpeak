@@ -267,7 +267,8 @@ export function LiveStage({ room, onChange, rejoined, deviceId }: {
             aria-controls="audio-panel" disabled={!started} onClick={() => setAudioOpen(open => !open)}><Settings size={20} aria-hidden="true" /></button>
           <button ref={endButton} type="button" className="action stage-danger" onClick={() => setConfirming(true)}>End debate</button>
         </div>}
-      {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} anchor={gear} onClose={closeAudio} />}
+      {audioOpen && settingsAudio && <AudioPanel audio={settingsAudio} publishMic={publishMic} stopped={micStopped}
+        anchor={gear} onClose={closeAudio} />}
     </div>
    </div>
     {panelOpen && <TypePanel turns={typed.turns} participants={room.participants} meId={me?.user_id} send={typed.send}

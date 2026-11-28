@@ -119,3 +119,36 @@ test('a stopped mic with another mic available shows only the settings alert', a
   await expect(stoppedAlert(page)).toBeVisible();
   await expect(noMicNotice(page)).toHaveCount(0);
 });
+
+test('the meter hears the live mic', async ({ page }) => {
+  await fakeMic(page, { signal: true });
+  await openLiveRoom(page);
+  await page.evaluate(() => { window.__audio.micTone = 0.5; });
+  await gear(page).click();
+  await expect(panel(page).getByText('We can hear you', { exact: true })).toBeVisible();
+  expect(await panel(page).locator('.mic-meter span.on').count()).toBeGreaterThan(0);
+  expect(await page.evaluate(() => window.__mic.requests)).toBe(0);
+});
+
+test('the meter says when there is no sound', async ({ page }) => {
+  await openLiveRoom(page);
+  await gear(page).click();
+  await expect(panel(page).getByText('No sound yet', { exact: true })).toBeVisible();
+});
+
+test('the meter says when the mic stopped', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => window.__audio.emit({ type: 'mic', state: 'stopped' }));
+  await gear(page).click();
+  await expect(panel(page).getByText('Microphone stopped', { exact: true })).toBeVisible();
+});
+
+test('closing audio settings leaves the live mic running', async ({ page }) => {
+  await openLiveRoom(page);
+  await page.evaluate(() => { window.__audio.micTone = 0.5; });
+  await gear(page).click();
+  await expect(panel(page).getByText('We can hear you', { exact: true })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(panel(page)).toHaveCount(0);
+  expect(await page.evaluate(() => window.__audio.track?.readyState)).toBe('live');
+});

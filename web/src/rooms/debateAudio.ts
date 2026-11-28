@@ -30,6 +30,8 @@ export interface DebateAudio {
   activeDevice(kind: DeviceKind): string | undefined;
   /** Rejects when the device cannot be used. */
   switchDevice(kind: DeviceKind, id: string): Promise<void>;
+  /** The published microphone track, for a level meter. Never stop it. */
+  micTrack(): MediaStreamTrack | undefined;
   subscribe(listener: (event: AudioEvent) => void): () => void;
 }
 
@@ -100,6 +102,7 @@ function liveKitAudio(): DebateAudio {
   let closed = false;
   // After our own disconnect, LiveKit's events are not news.
   const emit = (event: AudioEvent) => { if (!closed) listeners.forEach(listener => listener(event)); };
+  const micTrack = () => (kit ? room?.localParticipant.getTrackPublication(kit.Track.Source.Microphone)?.track?.mediaStreamTrack : undefined);
 
   return {
     async connect({ url, token, publishMic, startMuted, deviceId }) {
@@ -135,10 +138,10 @@ function liveKitAudio(): DebateAudio {
       const devices = await LiveKitRoom.getLocalDevices(kind, false);
       return devices.filter(device => device.deviceId).map(device => ({ id: device.deviceId, label: device.label }));
     },
+    micTrack,
     activeDevice(kind) {
       // The live track knows the real input, even after LiveKit fell back to another one.
-      const track = kit && kind === 'audioinput'
-        ? room?.localParticipant.getTrackPublication(kit.Track.Source.Microphone)?.track?.mediaStreamTrack : undefined;
+      const track = kind === 'audioinput' ? micTrack() : undefined;
       return track?.getSettings().deviceId ?? room?.getActiveDevice(kind);
     },
     async switchDevice(kind, id) {
