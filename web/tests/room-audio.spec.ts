@@ -115,3 +115,16 @@ test('the partner comes back at the chosen volume', async ({ page }) => {
   });
   await expect.poll(() => page.evaluate(() => window.__lk.volumes)).toContainEqual(['sam', 0.4]);
 });
+
+test('a mic brought back by Unmute clears the stopped alert', async ({ page }) => {
+  await installFakeLiveKit(page);
+  await openLiveRoom(page, { liveKit: true });
+  await expect(page.getByText('Connected', { exact: true })).toBeVisible();
+  await page.evaluate(() => window.__lk.rooms[0].emit('MediaDevicesError', new Error('device lost'), 'audioinput'));
+  const alert = page.getByRole('alert').filter({ hasText: 'Your microphone stopped.' });
+  await expect(alert).toBeVisible();
+  await page.getByRole('button', { name: 'Unmute', exact: true }).click();
+  await expect(alert).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Mute', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => window.__lk.mic)).toBe(true);
+});

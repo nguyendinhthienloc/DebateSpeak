@@ -124,7 +124,10 @@ function liveKitAudio(): DebateAudio {
     },
     async setMuted(next) {
       muted = next;
-      if (room && publishing) await room.localParticipant.setMicrophoneEnabled(!next);
+      if (!room || !publishing) return;
+      await room.localParticipant.setMicrophoneEnabled(!next);
+      // A fresh track is published, not unmuted, so LiveKit sends no TrackUnmuted for it: say it ourselves.
+      if (!next) emit({ type: 'mic', state: 'live' });
     },
     async resumePlayback() {
       await room?.startAudio();
@@ -155,7 +158,10 @@ function liveKitAudio(): DebateAudio {
     async switchDevice(kind, id) {
       if (!room || !(await room.switchActiveDevice(kind, id))) throw new Error(`Could not use ${kind} ${id}`);
       // A mic LiveKit had to stop comes back on the new device, unless the debater muted it.
-      if (kind === 'audioinput' && publishing && !muted) await room.localParticipant.setMicrophoneEnabled(true, { deviceId: id });
+      if (kind === 'audioinput' && publishing && !muted) {
+        await room.localParticipant.setMicrophoneEnabled(true, { deviceId: id });
+        emit({ type: 'mic', state: 'live' });
+      }
     },
     subscribe(listener) {
       listeners.add(listener);
