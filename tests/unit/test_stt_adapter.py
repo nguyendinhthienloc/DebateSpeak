@@ -1,11 +1,10 @@
 import asyncio
-from pathlib import Path
 import wave
+from pathlib import Path
 
 import pytest
 from app.adapters.stt import (
     LocalMockSTTAdapter,
-    LocalMockSTTStream,
     STTAdapter,
     STTEvent,
     STTStream,
@@ -14,7 +13,6 @@ from app.adapters.stt import (
     transcribe_wav_file,
 )
 from pydantic import ValidationError
-
 
 SAMPLE_WAV_PATH = Path("tests/fixtures/sample_debate.wav")
 
@@ -33,7 +31,9 @@ def test_word_timing_zero_duration_allowed():
 
 
 def test_word_timing_rejects_inverted_duration():
-    with pytest.raises(ValidationError, match="end_ms must be greater than or equal to start_ms"):
+    with pytest.raises(
+        ValidationError, match="end_ms must be greater than or equal to start_ms"
+    ):
         WordTiming(word="invalid", start_ms=500, end_ms=400, confidence=0.9)
 
 
@@ -57,7 +57,9 @@ def test_word_timing_rejects_out_of_range_confidence(confidence):
 
 def test_word_timing_rejects_extra_fields():
     with pytest.raises(ValidationError):
-        WordTiming(word="test", start_ms=0, end_ms=100, confidence=0.9, extra="disallowed")
+        WordTiming(
+            word="test", start_ms=0, end_ms=100, confidence=0.9, extra="disallowed"
+        )
 
 
 def test_stt_event_interim_hypothesis():
@@ -97,7 +99,9 @@ def test_stt_adapter_and_stream_satisfy_protocols():
 
 def test_stt_stream_audio_and_events():
     async def run():
-        adapter = LocalMockSTTAdapter(mock_transcript="Universities should offer four day weeks")
+        adapter = LocalMockSTTAdapter(
+            mock_transcript="Universities should offer four day weeks"
+        )
         stream = await adapter.open_stream(language="en")
 
         pcm_chunk = b"\x00\x00" * 1600  # 100ms of 16kHz 16-bit silence
@@ -126,7 +130,9 @@ def test_stt_stream_closed_rejects_further_audio():
         adapter = LocalMockSTTAdapter()
         stream = await adapter.open_stream()
         await stream.close()
-        with pytest.raises(RuntimeError, match="Cannot send audio to a closed STTStream"):
+        with pytest.raises(
+            RuntimeError, match="Cannot send audio to a closed STTStream"
+        ):
             await stream.send_audio(b"\x00\x00" * 100)
 
     asyncio.run(run())
