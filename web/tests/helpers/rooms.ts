@@ -89,8 +89,11 @@ declare global {
   interface Window { __mic: { requests: number; stopped: number } }
 }
 
-/** Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`. */
-export async function fakeMic(page: Page, options: { signal: boolean; denied?: boolean }) {
+/**
+ * Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`.
+ * `signal: true` is a loud tone; a number sets the tone's peak volume (its level is about 0.7 times that).
+ */
+export async function fakeMic(page: Page, options: { signal: boolean | number; denied?: boolean }) {
   await page.addInitScript(({ signal, denied }) => {
     window.__mic = { requests: 0, stopped: 0 };
     const devices = navigator.mediaDevices;
@@ -103,7 +106,7 @@ export async function fakeMic(page: Page, options: { signal: boolean; denied?: b
       if (signal) {
         const tone = context.createOscillator();
         const gain = context.createGain();
-        gain.gain.value = 0.5;
+        gain.gain.value = typeof signal === 'number' ? signal : 0.5;
         tone.connect(gain).connect(output);
         tone.start();
       }

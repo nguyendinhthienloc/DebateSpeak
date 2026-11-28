@@ -364,11 +364,11 @@ Headings explain the task. Long names, email addresses and motions wrap rather t
 
 ## Layout
 
-The header bar spans the window; content grows to 1440px (`content-max`) inside the `gutter`. Wide screens gain a second column rather than longer lines: Home places the two doors and history on the left with the Ink topics pane on the right (one column under 1200px, doors stack under 900px); Profile places the form beside a raised links pane above 960px; Create Room uses a flexible setup column beside a 20–28rem preview. Under 760px, action bars stick to the bottom of the viewport above a Divider rule.
+The header bar spans the window; content grows to 1440px (`content-max`) inside the `gutter`. Wide screens gain a second column rather than longer lines: Home places the two doors and history on the left with the Ink topics pane on the right (one column under 1200px, doors stack under 900px); Profile places the form beside a raised links pane above 960px, the pair centred in the content column; Create Room uses a flexible setup column beside a 20–28rem preview. Under 760px, action bars stick to the bottom of the viewport above a Divider rule.
 
 The welcome page (`#/welcome`) is the exception to the content column: six full-height acts (`min-height: 100svh`) with content held to `content-max` by padding, and the act rail fixed at the right edge (hidden under 760px).
 
-The auth stage (sign in, register, account created, recovery) also leaves the content column: a full-height (`100svh`) Ink stage with its own top bar, one centred plate up to 36rem wide, and spare height split between the space above the plate and the floor so the podium sits low on tall screens. See Components.
+The auth stage (sign in, register, account created, recovery) also leaves the content column: a full-height (`100svh`) Ink stage with its own top bar, one centred plate up to 36rem wide, and spare height split between the space above the plate and the floor so the podium sits low on tall screens. On short viewports (860px tall or less, such as 1920 × 1080 at 125% scaling, about 730px), the top padding, plate padding, form gaps, lectern and floor tighten so every register step fits without a page scroll. See Components.
 
 Historical Figma geometry (510px/488px Create Room columns, 1102px and 390px reference frames, 32px desktop gutters, 368px sign-in column) is superseded by the values above and kept only as research context. Mobile references used a 390 × 844 viewport with one page scroll area; reflow at 320px remains a required check.
 
