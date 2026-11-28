@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { ActionLink, PageHeading } from './components/ui';
-import { clearSession, finishRestoring, hasSession, setExpiryHandler, setSession, useSession } from './auth/session';
+import { clearSession, finishRestoring, hasSession, setRefresher, setSession, useSession } from './auth/session';
 import { logout, refresh } from './auth/api';
 import type { TokenResponse, UserResponse } from './auth/contracts';
 import { ProfilePage, RegisterPage, SignInPage } from './pages/AccountPages';
@@ -32,6 +32,7 @@ export default function App() {
   const title = route?.label ?? (dynamic?.kind === 'join' ? 'Join a room' : dynamic?.kind === 'room' ? 'Room' : 'Page not found');
   const main = useRef<HTMLElement>(null);
   const [topicId, setTopicId] = useState<string>();
+  const [stage, setStage] = useState(false);
   const [registeredUser, setRegisteredUser] = useState<UserResponse>();
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [notice, setNotice] = useState<string>();
@@ -52,9 +53,9 @@ export default function App() {
 
   // Restore a session from the HttpOnly refresh cookie on load, and refresh on expiry.
   useEffect(() => {
-    setExpiryHandler(() => { refresh(new AbortController().signal).then(setSession, () => clearSession(true)); });
+    setRefresher(() => refresh(new AbortController().signal));
     restoreOnce();
-    return () => setExpiryHandler(undefined);
+    return () => setRefresher(undefined);
   }, []);
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export default function App() {
   }
 
   function page() {
-    if (dynamic?.kind === 'room') return <RequireSession title="Room"><RoomPage roomId={dynamic.roomId} /></RequireSession>;
+    if (dynamic?.kind === 'room') return <RequireSession title="Room"><RoomPage roomId={dynamic.roomId} onStage={setStage} /></RequireSession>;
     if (dynamic?.kind === 'join') return <RequireSession title="Home"><HomePage onPickTopic={pickTopic} /><JoinDialog code={dynamic.code} /></RequireSession>;
     switch (path) {
       case '/sign-in': return <SignInPage registered={registeredUser} expired={expired} notice={notice} onSignedIn={signedIn} />;
@@ -122,10 +123,10 @@ export default function App() {
     }
   }
 
-  const content = <main id="main" className={isWelcome ? 'welcome-main' : isAuth ? 'auth-main' : 'shell-inner'} ref={main} tabIndex={-1} key={path}>
+  const content = <main id="main" className={isWelcome ? 'welcome-main' : isAuth ? 'auth-main' : stage ? 'stage-main' : 'shell-inner'} ref={main} tabIndex={-1} key={path}>
     {page()}
   </main>;
-  const bare = isWelcome || isAuth;
+  const bare = isWelcome || isAuth || stage;
 
   return <div className="app-shell">
     <a className="skip-link" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>

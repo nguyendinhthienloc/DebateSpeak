@@ -81,3 +81,20 @@ export interface RoomPreview {
 export function isRoomPreview(value: unknown): value is RoomPreview {
   return isRecord(value) && typeof value.motion === 'string' && typeof value.creator_name === 'string';
 }
+
+export interface MediaToken { token: string; url: string }
+
+export function isMediaToken(value: unknown): value is MediaToken {
+  return isRecord(value) && typeof value.token === 'string' && typeof value.url === 'string';
+}
+
+/** A typed debate turn. Turns are debate content, saved in the transcript. */
+export interface TypedTurn { seq: number; user_id: string; text: string; at_ms: number }
+
+export function isTypedTurn(value: unknown): value is TypedTurn {
+  return isRecord(value) && Number.isInteger(value.seq) && typeof value.user_id === 'string' && typeof value.text === 'string';
+}
+
+export function isTurnList(value: unknown): value is { turns: TypedTurn[] } {
+  return isRecord(value) && Array.isArray(value.turns) && value.turns.every(isTypedTurn);
+}

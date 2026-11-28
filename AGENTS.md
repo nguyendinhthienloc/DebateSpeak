@@ -15,7 +15,8 @@ Neither the historical Foundations nor Build 1 flow Figma link is a prerequisite
 or an acceptance gate. Open, read, change or sync Figma only when the user
 explicitly requests it. Preserve the existing Cream & Yellow identity.
 The human API handoff lives at `web/API_CONTRACT.md`; keep endpoint paths and
-response examples consistent with `web/src/auth/`. Update specs before code.
+response examples consistent with `web/src/rooms/`. The built auth contract is
+in `docs/api/`. Update specs before code.
 
 1. **NO HARDCODED ABSOLUTE PATHS:**
    - Never write machine-specific or OS-specific absolute paths such as:

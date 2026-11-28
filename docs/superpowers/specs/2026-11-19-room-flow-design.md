@@ -124,6 +124,8 @@ Both seats show names and sides. Two cards sit side by side:
 1. **Agree to this debate:** a plain list of what happens, then an unticked checkbox.
 2. **Check your microphone:** device picker, explicit Test button, level meter and
    "We can hear you". The test stays in the browser and the mic is released afterwards.
+   It uses the same noise suppression as the debate, and passes after about one second of
+   sound at a normal speaking level (RMS above 0.08); background noise alone does not pass.
    A quiet **Type instead** action skips the mic request and the test for this debate.
 
 **I'm ready** unlocks when the box is ticked and either the mic test has passed or

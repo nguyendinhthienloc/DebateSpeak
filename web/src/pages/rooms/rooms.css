@@ -97,3 +97,5 @@
 @media (max-width: 760px) {
   .agree-cards { grid-template-columns: minmax(0, 1fr); }
 }
+
+.agree-card .agree-switch { align-self: flex-start; width: auto; padding-inline: 0; }

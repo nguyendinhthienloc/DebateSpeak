@@ -1386,7 +1386,7 @@ These frontend contracts do not establish server security or email delivery.
 
 The existing frontend is now recorded retrospectively in
 [specs/001-frontend-baseline](../../specs/001-frontend-baseline/spec.md), with
-plan, tasks and a [short human-readable API handoff](../../web/API_CONTRACT.md).
+plan, tasks and a [short human-readable API handoff](../api/fg01-auth-contract.md).
 Earlier frontend work did not follow Spec Kit feature artifacts. Future changes
 update these artifacts before code. Backend integration remains unfinished;
 this documentation does not change product behavior or complete FG-01.
@@ -1412,7 +1412,7 @@ The frontend now calls the remaining FG-01 endpoints. The Spring Boot service
 tables `users`, `auth_sessions`, `auth_codes` and `account_suspensions`
 (`specs/002-fg01-accounts`), verified end to end on 2026-11-14 (JDK 17, PostgreSQL 16, real browser). Deviations: BCrypt instead of Argon2id; schema by
 Hibernate, not migrations.
-Paths are under the API prefix; the human handoff is `web/API_INTEGRATION.md`.
+Paths are under the API prefix; the human handoff is `docs/api/fg01-accounts-guide.md`.
 This reconciles §14: account deletion uses `DELETE /users/me` (G1 spelling), not `/me`.
 
 | Method & path | Auth | Request | Success |
@@ -1443,3 +1443,17 @@ Frontend rules: access tokens stay in memory and travel only in `Authorization`;
 reload calls `/auth/refresh` once; a 401 on any Bearer call ends the session.
 Destructive actions require explicit confirmation. Admin links are hidden for
 non-admins, but the server is the only authority on role.
+
+---
+
+## 22. SCRUM-64: Audio & Speech AI Pipeline and Deterministic Attribution (PA4 Build 3)
+*Performed: Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead. Reviewed: Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead — pending. Edited: Nguyễn Anh Khoa (24125058).*
+
+### 22.1 Scope & Operational Invariants
+Implement the live WebRTC audio track consumption, streaming STT pipeline, and deterministic speaker attribution for DebateSpeak AI (FG-04 and FG-05, PA4 Build 3).
+1. **Deterministic Speaker Attribution (AGENTS.md §4.3):** WebRTC audio routes on independent participant tracks via LiveKit Cloud (`SpeakerAudioTrack`). Every emitted `SpeakerTranscriptSegment` strictly binds the participant's `speaker_id`, `speaker_stance` (`AFFIRMATIVE`, `NEGATIVE`, or `MODERATOR`), and `track_sid`. Diarization clustering is never used server-side, ensuring >= 98% deterministic attribution accuracy without speaker bleed or cross-talk contamination.
+2. **Streaming Recognition Protocol:** Connects to the provider-agnostic `STTAdapter` async protocol (`app.adapters.stt`). Chunks audio in 100ms PCM16 buffers (3200 bytes at 16kHz mono, 16-bit linear PCM). Emits both interim hypothesis segments (`is_final=False`) for low-latency live captions and finalized segments (`is_final=True`) with word-level confidence and monotonic start/end offsets (`WordTiming`).
+3. **Graceful Failover / Fallback:** If the primary cloud STT adapter raises a connection error or stream drop, the pipeline transparently fails over to `fallback_adapter` (`LocalMockSTTAdapter`) without raising unhandled exceptions or disconnecting the active debate room.
+4. **Multi-Track Room Orchestration (`AudioPipelineManager`):** Manages isolated speaker sessions per debate room (`register_speaker_track`, `get_track`, `close_all`), enabling clean concurrent audio processing without cross-session leakage.
+5. **Zero Absolute/Hardcoded Paths Policy (AGENTS.md §1):** Fully portable across Windows, macOS, Linux, and CI runners using relative and standard dynamic path helpers.
+

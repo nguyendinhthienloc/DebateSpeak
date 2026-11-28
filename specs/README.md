@@ -4,13 +4,17 @@
 account forms and room/profile previews.
 [002 — FG-01 accounts end to end](002-fg01-accounts/spec.md) adds the Spring Boot
 API and PostgreSQL half (PA3 Part E). Start with its
-[short backend handoff](../web/API_CONTRACT.md) to connect auth.
+[short backend handoff](../docs/api/fg01-auth-contract.md) to connect auth.
 [003 — UI refresh](003-ui-refresh/spec.md) adds display type, motion, two-step
 registration, shorter copy and a main menu (SCRUM-53).
 [004 — Welcome page and contrast system](004-welcome-contrast/spec.md) adds the
 signed-out landing page and replaces the low-contrast surface rules.
 [005 — Sign-in and sign-up on the stage](005-auth-stage/spec.md) remakes the
 auth flow in the welcome page's stage and adds a three-step registration.
+[006 — FG-03 Room & Live Session Management](006-fg03-rooms/spec.md) adds the
+Spring Boot Room lifecycle state machine, 8-character invite code, and mutual readiness lobby (PA4 Increment 2).
+[007 — FG-04 Real-Time Audio Communication](007-fg04-audio/spec.md) adds the
+LiveKit WebRTC audio integration, token provisioning, dual-consent safety, and deterministic track attribution (PA4 Increment 2).
 
 Spec Kit was already installed in `.specify/`; frontend adoption starts with this
 retrospective baseline on 2026-11-14. Earlier `docs/superpowers/` documents remain

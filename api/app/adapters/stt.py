@@ -1,9 +1,9 @@
 """SCRUM-46 contract and local streaming STT adapter spike."""
 
+import wave
 from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Protocol, runtime_checkable
-import wave
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 

@@ -1,4 +1,5 @@
-import type { Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
+import { installFakeAudio } from './fakeAudio';
 
 export const roomId = '6f1c2a9e-4b7d-4c8e-9a1f-2d3e4f5a6b7c';
 export const linhId = 'd817b684-08e9-49c0-806a-a045fb7f060c';
@@ -88,8 +89,11 @@ declare global {
   interface Window { __mic: { requests: number; stopped: number } }
 }
 
-/** Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`. */
-export async function fakeMic(page: Page, options: { signal: boolean; denied?: boolean }) {
+/**
+ * Replaces the microphone with a tone (or silence, or a refusal) and counts requests and stopped tracks on `window.__mic`.
+ * `signal: true` is a loud tone; a number sets the tone's peak volume (its level is about 0.7 times that).
+ */
+export async function fakeMic(page: Page, options: { signal: boolean | number; denied?: boolean }) {
   await page.addInitScript(({ signal, denied }) => {
     window.__mic = { requests: 0, stopped: 0 };
     const devices = navigator.mediaDevices;
@@ -102,7 +106,7 @@ export async function fakeMic(page: Page, options: { signal: boolean; denied?: b
       if (signal) {
         const tone = context.createOscillator();
         const gain = context.createGain();
-        gain.gain.value = 0.5;
+        gain.gain.value = typeof signal === 'number' ? signal : 0.5;
         tone.connect(gain).connect(output);
         tone.start();
       }
@@ -144,4 +148,73 @@ export async function passAgree(page: Page) {
   await page.getByRole('checkbox', { name: 'I agree for this debate' }).check();
   await page.getByRole('button', { name: 'Test microphone', exact: true }).click();
   await page.getByText('We can hear you', { exact: true }).waitFor();
+}
+
+interface LiveOptions {
+  startsInSeconds?: number; secondsLeft?: number; format?: 'FREE_FLOW' | 'TIMED_TURNS';
+  partnerName?: string; myInput?: 'VOICE' | 'TYPE'; partnerInput?: 'VOICE' | 'TYPE'; turnsFail?: boolean;
+  /** Run the real audio layer against a fake livekit-client module (install it first with installFakeLiveKit). */
+  liveKit?: boolean;
+}
+
+type Turn = { seq: number; user_id: string; text: string; at_ms: number };
+
+/**
+ * Signs in as Linh with fake audio, opens the room in READY, then switches it to LIVE so the page sees the debate begin.
+ * The start time is fixed when LIVE is first served, and every response carries the current server time.
+ */
+export async function openLiveRoom(page: Page, options: LiveOptions = {}) {
+  if (!options.liveKit) await installFakeAudio(page);
+  await signInAs(page, 'Linh');
+  const timed = options.format === 'TIMED_TURNS';
+  const duration = timed ? 390 : 600;
+  const seats = [
+    { ...linhSeat, ready: true, input: options.myInput ?? 'VOICE' },
+    { ...samSeat, display_name: options.partnerName ?? 'Sam', ready: true, input: options.partnerInput ?? 'VOICE' },
+  ];
+  let current: Record<string, unknown> = snapshot({ status: 'READY', format: options.format ?? 'FREE_FLOW', duration_seconds: duration, participants: seats });
+  let ended = 0;
+  let endReason: string | undefined;
+  const sent: unknown[] = [];
+  const turns: Turn[] = [];
+  await page.route(url => url.pathname.endsWith(`/api/v1/rooms/${roomId}/turns`), route => {
+    if (route.request().method() === 'POST') {
+      if (options.turnsFail) return route.fulfill({ status: 500, json: {} });
+      const body = route.request().postDataJSON();
+      sent.push(body);
+      const turn = { seq: turns.length + 1, user_id: linhId, text: body.text, at_ms: 1000 };
+      turns.push(turn);
+      return route.fulfill({ status: 201, json: turn });
+    }
+    const after = Number(new URL(route.request().url()).searchParams.get('after') ?? 0);
+    return route.fulfill({ status: 200, json: { turns: turns.filter(turn => turn.seq > after) } });
+  });
+  await page.route(`**/api/v1/rooms/${roomId}`, route => {
+    if (current.status === 'LIVE' && current.started_at === null) {
+      const startsIn = options.startsInSeconds !== undefined ? options.startsInSeconds : -(duration - (options.secondsLeft ?? duration - 5));
+      current = { ...current, started_at: new Date(Date.now() + startsIn * 1000).toISOString() };
+    }
+    return route.fulfill({ status: 200, json: { ...current, server_now: new Date().toISOString() } });
+  });
+  await page.route(`**/api/v1/rooms/${roomId}/token`, route => route.fulfill({ status: 200, json: { token: 'media-token', url: 'wss://livekit.test' } }));
+  await page.route(`**/api/v1/rooms/${roomId}/end`, route => {
+    ended += 1;
+    endReason = route.request().postDataJSON()?.reason;
+    current = { ...current, status: 'ENDED', end_reason: endReason, ended_by: endReason === 'MANUAL' ? linhId : null, ended_at: new Date().toISOString() };
+    return route.fulfill({ status: 200, json: { ...current, server_now: new Date().toISOString() } });
+  });
+  await page.goto(`/#/rooms/${roomId}`);
+  await expect(page.getByTestId('room-view')).toHaveAttribute('data-status', 'READY');
+  current = { ...current, status: 'LIVE', started_at: null };
+  await expect(page.getByTestId('room-view')).toHaveAttribute('data-status', 'LIVE', { timeout: 5000 });
+  if (options.startsInSeconds === undefined && !options.liveKit) {
+    await expect.poll(() => page.evaluate(() => window.__audio.connects.length), { timeout: 5000 }).toBeGreaterThan(0);
+  }
+  return {
+    set(room: Record<string, unknown>) { current = { ...room }; },
+    ended: () => ended,
+    endReason: () => endReason,
+    turns: () => sent,
+    addTurn(turn: Turn) { turns.push(turn); },
+  };
 }

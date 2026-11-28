@@ -52,8 +52,8 @@ reused code, refresh-token replay, wrong delete password (403), non-admin on
 ## Requirements
 
 - FR-001: Endpoints, request/response shapes and status codes follow
-  [web/API_CONTRACT.md](../../web/API_CONTRACT.md) and
-  [web/API_INTEGRATION.md](../../web/API_INTEGRATION.md) exactly.
+  [docs/api/fg01-auth-contract.md](../../docs/api/fg01-auth-contract.md) and
+  [docs/api/fg01-accounts-guide.md](../../docs/api/fg01-accounts-guide.md) exactly.
 - FR-002: Users, sessions, codes and suspensions persist in PostgreSQL 16.
 - FR-003: Passwords and codes are stored only as hashes.
 - FR-004: Access JWTs are short-lived and sent only as `Authorization: Bearer`;

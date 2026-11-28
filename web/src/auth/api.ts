@@ -110,7 +110,7 @@ async function request<T>(path: string, { method = 'POST', body, status, valid, 
   headers.Accept = 'application/json';
   headers['X-DebateSpeak-Client'] = 'web';
   if (auth) {
-    const token = getAccessToken();
+    const token = await getAccessToken();
     if (!token) throw new AuthApiError(sessionExpired);
     headers.Authorization = `Bearer ${token}`;
   }
