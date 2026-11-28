@@ -3,7 +3,10 @@
 Responsive frontend using the Cream & Yellow design system. Sign-up and
 sign-in are API-ready forms using the existing G1 contract. The Spring Boot API
 (`api/authify`, branch `backend-tai`) implements these endpoints. Profile, sign out, active sessions, account deletion and admin
-suspension are API-ready too. Rooms, audio, transcription and AI remain previews.
+suspension are API-ready too. Rooms (create, invite, join, agree, the live debate
+stage with LiveKit audio, and wrap up) are built against the room API but wait for
+its backend; see [the room API contract](API_CONTRACT.md). Transcription
+and AI feedback are not built yet.
 
 ## Run
 
@@ -14,17 +17,15 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The default page is sign-in; use the page
-links or **Preview screen** selector at the bottom to explore every screen.
-**Create account** and **Sign in** submit to the configured API. Actions labeled
-**Preview** navigate to sample outcomes. Signed out, Profile is a labelled sample
-with saving disabled. Audio checks are disabled.
-Room setting selections live only in memory and reset on reload; lobby screens
-are sample previews, not the output of a room service.
+Open the local URL printed by Vite. The default page is the welcome page; use the
+page links or the **Preview screen** selector at the bottom (development only) to
+explore every screen. **Create account** and **Sign in** submit to the configured
+API. Signed out, Profile is a labelled sample with saving disabled. Room screens
+need a signed-in account and the room API.
 
 ## Connect the auth API
 
-Use the [short backend handoff](API_CONTRACT.md)
+Use the [auth contract](../docs/api/fg01-auth-contract.md)
 for all six endpoints, request/response examples, validation and errors.
 The [Spec Kit baseline](../specs/001-frontend-baseline/spec.md) records current
 scope; [tasks](../specs/001-frontend-baseline/tasks.md) distinguish completed
@@ -47,18 +48,15 @@ server rewrites. Browser back/forward, page titles and focus follow navigation.
 | `#/forgot-password` | Request a reset code |
 | `#/reset-password` | Set a new password with an email code |
 | `#/verify-email` | Verify email or request a code |
-| `#/rooms` | Room entry |
-| `#/rooms/new` | Setup summary and preview |
-| `#/rooms/new/settings` | Room settings |
+| `#/welcome` | Welcome |
+| `#/home` | Home: create, join with a code, topics |
+| `#/rooms/new` | Create a room |
+| `#/rooms/:id` | One room in every state: invite, agree, live debate, wrap up, closed |
+| `#/join/:code` | Invite dialog over Home |
 | `#/profile` | Profile (real when signed in, sample otherwise) |
 | `#/account/sessions` | Active sessions (signed in) |
 | `#/account/delete` | Delete account (signed in) |
 | `#/admin/users` | Suspend or reactivate accounts (admins) |
-| `#/invite` | Invitation example |
-| `#/rooms/waiting` | Waiting lobby example |
-| `#/rooms/ready` | Ready lobby example |
-| `#/rooms/full` | Full-room recovery example |
-| `#/rooms/expired` | Expired-room recovery example |
 
 Unknown routes show a recovery page. Shared controls live in `src/components/`,
 page families in `src/pages/`, navigation in `src/routes.ts`, and visual tokens in
@@ -76,8 +74,9 @@ npm run test:e2e
 Browser checks intercept only the external HTTP boundary and exercise real forms,
 request bodies/options, loading/errors, cancellation, session expiry and absence
 of stored credentials. Existing checks cover history/reload, unknown routes,
-keyboard controls and all routes at 320/390/1102/1440px. Room previews make no
-service/media requests. These tests verify the frontend contract, not database
+keyboard controls and all routes at 320/390/1102/1440px. Room tests mock the room
+API, the microphone and LiveKit; no microphone is requested before the learner clicks Test.
+These tests verify the frontend contract, not database
 persistence, password hashing, JWT security or complete FG-01 acceptance.
 See [the approved auth scope](../docs/superpowers/specs/2026-11-12-auth-frontend-design.md).
 
@@ -87,16 +86,21 @@ Frontend development is independent of both historical Figma links. Implement
 from `src/`, [DESIGN.md](../DESIGN.md) and [Spec Kit](../specs/README.md), then
 verify in the browser. Update Figma only when explicitly requested.
 
-Login, registration and recovery are FG-01. FG-03 room/session support remains
-previews: create/join APIs, persistence, participant authorization, server-side
-state transitions, dual consent, timing, reconnection and moderation are missing.
+Login, registration and recovery are FG-01. FG-03 room screens follow
+[the room flow spec](../docs/superpowers/specs/2026-11-19-room-flow-design.md).
 FG-01 account management is frontend-ready; see "Not yet available" below and
-[the backend integration guide](API_INTEGRATION.md).
+[the accounts guide](../docs/api/fg01-accounts-guide.md).
 
 After email verification, Change password opens the password-reset request.
 Profile has the same entry point. Request a fresh reset code, enter it with the
 new password, then sign in. A verification code cannot substitute for a reset
 code. Real email/password changes require the documented backend endpoints.
+
+## Waiting on the backend
+
+The backend has every auth and account endpoint. The room endpoints are not
+built yet; [API_CONTRACT.md](API_CONTRACT.md) lists each one with its request,
+response and rules.
 
 ## Not yet available (FG-01, 2026-11-14)
 

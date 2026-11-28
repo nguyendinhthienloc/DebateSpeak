@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { ActionLink } from '../components/ui';
+import { StageBar } from '../components/Headers';
 import { useSession } from '../auth/session';
 import './welcome.css';
 
@@ -79,15 +80,14 @@ export function WelcomePage() {
       <ActionLink to="/sign-in" variant="secondary" className="w-btn w-btn-ghost">Sign in</ActionLink></>;
 
   return <div className="welcome">
-    <nav className="w-nav" aria-label="Account">
-      <span className="w-brand">DebateSpeak AI</span>
-      <div className="w-nav-actions">
+    <StageBar>
+      <nav className="w-nav-actions" aria-label="Account">
         {session
           ? <ActionLink to="/home" className="w-btn w-btn-yellow">Open DebateSpeak</ActionLink>
           : <><ActionLink to="/sign-in" variant="secondary" className="w-btn w-btn-ghost">Sign in</ActionLink>
             <ActionLink to="/register" className="w-btn w-btn-yellow">Create account</ActionLink></>}
-      </div>
-    </nav>
+      </nav>
+    </StageBar>
 
     <nav className="w-progress" aria-label="Acts">
       {acts.map((name, index) => <a key={name} href={`#act-${index + 1}`} aria-current={active === index ? 'step' : undefined}
@@ -170,7 +170,6 @@ export function WelcomePage() {
       <p>{side ? `You argued ${side}. Bring one partner to argue ${theirs}.` : 'Bring one partner. Any English level from A2 to C1.'}</p>
       <div className="w-close-actions">
         {accountActions}
-        <ActionLink to="/rooms" variant="text" className="w-btn-text">Preview rooms</ActionLink>
       </div>
       <div className="w-podiums w-podiums-small" aria-hidden="true">
         <Podium side="FOR" mine={side} small />

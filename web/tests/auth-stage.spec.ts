@@ -14,7 +14,7 @@ test('auth screens use their own stage, without the app header or dev bar', asyn
   for (const route of ['/sign-in', '/register', '/account-created', '/forgot-password']) {
     await page.goto(`/#${route}`);
     await expect(page.locator('.auth-stage')).toBeVisible();
-    await expect(page.locator('.app-header')).toHaveCount(0);
+    await expect(page.locator('.app-bar')).toHaveCount(0);
     await expect(page.getByLabel('Preview screen')).toHaveCount(0);
     await expect(page.getByRole('link', { name: 'DebateSpeak AI', exact: true })).toHaveAttribute('href', '#/welcome');
   }
@@ -45,7 +45,7 @@ test('a new account is welcomed by name on the sign-in lectern', async ({ page }
   await expect(page.getByText('Account created', { exact: true })).toBeVisible();
   await expect(page.locator('.auth-lectern')).toContainText('Welcome, Linh');
   await expect(page.locator('.auth-lectern')).toContainText('English level B2');
-  await expect(page.locator('.auth-foot').getByRole('link', { name: 'Preview rooms', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Preview rooms' })).toHaveCount(0);
 });
 
 test('the level is optional and says what happens without one', async ({ page }) => {

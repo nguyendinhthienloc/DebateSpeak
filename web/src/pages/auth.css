@@ -10,14 +10,8 @@
   background: radial-gradient(ellipse 50% 55% at 50% 55%, rgb(255 208 0 / .3), rgb(255 208 0 / 0));
 }
 
-.auth-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; padding: 16px var(--gutter); }
-.auth-brand {
-  color: var(--on-ink); font-family: var(--font-display); font-stretch: var(--stretch-display); font-size: 1.5rem;
-  font-weight: var(--weight-display); letter-spacing: -.01em; text-decoration: none; overflow-wrap: anywhere;
-}
 .auth-switch { display: flex; flex-wrap: wrap; align-items: center; column-gap: .25rem; color: rgb(255 255 255 / .84); font-size: var(--type-support); }
 .auth-stage .auth-switch .action-text { padding-inline: .5rem; color: var(--accent); }
-.auth-stage .auth-bar :focus-visible { outline-color: var(--accent); }
 
 .auth-main { display: flex; flex: 1; flex-direction: column; padding: 0; animation: none; }
 .auth-podium { --podium-pad: 16px; display: flex; flex: 1; flex-direction: column; align-items: center; padding: clamp(8px, 3vh, 40px) var(--podium-pad) 0; }
@@ -121,7 +115,6 @@
 .guide-result .guide-actions { width: 100%; }
 
 @media (max-width: 560px) {
-  .auth-bar { padding-inline: 16px; }
   .auth-switch-prompt { display: none; }
   .auth-stage .auth-plate { padding: 20px; }
   .auth-lectern { min-height: 5.5rem; padding-top: 1rem; }

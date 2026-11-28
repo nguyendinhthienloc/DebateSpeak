@@ -110,25 +110,25 @@ test('reduced motion preserves immediate control state without transitions', asy
   await expect(page.getByLabel('Password', { exact: true })).toHaveAttribute('type', 'text');
 });
 
-test('account and room navigation preserves keyboard skip, history and recovery', async ({ page }) => {
+test('account navigation preserves keyboard skip, history and recovery', async ({ page }) => {
   await page.goto('/#/sign-in');
   const skip = page.getByRole('link', { name: 'Skip to content', exact: true });
   await skip.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('main')).toBeFocused();
   await expect(page).toHaveURL(/#\/sign-in$/);
-  await page.getByRole('link', { name: 'Preview rooms', exact: true }).click();
+  await page.goto('/#/home');
   await page.getByRole('link', { name: 'Account', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your profile', exact: true })).toBeVisible();
   await page.goBack();
-  await expect(page).toHaveURL(/#\/rooms$/);
+  await expect(page).toHaveURL(/#\/home$/);
   await expect(page.locator('main')).toBeFocused();
   await page.goForward();
   await expect(page).toHaveTitle('Profile · DebateSpeak AI');
   for (const route of ['/rooms/expired', '/not-a-screen']) {
     await page.goto(`/#${route}`);
-    await page.getByRole('link', { name: 'Back to rooms', exact: true }).click();
-    await expect(page).toHaveURL(/#\/rooms$/);
-    await expect(page.getByRole('heading', { name: 'Find your practice room', exact: true })).toBeVisible();
+    await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+    await expect(page).toHaveURL(/#\/home$/);
+    await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();
   }
 });

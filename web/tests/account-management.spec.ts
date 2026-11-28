@@ -22,7 +22,7 @@ test('reload restores the session once, and sign out revokes it on the server', 
   const refreshes = await restoreAs(page);
   let logoutHeaders: Record<string, string> | undefined;
   await page.route('**/api/v1/auth/logout', route => { logoutHeaders = route.request().headers(); return route.fulfill({ status: 204 }); });
-  await page.goto('/#/rooms');
+  await page.goto('/#/home');
   await expect(page.getByText('Signed in as Linh', { exact: true })).toBeVisible();
   expect(refreshes()).toBe(1);
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
@@ -37,7 +37,7 @@ test('reload restores the session once, and sign out revokes it on the server', 
 test('sign out still clears the device when the server does not confirm', async ({ page }) => {
   await restoreAs(page);
   await page.route('**/api/v1/auth/logout', route => route.abort('failed'));
-  await page.goto('/#/rooms');
+  await page.goto('/#/home');
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
   await expect(page.getByText(/server did not confirm/)).toBeVisible();
   await expect(page.getByText('Signed in as Linh', { exact: true })).toHaveCount(0);

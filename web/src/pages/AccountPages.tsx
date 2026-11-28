@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
-import { ActionLink, BackToRooms, Choices, Field, Note, PageHeading, StepIndicator } from '../components/ui';
+import { ActionLink, Choices, Field, Note, PageHeading, StepIndicator } from '../components/ui';
 import type { FormEvent } from 'react';
 import { AuthApiError, getProfile, login, register, updateProfile } from '../auth/api';
 import { cefrLevels, type CefrLevel, type ProfileResponse, type TokenResponse, type UserResponse } from '../auth/contracts';
@@ -56,7 +56,7 @@ export function SignInPage({ registered, expired = false, notice, onSignedIn }: 
 
   // A new account's lectern keeps the name and level the visitor just watched fill in.
   return <Podium name={registered ? `Welcome, ${registered.display_name}` : 'Welcome back'}
-    detail={registered && `English level ${registered.cefr_level}`} foot={<ActionLink to="/rooms" variant="text">Preview rooms</ActionLink>}>
+    detail={registered && `English level ${registered.cefr_level}`}>
     <form ref={form} className="auth-plate account-page account-form" noValidate onSubmit={submit} aria-busy={pending}>
       <PageHeading title="Sign in" />
       {registered && <div role="status"><Note title="Account created" tone="success">Sign in with your email and password.</Note></div>}
@@ -169,7 +169,6 @@ function SampleProfile() {
     </div>
     <nav className="account-secondary" aria-label="Profile navigation">
       <ActionLink to="/forgot-password" variant="text">Change password</ActionLink>
-      <BackToRooms />
       <ActionLink to="/sign-in" variant="text">Back to sign in</ActionLink>
     </nav>
   </div>;

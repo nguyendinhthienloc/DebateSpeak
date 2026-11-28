@@ -47,7 +47,7 @@ api/authify/
 
 ## Endpoints
 
-All under `/api/v1`; full shapes in [web/API_INTEGRATION.md](../../web/API_INTEGRATION.md).
+All under `/api/v1`; full shapes in [docs/api/fg01-accounts-guide.md](../../docs/api/fg01-accounts-guide.md).
 `GET /health`; `POST /auth/{register,login,refresh,logout,forgot-password,resend-verification,verify-email,reset-password}`;
 `GET|PATCH|DELETE /users/me`; `GET /auth/sessions`; `DELETE /auth/sessions/{id}`;
 `GET /admin/users?email=`; `POST /admin/users/{id}/{suspend,reactivate}`.
