@@ -6,7 +6,7 @@ Retrospective adoption of Spec Kit; no new product behavior in this documentatio
 ## Summary
 
 Keep the existing frontend and map its account journeys and previews to a single
-Spec Kit baseline. Keep the backend developer handoff in [../../web/API_CONTRACT.md](../../web/API_CONTRACT.md).
+Spec Kit baseline. Keep the backend developer handoff in [../../docs/api/fg01-auth-contract.md](../../docs/api/fg01-auth-contract.md).
 Future feature work updates its specification and contract before code changes.
 
 Current revision: expose password reset from verification success and Profile,
@@ -21,7 +21,7 @@ adds Bearer auth for signed-in calls. On load the app calls `/auth/refresh`
 once; on token expiry it tries refresh before showing "session expired". New
 screens: active sessions, delete account and admin accounts. Profile uses
 `/users/me` when signed in and keeps its labelled sample otherwise. The backend
-handoff for these endpoints is `web/API_INTEGRATION.md`.
+handoff for these endpoints is `docs/api/fg01-accounts-guide.md`.
 
 ## Technical Context
 

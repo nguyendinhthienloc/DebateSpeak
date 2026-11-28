@@ -205,7 +205,7 @@ rendered browser checks. Keep Cream & Yellow, Inter, responsive layouts and
 accessible controls. Figma updates require an explicit user request; neither
 Foundations nor Build 1 flow is a dependency, approval gate or sync requirement.
 The older Figma details below are historical design research, not current
-implementation instructions. For account APIs use `web/API_CONTRACT.md`.
+implementation instructions. For account APIs use `docs/api/fg01-auth-contract.md`.
 Recovery pages reuse account geometry and expose Change password after email
 verification and from Profile. That action requests a separate password-reset
 code; verification alone never grants password-change authorization.
