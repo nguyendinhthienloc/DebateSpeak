@@ -4,7 +4,7 @@ Sprint 4 (PA4). Scope and rules: [../README.md](../README.md). Branch from `pa4`
 
 | Task | Jira | Branch | Due | Status |
 |---|---|---|---|---|
-| Part A: Revised Use-Case Model & Specifications (2nd submission) + `docs/pa4/Changes.md` | SCRUM-54 | `feature/SCRUM-54-revised-use-cases` | TBD | Ready for review (local, 2026-11-23) |
+| Part A: Revised Use-Case Model & Specifications (2nd submission) + `docs/pa4/Changes.md` | SCRUM-54 | `feature/SCRUM-54-revised-use-cases` | TBD | Done (PR #72 approved & merged into `pa4`) |
 | Sprint 4 AI Usage Log: collect entries from all 5 members, write `docs/pa4/AI_USAGE_LOG.md` | SCRUM-71 | `feature/SCRUM-71-ai-usage-log` | TBD | To Do |
 | Review Tài's C4 Level 1 System Context Diagram (Part B) | SCRUM-60 (review) | n/a (review) | TBD | To Do |
 | Review Tài's FG-03 Backend (Room API & state machine) | SCRUM-62 (review) | n/a (review) | TBD | To Do |

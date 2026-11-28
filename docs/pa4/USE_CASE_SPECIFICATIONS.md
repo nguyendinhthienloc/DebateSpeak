@@ -1,12 +1,12 @@
 # PA4 — Revised Use-Case Specifications (Second Submission)
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 Ticket: **SCRUM-54**, PA4 Part A. Revision date: **2026-11-23**. Owner: **Trần Lê Anh Tuấn (24125107), AI Orchestrator & Analysis Lead**. Assigned reviewer: **Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead**. This is a specification ready for peer review, not a claim that the live product or peer review is complete.
 
 ## 1. Revision scope and sources
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
-This second submission preserves the 54 PA3 use-case identifiers, revises eleven room/audio use cases, and adds **UC-04-05** for typed debate turns. All **55** specifications appear in this document. The other 43 entries retain their PA3 functional behavior and priority; their prototype references are historical links, not new UI evidence. The revised [use-case model](USE_CASE_MODEL.md) supplies the complete actor, requirement and relationship index. [Changes.md](Changes.md) records changes separately for the model and these specifications.
+This second submission preserves the 54 PA3 use-case identifiers, revises eleven room/audio use cases, and adds **UC-04-05** for typed debate turns. All **55** specifications appear in this document. The other 43 entries retain their PA3 functional behavior and priority (originally reviewed and co-edited in PA3 by **Nguyễn Bảo Minh Triết (24125047)**); their prototype references are historical links, not new UI evidence. The revised [use-case model](USE_CASE_MODEL.md) supplies the complete actor, requirement and relationship index. [Changes.md](Changes.md) records changes separately for the model and these specifications.
 
 PA4 Part E targets **FG-03 Room and Session Management + FG-04 Real-Time Audio**. FG-01 remains the PA3 implementation baseline. Seeded motion selection supports room creation; it does not claim completion of FG-02 topic management. Streaming STT, AI analysis, reports, video, audiences, solo AI practice and private side chat are not completion claims of this ticket. Typing is an approved follow-up after the graded voice flow, not a reason to delay that flow or claim FG-05 is delivered.
 
@@ -21,13 +21,13 @@ PA4 Part E targets **FG-03 Room and Session Management + FG-04 Real-Time Audio**
 | [Architecture specification](../architecture/SOFTWARE_ARCHITECTURE_SPEC.md), §§3, 4, 6, 15 | Existing FR/NFR identifiers and safety rules; discrepancies are listed in §7 rather than silently rewriting another owner's document. |
 | [Room client](../../web/src/rooms/api.ts), [contracts](../../web/src/rooms/contracts.ts), [room page](../../web/src/pages/rooms/RoomPage.tsx) | Merged frontend behavior inspected at PA4 base commit `7676197`; not proof of a working room backend. |
 
-**TA-feedback status.** No specific PA3 TA comments were supplied for this revision or located in the PA3/PA4 repository documents. Moodle and instructor email were not accessed. This revision follows the current team workflow, with Triết responsible for frontend. The changes below therefore address documented contract gaps and current design decisions; they are not attributed to an invented TA review. Any later TA comments must be recorded verbatim or faithfully summarized with their source in Changes.md and mapped to the affected sections.
+**TA-feedback status.** No PA3 TA feedback received as of 2026-11-28 (checked Moodle). This revision follows the current team workflow, with Triết responsible for frontend. The changes below therefore address documented contract gaps and current design decisions without fabricating TA comments.
 
 ## 2. Shared contracts
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### 2.1 Identity, privacy and honest outcomes
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 The server derives identity from the authenticated session. A body-supplied user ID, browser role or invite code does not grant participant privileges. Room snapshots, turns and media tokens require current membership. Read access to an absent or nonmember room returns a non-disclosing unavailable outcome. Invite lookup returns only the deliberately limited preview after authentication; it never grants a seat or media access. Moderator/Admin, human Evaluator, Teacher and Audience rights remain individually scoped, with optional actors disabled outside their specified future scope.
 
@@ -36,7 +36,7 @@ Room creation, seating, side assignment, readiness and lifecycle changes must be
 Never log passwords, access/refresh/media tokens, raw invite codes or private transcript content. Render learner names and typed turns as text. Do not put credentials into URLs or browser storage. An invite code may appear only in the designated invitation hash (`#/join/:code`); it is not an authentication credential. The room's stable address uses its room ID (`#/rooms/:id`).
 
 ### 2.2 Room lifecycle and time authority
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 | State | Meaning and allowed exits |
 |---|---|
@@ -46,14 +46,16 @@ Never log passwords, access/refresh/media tokens, raw invite codes or private tr
 | `ENDED` | Finished session; no further capture, publication or typed submissions. Terminal. |
 | `CANCELLED` | Closed/expired before LIVE; no debate started. Terminal. |
 
+*State-name mapping:* Planning docs (`docs/pa4/README.md`) refer to `WAITING`, `READY`, and `IN_DEBATE`; in the implemented frontend (`web/src/rooms/contracts.ts`) and Spring Boot backend (`RoomService.java`), these correspond directly to `LOBBY`, `READY`, and `LIVE`.
+
 The server enforces two distinct debaters even under concurrent joins. Invite codes contain eight uppercase characters, are normalized for case/whitespace, and expire with the lobby after 30 minutes. A guest leaving READY reopens LOBBY, clears both ready flags and restarts the 30-minute deadline. A creator leaving/cancelling before LIVE cancels the room. Expiry cancels LOBBY/READY, invalidates the invite and prevents a late join/start; LIVE is governed by session time, not lobby expiry. Terminal states never reopen.
 
-Random sides are assigned once when the second learner joins; a creator's selected side yields the opposite side for the partner. FREE_FLOW offers 5, 10, 15 or 20 minutes. TIMED_TURNS uses the fixed approximately seven-minute format in the current design, without a free-flow duration selector. The backend must return the authoritative phase schedule; the older phase wording is ambiguous about per-speaker durations, so this revision does not invent exact phase boundaries. Turn markers guide speaking and never automatically mute anyone.
+Random sides are assigned once when the second learner joins; a creator's selected side yields the opposite side for the partner. FREE_FLOW offers 5, 10, 15 or 20 minutes. TIMED_TURNS uses the fixed 390-second format (`web/API_CONTRACT.md`, PR #73, `RoomService.java`), without a free-flow duration selector. Turn markers guide speaking and never automatically mute anyone.
 
 The second accepted Ready atomically sets LIVE and `started_at = server acceptance time + 3 seconds`. Clients use `server_now` to align their countdown and publish no audio before `started_at`. There is no separate public Start or arbitrary state-patch endpoint. Poll every two seconds in LOBBY/READY and every five seconds in LIVE; stop on terminal state, exit or lost authorization. A transient poll failure preserves the last view and healthy audio while marking synchronization unavailable; stale state alone cannot grant new readiness or media access. The server owns debate expiry and the 60-second disconnect deadline.
 
 ### 2.3 Independent consent, microphone and typed participation
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 Each learner sees an unchecked personal agreement explaining audio routing, transcription, future AI processing, transcript/typed-content retention and deletion, and how to withdraw. The notice must disclose actual availability: PA4 does not promise a generated feedback report, functioning speech transcription or saved raw audio. Presence, account terms, the partner's choice and browser microphone permission are not consent. No countdown or language pressures a learner to agree. Declining has no account penalty and Leave remains available.
 
@@ -69,7 +71,7 @@ A mic test starts only after an explicit Test click. It is local: no upload, rec
 Consent withdrawal during LIVE stops local capture immediately and requests the shared End action; it does not merely mute audio and leave processing active. A READY withdrawal racing the second Ready must reconcile authoritative state: if LIVE already won, stop local capture and end instead of retrying DELETE indefinitely. Ending/disconnection cleanup must stop capture and subscriptions for both participants. Closing a browser or losing connectivity never authorizes background capture.
 
 ### 2.4 Room and media interaction contract
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 The following paths are relative to `/api/v1`. They describe the target interaction contract, not a declaration that these endpoints exist in the merged backend.
 
@@ -92,7 +94,7 @@ The following paths are relative to `/api/v1`. They describe the target interact
 Snapshots carry room ID/code/status, motion, format/duration, expiry/start/end timestamps, end reason, `server_now` and participants with ID/name/side/creator/ready/input. Clients use the snapshot rather than reconstructing authority from URL, local flags or countdown. End metadata must identify a manual ending where supplied. The LiveKit room name is **the room ID**, never its invitation code. Tokens are held only in memory; TYPE cannot publish audio; the configured production service is LiveKit Cloud. Local media development does not establish Cloud acceptance.
 
 ### 2.5 Errors, recovery and accessibility
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 | Condition | Required outcome and next action |
 |---|---|
@@ -109,7 +111,7 @@ Snapshots carry room ID/code/status, motion, format/duration, expiry/start/end t
 Preserve the Cream & Yellow design and existing typography; the focused Ink stage applies to LIVE/ENDED. Keep controls labelled and keyboard accessible with visible focus, readable text states and reflow at 320px. An invite dialog traps and restores focus and supports Escape/Not now. Destructive End asks “End for both of you?” without hiding the safe-exit path. Reduced motion removes animated spotlight/countdown transitions. Announce phase changes, one minute remaining and the ending politely; do not announce every speaker change. Do not show scores, coaching alerts or talk-time competition during the debate.
 
 ### 2.6 Inherited account, evidence and report contracts
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 FG-01 follows the PA3 account specifications and [account integration guide](../../web/API_INTEGRATION.md). Registration finishes signed out. Access credentials stay in memory; a host-only HttpOnly refresh cookie supports the documented refresh lifecycle. Revocation/expiry cannot be bypassed by room membership. Unknown email and wrong password share an invalid-credentials outcome; account suspension is revealed only after a correct password. Recovery/verification availability depends on verified email delivery, not the existence of a screen. The PA3 BCrypt and schema-migration deviations remain disclosed in [PA3 Changes](../pa3/Changes.md).
 
@@ -118,7 +120,7 @@ The unchanged future specifications retain their evidence guards: independent sp
 These later-product rules are design constraints only. PA4 wrap-up states “Feedback report: coming in a later release”; it does not enqueue or claim a functioning AI report as part of this revision.
 
 ### 2.7 Inherited authentication session lifecycle
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 The following account contract is carried forward from PA3; its historical implementation status was not re-tested by SCRUM-54.
 
@@ -134,15 +136,15 @@ FR-01's full-product session behavior is part of UC-01-02, not a separate user g
 Refresh-session behavior is implemented in PA3 (`specs/002-fg01-accounts`). Password recovery remains conditional on UC-01-05 being implemented and enabled; otherwise offer sign-in only and do not expose an actionable recovery link.
 
 ## 3. Use-case specifications
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 All 55 entries follow the stable catalogue order. Revised PA4 entries replace eleven room/audio specifications; UC-04-05 is new. The 43 retained entries preserve PA3 functional content and priority, subject to §2. Historical prototype links are design references, not current implementation evidence. PA3 co-owner edits by Nguyễn Bảo Minh Triết (24125047), Frontend & WebRTC/Audio Lead, remain attributable to the linked PA3 source; no new review by Triết or Lộc is asserted.
 
 ## FG-01 — Account and profile
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-01-01 — Register account
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -186,7 +188,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-01 alternative and exception prototype states](../pa3/screenshots/uc-01-01-alternatives.png)
 
 ### UC-01-02 — Sign in
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -230,7 +232,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-02 alternative and exception prototype states](../pa3/screenshots/uc-01-02-alternatives.png)
 
 ### UC-01-03 — Maintain learner profile
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -272,7 +274,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-03 alternative and exception prototype states](../pa3/screenshots/uc-01-03-alternatives.png)
 
 ### UC-01-04 — Sign out
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -314,7 +316,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-04 alternative and exception prototype states](../pa3/screenshots/uc-01-04-alternatives.png)
 
 ### UC-01-05 — Recover forgotten password
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -356,7 +358,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-05 alternative and exception prototype states](../pa3/screenshots/uc-01-05-alternatives.png)
 
 ### UC-01-06 — Review active sessions
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -399,7 +401,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-06 alternative and exception prototype states](../pa3/screenshots/uc-01-06-alternatives.png)
 
 ### UC-01-07 — Delete own account and data
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -442,7 +444,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-07 alternative and exception prototype states](../pa3/screenshots/uc-01-07-alternatives.png)
 
 ### UC-01-08 — Suspend or reactivate account
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -486,10 +488,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-01-08 alternative and exception prototype states](../pa3/screenshots/uc-01-08-alternatives.png)
 
 ## FG-02 — Topics and difficulty
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-02-01 — Browse and select topics
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -532,7 +534,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-02-01 alternative and exception prototype states](../pa3/screenshots/uc-02-01-alternatives.png)
 
 ### UC-02-02 — Manage topic library
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -575,7 +577,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-02-02 alternative and exception prototype states](../pa3/screenshots/uc-02-02-alternatives.png)
 
 ### UC-02-03 — Get personalized topic recommendations
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -617,7 +619,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-02-03 alternative and exception prototype states](../pa3/screenshots/uc-02-03-alternatives.png)
 
 ### UC-02-04 — Propose a custom topic
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -660,10 +662,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-02-04 alternative and exception prototype states](../pa3/screenshots/uc-02-04-alternatives.png)
 
 ## FG-03 — Room and session management
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-03-01 — Create debate room
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Create one two-person room with a chosen seeded motion and a real invitation, without starting capture.
 
@@ -701,7 +703,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-01, AC-02, AC-03 in §4. Current UI source: [CreateRoomPage](../../web/src/pages/rooms/CreateRoomPage.tsx).
 
 ### UC-03-02 — Join invited room
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Preview an invitation and deliberately take the open seat, without duplicate seating or unauthorized disclosure.
 
@@ -742,7 +744,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-04 through AC-07.
 
 ### UC-03-03 — View lobby and readiness
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** See current room membership and own readiness while keeping presence separate from permission to transmit.
 
@@ -780,7 +782,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-08, AC-09, AC-21.
 
 ### UC-03-04 — Give or withdraw processing consent
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Give an informed personal decision for this debate and withdraw it without pressure or account penalty.
 
@@ -818,7 +820,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-10, AC-11, AC-12, AC-16.
 
 ### UC-03-05 — Start debate
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Start exactly one shared session when the second current personal readiness submission is accepted.
 
@@ -857,7 +859,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-10 through AC-15.
 
 ### UC-03-06 — Leave or end debate
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Leave a pre-debate room or end the shared live session with prompt capture cleanup and an honest final view.
 
@@ -891,12 +893,12 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 
 **Postconditions — minimum guarantee:** Exit does not wait for AI, scoring or successful network confirmation; terminal states cannot resume.
 
-**Special requirements:** End also ends typed participation. No “report ready” or successful analysis queue is claimed in PA4. Read-token expiry alone is insufficient cleanup for an already connected media participant; server termination/revocation must be verified in integration.
+**Special requirements:** End also ends typed participation. No “report ready” or successful analysis queue is claimed in PA4. Token expiry alone is insufficient cleanup for an already connected media participant; server termination/revocation must be verified in integration.
 
 **Acceptance scenarios:** AC-16, AC-17, AC-18, AC-22.
 
 ### UC-03-07 — Follow debate and turn timers
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Follow server-owned debate time without forcing silence or adding cognitive pressure.
 
@@ -928,12 +930,12 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 
 **Postconditions — minimum guarantee:** Local clock manipulation, reloads and stale snapshots never create more debate time or a new start.
 
-**Special requirements:** Exact TIMED_TURNS phase durations remain a backend-contract confirmation (§7). Do not infer an exact schedule from the About 7 minutes label or ambiguous legacy prose.
+**Special requirements:** `TIMED_TURNS` total duration is fixed at 390 seconds (`web/API_CONTRACT.md`, `web/src/rooms/clock.ts`, `RoomService.java`), with client phase guidance markers aligned to that schedule.
 
 **Acceptance scenarios:** AC-14, AC-17, AC-19.
 
 ### UC-03-08 — Report abusive behavior
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -976,7 +978,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-03-08 alternative and exception prototype states](../pa3/screenshots/uc-03-08-alternatives.png)
 
 ### UC-03-09 — Review abuse and close room
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1019,7 +1021,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-03-09 alternative and exception prototype states](../pa3/screenshots/uc-03-09-alternatives.png)
 
 ### UC-03-10 — Use private room text chat
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1062,7 +1064,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-03-10 alternative and exception prototype states](../pa3/screenshots/uc-03-10-alternatives.png)
 
 ### UC-03-11 — Practise solo with an AI opponent
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1105,7 +1107,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-03-11 alternative and exception prototype states](../pa3/screenshots/uc-03-11-alternatives.png)
 
 ### UC-03-12 — Authorize and join audience access
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1151,7 +1153,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: Future authorized subscribe-only audience scenario; both debaters independently approve sharing, no publishing or real media](../pa3/screenshots/uc-03-12-authorized.png)
 
 ### UC-03-13 — Validate start readiness
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Validate the current authority for the second Ready within the same atomic start decision.
 
@@ -1188,10 +1190,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-10 through AC-13, AC-15, AC-16.
 
 ## FG-04 — Real-time audio
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-04-01 — Select and test microphone
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Deliberately test the selected input locally and retain an accessible alternative when voice is unavailable.
 
@@ -1228,7 +1230,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-10, AC-11, AC-12.
 
 ### UC-04-02 — Exchange audio and control mute
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Exchange two-way audio on isolated tracks and control only one's own microphone after dual consent and the shared start.
 
@@ -1244,7 +1246,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 
 1. Server issues a short-lived token scoped to authenticated participant identity and room ID, only while LIVE. VOICE may publish audio; TYPE may subscribe only.
 2. Client connects to LiveKit; at or after the shared start, permitted voice capture publishes on that participant's own track and the partner's authorized track is subscribed.
-3. System displays real connection/mute/speaking state. The learner can mute/unmute only their own audio while continuing to hear the partner.
+3. System displays real connection, mute, and active-speaker state. The learner can mute/unmute only their own audio while continuing to hear the partner.
 4. The focused stage keeps End and connection recovery available. Optional STT/AI failure cannot block otherwise healthy consented audio.
 5. End, revoked authorization/consent or route exit releases capture and media resources under UC-03-06.
 
@@ -1268,7 +1270,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-13, AC-15, AC-20, AC-21, AC-22.
 
 ### UC-04-03 — Recover a dropped connection
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Restore the same authorized participant within the server's 60-second grace or end safely without restarting time.
 
@@ -1306,7 +1308,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-14, AC-21, AC-23.
 
 ### UC-04-04 — Enable optional live video
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1348,7 +1350,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-04-04 alternative and exception prototype states](../pa3/screenshots/uc-04-04-alternatives.png)
 
 ### UC-04-05 — Participate through typed debate turns
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 **Description / goal:** Participate by typing instead of speaking, or supplement voice with a typed turn that is explicitly debate content.
 
@@ -1387,10 +1389,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 **Acceptance scenarios:** AC-12, AC-24, AC-25, AC-26.
 
 ## FG-05 — Transcription and attribution
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-05-01 — View speaker-attributed live transcript
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1434,7 +1436,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-05-01 alternative and exception prototype states](../pa3/screenshots/uc-05-01-alternatives.png)
 
 ### UC-05-02 — Review and export full transcript
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1476,7 +1478,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-05-02 alternative and exception prototype states](../pa3/screenshots/uc-05-02-alternatives.png)
 
 ### UC-05-03 — Use mixed-audio diarization fallback
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1518,10 +1520,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-05-03 alternative and exception prototype states](../pa3/screenshots/uc-05-03-alternatives.png)
 
 ## FG-06 — English language analysis
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-06-01 — Review language corrections
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1564,7 +1566,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-06-01 alternative and exception prototype states](../pa3/screenshots/uc-06-01-alternatives.png)
 
 ### UC-06-02 — Review speaking metrics
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1606,7 +1608,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-06-02 alternative and exception prototype states](../pa3/screenshots/uc-06-02-alternatives.png)
 
 ### UC-06-03 — Review recurring language patterns
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1648,7 +1650,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-06-03 alternative and exception prototype states](../pa3/screenshots/uc-06-03-alternatives.png)
 
 ### UC-06-04 — Review pronunciation assessment
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1690,7 +1692,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-06-04 alternative and exception prototype states](../pa3/screenshots/uc-06-04-alternatives.png)
 
 ### UC-06-05 — Validate cited transcript evidence
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1733,10 +1735,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-06-05 alternative and exception prototype states](../pa3/screenshots/uc-06-05-alternatives.png)
 
 ## FG-07 — Argument analysis
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-07-01 — Review argument structure and rebuttals
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1779,7 +1781,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-07-01 alternative and exception prototype states](../pa3/screenshots/uc-07-01-alternatives.png)
 
 ### UC-07-02 — Review potential logical fallacies
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1821,10 +1823,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-07-02 alternative and exception prototype states](../pa3/screenshots/uc-07-02-alternatives.png)
 
 ## FG-08 — Fact checking
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-08-01 — Inspect claim verdicts and evidence
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1869,7 +1871,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-08-01 alternative and exception prototype states](../pa3/screenshots/uc-08-01-alternatives.png)
 
 ### UC-08-02 — Show optional live fact-check overlay
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1911,10 +1913,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-08-02 alternative and exception prototype states](../pa3/screenshots/uc-08-02-alternatives.png)
 
 ## FG-09 — Evaluation and consensus
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-09-01 — Review debate evaluation and consensus
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -1957,7 +1959,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-01 alternative and exception prototype states](../pa3/screenshots/uc-09-01-alternatives.png)
 
 ### UC-09-02 — Configure analysis and inspect usage
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2000,7 +2002,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-02 alternative and exception prototype states](../pa3/screenshots/uc-09-02-alternatives.png)
 
 ### UC-09-03 — Run optional heterogeneous judge panel
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2042,7 +2044,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-03 alternative and exception prototype states](../pa3/screenshots/uc-09-03-alternatives.png)
 
 ### UC-09-04 — Assign a human evaluator
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2084,7 +2086,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-04 alternative and exception prototype states](../pa3/screenshots/uc-09-04-alternatives.png)
 
 ### UC-09-05 — Submit human grading card
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2127,7 +2129,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-05 alternative and exception prototype states](../pa3/screenshots/uc-09-05-alternatives.png)
 
 ### UC-09-06 — View shared human grades
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2170,10 +2172,10 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-09-06 alternative and exception prototype states](../pa3/screenshots/uc-09-06-alternatives.png)
 
 ## FG-10 — History and learning reports
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 ### UC-10-01 — Review personalized learning report
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2216,7 +2218,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-01 alternative and exception prototype states](../pa3/screenshots/uc-10-01-alternatives.png)
 
 ### UC-10-02 — Browse own debate history
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2259,7 +2261,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-02 alternative and exception prototype states](../pa3/screenshots/uc-10-02-alternatives.png)
 
 ### UC-10-03 — Review longitudinal progress
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2301,7 +2303,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-03 alternative and exception prototype states](../pa3/screenshots/uc-10-03-alternatives.png)
 
 ### UC-10-04 — Track analysis status and retry
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2344,7 +2346,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-04 alternative and exception prototype states](../pa3/screenshots/uc-10-04-alternatives.png)
 
 ### UC-10-05 — Export report PDF
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2386,7 +2388,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-05 alternative and exception prototype states](../pa3/screenshots/uc-10-05-alternatives.png)
 
 ### UC-10-06 — Process deletion and retention requests
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2429,7 +2431,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-06 alternative and exception prototype states](../pa3/screenshots/uc-10-06-alternatives.png)
 
 ### UC-10-07 — View consented student dashboards
-*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewer (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
+*Performed (PA3 baseline): Trần Lê Anh Tuấn (24125107) | Reviewed (PA4): Nguyễn Đình Thiên Lộc (24125093) | Edited (PA4 references): Trần Lê Anh Tuấn (24125107)*
 
 **Revision status:** Retained from PA3; functional behavior and original priority unchanged. Historical implementation notes are not new SCRUM-54 test results.
 
@@ -2472,7 +2474,7 @@ All 55 entries follow the stable catalogue order. Revised PA4 entries replace el
 [PA3 prototype: UC-10-07 alternative and exception prototype states](../pa3/screenshots/uc-10-07-alternatives.png)
 
 ## 4. Acceptance scenarios for the revised slice
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 These are executable acceptance criteria for feature owners to verify against the real API/database/media services. They have **not** been run as full-stack tests by this documentation ticket. Source-inspected mocked browser tests can support a UI claim only; they cannot prove persistence, consent enforcement, isolation or LiveKit transport.
 
@@ -2508,7 +2510,7 @@ These are executable acceptance criteria for feature owners to verify against th
 Accessibility checks apply to all scenarios: keyboard/focus and dialog recovery, 320px reflow, reduced motion, neutral consent wording and accessible safe exit. Audio latency must be measured separately under NFR-01; a functional exchange alone does not establish the latency target.
 
 ## 5. Implementation evidence at the PA4 base
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 Evidence cutoff: `7676197` (origin/pa4 fetched on 2026-11-23). The table records source inspection; no new runtime product verification is implied.
 
@@ -2524,7 +2526,7 @@ Evidence cutoff: `7676197` (origin/pa4 fetched on 2026-11-23). The table records
 Tuấn owns this analysis revision. Nguyễn Bảo Minh Triết (24125047), Frontend & WebRTC/Audio Lead, owns frontend. Nguyễn Hồng Tấn Tài (24125078), Backend & Real-Time Media Lead, owns backend contracts and room/media implementation. Nguyễn Anh Khoa (24125058), AI Audio & Speech Pipeline Lead, owns the assigned Spec Kit artifacts. Nguyễn Đình Thiên Lộc (24125093), DevOps & QA / Fact-Checking Lead, owns checklist/freeze and this ticket's assigned peer review. This document neither changes those assignments nor updates someone else's checklist.
 
 ## 6. Consistency with the Vision and PA3
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 | Vision need / existing scope | PA4 revision |
 |---|---|
@@ -2539,14 +2541,14 @@ Tuấn owns this analysis revision. Nguyễn Bảo Minh Triết (24125047), Fron
 The full-product vision remains broader than PA4. Old PA3 statements that FG-03 is the current PA3 focus and roadmap statements that PA4 delivers FG-04/FG-05 are historical inconsistencies, not completion evidence. This revision explicitly names the actual PA3 FG-01 baseline and current PA4 FG-03/FG-04 target.
 
 ## 7. Owner confirmations and review handoff
-*Performed: Trần Lê Anh Tuấn (24125107) | Reviewer: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
+*Performed: Trần Lê Anh Tuấn (24125107) | Reviewed: Nguyễn Đình Thiên Lộc (24125093) | Edited: Trần Lê Anh Tuấn (24125107)*
 
 The following cross-owner items require contract/implementation confirmation outside SCRUM-54:
 
 | Item | Required confirmation / integration action |
 |---|---|
 | Older room documentation | Backend/spec owners reconcile WAITING/IN_DEBATE, POST ready/start, invite-code media rooms and token-on-create wording with current LOBBY/READY/LIVE, PUT ready and room-ID token rules. |
-| TIMED_TURNS schedule | Backend owner provides exact phase durations/turn ownership and authoritative schedule; About 7 minutes is a UI label, not an exact tested timing contract. |
+| TIMED_TURNS schedule | Fixed to `390` seconds across `web/API_CONTRACT.md`, `web/src/rooms/clock.ts` (PR #73), and `RoomService.java` (PR #78). |
 | Consent persistence and revocation | Backend owner confirms durable current consent, withdrawal/start race handling, and active LiveKit participant cleanup; browser flags and short token expiry alone do not prove enforcement. |
 | Ambiguous POST outcomes | Backend/frontend owners define creation and typed-send reconciliation/deduplication so retries do not duplicate content. No undocumented endpoint or idempotency field is asserted here. |
 | Presence / disconnect grace | Backend owner defines authoritative presence detection and the 60-second deadline. Snapshot polling failure alone is not media disconnection. |
