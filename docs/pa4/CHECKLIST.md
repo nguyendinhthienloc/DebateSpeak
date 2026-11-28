@@ -42,7 +42,7 @@ One row per file: file path, owner, completeness (missing / draft / complete).
 |---|---|---|---|---|
 | E1 | FG-03 backend (Spring Boot Room API + state machine + DB) | Tài | Tuấn | Draft |
 | E2 | FG-03 frontend (Room Setup + Lobby UI + state sync) | Triết | Lộc | Complete |
-| E3 | FG-04 backend (LiveKit token API) | Tài | Khoa | Missing |
+| E3 | FG-04 backend (LiveKit token API) | Tài | Khoa | Draft |
 | E4 | FG-04 frontend (LiveKit Client SDK + audio UI) | Triết | Khoa | Complete |
 | E5 | Spec Kit artifacts (`specs/006-fg03-rooms/`, `specs/007-fg04-audio/`) | Khoa | Tuấn | Complete |
 | E6 | Narrated YouTube demo video (FG-03 + FG-04) | Triết | All | Missing |
@@ -56,7 +56,7 @@ One row per file: file path, owner, completeness (missing / draft / complete).
 | F2 | `docs/pa4/WEEKLY_REPORT.md` | Lộc | Tuấn | Draft |
 | F3 | `docs/pa4/MEETINGS/SPRINT_PLANNING.md` | Lộc | Tuấn | Draft |
 | F4 | `docs/pa4/MEETINGS/SPRINT_REVIEW.md` | Lộc | Tuấn | Draft |
-| F5 | Jira screenshots | Lộc | Khoa | Missing |
+| F5 | Jira screenshots | Lộc | Khoa | Draft |
 
 ## Submission Package
 
