@@ -91,8 +91,10 @@ Response shapes the frontend validates are the type guards in
 - **Login** returns the access token and sets the refresh cookie.
 - **Page load** calls `POST /auth/refresh` exactly once. 200 restores the
   session; any error means signed out, and the frontend shows nothing.
-- **Access-token expiry** calls `/auth/refresh` again. If that fails, the
-  user sees "Your session expired".
+- **Access-token expiry**: the frontend calls `/auth/refresh` a minute before
+  the token expires, one call at a time. A request made with an expired token
+  (for example after the computer slept) refreshes first. If the refresh
+  fails, the user sees "Your session expired".
 - **Any 401 on a Bearer request** ends the frontend session immediately. Do
   not use 401 for "wrong password" on signed-in endpoints (see delete account).
 - **Rotation:** each refresh consumes the old token and issues a new one
