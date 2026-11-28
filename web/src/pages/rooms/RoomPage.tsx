@@ -33,6 +33,8 @@ export function RoomPage({ roomId, onStage }: { roomId: string; onStage: (on: bo
   const [seen, setSeen] = useState(room);
   const [partnerLeft, setPartnerLeft] = useState<string>();
   const [left, setLeft] = useState(false);
+  // The mic picked in the lobby, used when the debate connects.
+  const [micId, setMicId] = useState<string>();
   if (room !== seen) {
     // A guest who leaves before the start sends the room back to LOBBY with one seat.
     const gone = seen?.participants.find(person => !room?.participants.some(other => other.user_id === person.user_id));
@@ -51,8 +53,8 @@ export function RoomPage({ roomId, onStage }: { roomId: string; onStage: (on: bo
   return <div data-testid="room-view" data-status={room.status}>
     {room.status === 'CANCELLED' ? <Closed room={room} userId={session?.user.id} />
       : room.status === 'LOBBY' ? <InviteView room={room} onChange={apply} partnerLeft={partnerLeft} />
-      : room.status === 'READY' ? <AgreeView room={room} onChange={apply} onLeft={() => setLeft(true)} />
-      : room.status === 'LIVE' ? <LiveStage room={room} onChange={apply} rejoined={rejoined} />
+      : room.status === 'READY' ? <AgreeView room={room} onChange={apply} onLeft={() => setLeft(true)} onMicChoice={setMicId} />
+      : room.status === 'LIVE' ? <LiveStage room={room} onChange={apply} rejoined={rejoined} deviceId={micId} />
       : <WrapUp room={room} userId={session?.user.id} />}
   </div>;
 }

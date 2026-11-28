@@ -40,7 +40,9 @@ function Spotlight({ spot, room, me }: { spot: SpotlightState; room: RoomSnapsho
  * The live debate on the Ink stage. Audio connects once the shared countdown reaches zero and
  * disconnects when the stage unmounts (Back, the debate ending, or leaving the page).
  */
-export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; rejoined: boolean }) {
+export function LiveStage({ room, onChange, rejoined, deviceId }: {
+  room: RoomSnapshot; onChange: (room: RoomSnapshot) => void; rejoined: boolean; deviceId?: string;
+}) {
   const { session } = useSession();
   const me = room.participants.find(person => person.user_id === session?.user.id);
   const partner = room.participants.find(person => person !== me);
@@ -111,7 +113,7 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
         if (controller.signal.aborted) return;
         connected = true;
         audio.current = instance;
-        return instance.connect({ url, token, publishMic, startMuted: mutedNow.current }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
+        return instance.connect({ url, token, publishMic, startMuted: mutedNow.current, deviceId }).then(() => { if (!controller.signal.aborted) setConnection('good'); });
       })
       .catch(() => { if (!controller.signal.aborted) setAudioFailed(true); });
     return () => {
@@ -120,7 +122,7 @@ export function LiveStage({ room, onChange, rejoined }: { room: RoomSnapshot; on
       audio.current = undefined;
       if (connected) void instance.disconnect();
     };
-  }, [started, room.id, publishMic, attempt, refreshTurns]);
+  }, [started, room.id, publishMic, attempt, refreshTurns, deviceId]);
 
   // A partner who drops gets 60 seconds to come back before the debate ends for both.
   useEffect(() => {
