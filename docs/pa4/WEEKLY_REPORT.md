@@ -1,5 +1,4 @@
 # Weekly Report (PA4)
-
 *Performed: Nguyễn Đình Thiên Lộc (24125093); Review: Trần Lê Anh Tuấn (24125107), pending*
 
 ---
@@ -11,64 +10,69 @@
 
 ## 2. Per-Member Task Table
 
-Status is determined strictly by verified repository evidence (merged pull request = Done; active branch = In Progress; otherwise as recorded in member `TODO.md` files).
+Status is determined strictly by verified repository evidence as of **2026-11-28** (merged pull request = Done; active branch / open PR = In Review or In Progress; otherwise as recorded in member `TODO.md` files).
 
-| Member | Student ID | Team Role | Jira Key | Task Summary | Status | Evidence / Notes |
-|---|---|---|---|---|---|---|
-| **Nguyễn Đình Thiên Lộc** | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Sprint setup: create `pa4` branch from `pa3`, merge `pa3` to `dev` | **Done** | Branch `pa4` created; PR #67 merged `pa3` into `dev` on 2026-11-14 |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-59 | Part D: Deployment Diagram (Mermaid) + infrastructure prose | In Review | Drafted with PDF on `feature/SCRUM-68-graphify`; review by Khoa |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-67 | Part F2: Weekly Report & Scrum meeting documentation | In Progress | Drafted on `feature/SCRUM-68-graphify`; meeting minutes still to fill |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Part S: Compile all PA4 Markdown documents to PDF | To Do | Deliverables `docs/pa4/*.pdf` missing |
-| Nguyễn Đình Thiên Lộc | 24125093 | DevOps & QA / Fact-Checking Lead | SCRUM-68 | Submission: Manage `docs/pa4/CHECKLIST.md`, export Git log, package `.zip` | To Do | Awaiting sprint freeze |
-| **Nguyễn Bảo Minh Triết** | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-58 | Part C3: C4 Level 3 Frontend Component Diagram | In Progress | Draft by Lộc on `feature/SCRUM-58-c4-frontend-components`; Triết to check |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-61 | Part E2: FG-03 Frontend (Room Setup, Join Dialog, Room Page, Lobby sync) | **Done** | PR #70 merged into `pa4` on 2026-11-21 (commit `7676197`) |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit Client SDK, audio tracks, dual-consent) | **Done** | PR #71 (live stage) and PR #73 (typed turns, mock API) merged into `pa4` |
-| Nguyễn Bảo Minh Triết | 24125047 | Frontend & WebRTC/Audio Lead | SCRUM-65 | Part E6: Narrated YouTube demo video for FG-03 + FG-04 | To Do | Deliverable `docs/pa4/DEMO_VIDEO.md` missing |
-| **Nguyễn Hồng Tấn Tài** | 24125078 | Backend & Real-Time Media Lead | SCRUM-55 | Part B: C4 Level 1 System Context Diagram + Tech Stack prose | In Progress | Draft by Lộc on `feature/SCRUM-55-c4-system-context`; Tài to check |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-60 | Part E1: FG-03 Backend (Room API, invite code, state machine, DB) | To Do | Not started as of 2026-11-27: no room endpoints on any branch |
-| Nguyễn Hồng Tấn Tài | 24125078 | Backend & Real-Time Media Lead | SCRUM-62 | Part E3: FG-04 Backend (LiveKit token generation API endpoint) | To Do | Not started as of 2026-11-27: no token endpoint on any branch |
-| **Nguyễn Anh Khoa** | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-56 | Part C1: C4 Level 2 Container Diagram (Mermaid) + protocols | In Review | Pushed to `feature/SCRUM-56-c4-container-diagram` (2026-11-24); no PR yet. Jira says Done |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-57 | Part C2: C4 Level 3 Backend Component Diagram | In Review | Pushed to `feature/SCRUM-57-c4-backend-components` (2026-11-24); no PR yet |
-| Nguyễn Anh Khoa | 24125058 | AI Audio & Speech Pipeline Lead | SCRUM-64 | Part E5: Spec Kit artifacts for FG-03 & FG-04 (`specs/006-`, `specs/007-`) | In Progress | Draft by Lộc on `feature/SCRUM-64-speckit-fg03-fg04`; Khoa to check |
-| **Trần Lê Anh Tuấn** | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-54 | Part A: Revised Use-Case Specifications (2nd submission) + `Changes.md` | In Review | PR #72 open into `pa4`; changes requested by Lộc |
-| Trần Lê Anh Tuấn | 24125107 | AI Orchestrator & Analysis Lead | SCRUM-66 | Part F1: AI Usage Log — Sprint 4 entries for all 5 members | To Do | Deliverable `docs/pa4/AI_USAGE_LOG.md` missing |
+| Member | Jira Key | Task Summary | Status | Evidence / Notes |
+|---|---|---|---|---|
+| **Lộc** (24125093) | SCRUM-68 | Create `pa4` from `pa3`; merge `pa3` → `dev` | **Done** | Branch `pa4` created; PR #67 merged into `dev` (2026-11-14) |
+| Lộc (24125093) | SCRUM-59 | Part D: Deployment Diagram + prose | In Review | Updated + PDF built on PR #74 (`feature/SCRUM-68-graphify`); Khoa to review |
+| Lộc (24125093) | SCRUM-67 | Part F2: Weekly Report & meeting minutes | In Progress | Planning, Check-in 1 & 2, `SPRINT_REVIEW.md` template on PR #74; waits for Sprint Review & Jira screenshots |
+| Lộc (24125093) | SCRUM-68 | Part S: Compile PA4 Markdown docs to PDF | In Progress | Lộc's docs & current drafts built via `report/pdf/build.py`; remaining Parts A/C1/C2/E7 await merges |
+| Lộc (24125093) | SCRUM-68 | Freeze `CHECKLIST.md`, Git log, package `.zip` | In Progress | Checklist updated on PR #74; freeze & zip blocked until all rows are Complete (`AGENTS.md` §10) |
+| Lộc (24125093) | SCRUM-52 | Refine waiting/ready lobbies & accessibility | Deferred / Closed | Dropped from PA4 (not in `PA4_OVERVIEW.md`; superseded by Triết's PR #70/#71/#73) |
+| **Triết** (24125047) | SCRUM-58 | Part C3: C4 Level 3 Frontend Components | In Progress | Draft by Lộc on PR #74; Triết to check and take over |
+| Triết (24125047) | SCRUM-61 | Part E2: FG-03 Frontend (Setup, Join, Lobby) | **Done** | PR #70 merged into `pa4` (2026-11-21, `7676197`) |
+| Triết (24125047) | SCRUM-63 | Part E4: FG-04 Frontend (LiveKit, audio UI) | **Done** | PR #71 & PR #73 merged into `pa4`; bugfix branch pushed 2026-11-28 |
+| Triết (24125047) | SCRUM-65 | Part E6/E7: Narrated YouTube demo video | To Do | `docs/pa4/DEMO_VIDEO.md` missing; waits for backend E2E |
+| **Tài** (24125078) | SCRUM-55 | Part B: C4 Level 1 System Context + stack | In Progress | Draft by Lộc on PR #74; Tài to check and take over |
+| Tài (24125078) | SCRUM-60 | Part E1: FG-03 Backend (Room API & DB) | In Progress | Commit `e9601d9` (2026-11-28) pushed onto PR #78 (`feature/SCRUM-56-c4-container-diagram`), unmerged |
+| Tài (24125078) | SCRUM-62 | Part E3: FG-04 Backend (LiveKit token API) | To Do | No LiveKit token endpoint on any branch as of 2026-11-28 |
+| **Khoa** (24125058) | SCRUM-56 | Part C1: C4 Level 2 Container Diagram | In Review | PR #78 open into `pa4` (`feature/SCRUM-56-c4-container-diagram`) |
+| Khoa (24125058) | SCRUM-57 | Part C2: C4 Level 3 Backend Components | In Review | PR #79 open into `pa4` (`feature/SCRUM-57-c4-backend-components`) |
+| Khoa (24125058) | SCRUM-64 | Part E5: Spec Kit (`specs/006-`, `specs/007-`) | **Done** | PR #80 merged into `pa4` (2026-11-28, `d81ddc6`); audio worker PR #81 also open |
+| **Tuấn** (24125107) | SCRUM-54 | Part A: Revised Use Cases + `Changes.md` | In Review | PR #72 open into `pa4`; `CHANGES_REQUESTED` by Lộc (2026-11-27) |
+| Tuấn (24125107) | SCRUM-66 | Part F1: AI Usage Log (all 5 members) | In Progress | Draft by Lộc on PR #74; Tuấn to confirm and complete |
 
 ---
 
 ## 3. Work Completed So Far (with Commit & PR Evidence)
 
 1. **Sprint 4 Task Planning & Workspace Setup:**
-   - Commit `a98d181` (2026-11-17, Khoa Nguyen): Initialized `docs/pa4/README.md`, `docs/pa4/CHECKLIST.md`, `docs/pa4/create_pa4_jira_issues.py`, and individual member task files (`docs/pa4/*/TODO.md`).
-   - Commit `ef607a4` (2026-11-17, Khoa Nguyen): Added SCRUM-46 `STTAdapter` protocol implementation and unit tests (`api/app/adapters/stt.py`, `tests/unit/test_stt_adapter.py`).
+   - Commit `a98d181` (2026-11-17, Khoa): Initialized `docs/pa4/README.md`, `docs/pa4/CHECKLIST.md`, `docs/pa4/create_pa4_jira_issues.py`, and member `TODO.md` files.
+   - Commit `ef607a4` (2026-11-17, Khoa): Added `STTAdapter` protocol implementation and unit tests (`api/app/adapters/stt.py`, `tests/unit/test_stt_adapter.py`).
 
-2. **Prototype & Specification Refinement:**
-   - **Pull Request #68** (merged 2026-11-17, commit `4bd5201`): Removed PA3 Part D clickable prototype per grading scope while retaining prototype UI screenshots (`docs/pa3/`).
-   - **Pull Request #69** (merged 2026-11-19, commit `3d3c3f8`): Merged UI refresh (`feature/SCRUM-53-ui-refresh`) into `pa4`, establishing typography scales, motion tokens, entrance animations, split-step registration, and page shells.
+2. **Prototype Cleanup & UI Refresh:**
+   - **PR #68** (merged 2026-11-17, `4bd5201`): Removed PA3 Part D clickable prototype per grading scope while retaining prototype UI screenshots (`docs/pa3/`).
+   - **PR #69** (merged 2026-11-19, `3d3c3f8`): Merged UI refresh (`feature/SCRUM-53-ui-refresh`) into `pa4`.
 
-3. **FG-03 Frontend Room Flow:**
-   - **Pull Request #70** (merged 2026-11-21, commit `7676197`): Merged FG-03 frontend implementation (`feature/SCRUM-61-fg03-frontend`) into `pa4`. Deliverables included:
-     - Pages & Views: `CreateRoomPage.tsx`, `InviteView.tsx`, `AgreeView.tsx`, `JoinDialog.tsx`, `RoomPage.tsx`, `RoomNotice.tsx`.
-     - State Management & API: `web/src/rooms/api.ts`, `web/src/rooms/contracts.ts`, `web/src/rooms/useRoom.ts`, `web/src/rooms/useMicCheck.ts`.
-     - Automated Browser Tests: `room-create.spec.ts`, `room-invite.spec.ts`, `room-agree.spec.ts`, `room-page.spec.ts`, `room-routes.spec.ts`.
+3. **FG-03 & FG-04 Frontend Implementation and Spec Kit Artifacts:**
+   - **PR #70** (merged 2026-11-21, `7676197`): Merged FG-03 room flow (`CreateRoomPage.tsx`, `InviteView.tsx`, `AgreeView.tsx`, `JoinDialog.tsx`, `RoomPage.tsx`, `RoomNotice.tsx`, `web/src/rooms/`, Playwright specs).
+   - **PR #71** (merged 2026-11-23, `d86968e`): Merged FG-04 LiveKit live debate stage (`LiveStage.tsx`, `debateAudio.ts`, `WrapUp.tsx`, `clock.ts`, `spotlight.ts`, Playwright audio/live specs).
+   - **PR #73** (merged 2026-11-26, `97694af`): Merged typed-turn fallback (`TypePanel.tsx`, `useTypedTurns.ts`), local mock API (`web/mock-local/mockApi.ts`, `vite.mock.config.ts`), `web/DEV_GUIDE.md`, and `docs/api/` contract docs.
+   - **PR #80** (merged 2026-11-28, `d81ddc6`): Merged Spec Kit artifacts `specs/006-fg03-rooms/` and `specs/007-fg04-audio/` into `pa4`.
 
-4. **Sprint Management & Documentation in Progress:**
-   - Branch `feature/SCRUM-68-graphify` (Lộc): Drafted `docs/pa4/MEETINGS/SPRINT_PLANNING.md` and `docs/pa4/WEEKLY_REPORT.md`.
-   - Same branch: `docs/pa4/DEPLOYMENT_DIAGRAM.md` and its PDF (SCRUM-59).
+4. **Sprint Management, Reviews & Open Pull Requests:**
+   - **PR #74** (draft, `feature/SCRUM-68-graphify`, Lộc): Finalized `docs/pa4/DEPLOYMENT_DIAGRAM.md` (+ PDF), `docs/pa4/MEETINGS/SPRINT_PLANNING.md` (+ PDF), `docs/pa4/MEETINGS/SPRINT_REVIEW.md` template (+ PDF), `docs/pa4/WEEKLY_REPORT.md` (+ PDF), `docs/reference/AI_SKILLS_GUIDE.md`, `docs/pa4/CHECKLIST.md`, and handoff drafts for Parts B, C3, and F1.
+   - **PR #72** (open, Tuấn): Part A revised use cases and `Changes.md`; Lộc posted review (`CHANGES_REQUESTED`, 2026-11-27).
+   - **PR #78** (open, Khoa + Tài): Part C1 C4 Container diagram plus Tài's Spring Boot Room API commit (`e9601d9`, 2026-11-28).
+   - **PR #79** (open, Khoa): Part C2 C4 Backend Component diagram.
+   - **PR #81** (open, Khoa): WebRTC audio pipeline prototype (`workers/audio_pipeline.py`).
 
 ---
 
 ## 4. Risks and Blockers
 
-- **Missing PA4 Deliverables Across All Parts (per `docs/pa4/CHECKLIST.md`):**
-  - As of 2026-11-22, all checklist entries except sprint setup and frontend room components are marked `Missing`. Accelerated execution across all five members is required.
-- **Backend FG-03 & FG-04 API Delivery:**
-  - FG-03 backend endpoints (`POST /api/v1/rooms`, `POST /api/v1/rooms/join`, `POST /api/v1/rooms/{id}/ready`) and FG-04 LiveKit token API (`POST /api/v1/rooms/{id}/token`) remain in progress with Tài and have not been merged into `pa4`. The frontend currently operates against contract definitions.
-- **LiveKit Cloud Credentials & Audio End-to-End:**
-  - FG-04 requires active LiveKit Cloud configuration (`LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`) tested through the Spring Boot token endpoint and React LiveKit Client SDK.
-- **Demo Video Recording Dependency:**
-  - Triết's narrated YouTube demo (SCRUM-65) requires a fully functioning end-to-end flow across two separate browser sessions (Affirmative and Negative debaters), which is blocked until backend endpoints and audio integration are merged.
-- **Strict PDF Build and Submission Freeze:**
-  - Every document must compile cleanly to PDF via `report/pdf/build.py` without layout or table truncation before the freeze checklist can be marked complete.
+- **Incomplete PA4 Deliverables Blocking Freeze (as of 2026-11-28):**
+  - Only `E2`, `E4`, and `E5` are merged and complete on `pa4`. Per `AGENTS.md` §10, `PA4-Group02.zip` cannot be packaged until every row in `docs/pa4/CHECKLIST.md` is `Complete`.
+- **FG-03 & FG-04 Backend API Delivery:**
+  - Tài's Spring Boot Room API (`e9601d9`) was pushed onto Khoa's C4 Container branch (PR #78) rather than its own clean branch and is not yet reviewed or merged.
+  - The FG-04 LiveKit token endpoint (`POST /api/v1/rooms/{id}/token`) has not been pushed to any branch yet, blocking real two-browser LiveKit integration.
+- **Part A Rework (PR #72):**
+  - PR #72 requires updates to restore dropped Mermaid diagrams (11 → 3), restore PA3 credits for Triết, and document the Moodle PA3 TA feedback check before it can be approved and merged.
+- **Demo Video Dependency:**
+  - Triết's narrated YouTube demo (SCRUM-65) requires working end-to-end backend + LiveKit room flow (or agreed verification path) and remains unrecorded.
+- **Missing Jira Screenshots & Sprint Review:**
+  - `docs/pa4/screenshots/jira-board.png` and `docs/pa4/screenshots/burndown.png` (F5) have not been captured yet, and the Sprint Review & Retrospective meeting has not yet taken place.
 
 ---
 
@@ -96,46 +100,45 @@ Status as of the meeting, from Git and GitHub.
 
 ## 6. Scrum Check-in 2
 
-**Date & Time:** > TO FILL (Lộc): Date and time of Check-in 2  
-**Team members present:** > TO FILL (Lộc): Team members present at Check-in 2  
-**Team members absent:** > TO FILL (Lộc): Team members absent from Check-in 2  
+**Date & Time:** Friday 27 November 2026, 22:00, Google Meet  
+**Team members present:** All five: Nguyễn Đình Thiên Lộc (24125093), Nguyễn Bảo Minh Triết (24125047), Nguyễn Hồng Tấn Tài (24125078), Nguyễn Anh Khoa (24125058), Trần Lê Anh Tuấn (24125107).  
+**Team members absent:** None.  
 
 ### Status Reports
-> TO FILL (Lộc): Discussion and per-member status reports (Completed, To-do, Obstacles) for Check-in 2
+Status as of 2026-11-27 22:00, verified against Git and GitHub.
+
+| Member | Completed | To do | Obstacles |
+|---|---|---|---|
+| Lộc | Reviewed PR #72 (`CHANGES_REQUESTED`); drafted C4 Context (Part B), C4 FE Components (Part C3), Spec Kit specs, and AI Usage Log on PR #74 | Sync PR #74 with `pa4`, finalize Check-in 2, compile PDFs, wait for freeze | Cannot freeze or build final PDFs until teammates' PRs merge |
+| Triết | FG-04 live stage (PR #71, 23 Nov) and typed turns + mock API (PR #73, 26 Nov) merged into `pa4` | Review/take over C4 FE Components draft; record YouTube demo video | Backend room & LiveKit token APIs not merged yet |
+| Tài | No merged commits or open PRs as of 22:00 | Review/take over C4 Context draft; deliver FG-03 Room API & FG-04 LiveKit Token API | Behind schedule on backend critical path |
+| Khoa | C4 Container and BE Component branches pushed (24 Nov); preparing PRs and Spec Kit (`specs/006-`, `specs/007-`) | Open PRs for C4 Container, C4 BE Components, and Spec Kit artifacts | Needs Tài's backend alignment for C4/API consistency |
+| Tuấn | Opened PR #72 (25 Nov) for Part A (`Changes.md`, Use Cases) | Address Lộc's blocking review comments on PR #72; finalize AI Usage Log | Needs Moodle check for PA3 TA feedback and diagram restoration |
 
 ### Summary of Meeting
-> TO FILL (Lộc): Summary of Check-in 2 meeting and agreed adjustments
+- **Deadline alignment:** The team reviewed progress across all PA4 deliverables (Parts A–F) to meet the upcoming submission deadline.
+- **Unblocking critical path:** Prioritized accelerating Tài's FG-03 Room API and FG-04 LiveKit Token API so Triết can verify end-to-end integration and record the narrated YouTube demo video.
+- **Review & documentation follow-ups:** Agreed to push open C4 PRs (Khoa), resolve the blocking comments on PR #72 (Tuấn), and confirm/take over the draft documents prepared by Lộc on PR #74.
 
 ---
 
 ## 7. Sprint Review & Retrospective
 
-**Date & Time:** > TO FILL (Lộc): Date and time of Sprint Review & Retrospective  
-**Team members present:** > TO FILL (Lộc): Team members present at Sprint Review & Retrospective  
-**Team members absent:** > TO FILL (Lộc): Team members absent from Sprint Review & Retrospective  
+**Status:** Pending — Sprint 4 Review & Retrospective has not yet been held as of 2026-11-28. Full minutes will be recorded in `docs/pa4/MEETINGS/SPRINT_REVIEW.md` and summarized below once the meeting takes place.
 
-### Sprint Results & Increment Review
-> TO FILL (Lộc): Review of delivered increments against sprint goal (FG-03, FG-04, architecture diagrams, use cases, demo video)
-
-### Retrospective
-- **What went well:**
-  - > TO FILL (Lộc): Key positive outcomes and achievements from Sprint 4
-- **What went wrong:**
-  - > TO FILL (Lộc): Bottlenecks, delays, and friction points encountered during Sprint 4
-- **Root causes:**
-  - > TO FILL (Lộc): Underlying causes of identified issues
-- **What to do differently in Sprint 5 / PA5:**
-  - > TO FILL (Lộc): Concrete process and technical improvements for next sprint
-
-### Action Items for Next Sprint
-> TO FILL (Lộc): Action items and assignees for next sprint
+- **Date & Time:** Pending (to be scheduled once remaining Part A–E deliverables are ready for sprint review).
+- **Team members present / absent:** Pending.
+- **Sprint Results & Increment Review:** Pre-review evidence table (as of 2026-11-28) is tracked in `docs/pa4/MEETINGS/SPRINT_REVIEW.md` and Section 2 above.
+- **Retrospective & Action Items for PA5:** Pending team meeting discussion.
 
 ---
 
 ## 8. Jira Board & Burndown Chart
 
 ### Jira Board Progression
-> TO FILL (Lộc): Jira board screenshots (e.g. docs/pa4/screenshots/jira-board.png) showing task progression across To Do, In Progress, In Review, and Done
+- **Status:** Pending capture by Lộc.
+- **Expected artifact path:** `docs/pa4/screenshots/jira-board.png` (showing SCRUM-54 through SCRUM-68 across To Do, In Progress, In Review, and Done).
 
 ### Sprint Burndown Chart
-> TO FILL (Lộc): Sprint 4 burndown chart screenshot from Jira (e.g. docs/pa4/screenshots/burndown.png)
+- **Status:** Pending capture by Lộc.
+- **Expected artifact path:** `docs/pa4/screenshots/burndown.png` (Sprint 4 burndown chart exported from Jira).

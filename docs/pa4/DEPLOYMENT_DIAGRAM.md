@@ -1,4 +1,5 @@
 # Deployment Diagram — PA4
+*Performed: Nguyễn Đình Thiên Lộc (24125093) | Reviewed: Nguyễn Anh Khoa (24125058) | Edited: Nguyễn Đình Thiên Lộc (24125093)*
 
 | Metadata | Value |
 |---|---|
@@ -7,7 +8,7 @@
 | **Task** | SCRUM-59 |
 | **Owner** | Nguyễn Đình Thiên Lộc (24125093) — DevOps & QA / Fact-Checking Lead |
 | **Reviewer** | Nguyễn Anh Khoa (24125058) — AI Audio & Speech Pipeline Lead |
-| **Date** | November 22, 2026 |
+| **Date** | November 28, 2026 |
 | **Status** | In Review |
 
 ---
@@ -74,13 +75,13 @@ flowchart TB
 ### 3.1 Node: Client Workstation (`<<device>>`)
 * **Execution Environment:** Modern Web Browser (Chromium / Firefox / WebKit).
 * **Artifact:** `debatespeak-web` Single-Page Application (SPA) built with React 18, TypeScript, and Tailwind CSS.
-* **Responsibilities:** Renders room lobbies, captures local microphone input (WebRTC `getUserMedia`), manages dual-consent audio toggles, and connects to the WebRTC SFU for audio exchange.
+* **Responsibilities:** Renders room lobbies (`CreateRoomPage.tsx`, `InviteView.tsx`, `AgreeView.tsx`), performs local microphone checks via WebRTC `getUserMedia` (`useMicCheck.ts`), manages dual-consent audio activation, connects to the WebRTC SFU using `livekit-client` (`LiveStage.tsx`, `debateAudio.ts`), and provides a typed-turn fallback (`TypePanel.tsx`) when speaking is unavailable.
 
 ### 3.2 Node: Developer Workstation (`<<device>>`)
 The local development machine hosts both uncontainerized developer runtime processes and containerized backing services.
 
 #### 3.2.1 Host Runtime Processes
-* **Vite Development Server:** Runs directly on the host using Node.js (`pnpm run dev` in `web/`). Binds to port `5173` (`host: true` in `web/vite.config.ts`) and serves assets and Hot Module Replacement (HMR).
+* **Vite Development Server:** Runs directly on the host using Node.js (`npm run dev` / `pnpm run dev` in `web/`). Binds to port `5173` (`host: true` in `web/vite.config.ts`) and serves assets and Hot Module Replacement (HMR). An optional local mock configuration (`web/mock-local/vite.mock.config.ts`, port `5174`) embeds an in-memory mock API (`mockApi.ts`) for two-browser room and audio-stage testing when the backend is offline.
 * **Backend API Process:** Executes on the host binding to port `8000`. Exposes REST endpoints and WebSocket room handlers:
   * Python FastAPI implementation: `uvicorn app.main:app --port 8000` (dependencies in `api/pyproject.toml`).
   * Spring Boot implementation: `./mvnw spring-boot:run` in `api/authify/` (configured with `server.port=8000`).

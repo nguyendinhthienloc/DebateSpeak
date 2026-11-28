@@ -2,18 +2,18 @@
 
 Sprint 4 (PA4). Scope and rules: [../README.md](../README.md). Branch from `pa4`, PR into `pa4`.
 
-Status checked against Jira and GitHub on 2026-11-22.
+Status checked against Jira and GitHub on 2026-11-28.
 
 | Task | Jira | Branch | Due | Status |
 |---|---|---|---|---|
 | Create `pa4` from `pa3`; merge `pa3` → `dev` first | SCRUM-68 | n/a | TBD | Done (`pa4` exists; `pa3` → `dev` merged in PR #67) |
-| Deployment Diagram (Mermaid): Docker Compose, Caddy TLS, Postgres, Redis, LiveKit Cloud, Web client | SCRUM-59 | `feature/SCRUM-61-deployment-diagram` (local, wrong number: should be SCRUM-59) | TBD | In Progress |
-| Sprint 4 Weekly Report: Sprint Planning, 2 Scrum Check-ins, Sprint Review minutes; Jira board screenshots | SCRUM-67 | `feature/SCRUM-67-pa4-weekly-report` (local) | TBD | In Progress |
-| Build all PA4 Markdown docs to PDF via `report/pdf/build.py`; fix any font/table overflow errors | SCRUM-68 | `feature/SCRUM-68-pa4-pdfs` | TBD | To Do (waits for Parts A–D docs) |
-| Manage freeze checklist `docs/pa4/CHECKLIST.md`; export Git log; package `PA4-Group02.zip` | SCRUM-68 | n/a | TBD | In Progress (checklist exists, every row still Missing) |
-| Refine waiting and ready lobbies; verify UI accessibility | SCRUM-52 | not started | TBD | To Do |
-| Team guide: how to call graphify and Spec Kit (optional) | SCRUM-68 | `feature/SCRUM-68-graphify` | TBD | In Review |
-| Review Tuấn's Changes.md and Use-Case Specifications (Part A) | SCRUM-54 (review) | n/a (review) | TBD | To Do (blocked: files not written yet) |
+| Deployment Diagram (Mermaid): Docker Compose, Caddy TLS, Postgres, Redis, LiveKit Cloud, Web client | SCRUM-59 | `feature/SCRUM-68-graphify` (PR #74) | TBD | In Review (PR #74, synced with `pa4` & PDF built) |
+| Sprint 4 Weekly Report: Sprint Planning, 2 Scrum Check-ins, Sprint Review minutes; Jira board screenshots | SCRUM-67 | `feature/SCRUM-68-graphify` (PR #74) | TBD | In Progress (PR #74: Planning, Check-in 1 & 2, `SPRINT_REVIEW.md` template + PDFs built; waits for Sprint Review meeting & Jira screenshots) |
+| Build all PA4 Markdown docs to PDF via `report/pdf/build.py`; fix any font/table overflow errors | SCRUM-68 | `feature/SCRUM-68-graphify` (PR #74) | TBD | In Progress (PR #74: Lộc's docs & current drafts built cleanly; remaining Parts A/C1/C2/E7 wait for merges) |
+| Manage freeze checklist `docs/pa4/CHECKLIST.md`; export Git log; package `PA4-Group02.zip` | SCRUM-68 | `feature/SCRUM-68-graphify` (PR #74) | TBD | In Progress (`CHECKLIST.md` updated 2026-11-28; freeze & zip wait until all rows are Complete per `AGENTS.md` §10) |
+| Refine waiting and ready lobbies; verify UI accessibility | SCRUM-52 | n/a | TBD | Deferred / Closed for PA4 (not required by `docs/assignments/PA4_OVERVIEW.md`; superseded by Triết's FG-03/04 room UI in PR #70, #71, #73) |
+| Team guide: how to call graphify and Spec Kit (optional) | SCRUM-68 | `feature/SCRUM-68-graphify` (PR #74) | TBD | In Review (PR #74) |
+| Review Tuấn's Changes.md and Use-Case Specifications (Part A) | SCRUM-54 (review) | n/a (review) | TBD | In Progress (PR #72 reviewed 2026-11-27, `CHANGES_REQUESTED`; awaiting Tuấn's updates) |
 | Review Triết's FG-03 frontend (Room Setup + Lobby UI) | SCRUM-61 (review) | n/a (review) | TBD | Done (PR #70 merged into `pa4`) |
 
 Jira numbers fixed on 2026-11-22: the Deployment Diagram is SCRUM-59 (not 61), the sprint
